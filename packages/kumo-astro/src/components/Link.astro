@@ -1,0 +1,52 @@
+---
+/**
+ * Link component for consistent inline text links.
+ *
+ * Usage:
+ * ```astro
+ * <Link href="/docs">Learn more</Link>
+ * <Link href="https://example.com" target="_blank" rel="noopener noreferrer" variant="plain">
+ *   Visit Cloudflare
+ * </Link>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  linkVariants,
+  KUMO_LINK_DEFAULT_VARIANTS,
+  type KumoLinkVariant,
+} from "@cloudflare/kumo/components/link";
+
+interface Props {
+  href?: string;
+  /**
+   * Visual style of the link.
+   * - "inline" — Underlined inline text link
+   * - "current" — Inherits parent text color
+   * - "plain" — No underline decoration
+   * @default "inline"
+   */
+  variant?: KumoLinkVariant;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = KUMO_LINK_DEFAULT_VARIANTS.variant,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    linkVariants({ variant }),
+    "group/link inline-flex items-center gap-[0.1875em]",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</a>

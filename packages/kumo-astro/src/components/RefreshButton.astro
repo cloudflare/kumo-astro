@@ -1,0 +1,86 @@
+---
+/**
+ * Square button with a rotating arrows icon for data refresh actions.
+ *
+ * Usage:
+ * ```astro
+ * <RefreshButton id="refresh-btn" />
+ * ```
+ * Then wire it up with a script:
+ * ```js
+ * document.getElementById("refresh-btn").addEventListener("click", () => refresh());
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  buttonVariants,
+  KUMO_BUTTON_DEFAULT_VARIANTS,
+  type KumoButtonVariant,
+  type KumoButtonSize,
+} from "@cloudflare/kumo/components/button";
+
+interface Props {
+  "aria-label"?: string;
+  /** Shows a loading spinner animation on the icon. */
+  loading?: boolean;
+  variant?: KumoButtonVariant;
+  size?: KumoButtonSize;
+  disabled?: boolean;
+  type?: "button" | "submit" | "reset";
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  "aria-label": ariaLabel = "Refresh",
+  loading = false,
+  variant = KUMO_BUTTON_DEFAULT_VARIANTS.variant,
+  size = KUMO_BUTTON_DEFAULT_VARIANTS.size,
+  disabled = false,
+  type = "button",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const iconSize =
+  size === "lg" ? "size-5" : size === "sm" ? "size-4" : "size-4.5";
+---
+
+<button
+  class={cn(
+    buttonVariants({ variant, size, shape: "square" }),
+    (disabled || loading) && "cursor-not-allowed opacity-50",
+    className,
+  )}
+  disabled={loading || disabled}
+  type={type}
+  aria-label={ariaLabel}
+  {...rest}
+>
+  {/* ArrowsClockwise icon from @phosphor-icons — inlined as SVG */}
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 256 256"
+    aria-hidden="true"
+    class={cn(iconSize, loading && "animate-spin")}
+    style="display:inline-block;vertical-align:middle"
+  >
+    <rect width="256" height="256" fill="none" />
+    <polyline
+      points="176 96 224 96 224 48"
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="16"
+    />
+    <path
+      d="M190.2,190.2a88,88,0,1,1,0-124.4L224,96"
+      fill="none"
+      stroke="currentColor"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-width="16"
+    />
+  </svg>
+</button>

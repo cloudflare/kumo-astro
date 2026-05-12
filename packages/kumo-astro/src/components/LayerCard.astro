@@ -1,0 +1,54 @@
+---
+/**
+ * LayerCard — card container for both simple surfaces and layered layouts.
+ *
+ * For a simple surface card, use with direct children:
+ * ```astro
+ * <LayerCard class="p-4">Card content</LayerCard>
+ * ```
+ *
+ * For a layered card, compose with LayerCardSecondary and LayerCardPrimary:
+ * ```astro
+ * <LayerCard layered>
+ *   <LayerCardSecondary>Next Steps</LayerCardSecondary>
+ *   <LayerCardPrimary>Get started with Kumo</LayerCardPrimary>
+ * </LayerCard>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+const LAYER_CARD_SURFACE_CLASSES =
+  "overflow-hidden rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line";
+const LAYER_CARD_LAYERED_ROOT_CLASSES =
+  "flex w-full flex-col overflow-hidden rounded-lg bg-kumo-elevated text-base ring ring-kumo-hairline";
+
+interface Props {
+  /**
+   * When true, applies the layered card root styling (for use with
+   * LayerCardSecondary + LayerCardPrimary children).
+   * @default false
+   */
+  layered?: boolean;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  /** HTML element to render as. @default "div" */
+  as?: string;
+  [key: string]: unknown;
+}
+
+const {
+  layered = false,
+  class: className,
+  as: Tag = "div",
+  ...rest
+} = Astro.props;
+
+const classes = cn(
+  layered ? LAYER_CARD_LAYERED_ROOT_CLASSES : LAYER_CARD_SURFACE_CLASSES,
+  className,
+);
+---
+
+<Tag class={classes} {...rest}>
+  <slot />
+</Tag>

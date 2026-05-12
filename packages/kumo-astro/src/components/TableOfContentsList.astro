@@ -1,0 +1,17 @@
+---
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<ul
+  class={cn("flex flex-col gap-2 border-l-2 border-kumo-hairline", className)}
+  {...rest}
+>
+  <slot />
+</ul>

@@ -1,0 +1,69 @@
+---
+/**
+ * Anchor element styled as a button.
+ *
+ * Since Astro handles routing natively, LinkProvider is not needed.
+ * Use plain `href` for all navigation.
+ *
+ * Usage:
+ * ```astro
+ * <LinkButton href="/settings" variant="ghost">Settings</LinkButton>
+ * <LinkButton href="https://example.com" external variant="primary">Visit Site</LinkButton>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  buttonVariants,
+  KUMO_BUTTON_DEFAULT_VARIANTS,
+  type KumoButtonVariant,
+  type KumoButtonSize,
+  type KumoButtonShape,
+} from "@cloudflare/kumo/components/button";
+
+interface Props {
+  href: string;
+  /**
+   * Visual style.
+   * @default "ghost"
+   */
+  variant?: KumoButtonVariant;
+  /**
+   * Button size.
+   * @default "base"
+   */
+  size?: KumoButtonSize;
+  /**
+   * Button shape.
+   * @default "base"
+   */
+  shape?: KumoButtonShape;
+  /** When true, opens in a new tab with rel="noopener noreferrer". */
+  external?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = "ghost" as KumoButtonVariant,
+  size = KUMO_BUTTON_DEFAULT_VARIANTS.size,
+  shape = KUMO_BUTTON_DEFAULT_VARIANTS.shape,
+  external = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    buttonVariants({ variant, size, shape }),
+    "flex items-center no-underline!",
+    className,
+  )}
+  target={external ? "_blank" : undefined}
+  rel={external ? "noopener noreferrer" : undefined}
+  {...rest}
+>
+  <slot />
+</a>

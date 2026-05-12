@@ -1,0 +1,37 @@
+---
+import { cn } from "../utils/cn";
+import {
+  KUMO_TABLE_VARIANTS,
+  KUMO_TABLE_DEFAULT_VARIANTS,
+  type KumoTableRowVariant,
+} from "@cloudflare/kumo/components/table";
+import { resolveVariant } from "../utils/resolve-variant";
+
+interface Props {
+  /**
+   * Row variant.
+   * - "default" — Standard row
+   * - "selected" — Highlighted selected row
+   * @default "default"
+   */
+  variant?: KumoTableRowVariant;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_TABLE_DEFAULT_VARIANTS.variant,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<tr
+  class={cn(
+    resolveVariant(KUMO_TABLE_VARIANTS.variant, variant, KUMO_TABLE_DEFAULT_VARIANTS.variant).classes,
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</tr>

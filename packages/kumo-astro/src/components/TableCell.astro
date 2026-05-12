@@ -1,0 +1,29 @@
+---
+import { cn } from "../utils/cn";
+import type { KumoTableStickyColumn } from "@cloudflare/kumo/components/table";
+
+interface Props {
+  /**
+   * Pin this cell to the left or right edge of the scroll container.
+   */
+  sticky?: KumoTableStickyColumn;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { sticky, class: className, ...rest } = Astro.props;
+
+const stickyClasses =
+  sticky === "left"
+    ? "sticky left-0 z-1 bg-kumo-base"
+    : sticky === "right"
+      ? "sticky right-0 z-1 bg-kumo-base"
+      : "";
+---
+
+<td
+  class={cn(stickyClasses, className)}
+  {...rest}
+>
+  <slot />
+</td>

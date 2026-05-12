@@ -1,0 +1,46 @@
+---
+/**
+ * Navigation breadcrumb trail showing the current page's location in a hierarchy.
+ *
+ * Compose with BreadcrumbsLink, BreadcrumbsSeparator, and BreadcrumbsCurrent:
+ * ```astro
+ * <Breadcrumbs>
+ *   <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+ *   <BreadcrumbsSeparator />
+ *   <BreadcrumbsLink href="/docs">Docs</BreadcrumbsLink>
+ *   <BreadcrumbsSeparator />
+ *   <BreadcrumbsCurrent>Current Page</BreadcrumbsCurrent>
+ * </Breadcrumbs>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  breadcrumbsVariants,
+  KUMO_BREADCRUMBS_DEFAULT_VARIANTS,
+  type KumoBreadcrumbsSize,
+} from "@cloudflare/kumo/components/breadcrumbs";
+
+interface Props {
+  /**
+   * Size of the breadcrumbs.
+   * @default "base"
+   */
+  size?: KumoBreadcrumbsSize;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_BREADCRUMBS_DEFAULT_VARIANTS.size,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<nav
+  class={cn(breadcrumbsVariants({ size }), className)}
+  aria-label="breadcrumb"
+  {...rest}
+>
+  <slot />
+</nav>

@@ -1,0 +1,29 @@
+---
+import { cn } from "../utils/cn";
+import type { KumoTableStickyColumn } from "@cloudflare/kumo/components/table";
+
+interface Props {
+  /**
+   * Pin this header cell to the left or right edge of the scroll container.
+   */
+  sticky?: KumoTableStickyColumn;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { sticky, class: className, ...rest } = Astro.props;
+
+const stickyClasses =
+  sticky === "left"
+    ? "sticky left-0 z-2 bg-kumo-base group-data-[compact]/header:bg-kumo-elevated"
+    : sticky === "right"
+      ? "sticky right-0 z-2 bg-kumo-base group-data-[compact]/header:bg-kumo-elevated"
+      : "";
+---
+
+<th
+  class={cn("group relative", stickyClasses, className)}
+  {...rest}
+>
+  <slot />
+</th>

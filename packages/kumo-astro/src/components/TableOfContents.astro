@@ -1,0 +1,105 @@
+---
+/**
+ * Table of contents navigation component.
+ *
+ * Compose with sub-components:
+ * ```astro
+ * <TableOfContents scrollSpy>
+ *   <TableOfContentsTitle>On this page</TableOfContentsTitle>
+ *   <TableOfContentsList>
+ *     <TableOfContentsItem href="#intro">Introduction</TableOfContentsItem>
+ *     <TableOfContentsItem href="#install">Installation</TableOfContentsItem>
+ *   </TableOfContentsList>
+ * </TableOfContents>
+ * ```
+ *
+ * When `scrollSpy` is true, an IntersectionObserver script is injected that
+ * automatically marks the active item based on which heading is in view.
+ * Items must have `data-toc-target` set to the heading id they track.
+ */
+import { cn } from "../utils/cn";
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  "aria-label"?: string;
+  /**
+   * When true, injects an IntersectionObserver script that auto-marks
+   * the active item based on which heading is visible in the viewport.
+   * Requires each TableOfContentsItem to have `data-toc-target="heading-id"`.
+   */
+  scrollSpy?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  "aria-label": ariaLabel = "Table of contents",
+  scrollSpy = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const navId = scrollSpy ? safeRandomId("toc") : undefined;
+---
+
+<nav
+  id={navId}
+  aria-label={ariaLabel}
+  class={cn(className)}
+  {...rest}
+>
+  <slot />
+</nav>
+
+{scrollSpy && navId && (
+  <script define:vars={{ navId }}>
+    const nav = document.getElementById(navId);
+    if (!nav) return;
+
+    const items = Array.from(nav.querySelectorAll("[data-toc-target]"));
+    if (!items.length) return;
+
+    const ACTIVE_CLASSES = ["border-kumo-brand", "font-medium", "text-kumo-default"];
+    const INACTIVE_CLASSES = ["text-kumo-subtle", "hover:border-kumo-line", "hover:text-kumo-default", "hover:font-medium"];
+
+    function setActive(id) {
+      items.forEach((item) => {
+        const target = item.dataset.tocTarget;
+        const isActive = target === id;
+        if (isActive) {
+          item.classList.remove(...INACTIVE_CLASSES);
+          item.classList.add(...ACTIVE_CLASSES);
+          item.setAttribute("aria-current", "true");
+        } else {
+          item.classList.remove(...ACTIVE_CLASSES);
+          item.classList.add(...INACTIVE_CLASSES);
+          item.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    const headingIds = items
+      .map((item) => item.dataset.tocTarget)
+      .filter(Boolean);
+
+    const headings = headingIds
+      .map((id) => document.getElementById(id))
+      .filter(Boolean);
+
+    if (!headings.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+            break;
+          }
+        }
+      },
+      { rootMargin: "0px 0px -80% 0px", threshold: 0 },
+    );
+
+    headings.forEach((h) => observer.observe(h));
+  </script>
+)}

@@ -1,0 +1,84 @@
+---
+/**
+ * Progress bar showing a measured value within a known range (e.g. quota usage).
+ *
+ * Uses the native HTML <meter> element for semantic accessibility.
+ *
+ * Usage:
+ * ```astro
+ * <Meter label="Storage used" value={65} />
+ * <Meter label="API requests" value={75} max={100} customValue="750 / 1,000" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Label text displayed above the meter track. */
+  label: string;
+  /** Current value (0–100 by default, or scaled to min/max). */
+  value: number;
+  /** Minimum value. @default 0 */
+  min?: number;
+  /** Maximum value. @default 100 */
+  max?: number;
+  /** Custom formatted value text (e.g. "750 / 1,000") — overrides the default percentage. */
+  customValue?: string;
+  /**
+   * Whether to display the percentage value next to the label.
+   * @default true
+   */
+  showValue?: boolean;
+  /** Additional CSS classes for the track (background bar). */
+  trackClass?: string;
+  /** Additional CSS classes for the indicator (filled bar). */
+  indicatorClass?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  value,
+  min = 0,
+  max = 100,
+  customValue,
+  showValue = true,
+  trackClass,
+  indicatorClass,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const percentage = Math.round(((value - min) / (max - min)) * 100);
+const displayValue = customValue ?? `${percentage}%`;
+---
+
+<div class={cn("flex w-full flex-col gap-2", className)} {...rest}>
+  <div class="flex items-center justify-between gap-4">
+    <span class="text-xs text-kumo-subtle">{label}</span>
+    {showValue && (
+      <span class="text-sm font-medium text-kumo-default tabular-nums">
+        {displayValue}
+      </span>
+    )}
+  </div>
+  <div
+    class={cn(
+      "relative h-2 w-full overflow-hidden rounded-full bg-kumo-fill",
+      trackClass,
+    )}
+    role="meter"
+    aria-label={label}
+    aria-valuenow={value}
+    aria-valuemin={min}
+    aria-valuemax={max}
+  >
+    <div
+      class={cn(
+        "absolute inset-y-0 left-0 rounded-full bg-linear-to-r from-kumo-brand via-kumo-brand to-kumo-brand transition-[width] duration-300 ease-out",
+        indicatorClass,
+      )}
+      style={`width:${Math.min(100, Math.max(0, percentage))}%`}
+    />
+  </div>
+</div>

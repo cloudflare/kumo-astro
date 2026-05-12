@@ -1,0 +1,95 @@
+---
+/**
+ * Typography component for rendering text with consistent styling.
+ *
+ * Usage:
+ * ```astro
+ * <Text variant="heading1" as="h1">Page Title</Text>
+ * <Text variant="body">Default body text.</Text>
+ * <Text variant="secondary" size="sm">Muted helper text</Text>
+ * <Text variant="error">Something went wrong</Text>
+ * <Text variant="mono">console.log("code")</Text>
+ * ```
+ *
+ * **Note:** For heading variants, the `as` prop is required to set the
+ * appropriate semantic HTML element for the document outline.
+ */
+import { cn } from "../utils/cn";
+import { resolveVariant } from "../utils/resolve-variant";
+import {
+  KUMO_TEXT_VARIANTS,
+  KUMO_TEXT_DEFAULT_VARIANTS,
+  type KumoTextVariant,
+  type KumoTextSize,
+} from "@cloudflare/kumo/components/text";
+
+type TextElement =
+  | "h1" | "h2" | "h3" | "h4" | "h5" | "h6"
+  | "p" | "span" | "label" | "dt" | "dd" | "li"
+  | "figcaption" | "legend" | "pre" | "code"
+  | "em" | "strong" | "small" | "abbr" | "time";
+
+interface Props {
+  /**
+   * Text style variant.
+   * @default "body"
+   */
+  variant?: KumoTextVariant;
+  /**
+   * Text size (only applies to body/secondary/success/error variants).
+   * @default "base"
+   */
+  size?: KumoTextSize;
+  /** Whether to use bold font weight (body variants only). */
+  bold?: boolean;
+  /** Whether to truncate overflowing text with an ellipsis. */
+  truncate?: boolean;
+  /**
+   * HTML element to render as. Defaults to "p" for body variants and "span"
+   * for heading/mono variants. Required for heading variants.
+   */
+  as?: TextElement;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_TEXT_DEFAULT_VARIANTS.variant as KumoTextVariant,
+  size = KUMO_TEXT_DEFAULT_VARIANTS.size as KumoTextSize,
+  bold = false,
+  truncate = false,
+  as,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isCopy = ["body", "secondary", "success", "error"].includes(variant);
+const isMono = ["mono", "mono-secondary"].includes(variant);
+const isHeading = ["heading1", "heading2", "heading3"].includes(variant);
+
+// Determine the default element
+let Tag: TextElement;
+if (as) {
+  Tag = as;
+} else if (isMono || isHeading) {
+  Tag = "span";
+} else {
+  Tag = "p";
+}
+
+const classes = cn(
+  "text-kumo-default",
+  resolveVariant(KUMO_TEXT_VARIANTS.variant, variant, KUMO_TEXT_DEFAULT_VARIANTS.variant).classes,
+  isCopy ? resolveVariant(KUMO_TEXT_VARIANTS.size, size, KUMO_TEXT_DEFAULT_VARIANTS.size).classes : "",
+  isCopy && bold ? "font-medium" : "",
+  isMono && (size === "lg"
+    ? KUMO_TEXT_VARIANTS.size.base.classes
+    : KUMO_TEXT_VARIANTS.size.sm.classes),
+  truncate && "truncate min-w-0",
+  className,
+);
+---
+
+<Tag class={classes} {...rest}>
+  <slot />
+</Tag>

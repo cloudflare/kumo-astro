@@ -1,0 +1,113 @@
+{
+  "name": "@cloudflare/kumo-astro",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Kumo - Cloudflare's Astro component library (framework-agnostic, no React required)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudflare/kumo.git",
+    "directory": "packages/kumo-astro"
+  },
+  "license": "MIT",
+  "keywords": [
+    "astro",
+    "components",
+    "ui",
+    "cloudflare",
+    "design-system"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components/badge": "./src/components/Badge.astro",
+    "./components/surface": "./src/components/Surface.astro",
+    "./components/text": "./src/components/Text.astro",
+    "./components/label": "./src/components/Label.astro",
+    "./components/loader": "./src/components/Loader.astro",
+    "./components/empty": "./src/components/Empty.astro",
+    "./components/grid": "./src/components/Grid.astro",
+    "./components/grid-item": "./src/components/GridItem.astro",
+    "./components/layer-card": "./src/components/LayerCard.astro",
+    "./components/layer-card-primary": "./src/components/LayerCardPrimary.astro",
+    "./components/layer-card-secondary": "./src/components/LayerCardSecondary.astro",
+    "./components/cloudflare-logo": "./src/components/CloudflareLogo.astro",
+    "./components/code": "./src/components/Code.astro",
+    "./components/button": "./src/components/Button.astro",
+    "./components/link-button": "./src/components/LinkButton.astro",
+    "./components/refresh-button": "./src/components/RefreshButton.astro",
+    "./components/link": "./src/components/Link.astro",
+    "./components/banner": "./src/components/Banner.astro",
+    "./components/meter": "./src/components/Meter.astro",
+    "./components/breadcrumbs": "./src/components/Breadcrumbs.astro",
+    "./components/breadcrumbs-link": "./src/components/BreadcrumbsLink.astro",
+    "./components/breadcrumbs-current": "./src/components/BreadcrumbsCurrent.astro",
+    "./components/breadcrumbs-separator": "./src/components/BreadcrumbsSeparator.astro",
+    "./components/table-of-contents": "./src/components/TableOfContents.astro",
+    "./components/table-of-contents-title": "./src/components/TableOfContentsTitle.astro",
+    "./components/table-of-contents-list": "./src/components/TableOfContentsList.astro",
+    "./components/table-of-contents-item": "./src/components/TableOfContentsItem.astro",
+    "./components/table": "./src/components/Table.astro",
+    "./components/table-header": "./src/components/TableHeader.astro",
+    "./components/table-body": "./src/components/TableBody.astro",
+    "./components/table-footer": "./src/components/TableFooter.astro",
+    "./components/table-row": "./src/components/TableRow.astro",
+    "./components/table-head": "./src/components/TableHead.astro",
+    "./components/table-cell": "./src/components/TableCell.astro",
+    "./styles": "./src/styles/kumo-binding.css",
+    "./styles/*": "./src/styles/*.css",
+    "./utils": {
+      "types": "./dist/src/utils/index.d.ts",
+      "import": "./dist/utils.js"
+    }
+  },
+  "files": [
+    "src",
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": [
+    "*.css",
+    "src/styles/*.css"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "typecheck": "astro check",
+    "lint": "oxlint --config .oxlintrc.json src/",
+    "test": "playwright test"
+  },
+  "peerDependencies": {
+    "astro": ">=4.0.0",
+    "@phosphor-icons/web": ">=2.1.0"
+  },
+  "peerDependenciesMeta": {
+    "@phosphor-icons/web": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@cloudflare/kumo": "workspace:*",
+    "clsx": "catalog:",
+    "tailwind-merge": "catalog:"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "^4.2.1",
+    "@tailwindcss/vite": "catalog:",
+    "@types/node": "catalog:",
+    "astro": "^5.18.1",
+    "oxlint": "catalog:",
+    "playwright": "catalog:",
+    "tailwindcss": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
+  }
+}

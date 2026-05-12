@@ -1,0 +1,17 @@
+---
+import { cn } from "../utils/cn";
+
+const LAYER_CARD_SECONDARY_CLASSES =
+  "-my-2 flex items-center gap-2 bg-kumo-elevated p-4 text-base font-medium text-kumo-subtle";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={cn(LAYER_CARD_SECONDARY_CLASSES, className)} {...rest}>
+  <slot />
+</div>

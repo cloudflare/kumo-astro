@@ -1,0 +1,111 @@
+---
+/**
+ * Full-width message bar for informational, warning, or error notices.
+ *
+ * Supports structured title/description for i18n, or simple children.
+ *
+ * Usage:
+ * ```astro
+ * <Banner title="Update available" description="A new version is ready to install." />
+ * <Banner variant="alert" title="Review required">
+ *   <svg slot="icon" ...>...</svg>
+ * </Banner>
+ * <Banner variant="error" title="Save failed" dismissible id="error-banner" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  bannerVariants,
+  KUMO_BANNER_DEFAULT_VARIANTS,
+  KUMO_BANNER_VARIANTS,
+  type KumoBannerVariant,
+} from "@cloudflare/kumo/components/banner";
+import { safeRandomId } from "../utils/safe-random-id";
+import { resolveVariant } from "../utils/resolve-variant";
+
+interface Props {
+  /** Primary heading text for the banner. */
+  title?: string;
+  /** Secondary description text. */
+  description?: string;
+  /**
+   * Visual style of the banner.
+   * @default "default"
+   */
+  variant?: KumoBannerVariant;
+  /** When true, shows a dismiss button that hides the banner. */
+  dismissible?: boolean;
+  /** HTML id for the banner container (used by dismiss script). */
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  title,
+  description,
+  variant = KUMO_BANNER_DEFAULT_VARIANTS.variant,
+  dismissible = false,
+  id: providedId,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const bannerId = providedId ?? (dismissible ? safeRandomId("banner") : undefined);
+const variantConfig = resolveVariant(KUMO_BANNER_VARIANTS.variant, variant, KUMO_BANNER_DEFAULT_VARIANTS.variant);
+---
+
+<div
+  id={bannerId}
+  class={cn(bannerVariants({ variant }), className)}
+  role="alert"
+  {...rest}
+>
+  {/* Icon slot — rendered at leading edge */}
+  <slot name="icon">
+    <span class={cn("shrink-0 flex items-center h-[1.375em]", variantConfig.iconClasses)} />
+  </slot>
+
+  {(title || description) ? (
+    <div class="flex min-w-0 flex-1 items-center justify-between gap-3">
+      <div class="flex flex-col gap-0.5">
+        {title && <p class="font-medium leading-snug">{title}</p>}
+        {description && <p class="text-sm leading-snug">{description}</p>}
+      </div>
+      {/* Action slot */}
+      <slot name="action" />
+    </div>
+  ) : (
+    <div class="flex min-w-0 flex-1">
+      <slot />
+    </div>
+  )}
+
+  {dismissible && bannerId && (
+    <button
+      type="button"
+      data-dismiss={bannerId}
+      aria-label="Dismiss"
+      class="ml-auto shrink-0 self-start rounded p-0.5 opacity-70 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-current"
+    >
+      {/* X icon */}
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true">
+        <rect width="256" height="256" fill="none" />
+        <line x1="200" y1="56" x2="56" y2="200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+        <line x1="200" y1="200" x2="56" y2="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+      </svg>
+    </button>
+  )}
+</div>
+
+{dismissible && bannerId && (
+  <script define:vars={{ bannerId }}>
+    const btn = document.querySelector(`[data-dismiss="${bannerId}"]`);
+    const banner = document.getElementById(bannerId);
+    if (btn && banner) {
+      btn.addEventListener("click", () => {
+        banner.style.display = "none";
+      });
+    }
+  </script>
+)}

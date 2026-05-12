@@ -1,0 +1,17 @@
+---
+import { cn } from "../utils/cn";
+
+const LAYER_CARD_PRIMARY_CLASSES =
+  "relative flex flex-col gap-2 overflow-hidden rounded-lg bg-kumo-base p-4 pr-3 text-inherit no-underline ring ring-kumo-fill";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={cn(LAYER_CARD_PRIMARY_CLASSES, className)} {...rest}>
+  <slot />
+</div>

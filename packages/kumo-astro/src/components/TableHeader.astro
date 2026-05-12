@@ -1,0 +1,34 @@
+---
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** "compact" applies smaller padding and elevated background. */
+  variant?: "default" | "compact";
+  /** Sticks the header to the top of the scroll container. */
+  sticky?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = "default",
+  sticky = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isCompact = variant === "compact";
+---
+
+<thead
+  class={cn(
+    "group/header",
+    isCompact && "[&_th]:bg-kumo-elevated [&_th]:py-2 text-xs text-kumo-strong",
+    sticky && "[&_th]:sticky [&_th]:top-0 [&_th]:z-1",
+    className,
+  )}
+  data-compact={isCompact ? "" : undefined}
+  {...rest}
+>
+  <slot />
+</thead>

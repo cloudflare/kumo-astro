@@ -1,0 +1,61 @@
+---
+/**
+ * Responsive CSS grid layout container with preset column configurations.
+ *
+ * Usage:
+ * ```astro
+ * <Grid variant="2up" gap="base">
+ *   <GridItem>Left</GridItem>
+ *   <GridItem>Right</GridItem>
+ * </Grid>
+ * ```
+ *
+ * For mobile divider support on "4up" grids, pass `mobileDivider` to each
+ * GridItem directly (context is unavailable in Astro):
+ * ```astro
+ * <Grid variant="4up">
+ *   <GridItem mobileDivider variant="4up">Item</GridItem>
+ * </Grid>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  gridVariants,
+  KUMO_GRID_DEFAULT_VARIANTS,
+  type KumoGridVariant,
+  type KumoGridGap,
+} from "@cloudflare/kumo/components/grid";
+
+interface Props {
+  /**
+   * Responsive column layout variant.
+   * - "2up" — 1 col → 2 cols at md
+   * - "side-by-side" — Always 2 cols
+   * - "2-1" — 66%/33% split at md
+   * - "1-2" — 33%/66% split at md
+   * - "3up" — 1 → 2 → 3 cols
+   * - "4up" — 1 → 2 → 3 → 4 cols
+   * - "6up" — 2 → 3 → 4 → 6 cols
+   * - "1-2-4up" — 1 → 2 → 4 cols
+   */
+  variant?: KumoGridVariant;
+  /**
+   * Gap size between grid items.
+   * @default "base"
+   */
+  gap?: KumoGridGap;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant,
+  gap = KUMO_GRID_DEFAULT_VARIANTS.gap,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class={cn(gridVariants({ variant, gap }), className)} {...rest}>
+  <slot />
+</div>

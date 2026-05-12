@@ -1,0 +1,29 @@
+---
+import { cn } from "../utils/cn";
+import {
+  badgeVariants,
+  type KumoBadgeVariant,
+  KUMO_BADGE_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/badge";
+
+interface Props {
+  /**
+   * Color variant of the badge.
+   * @default "primary"
+   */
+  variant?: KumoBadgeVariant;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_BADGE_DEFAULT_VARIANTS.variant,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<span class={cn(badgeVariants({ variant }), className)} {...rest}>
+  <slot />
+</span>

@@ -1,0 +1,46 @@
+---
+/**
+ * A single item in a TableOfContents list.
+ *
+ * For scroll-spy integration, set `data-toc-target` to the heading id:
+ * ```astro
+ * <TableOfContentsItem href="#intro" data-toc-target="intro">
+ *   Introduction
+ * </TableOfContentsItem>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+const ITEM_BASE =
+  "block w-full truncate border-l-2 border-transparent py-0.5 pl-4 text-sm text-left no-underline";
+
+const ACTIVE_CLASSES = "border-kumo-brand font-medium text-kumo-default";
+const DEFAULT_CLASSES =
+  "text-kumo-subtle hover:border-kumo-line hover:text-kumo-default hover:font-medium";
+
+interface Props {
+  href?: string;
+  /** Whether this item represents the currently active section. */
+  active?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  active = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<li class="-ml-0.5">
+  <a
+    href={href}
+    class={cn(ITEM_BASE, active ? ACTIVE_CLASSES : DEFAULT_CLASSES, className)}
+    aria-current={active ? "true" : undefined}
+    {...rest}
+  >
+    <span class="block min-w-0 leading-5"><slot /></span>
+  </a>
+</li>

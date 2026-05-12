@@ -1,0 +1,65 @@
+---
+/**
+ * Label component for form fields.
+ *
+ * Usage:
+ * ```astro
+ * <Label>Email</Label>
+ * <Label showOptional>Middle Name</Label>
+ * <Label for="email-input">Email</Label>
+ * ```
+ *
+ * **Note:** Tooltip support is deferred to Phase 4 (requires Tooltip component).
+ * The `tooltip` prop is accepted but ignored until then.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** When true, shows gray "(optional)" text after the label. */
+  showOptional?: boolean;
+  /** The id of the form element this label is associated with. Use `for` (HTML attr). */
+  for?: string;
+  /** Tooltip content — deferred to Phase 4. Currently ignored. */
+  tooltip?: string;
+  /**
+   * When true, only renders the inline content without the outer label element.
+   * @default false
+   */
+  asContent?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  showOptional = false,
+  for: htmlFor,
+  tooltip: _tooltip,
+  asContent = false,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const labelClasses = cn(
+  "m-0 text-base font-medium text-kumo-default",
+  "inline-flex items-center gap-1",
+  className,
+);
+
+const contentClasses = cn("inline-flex items-center gap-1", className);
+---
+
+{asContent ? (
+  <span class={contentClasses} {...rest}>
+    <slot />
+    {showOptional && (
+      <span class="font-normal text-kumo-subtle">(optional)</span>
+    )}
+  </span>
+) : (
+  <label for={htmlFor} class={labelClasses} {...rest}>
+    <slot />
+    {showOptional && (
+      <span class="font-normal text-kumo-subtle">(optional)</span>
+    )}
+  </label>
+)}

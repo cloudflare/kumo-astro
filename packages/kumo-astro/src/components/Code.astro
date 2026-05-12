@@ -1,0 +1,96 @@
+---
+/**
+ * Server-side syntax highlighted code block.
+ *
+ * Runs Shiki in Astro's SSR frontmatter — no client:* directive needed.
+ * Uses github-light (light mode) / vesper (dark mode) themes.
+ *
+ * Usage:
+ * ```astro
+ * <Code code={`const x = 1;`} lang="typescript" />
+ * <Code code={shellScript} lang="bash" showCopyButton />
+ * ```
+ *
+ * **Note:** `shiki` must be available in your project's dependencies.
+ * It is already a dependency of `@cloudflare/kumo`.
+ */
+import { cn } from "../utils/cn";
+import { highlightCode } from "@cloudflare/kumo/code/server";
+import type { SupportedLanguage } from "@cloudflare/kumo/code";
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  /** The source code string to highlight. */
+  code: string;
+  /**
+   * Language identifier for syntax highlighting.
+   */
+  lang: SupportedLanguage;
+  /** Show a copy-to-clipboard button. */
+  showCopyButton?: boolean;
+  class?: string;
+}
+
+const {
+  code,
+  lang,
+  showCopyButton = false,
+  class: className,
+} = Astro.props;
+
+let highlighted = "";
+try {
+  highlighted = await highlightCode(code, lang);
+} catch {
+  // Fallback: render as plain pre/code if Shiki fails
+  highlighted = `<pre><code>${code.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>`;
+}
+
+const copyBtnId = showCopyButton ? safeRandomId("code-copy") : undefined;
+---
+
+<div class={cn("group relative w-full min-w-0 rounded-md border border-kumo-fill bg-kumo-base", className)}>
+  {showCopyButton && (
+    <button
+      id={copyBtnId}
+      type="button"
+      aria-label="Copy code"
+      data-code={code}
+      class="absolute top-2 right-2 z-10 inline-flex items-center justify-center rounded p-1.5 text-kumo-subtle opacity-0 transition-opacity group-hover:opacity-100 hover:text-kumo-default focus:opacity-100 focus:outline-none"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true">
+        <rect width="256" height="256" fill="none" />
+        <polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+        <rect x="40" y="88" width="128" height="128" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+      </svg>
+    </button>
+  )}
+  <div class="overflow-x-auto">
+    <div
+      class="kumo-shiki [&>pre]:p-4 [&>pre]:font-mono [&>pre]:text-sm [&>pre]:leading-relaxed"
+      set:html={highlighted}
+    />
+  </div>
+</div>
+
+{showCopyButton && copyBtnId && (
+  <script define:vars={{ copyBtnId }}>
+    const btn = document.getElementById(copyBtnId);
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        const code = btn.dataset.code;
+        if (!code) return;
+        await navigator.clipboard.writeText(code);
+
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"/><polyline points="40 144 96 200 224 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+        btn.classList.add("text-kumo-success");
+
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("text-kumo-success");
+        }, 1500);
+      });
+    }
+  </script>
+)}

@@ -1,0 +1,34 @@
+---
+/**
+ * @deprecated Use LayerCard instead. Surface is now a compatibility wrapper
+ * around LayerCard for simple one-layer card containers.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /**
+   * @deprecated Use class prop instead.
+   */
+  color?: "primary" | "secondary";
+  class?: string;
+  /** HTML element to render as. @default "div" */
+  as?: string;
+  [key: string]: unknown;
+}
+
+const {
+  color = "primary",
+  class: className,
+  as: Tag = "div",
+  ...rest
+} = Astro.props;
+---
+
+<Tag
+  class={cn("overflow-hidden rounded-lg bg-kumo-base shadow-xs ring ring-kumo-line overflow-visible rounded-none", className)}
+  data-surface-color={color}
+  data-deprecated="surface"
+  {...rest}
+>
+  <slot />
+</Tag>

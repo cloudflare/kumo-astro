@@ -1,0 +1,68 @@
+---
+/**
+ * Semantic HTML table with styled rows, cells, and optional sticky columns.
+ *
+ * Compound component — use with sub-components:
+ * - TableHeader / TableBody / TableFooter (section wrappers)
+ * - TableRow / TableHead / TableCell (row and cell elements)
+ *
+ * Usage:
+ * ```astro
+ * <Table>
+ *   <TableHeader>
+ *     <TableRow>
+ *       <TableHead>Name</TableHead>
+ *       <TableHead>Status</TableHead>
+ *     </TableRow>
+ *   </TableHeader>
+ *   <TableBody>
+ *     <TableRow>
+ *       <TableCell>Worker A</TableCell>
+ *       <TableCell>Active</TableCell>
+ *     </TableRow>
+ *   </TableBody>
+ * </Table>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_TABLE_VARIANTS,
+  KUMO_TABLE_DEFAULT_VARIANTS,
+  type KumoTableLayout,
+} from "@cloudflare/kumo/components/table";
+import { resolveVariant } from "../utils/resolve-variant";
+
+interface Props {
+  /**
+   * Table layout algorithm.
+   * - "auto" — columns resize based on content
+   * - "fixed" — equal-width columns
+   * @default "auto"
+   */
+  layout?: KumoTableLayout;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  layout = KUMO_TABLE_DEFAULT_VARIANTS.layout,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<table
+  class={cn(
+    "isolate w-full",
+    resolveVariant(KUMO_TABLE_VARIANTS.layout, layout, KUMO_TABLE_DEFAULT_VARIANTS.layout).classes,
+    "[&_td]:border-b [&_td]:border-kumo-fill [&_tr:last-child_td]:border-b-0",
+    "[&_td]:p-3",
+    "[&_th]:border-b [&_th]:border-kumo-fill [&_th]:p-3 [&_th]:font-semibold [&_th]:text-base",
+    "[&_th]:bg-kumo-base",
+    "text-base text-left text-kumo-default",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</table>

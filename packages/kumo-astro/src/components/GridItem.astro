@@ -1,0 +1,42 @@
+---
+/**
+ * A single cell within a Grid layout.
+ *
+ * In Astro, the React Grid context is unavailable, so `variant` and
+ * `mobileDivider` must be passed directly to each GridItem:
+ * ```astro
+ * <Grid variant="4up">
+ *   <GridItem variant="4up" mobileDivider>Item</GridItem>
+ * </Grid>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  gridItemVariants,
+  type KumoGridVariant,
+} from "@cloudflare/kumo/components/grid";
+
+interface Props {
+  /**
+   * Grid variant — must match the parent Grid's variant when using mobileDivider.
+   */
+  variant?: KumoGridVariant;
+  /**
+   * Show a bottom divider on mobile (only applies when variant is "4up").
+   */
+  mobileDivider?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant,
+  mobileDivider = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div class={cn(gridItemVariants({ variant, mobileDivider }), className)} {...rest}>
+  <slot />
+</div>

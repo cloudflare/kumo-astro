@@ -1,0 +1,119 @@
+---
+/**
+ * Placeholder shown when a list, table, or page has no content to display.
+ *
+ * Usage:
+ * ```astro
+ * <Empty title="No results found" description="Try adjusting your search." />
+ * <Empty
+ *   title="No packages found"
+ *   description="Get started by installing your first package."
+ *   commandLine="npm install @cloudflare/kumo"
+ * />
+ * ```
+ *
+ * The icon slot accepts any SVG or image element:
+ * ```astro
+ * <Empty title="No results">
+ *   <svg slot="icon" ...>...</svg>
+ * </Empty>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  emptyVariants,
+  KUMO_EMPTY_DEFAULT_VARIANTS,
+  type KumoEmptySize,
+} from "@cloudflare/kumo/components/empty";
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  /** Primary heading text for the empty state. */
+  title: string;
+  /** Secondary description text displayed below the title. */
+  description?: string;
+  /** Shell command displayed in a copyable code block. */
+  commandLine?: string;
+  /**
+   * Size of the empty state container.
+   * @default "base"
+   */
+  size?: KumoEmptySize;
+  class?: string;
+}
+
+const {
+  title,
+  description,
+  commandLine,
+  size = KUMO_EMPTY_DEFAULT_VARIANTS.size,
+  class: className,
+} = Astro.props;
+
+const copyBtnId = commandLine ? safeRandomId("empty-copy") : undefined;
+---
+
+<div class={cn(emptyVariants({ size }), className)}>
+  <slot name="icon" />
+  <h2 class="text-2xl font-semibold">{title}</h2>
+
+  {description && (
+    <p class="max-w-140 text-center text-kumo-subtle">{description}</p>
+  )}
+
+  {commandLine && (
+    <div class="group/cmd relative inline-flex h-10 max-w-8/10 transform-gpu items-center gap-2 rounded-lg font-mono shadow-sm bg-kumo-overlay pr-2 pl-3 transition-all duration-300 hover:border-kumo-interact/80 hover:shadow-md border border-kumo-fill/60">
+      <span class="text-xs text-kumo-inactive select-none">$</span>
+      <span class="no-scrollbar overflow-scroll text-base whitespace-nowrap text-kumo-brand">
+        {commandLine}
+      </span>
+      <button
+        id={copyBtnId}
+        type="button"
+        aria-label="Copy command"
+        data-command={commandLine}
+        class="inline-flex items-center justify-center size-6 rounded text-kumo-inactive hover:text-kumo-brand transition-colors"
+      >
+        {/* Copy icon (inline SVG from @phosphor-icons/web pattern) */}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 256 256"
+          aria-hidden="true"
+        >
+          <rect width="256" height="256" fill="none" />
+          <polyline points="168 168 216 168 216 40 88 40 88 88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+          <rect x="40" y="88" width="128" height="128" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16" />
+        </svg>
+      </button>
+    </div>
+  )}
+
+  <slot />
+</div>
+
+{commandLine && copyBtnId && (
+  <script define:vars={{ copyBtnId }}>
+    const btn = document.getElementById(copyBtnId);
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        const command = btn.dataset.command;
+        if (!command) return;
+        await navigator.clipboard.writeText(command);
+
+        // Swap to check icon temporarily
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true"><rect width="256" height="256" fill="none"/><polyline points="40 144 96 200 224 72" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>`;
+        btn.classList.add("text-kumo-success");
+        btn.classList.remove("text-kumo-inactive");
+
+        setTimeout(() => {
+          btn.innerHTML = originalHtml;
+          btn.classList.remove("text-kumo-success");
+          btn.classList.add("text-kumo-inactive");
+        }, 1000);
+      });
+    }
+  </script>
+)}
