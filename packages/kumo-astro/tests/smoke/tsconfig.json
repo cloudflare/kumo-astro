@@ -1,0 +1,11 @@
+{
+  "extends": "../../node_modules/astro/tsconfigs/strict.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@cloudflare/kumo-astro": ["../.."],
+      "@cloudflare/kumo-astro/*": ["../../*"]
+    }
+  },
+  "include": ["src", "../../node_modules/astro/client.d.ts"]
+}

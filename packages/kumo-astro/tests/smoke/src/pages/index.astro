@@ -1,16 +1,276 @@
 ---
-// Smoke test page — renders Phase 1 components to verify basic rendering works.
-// Extended as new components are added.
+/**
+ * Smoke test fixture page.
+ *
+ * Renders every Phase 1 and Phase 2 component so that:
+ *   1. Astro build-time errors surface immediately (missing imports, bad props).
+ *   2. Playwright can assert rendered HTML structure and accessible roles.
+ *   3. Screenshots can be taken for visual regression baselines.
+ *
+ * Each section is wrapped in a <section data-testid="..."> so specs can
+ * scope assertions without relying on fragile CSS selectors.
+ */
+
+import "../styles/global.css";
+
+// ── Phase 1: Presentational ───────────────────────────────────────────────
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Text from "@cloudflare/kumo-astro/components/text";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Loader from "@cloudflare/kumo-astro/components/loader";
+import Empty from "@cloudflare/kumo-astro/components/empty";
+import Grid from "@cloudflare/kumo-astro/components/grid";
+import GridItem from "@cloudflare/kumo-astro/components/grid-item";
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+import LayerCardSecondary from "@cloudflare/kumo-astro/components/layer-card-secondary";
+import LayerCardPrimary from "@cloudflare/kumo-astro/components/layer-card-primary";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+
+// ── Phase 2: Static-with-light-JS ────────────────────────────────────────
+import Button from "@cloudflare/kumo-astro/components/button";
+import LinkButton from "@cloudflare/kumo-astro/components/link-button";
+import RefreshButton from "@cloudflare/kumo-astro/components/refresh-button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import Banner from "@cloudflare/kumo-astro/components/banner";
+import Meter from "@cloudflare/kumo-astro/components/meter";
+import Breadcrumbs from "@cloudflare/kumo-astro/components/breadcrumbs";
+import BreadcrumbsLink from "@cloudflare/kumo-astro/components/breadcrumbs-link";
+import BreadcrumbsSeparator from "@cloudflare/kumo-astro/components/breadcrumbs-separator";
+import BreadcrumbsCurrent from "@cloudflare/kumo-astro/components/breadcrumbs-current";
+import TableOfContents from "@cloudflare/kumo-astro/components/table-of-contents";
+import TableOfContentsTitle from "@cloudflare/kumo-astro/components/table-of-contents-title";
+import TableOfContentsList from "@cloudflare/kumo-astro/components/table-of-contents-list";
+import TableOfContentsItem from "@cloudflare/kumo-astro/components/table-of-contents-item";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
 ---
+
 <!doctype html>
-<html lang="en" data-mode="light" data-theme="default">
+<html lang="en" data-mode="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>kumo-astro smoke test</title>
   </head>
-  <body>
-    <h1>kumo-astro smoke test</h1>
-    <p>Components will be rendered here as they are implemented.</p>
+  <body class="bg-white p-8 space-y-12 font-sans">
+
+    <h1 class="text-2xl font-bold">kumo-astro smoke test</h1>
+
+    <!-- ─── Phase 1: Badge ─────────────────────────────────────────────── -->
+    <section data-testid="badge" class="space-y-2">
+      <h2 class="text-lg font-semibold">Badge</h2>
+      <div class="flex flex-wrap gap-2">
+        <Badge variant="primary">Primary</Badge>
+        <Badge variant="secondary">Secondary</Badge>
+        <Badge variant="error">Error</Badge>
+        <Badge variant="warning">Warning</Badge>
+        <Badge variant="success">Success</Badge>
+        <Badge variant="info">Info</Badge>
+        <Badge variant="beta">Beta</Badge>
+        <Badge variant="outline">Outline</Badge>
+        <Badge variant="green">Green</Badge>
+        <Badge variant="red">Red</Badge>
+        <Badge variant="neutral">Neutral</Badge>
+        <Badge variant="orange">Orange</Badge>
+        <Badge variant="blue">Blue</Badge>
+        <Badge variant="teal">Teal</Badge>
+        <Badge variant="purple">Purple</Badge>
+      </div>
+    </section>
+
+    <!-- ─── Phase 1: Text ──────────────────────────────────────────────── -->
+    <section data-testid="text" class="space-y-2">
+      <h2 class="text-lg font-semibold">Text</h2>
+      <Text variant="heading1" as="h3">Heading 1</Text>
+      <Text variant="heading2" as="h4">Heading 2</Text>
+      <Text variant="heading3" as="h5">Heading 3</Text>
+      <Text variant="body">Body text — default paragraph style.</Text>
+      <Text variant="secondary">Secondary — muted helper text.</Text>
+      <Text variant="error">Error — something went wrong.</Text>
+      <Text variant="mono">mono: console.log("code")</Text>
+      <Text variant="body" bold>Bold body text</Text>
+      <Text variant="body" truncate class="max-w-xs">Truncated text that is very long and should be cut off with an ellipsis</Text>
+    </section>
+
+    <!-- ─── Phase 1: Label ─────────────────────────────────────────────── -->
+    <section data-testid="label" class="space-y-2">
+      <h2 class="text-lg font-semibold">Label</h2>
+      <Label for="demo-input">Email address</Label>
+      <Label showOptional for="demo-opt">Middle name</Label>
+    </section>
+
+    <!-- ─── Phase 1: Loader ────────────────────────────────────────────── -->
+    <section data-testid="loader" class="flex items-center gap-4">
+      <h2 class="text-lg font-semibold">Loader</h2>
+      <Loader size="sm" />
+      <Loader />
+      <Loader size="lg" />
+    </section>
+
+    <!-- ─── Phase 1: Empty ─────────────────────────────────────────────── -->
+    <section data-testid="empty">
+      <h2 class="text-lg font-semibold mb-2">Empty</h2>
+      <Empty
+        title="No results found"
+        description="Try adjusting your search or filter criteria."
+        commandLine="npm install @cloudflare/kumo"
+      />
+    </section>
+
+    <!-- ─── Phase 1: Grid ──────────────────────────────────────────────── -->
+    <section data-testid="grid">
+      <h2 class="text-lg font-semibold mb-2">Grid</h2>
+      <Grid variant="3up" gap="sm">
+        <GridItem><div class="rounded bg-gray-100 p-4 text-center">1</div></GridItem>
+        <GridItem><div class="rounded bg-gray-100 p-4 text-center">2</div></GridItem>
+        <GridItem><div class="rounded bg-gray-100 p-4 text-center">3</div></GridItem>
+      </Grid>
+    </section>
+
+    <!-- ─── Phase 1: LayerCard ─────────────────────────────────────────── -->
+    <section data-testid="layer-card" class="space-y-4 max-w-sm">
+      <h2 class="text-lg font-semibold">LayerCard</h2>
+      <LayerCard class="p-4">Simple surface card content</LayerCard>
+      <LayerCard layered>
+        <LayerCardSecondary>Next Steps</LayerCardSecondary>
+        <LayerCardPrimary>Get started with Kumo</LayerCardPrimary>
+      </LayerCard>
+    </section>
+
+    <!-- ─── Phase 1: CloudflareLogo ───────────────────────────────────── -->
+    <section data-testid="cloudflare-logo" class="flex items-center gap-6">
+      <h2 class="text-lg font-semibold">CloudflareLogo</h2>
+      <CloudflareLogo variant="glyph" class="h-6 w-auto" />
+      <CloudflareLogo variant="full" class="h-8 w-auto" />
+      <CloudflareLogo variant="glyph" color="black" class="h-6 w-auto" />
+    </section>
+
+    <!-- ─── Phase 2: Button ────────────────────────────────────────────── -->
+    <section data-testid="button" class="space-y-2">
+      <h2 class="text-lg font-semibold">Button</h2>
+      <div class="flex flex-wrap gap-2">
+        <Button variant="primary">Primary</Button>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="secondary" loading>Loading</Button>
+        <Button variant="secondary" disabled>Disabled</Button>
+        <Button variant="secondary" size="sm">Small</Button>
+        <Button variant="secondary" size="lg">Large</Button>
+        <Button variant="secondary" shape="square" aria-label="Square icon button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 256 256" aria-hidden="true">
+            <path d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24Zm0 192a88 88 0 1 1 88-88 88.1 88.1 0 0 1-88 88Z" fill="currentColor"/>
+          </svg>
+        </Button>
+      </div>
+    </section>
+
+    <!-- ─── Phase 2: LinkButton ────────────────────────────────────────── -->
+    <section data-testid="link-button" class="flex flex-wrap gap-2">
+      <h2 class="text-lg font-semibold">LinkButton</h2>
+      <LinkButton href="#" variant="ghost">Ghost link</LinkButton>
+      <LinkButton href="#" variant="primary">Primary link</LinkButton>
+      <LinkButton href="https://example.com" external variant="secondary">External</LinkButton>
+    </section>
+
+    <!-- ─── Phase 2: RefreshButton ────────────────────────────────────── -->
+    <section data-testid="refresh-button" class="flex gap-2 items-center">
+      <h2 class="text-lg font-semibold">RefreshButton</h2>
+      <RefreshButton />
+      <RefreshButton loading />
+      <RefreshButton size="sm" />
+    </section>
+
+    <!-- ─── Phase 2: Link ──────────────────────────────────────────────── -->
+    <section data-testid="link" class="space-y-1">
+      <h2 class="text-lg font-semibold">Link</h2>
+      <p><Link href="#">Inline link (default)</Link></p>
+      <p><Link href="#" variant="plain">Plain link</Link></p>
+      <p><Link href="#" variant="current">Current link</Link></p>
+    </section>
+
+    <!-- ─── Phase 2: Banner ────────────────────────────────────────────── -->
+    <section data-testid="banner" class="space-y-3">
+      <h2 class="text-lg font-semibold">Banner</h2>
+      <Banner title="Informational" description="Something you should know." />
+      <Banner variant="alert" title="Warning" description="Proceed with caution." />
+      <Banner variant="error" title="Error" description="Something went wrong." />
+      <Banner
+        title="Dismissible banner"
+        description="Click the X to hide this."
+        dismissible
+      />
+    </section>
+
+    <!-- ─── Phase 2: Meter ─────────────────────────────────────────────── -->
+    <section data-testid="meter" class="space-y-3 max-w-sm">
+      <h2 class="text-lg font-semibold">Meter</h2>
+      <Meter label="Storage used" value={65} />
+      <Meter label="API requests" value={80} customValue="800 / 1,000" />
+      <Meter label="Full" value={100} />
+      <Meter label="Empty" value={0} />
+    </section>
+
+    <!-- ─── Phase 2: Breadcrumbs ───────────────────────────────────────── -->
+    <section data-testid="breadcrumbs">
+      <h2 class="text-lg font-semibold mb-2">Breadcrumbs</h2>
+      <Breadcrumbs>
+        <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+        <BreadcrumbsSeparator />
+        <BreadcrumbsLink href="/docs">Docs</BreadcrumbsLink>
+        <BreadcrumbsSeparator />
+        <BreadcrumbsCurrent>Current Page</BreadcrumbsCurrent>
+      </Breadcrumbs>
+    </section>
+
+    <!-- ─── Phase 2: TableOfContents ──────────────────────────────────── -->
+    <section data-testid="table-of-contents">
+      <h2 class="text-lg font-semibold mb-2">TableOfContents</h2>
+      <TableOfContents>
+        <TableOfContentsTitle>On this page</TableOfContentsTitle>
+        <TableOfContentsList>
+          <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>
+          <TableOfContentsItem href="#install">Installation</TableOfContentsItem>
+          <TableOfContentsItem href="#usage">Usage</TableOfContentsItem>
+        </TableOfContentsList>
+      </TableOfContents>
+    </section>
+
+    <!-- ─── Phase 2: Table ────────────────────────────────────────────── -->
+    <section data-testid="table" class="overflow-x-auto">
+      <h2 class="text-lg font-semibold mb-2">Table</h2>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Requests</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>worker-a</TableCell>
+            <TableCell><Badge variant="success">Active</Badge></TableCell>
+            <TableCell>1,200</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>worker-b</TableCell>
+            <TableCell><Badge variant="error">Error</Badge></TableCell>
+            <TableCell>340</TableCell>
+          </TableRow>
+          <TableRow variant="selected">
+            <TableCell>worker-c</TableCell>
+            <TableCell><Badge variant="secondary">Inactive</Badge></TableCell>
+            <TableCell>0</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </section>
+
   </body>
 </html>

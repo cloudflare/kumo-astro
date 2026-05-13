@@ -3,17 +3,10 @@ import { resolve } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const smokeDir = resolve(__dirname, "tests/smoke");
+// Use the astro binary from kumo-astro's own node_modules (not a global install)
+const astroBin = resolve(__dirname, "node_modules/.bin/astro");
 
-/**
- * Playwright configuration for kumo-astro smoke and accessibility tests.
- *
- * Test strategy:
- * - `astro check` (run via `pnpm typecheck`) validates Astro frontmatter types.
- * - Playwright tests render components in a real browser for visual + a11y checks.
- * - Vitest unit tests cover behavior modules (focus-trap, roving-tabindex, etc.).
- *
- * See: packages/kumo-astro/tests/smoke/ for the fixture Astro project.
- */
 export default defineConfig({
   testDir: "tests",
   testMatch: "**/*.spec.ts",
@@ -29,8 +22,9 @@ export default defineConfig({
   },
 
   webServer: {
-    command: "astro dev --port 4322",
-    cwd: resolve(__dirname, "tests/smoke"),
+    // Run astro dev inside the smoke fixture directory.
+    command: `${astroBin} dev --port 4322`,
+    cwd: smokeDir,
     url: "http://localhost:4322",
     reuseExistingServer: !process.env["CI"],
     timeout: 60_000,

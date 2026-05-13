@@ -1,0 +1,32 @@
+/*
+ * Smoke test global styles.
+ *
+ * Imports kumo theme tokens + binding CSS so that semantic tokens
+ * (bg-kumo-base, text-kumo-default, etc.) resolve correctly in all
+ * rendered components. Also tells Tailwind to scan kumo-astro source
+ * files for class names.
+ *
+ * Paths are relative to THIS file → packages/kumo-astro/tests/smoke/src/styles/
+ */
+
+/* Scan kumo-astro .astro components for Tailwind class names */
+@source "../../../../src/**/*.astro";
+@source "../../../../src/**/*.ts";
+/* Also scan this page itself */
+@source "../pages/**/*.astro";
+
+/* Kumo theme tokens (CSS custom properties defining the color palette) */
+@import "../../../../src/styles/theme-kumo.css";
+
+/* Kumo binding CSS — maps Tailwind utility names to the theme tokens */
+@import "../../../../src/styles/kumo-binding.css";
+
+/* Tailwind base + utilities */
+@import "tailwindcss";
+
+/* Respect data-mode="dark" the same way the main docs site does */
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
+* {
+  box-sizing: border-box;
+}

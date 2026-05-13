@@ -79,10 +79,11 @@
     "registry": "https://registry.npmjs.org"
   },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "typecheck": "astro check",
+    "build": "tsc --noEmit",
+    "typecheck": "astro check --root tests/smoke",
     "lint": "oxlint --config .oxlintrc.json src/",
-    "test": "playwright test"
+    "test": "playwright test",
+    "test:build": "cd tests/smoke && node ../node_modules/astro/astro.js build"
   },
   "peerDependencies": {
     "astro": ">=4.0.0",
@@ -105,7 +106,8 @@
     "@types/node": "catalog:",
     "astro": "^5.18.1",
     "oxlint": "catalog:",
-    "playwright": "catalog:",
+    "@playwright/test": "^1.59.1",
+    "playwright": "^1.59.1",
     "tailwindcss": "catalog:",
     "tsx": "catalog:",
     "typescript": "catalog:"
