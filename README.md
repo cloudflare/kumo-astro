@@ -6,38 +6,105 @@ Kumo provides accessible, design-system-compliant UI components built on [Base U
 
 <img width="2560" height="1456" alt="image" src="https://github.com/user-attachments/assets/032f5a0e-b686-4440-b1ca-6182379479aa" />
 
-## Installation
+## Packages
+
+This repo publishes two packages:
+
+| Package | Description |
+|---|---|
+| `@cloudflare/kumo` | React component library (Base UI + Tailwind v4) |
+| `@cloudflare/kumo-astro` | Astro component library wrapping the same design system |
+
+---
+
+## `@cloudflare/kumo` — React
+
+### Installation
 
 ```bash
 pnpm add @cloudflare/kumo
 ```
 
-### Peer Dependencies
+#### Peer Dependencies
 
 ```bash
 pnpm add react react-dom @phosphor-icons/react
 ```
 
-## Usage
+### Usage
 
 ```tsx
 import { Button, Input, Dialog } from "@cloudflare/kumo";
 import "@cloudflare/kumo/styles";
 ```
 
-### Granular Imports (Tree-Shaking)
+#### Granular Imports (Tree-Shaking)
 
 ```tsx
 import { Button } from "@cloudflare/kumo/components/button";
 ```
 
-### Base UI Primitives
+#### Base UI Primitives
 
 Kumo re-exports all Base UI primitives for advanced use cases:
 
 ```tsx
 import { Popover } from "@cloudflare/kumo/primitives/popover";
 ```
+
+---
+
+## `@cloudflare/kumo-astro` — Astro
+
+Framework-agnostic `.astro` components with the same design tokens and variants as `@cloudflare/kumo`. No React required.
+
+### Installation
+
+```bash
+pnpm add @cloudflare/kumo-astro
+```
+
+#### Peer Dependencies
+
+```bash
+pnpm add astro
+# Optional: phosphor icon web fonts
+pnpm add @phosphor-icons/web
+```
+
+### Usage
+
+Import components via subpath exports:
+
+```astro
+---
+import Button from "@cloudflare/kumo-astro/components/button";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+---
+
+<Button variant="primary">Click me</Button>
+<Badge variant="info">New</Badge>
+```
+
+Import styles (Tailwind v4 + kumo design tokens):
+
+```astro
+---
+import "@cloudflare/kumo-astro/styles";
+---
+```
+
+#### Available Components
+
+Badge, Banner, Breadcrumbs, Button, CloudflareLogo, Code, Empty, Grid, Label, LayerCard, Link, LinkButton, Loader, Meter, RefreshButton, Table, TableOfContents, Text (34 components total — see `packages/kumo-astro/src/components/`).
+
+#### Utilities
+
+```ts
+import { cn, resolveVariant, safeRandomId } from "@cloudflare/kumo-astro";
+```
+
+---
 
 ## CLI
 
@@ -63,8 +130,47 @@ See [AGENTS.md](./AGENTS.md) for comprehensive development documentation includi
 
 ```bash
 pnpm install
-pnpm dev                    # Start docs site at localhost:4321
-pnpm --filter @cloudflare/kumo test
+pnpm dev                              # Start docs site at localhost:4321
+pnpm --filter @cloudflare/kumo test   # Run kumo unit tests
+pnpm test:astro                       # Run kumo-astro Playwright tests
+pnpm lint
+pnpm typecheck
+```
+
+### CI / GitHub Actions
+
+Five workflows run on every pull request:
+
+| Workflow | Trigger | What it does |
+|---|---|---|
+| `pullrequest.yml` | `pull_request`, push to `opencode/**` | Changeset validation, build, lint, typecheck, unit tests (kumo + kumo-astro Playwright) |
+| `preview.yml` | `pull_request`, push to `opencode/**` | `pkg-pr-new` installable preview for both packages, docs site preview deploy, visual regression |
+| `preview-deploy.yml` | `workflow_run` (after Preview) | Fork-safe docs deploy — uses secrets unavailable to fork PRs |
+| `release.yml` | push to `main` | Changesets version PR or npm publish for both packages |
+| `reviewer.yml` | PR review comment `/review` | AI code review via `ask-bonk` |
+
+#### Changesets
+
+Both `@cloudflare/kumo` and `@cloudflare/kumo-astro` require a changeset on every PR that modifies their source. The pre-push hook (`lefthook`) and CI enforce this automatically.
+
+```bash
+pnpm changeset   # follow prompts — select the package(s) you changed
+```
+
+Changesets are **not** required for `kumo-docs-astro` (docs site) or `kumo-figma` (Figma plugin).
+
+#### Package Previews
+
+Every PR publishes an installable preview of both packages via `pkg-pr-new`. The install command is posted as a PR comment automatically.
+
+#### Beta Releases
+
+```bash
+# Publish a beta of @cloudflare/kumo
+pnpm publish:beta
+
+# Publish a beta of @cloudflare/kumo-astro
+PACKAGE_NAME=@cloudflare/kumo-astro PACKAGE_PATH=packages/kumo-astro pnpm publish:beta
 ```
 
 ### Figma Plugin

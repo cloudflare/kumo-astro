@@ -12,8 +12,10 @@ fi
 
 echo "Starting manual release process for ${PACKAGE_NAME}"
 
-# Create release branch
-RELEASE_BRANCH="release/kumo-$(git rev-parse --short HEAD)"
+# Create release branch — derive slug from package path (e.g. packages/kumo → kumo,
+# packages/kumo-astro → kumo-astro) so the branch name stays meaningful.
+PACKAGE_SLUG=$(basename "${PACKAGE_PATH}")
+RELEASE_BRANCH="release/${PACKAGE_SLUG}-$(git rev-parse --short HEAD)"
 echo "Creating release branch: $RELEASE_BRANCH"
 git checkout -b "$RELEASE_BRANCH"
 

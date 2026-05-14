@@ -1,3 +1,7 @@
+# DISABLED: This workflow has been disabled for the kumo-astro PoC fork.
+# Publishing to npm is intentionally blocked until the package is ready for release.
+# See DOCS/PUBLISH.md — "Disabled Publish Flows" section for reactivation steps.
+
 name: Release
 
 on:
@@ -16,7 +20,9 @@ jobs:
       contents: write
       pull-requests: write
 
-    if: ${{ github.repository_owner == 'cloudflare' }}
+    # DISABLED: if condition set to 'false' to prevent any publish from running.
+    # Original condition was: github.repository_owner == 'cloudflare'
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -30,6 +36,9 @@ jobs:
 
       - name: Build @cloudflare/kumo
         run: pnpm --filter @cloudflare/kumo build
+
+      - name: Build @cloudflare/kumo-astro
+        run: pnpm --filter @cloudflare/kumo-astro build
 
       # changesets/action either:
       # 1. Creates/updates a "Version Packages" PR (when changesets exist)
@@ -51,4 +60,4 @@ jobs:
       # (GITHUB_TOKEN PRs don't trigger workflows, so we do it here)
       - name: Publish package preview
         if: ${{ steps.changesets.outputs.pullRequestNumber }}
-        run: pnpm dlx pkg-pr-new publish --pnpm --compact --no-template ./packages/kumo
+        run: pnpm dlx pkg-pr-new publish --pnpm --compact --no-template ./packages/kumo ./packages/kumo-astro

@@ -69,7 +69,7 @@ jobs:
           permissions: write
           # agent: reviewer
           prompt: |
-            Review PR "${{ steps.pr-details.outputs.title }}" against this repo's conventions. Read AGENTS.md (repo root and packages/kumo/) before reviewing. Read full files for context — diffs alone are not enough. Run `pnpm lint` and `pnpm typecheck` to validate changes. Focus on: semantic token usage (kumo-* only, never raw Tailwind colors or dark: variants), cn() for className composition, forwardRef/displayName patterns, and ESM-only imports.
+            Review PR "${{ steps.pr-details.outputs.title }}" against this repo's conventions. Read AGENTS.md (repo root, packages/kumo/, and packages/kumo-astro/) before reviewing. Read full files for context — diffs alone are not enough. Run `pnpm lint` and `pnpm typecheck` to validate changes. Focus on: semantic token usage (kumo-* only, never raw Tailwind colors or dark: variants), cn() for className composition, forwardRef/displayName patterns, and ESM-only imports.
 
             Use the gh CLI to leave inline comments on specific files and lines. Use code suggestions where you have high confidence in the fix — ensure they account for surrounding code (braces, indentation). ALWAYS leave the final "review" comment empty. Separate "Needs Fix" (bugs, type errors, broken conventions, security) from "Style" (suggestions, minor improvements). Flag only real problems — not formatting the linter handles, pre-existing issues, or hypothetical edge cases. If the PR is clean, say "LGTM!".
 

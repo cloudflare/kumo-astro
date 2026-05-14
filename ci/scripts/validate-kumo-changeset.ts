@@ -10,12 +10,17 @@ import {
 } from "../utils/git-operations";
 
 /**
- * Validates that a changeset exists for the @cloudflare/kumo package
- * when files in packages/kumo/ are modified in a pull request.
+ * Validates that a changeset exists for the given package when files in the
+ * package path are modified in a pull request.
+ *
+ * Configurable via env vars:
+ *   VALIDATE_PACKAGE_NAME  (default: @cloudflare/kumo)
+ *   VALIDATE_PACKAGE_PATH  (default: packages/kumo)
  */
 
-const KUMO_PACKAGE_NAME = "@cloudflare/kumo";
-const KUMO_PATH = "packages/kumo";
+const KUMO_PACKAGE_NAME =
+  process.env.VALIDATE_PACKAGE_NAME ?? "@cloudflare/kumo";
+const KUMO_PATH = process.env.VALIDATE_PACKAGE_PATH ?? "packages/kumo";
 const CHANGESET_DIR = ".changeset";
 
 interface ChangesetFile {
@@ -157,8 +162,8 @@ function checkForKumoChanges(): boolean {
 }
 
 function getNewlyAddedChangesets(): ChangesetFile[] {
-  // Determine working directory (handle both repo root and packages/kumo contexts)
-  const cwd = process.cwd().includes("packages/kumo") ? "../.." : ".";
+  // Determine working directory (handle both repo root and package subdir contexts)
+  const cwd = process.cwd().includes(KUMO_PATH) ? "../.." : ".";
 
   // Get newly added files in .changeset directory
   const newFiles = getNewlyAddedFiles(CHANGESET_DIR, { cwd });
@@ -189,7 +194,7 @@ function getNewlyAddedChangesets(): ChangesetFile[] {
 
     try {
       // Resolve file path relative to repo root
-      const repoRoot = process.cwd().includes("packages/kumo") ? "../.." : ".";
+      const repoRoot = process.cwd().includes(KUMO_PATH) ? "../.." : ".";
       const fullFilePath = join(repoRoot, filePath);
       const content = readFileSync(fullFilePath, "utf8");
       const packages = parseChangesetPackages(content);

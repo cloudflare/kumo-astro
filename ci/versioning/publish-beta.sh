@@ -3,8 +3,15 @@ set -euo pipefail
 
 # Beta release script for CI
 # Versions, builds, publishes, and outputs report artifact
+#
+# Configuration via env vars (defaults to @cloudflare/kumo):
+#   PACKAGE_NAME  - npm package name  (default: @cloudflare/kumo)
+#   PACKAGE_PATH  - workspace path    (default: packages/kumo)
 
-echo "Starting beta release process..."
+PACKAGE_NAME="${PACKAGE_NAME:-@cloudflare/kumo}"
+PACKAGE_PATH="${PACKAGE_PATH:-packages/kumo}"
+
+echo "Starting beta release process for ${PACKAGE_NAME}..."
 
 # Configure npm registry authentication
 cat > ~/.npmrc << EOF
@@ -22,15 +29,14 @@ pnpm run version:beta
 
 # Build the package before publishing
 echo "Building package..."
-cd packages/kumo && pnpm run build && cd ../..
+cd "${PACKAGE_PATH}" && pnpm run build && cd ../..
 
 # Run the publish step after versioning and building
 echo "Publishing to npm..."
 pnpm run release:beta
 
 # Get the published version
-NEW_VERSION=$(node -p "require('./packages/kumo/package.json').version")
-PACKAGE_NAME="${PACKAGE_NAME:-@cloudflare/kumo}"
+NEW_VERSION=$(node -p "require('./${PACKAGE_PATH}/package.json').version")
 
 echo "Published version: $NEW_VERSION"
 

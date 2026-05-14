@@ -50,7 +50,10 @@ jobs:
 
   pkg-preview:
     name: Package Preview
-    if: ${{ github.repository_owner == 'cloudflare' }}
+    # DISABLED: pkg-pr-new preview publishing is disabled for the kumo-astro PoC fork.
+    # See DOCS/PUBLISH.md — "Disabled Publish Flows" section for reactivation steps.
+    # Original condition was: github.repository_owner == 'cloudflare'
+    if: false
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -62,13 +65,16 @@ jobs:
       - name: Install Dependencies
         uses: ./.github/actions/install-dependencies
         with:
-          filter: "@cloudflare/kumo..."
+          filter: "@cloudflare/kumo-astro..."
 
       - name: Build @cloudflare/kumo
         run: pnpm --filter @cloudflare/kumo build
 
+      - name: Build @cloudflare/kumo-astro
+        run: pnpm --filter @cloudflare/kumo-astro build
+
       - name: Publish preview package
-        run: pnpm dlx pkg-pr-new publish --pnpm --compact --no-template ./packages/kumo
+        run: pnpm dlx pkg-pr-new publish --pnpm --compact --no-template ./packages/kumo ./packages/kumo-astro
 
   # Stage 1: Build docs (runs for ALL PRs including forks).
   # Produces an artifact consumed by either docs-deploy (internal) or

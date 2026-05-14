@@ -30,6 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: ./.github/actions/install-dependencies
       - run: pnpm tsx ci/scripts/validate-kumo-changeset.ts
+      - run: VALIDATE_PACKAGE_NAME=@cloudflare/kumo-astro VALIDATE_PACKAGE_PATH=packages/kumo-astro pnpm tsx ci/scripts/validate-kumo-changeset.ts
 
   build:
     timeout-minutes: 5
@@ -107,3 +108,25 @@ jobs:
           name: kumo-ai
           path: packages/kumo/ai
       - run: pnpm --filter @cloudflare/kumo test
+
+  test-astro:
+    needs: build
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: ./.github/actions/install-dependencies
+      - uses: actions/download-artifact@v4
+        with:
+          name: kumo-dist
+          path: packages/kumo/dist
+      - uses: actions/download-artifact@v4
+        with:
+          name: kumo-ai
+          path: packages/kumo/ai
+      - name: Install Playwright browsers
+        run: pnpm --filter @cloudflare/kumo-astro exec playwright install --with-deps chromium
+      - run: pnpm --filter @cloudflare/kumo-astro test:build
+      - run: pnpm --filter @cloudflare/kumo-astro test
