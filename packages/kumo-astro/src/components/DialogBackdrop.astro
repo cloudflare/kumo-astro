@@ -1,0 +1,26 @@
+---
+/**
+ * DialogBackdrop — the translucent backdrop behind the dialog panel.
+ *
+ * Place as first child of `<Dialog>`. For role="dialog", clicking
+ * the backdrop closes the dialog. For role="alertdialog" it does not.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  data-kumo-dialog-backdrop
+  aria-hidden="true"
+  class={cn(
+    "fixed inset-0 bg-kumo-recessed",
+    "transition-opacity duration-150",
+    "data-[open]:opacity-80 data-[closed]:opacity-0",
+    className,
+  )}
+/>

@@ -1,0 +1,140 @@
+---
+/**
+ * Tooltip — accessible popup showing additional information on hover/focus.
+ *
+ * Usage:
+ * ```astro
+ * <Tooltip content="Save changes">
+ *   <button>Save</button>
+ * </Tooltip>
+ *
+ * <!-- With placement -->
+ * <Tooltip content="Delete item" side="bottom">
+ *   <button>Delete</button>
+ * </Tooltip>
+ * ```
+ *
+ * The trigger is the default slot. The tooltip content is the `content` prop.
+ * Uses popover-anchor (floating-ui) for positioning.
+ */
+import { cn } from "../utils/cn";
+import { safeRandomId } from "../utils/safe-random-id";
+import type { Placement } from "../lib/behaviors/popover-anchor.js";
+
+type TooltipSide = "top" | "bottom" | "left" | "right";
+
+interface Props {
+  /** Text or HTML string to display in the tooltip */
+  content: string;
+  /** Preferred side of the trigger */
+  side?: TooltipSide;
+  /** Delay before showing in ms */
+  delay?: number;
+  /** Delay before hiding in ms */
+  closeDelay?: number;
+  class?: string;
+}
+
+const {
+  content,
+  side = "top",
+  delay = 600,
+  closeDelay = 0,
+  class: className,
+} = Astro.props;
+
+const uid = safeRandomId("kumo-tooltip");
+const triggerId = `${uid}-trigger`;
+const popupId = `${uid}-popup`;
+
+// Map side to floating-ui placement
+const placement: Placement = side;
+---
+
+<span
+  data-kumo-tooltip-root
+  data-placement={placement}
+  data-delay={delay}
+  data-close-delay={closeDelay}
+  class={cn("inline-flex", className)}
+  style="position:relative"
+>
+  <span
+    id={triggerId}
+    data-kumo-tooltip-trigger
+    aria-describedby={popupId}
+    class="inline-flex"
+  >
+    <slot />
+  </span>
+
+  <div
+    id={popupId}
+    data-kumo-tooltip-popup
+    role="tooltip"
+    hidden
+    style="position:absolute;z-index:50;pointer-events:none"
+    class={cn(
+      "flex flex-col rounded-md bg-kumo-base px-2.5 py-1.5 text-sm text-kumo-default",
+      "shadow-lg outline outline-1 outline-kumo-fill",
+      "transition-[transform,opacity] duration-150",
+      "data-[open]:opacity-100 data-[open]:scale-100",
+      "data-[closed]:opacity-0 data-[closed]:scale-90",
+    )}
+  >
+    {content}
+  </div>
+</span>
+
+<script>
+  import { createPopoverAnchor } from "../lib/behaviors/popover-anchor.js";
+  import { createTransition } from "../lib/behaviors/transition.js";
+  import type { Placement } from "../lib/behaviors/popover-anchor.js";
+
+  function initTooltip(root: HTMLElement) {
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-tooltip-trigger]");
+    const popup = root.querySelector<HTMLElement>("[data-kumo-tooltip-popup]");
+    if (!trigger || !popup) return;
+
+    const placement = (root.dataset.placement ?? "top") as Placement;
+    const delay = Number(root.dataset.delay ?? 600);
+    const closeDelay = Number(root.dataset.closeDelay ?? 0);
+
+    const anchor = createPopoverAnchor(trigger, popup, { placement, offset: 10 });
+    const transition = createTransition(popup);
+
+    let openTimer: ReturnType<typeof setTimeout> | null = null;
+    let closeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function show() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      openTimer = setTimeout(() => {
+        popup.removeAttribute("hidden");
+        anchor.mount();
+        transition.open();
+      }, delay);
+    }
+
+    function hide() {
+      if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+      closeTimer = setTimeout(() => {
+        transition.close(() => {
+          popup.setAttribute("hidden", "");
+          anchor.unmount();
+        });
+      }, closeDelay);
+    }
+
+    trigger.addEventListener("mouseenter", show);
+    trigger.addEventListener("mouseleave", hide);
+    trigger.addEventListener("focusin", show);
+    trigger.addEventListener("focusout", hide);
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-tooltip-root]").forEach(initTooltip);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

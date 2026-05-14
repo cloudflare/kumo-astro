@@ -13,9 +13,15 @@
  * anchor.mount();   // start auto-updating position
  * anchor.unmount(); // cleanup
  * ```
- *
- * @stub — Not yet implemented. Phase 3 deliverable.
  */
+
+import {
+  computePosition,
+  autoUpdate,
+  offset as offsetMiddleware,
+  flip as flipMiddleware,
+  shift as shiftMiddleware,
+} from "@floating-ui/dom";
 
 export type Placement =
   | "top"
@@ -57,20 +63,53 @@ export interface PopoverAnchor {
  * @param options     Positioning options.
  */
 export function createPopoverAnchor(
-  _referenceEl: HTMLElement,
-  _floatingEl: HTMLElement,
-  _options: PopoverAnchorOptions = {},
+  referenceEl: HTMLElement,
+  floatingEl: HTMLElement,
+  options: PopoverAnchorOptions = {},
 ): PopoverAnchor {
-  // TODO: Phase 3 — implement using @floating-ui/dom computePosition + autoUpdate
+  let cleanup: (() => void) | null = null;
+
+  function buildMiddleware() {
+    const middleware = [offsetMiddleware(options.offset ?? 6)];
+    if (options.flip !== false) {
+      middleware.push(flipMiddleware());
+    }
+    if (options.shift !== false) {
+      middleware.push(shiftMiddleware({ padding: 8 }));
+    }
+    return middleware;
+  }
+
+  async function updatePosition(): Promise<void> {
+    const { x, y } = await computePosition(referenceEl, floatingEl, {
+      placement: options.placement ?? "bottom",
+      middleware: buildMiddleware(),
+    });
+    floatingEl.style.position = "absolute";
+    floatingEl.style.left = `${x}px`;
+    floatingEl.style.top = `${y}px`;
+  }
+
   return {
     mount() {
-      /* stub */
+      cleanup = autoUpdate(referenceEl, floatingEl, () => {
+        void updatePosition();
+      });
+      void updatePosition();
     },
+
     unmount() {
-      /* stub */
+      if (cleanup) {
+        cleanup();
+        cleanup = null;
+      }
+      floatingEl.style.position = "";
+      floatingEl.style.left = "";
+      floatingEl.style.top = "";
     },
-    async update() {
-      /* stub */
+
+    update(): Promise<void> {
+      return updatePosition();
     },
   };
 }

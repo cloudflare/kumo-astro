@@ -1,0 +1,117 @@
+---
+/**
+ * DropdownMenu — root wrapper for an accessible dropdown menu.
+ *
+ * Usage:
+ * ```astro
+ * <DropdownMenu>
+ *   <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+ *   <DropdownMenuContent>
+ *     <DropdownMenuItem>Edit</DropdownMenuItem>
+ *     <DropdownMenuSeparator />
+ *     <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+ *   </DropdownMenuContent>
+ * </DropdownMenu>
+ * ```
+ */
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  side?: "top" | "bottom" | "left" | "right";
+  class?: string;
+  id?: string;
+}
+
+const {
+  side = "bottom",
+  class: className,
+  id = safeRandomId("kumo-dropdown"),
+} = Astro.props;
+---
+
+<span
+  data-kumo-dropdown-root
+  data-side={side}
+  id={id}
+  class={className}
+  style="display:contents"
+>
+  <slot />
+</span>
+
+<script>
+  import { createPopoverAnchor } from "../lib/behaviors/popover-anchor.js";
+  import { createPortal } from "../lib/behaviors/portal.js";
+  import { createTransition } from "../lib/behaviors/transition.js";
+  import { createRovingTabindex } from "../lib/behaviors/roving-tabindex.js";
+  import { pushEscapeLayer, popEscapeLayer } from "../lib/behaviors/escape-stack.js";
+  import type { Placement } from "../lib/behaviors/popover-anchor.js";
+
+  function initDropdown(root: HTMLElement) {
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-dropdown-trigger]");
+    const menu = root.querySelector<HTMLElement>("[data-kumo-dropdown-content]");
+    if (!trigger || !menu) return;
+
+    const placement = (root.dataset.side ?? "bottom") as Placement;
+    const anchor = createPopoverAnchor(trigger, menu, { placement, offset: 8 });
+    const portal = createPortal(menu);
+    const transition = createTransition(menu);
+    let rovingNav = createRovingTabindex(menu, "[data-kumo-dropdown-item]:not([disabled]):not([aria-disabled='true'])", {
+      orientation: "vertical",
+    });
+    let escId: symbol | null = null;
+    let isOpen = false;
+
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      portal.mount();
+      menu.removeAttribute("hidden");
+      anchor.mount();
+      transition.open();
+      trigger.setAttribute("aria-expanded", "true");
+      escId = pushEscapeLayer(close);
+      // Mount roving tabindex and focus first item
+      rovingNav = createRovingTabindex(menu, "[data-kumo-dropdown-item]:not([disabled]):not([aria-disabled='true'])", { orientation: "vertical" });
+      rovingNav.mount();
+      const firstItem = menu.querySelector<HTMLElement>("[data-kumo-dropdown-item]:not([disabled])");
+      firstItem?.focus();
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      rovingNav.unmount();
+      if (escId !== null) { popEscapeLayer(escId); escId = null; }
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.focus();
+      transition.close(() => {
+        anchor.unmount();
+        menu.setAttribute("hidden", "");
+        portal.unmount();
+      });
+    }
+
+    trigger.addEventListener("click", () => isOpen ? close() : open());
+
+    // Close on outside click
+    document.addEventListener("click", (e) => {
+      if (isOpen && !root.contains(e.target as Node) && !menu.contains(e.target as Node)) {
+        close();
+      }
+    }, { capture: true });
+
+    // Click on item closes menu (unless it's a submenu trigger)
+    menu.addEventListener("click", (e) => {
+      const item = (e.target as HTMLElement).closest<HTMLElement>("[data-kumo-dropdown-item]");
+      if (item && !item.dataset.submenuTrigger) close();
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-dropdown-root]").forEach(initDropdown);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

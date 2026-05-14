@@ -1,0 +1,39 @@
+---
+import { cn } from "../utils/cn";
+import {
+  KUMO_DROPDOWN_DEFAULT_VARIANTS,
+  type KumoDropdownVariant,
+} from "@cloudflare/kumo/components/dropdown";
+
+interface Props {
+  variant?: KumoDropdownVariant;
+  disabled?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_DROPDOWN_DEFAULT_VARIANTS.variant,
+  disabled = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+<button
+  type="button"
+  role="menuitem"
+  data-kumo-dropdown-item
+  disabled={disabled || undefined}
+  aria-disabled={disabled ? "true" : undefined}
+  tabindex="-1"
+  class={cn(
+    "relative flex w-full cursor-default items-center rounded-md px-2 py-1.5 text-base outline-none select-none",
+    "focus:bg-kumo-overlay focus:text-kumo-default focus-visible:ring-2 focus-visible:ring-kumo-brand",
+    "disabled:pointer-events-none disabled:opacity-50",
+    variant === "danger" && "text-kumo-danger focus:bg-kumo-danger/5 focus:text-kumo-danger",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</button>

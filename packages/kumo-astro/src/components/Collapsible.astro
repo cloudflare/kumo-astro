@@ -1,0 +1,95 @@
+---
+/**
+ * Collapsible — root container managing open/closed state.
+ *
+ * Usage:
+ * ```astro
+ * <Collapsible>
+ *   <CollapsibleTrigger>Show details</CollapsibleTrigger>
+ *   <CollapsiblePanel>Hidden content</CollapsiblePanel>
+ * </Collapsible>
+ *
+ * <!-- Controlled -->
+ * <Collapsible open={isOpen}>
+ *   <CollapsibleTrigger>Toggle</CollapsibleTrigger>
+ *   <CollapsiblePanel>Content</CollapsiblePanel>
+ * </Collapsible>
+ * ```
+ */
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  /** Controlled open state */
+  open?: boolean;
+  /** Initial open state (uncontrolled) */
+  defaultOpen?: boolean;
+  class?: string;
+  id?: string;
+}
+
+const {
+  open,
+  defaultOpen = false,
+  class: className,
+  id = safeRandomId("kumo-collapsible"),
+} = Astro.props;
+
+const initialOpen = open !== undefined ? open : defaultOpen;
+---
+
+<div
+  data-kumo-collapsible
+  id={id}
+  data-open={initialOpen ? "" : undefined}
+  class={className}
+>
+  <slot />
+</div>
+
+<script>
+  import { createTransition } from "../lib/behaviors/transition.js";
+
+  function initCollapsible(root: HTMLElement) {
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-collapsible-trigger]");
+    const panel = root.querySelector<HTMLElement>("[data-kumo-collapsible-panel]");
+    if (!trigger || !panel) return;
+
+    const transition = createTransition(panel);
+
+    // Apply initial state
+    const isOpen = root.hasAttribute("data-open");
+    if (isOpen) {
+      panel.removeAttribute("hidden");
+      trigger.setAttribute("aria-expanded", "true");
+      transition.open();
+    } else {
+      panel.setAttribute("hidden", "");
+      trigger.setAttribute("aria-expanded", "false");
+    }
+
+    trigger.addEventListener("click", () => {
+      const nowOpen = root.hasAttribute("data-open");
+      if (nowOpen) {
+        // Close
+        root.removeAttribute("data-open");
+        trigger.setAttribute("aria-expanded", "false");
+        transition.close(() => {
+          panel.setAttribute("hidden", "");
+        });
+      } else {
+        // Open
+        root.setAttribute("data-open", "");
+        trigger.setAttribute("aria-expanded", "true");
+        panel.removeAttribute("hidden");
+        transition.open();
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-collapsible]").forEach(initCollapsible);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

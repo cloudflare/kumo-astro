@@ -1,0 +1,80 @@
+---
+/**
+ * RadioGroup — fieldset wrapper for Radio items.
+ *
+ * Usage:
+ * ```astro
+ * <RadioGroup legend="Notification preference" name="notif">
+ *   <Radio label="Email" value="email" name="notif" />
+ *   <Radio label="SMS" value="sms" name="notif" />
+ * </RadioGroup>
+ * ```
+ *
+ * Note: Astro cannot pass context to slot children. Each Radio item inside
+ * must have a matching `name` prop set explicitly.
+ *
+ * Orientation:
+ * - `"vertical"` (default) — items stacked vertically
+ * - `"horizontal"` — items laid out in a row
+ *
+ * Appearance affects gap/grid layout:
+ * - `"default"` — compact flex gap
+ * - `"card"` — wider gap (and 2-col grid when horizontal)
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_RADIO_DEFAULT_VARIANTS,
+  type KumoRadioAppearance,
+} from "@cloudflare/kumo/components/radio";
+
+interface Props {
+  legend?: string;
+  orientation?: "vertical" | "horizontal";
+  appearance?: KumoRadioAppearance;
+  error?: string;
+  description?: string;
+  disabled?: boolean;
+  name?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  legend,
+  orientation = "vertical",
+  appearance = KUMO_RADIO_DEFAULT_VARIANTS.appearance,
+  error,
+  description,
+  disabled = false,
+  name,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isCard = appearance === "card";
+
+const itemsClass = cn(
+  orientation === "vertical"
+    ? cn("flex flex-col", isCard ? "gap-3" : "gap-2")
+    : isCard
+      ? "grid grid-cols-2 gap-3"
+      : "flex flex-row flex-wrap gap-2",
+);
+---
+
+<fieldset
+  class={cn("flex flex-col gap-4 border-0 m-0 p-0", disabled && "opacity-50", className)}
+  disabled={disabled || undefined}
+  {...rest}
+>
+  {legend && (
+    <legend class="text-base font-medium text-kumo-default float-none w-full p-0">
+      {legend}
+    </legend>
+  )}
+  <div class={itemsClass} data-kumo-radio-group data-name={name}>
+    <slot />
+  </div>
+  {error && <p class="text-sm text-kumo-danger">{error}</p>}
+  {description && <p class="text-sm text-kumo-subtle">{description}</p>}
+</fieldset>

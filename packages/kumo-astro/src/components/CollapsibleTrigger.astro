@@ -1,0 +1,26 @@
+---
+/**
+ * CollapsibleTrigger — button that toggles the collapsible panel.
+ *
+ * Must be a direct or nested child of `<Collapsible>`.
+ * The parent Collapsible script handles click and aria-expanded.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<button
+  type="button"
+  data-kumo-collapsible-trigger
+  aria-expanded="false"
+  class={cn("cursor-pointer", className)}
+  {...rest}
+>
+  <slot />
+</button>

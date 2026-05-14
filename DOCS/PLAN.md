@@ -22,7 +22,9 @@
 
 ---
 
-## Phase 0 — Foundations (1–2 days, no components yet)
+## Phase 0 — Foundations ✅ COMPLETE
+
+> **Status:** Done. Package scaffolded, utils and behavior modules in place.
 
 **Goal:** Stand up the new package and prove the toolchain.
 
@@ -40,7 +42,7 @@
 
 ---
 
-## Phase 1 — Presentational Tier (~10 components, 3–5 days)
+## Phase 1 — Presentational Tier ✅ COMPLETE
 
 Zero-interactivity, pure-template components. Conversion is mechanical.
 
@@ -74,7 +76,7 @@ const { variant = "primary", class: className, ...rest } = Astro.props;
 
 ---
 
-## Phase 2 — Static-with-light-JS Tier (~8 components, 1 week)
+## Phase 2 — Static-with-light-JS Tier ✅ COMPLETE
 
 Components that need a tiny amount of JS but no Base UI behaviors.
 
@@ -91,60 +93,79 @@ Components that need a tiny amount of JS but no Base UI behaviors.
 
 ---
 
-## Phase 3 — Behavior Modules (parallel to Phase 4)
+## Phase 3 — Behavior Modules ✅ COMPLETE
+
+> **Status:** All behavior modules implemented. `tsc --noEmit` passes clean.
 
 Build the shared behavior toolkit that interactive components will compose. **This is the project's biggest single risk.** Validate with one end-to-end component (Dialog) before generalizing.
 
-**Behavior modules to author in `kumo-astro/lib/behaviors/`:**
+**Behavior modules in `kumo-astro/src/lib/behaviors/`:**
 
-| Module | Replaces Base UI feature | Used by |
-|---|---|---|
-| `focus-trap.ts` | `FocusGuard`, focus management | Dialog, CommandPalette, Sidebar |
-| `escape-stack.ts` | Nested dismissal coordination | Dialog, Popover, Dropdown, Tooltip |
-| `popover-anchor.ts` (wraps `@floating-ui/dom`) | Floating positioning | Popover, Tooltip, Dropdown, Select, Combobox, DatePicker |
-| `portal.ts` | `FloatingPortal` | Dialog, Popover, Dropdown, Toast |
-| `roving-tabindex.ts` | `CompositeRoot` keyboard nav | Tabs, RadioGroup, Menubar, Dropdown |
-| `typeahead.ts` | List type-ahead | Select, Combobox, Dropdown |
-| `controllable.ts` | controlled/uncontrolled prop coordination | Checkbox, Switch, Tabs, Collapsible, Dialog |
-| `descendants.ts` | descendant indexing | Flow (if rewritten), CommandPalette |
-| `transition.ts` | CSS animation lifecycle | Dialog, Popover, Toast, Collapsible |
+| Module | Status | Replaces Base UI feature | Used by |
+|---|---|---|---|
+| `focus-trap.ts` | ✅ Done | `FocusGuard`, focus management | Dialog, CommandPalette, Sidebar |
+| `escape-stack.ts` | ✅ Done | Nested dismissal coordination | Dialog, Popover, Dropdown, Tooltip |
+| `popover-anchor.ts` (wraps `@floating-ui/dom`) | ✅ Done | Floating positioning | Popover, Tooltip, Dropdown, Select, Combobox, DatePicker |
+| `portal.ts` | ✅ Done | `FloatingPortal` | Dialog, Popover, Dropdown, Toast |
+| `roving-tabindex.ts` | ✅ Done | `CompositeRoot` keyboard nav | Tabs, RadioGroup, Menubar, Dropdown |
+| `controllable-state.ts` | ✅ Done | controlled/uncontrolled prop coordination | Checkbox, Switch, Tabs, Collapsible, Dialog |
+| `transition.ts` | ✅ Done | CSS animation lifecycle | Dialog, Popover, Toast, Collapsible |
+| `typeahead.ts` | ⏳ Not yet | List type-ahead | Select, Combobox, Dropdown |
+| `descendant-collection.ts` | ⏳ Stub | descendant indexing | Flow (if rewritten), CommandPalette |
 
 Each module is plain TS, framework-free, tree-shakeable. Components import only what they need via `<script>` blocks. Astro's bundler handles dedup.
 
 ---
 
-## Phase 4 — Disclosure & Overlay Components (~10 components, 2–3 weeks)
+## Phase 4 — Disclosure & Overlay Components 🔶 IN PROGRESS
 
-**Components:** `Tooltip`, `Popover`, `Dropdown`, `Dialog`, `Collapsible`, `Tabs`, `Toast`, `ClipboardText`, `Sidebar`, `Menubar`.
+> **Status:** Most components shipped. `Toast`, `ClipboardText`, `Sidebar`, `Menubar`, `Pagination` still to do.
 
-**Pattern (Dialog example):**
-```astro
----
-// Dialog.astro
-import { safeRandomId } from "../utils/safe-random-id";
-const id = safeRandomId("dialog");
----
-<dialog data-kumo-dialog id={id}>
-  <slot />
-</dialog>
-<script>
-  import { installDialog } from "../behaviors/dialog";
-  document.querySelectorAll("[data-kumo-dialog]").forEach(installDialog);
-</script>
-```
+**Components:**
+
+| Component | Status | Notes |
+|---|---|---|
+| `Tabs` | ✅ Done | roving-tabindex for arrow keys, aria-selected, named slots per panel |
+| `Collapsible` | ✅ Done | transition module, data-open toggle, CollapsibleTrigger + CollapsiblePanel sub-components |
+| `Dialog` | ✅ Done | focus-trap + portal + escape-stack + transition; DialogRoot, Dialog, DialogBackdrop, DialogTrigger, DialogClose, DialogTitle, DialogDescription |
+| `Tooltip` | ✅ Done | popover-anchor + transition, hover/focus with configurable delay |
+| `Popover` | ✅ Done | popover-anchor + portal + escape-stack + transition; PopoverRoot, PopoverTrigger, PopoverContent, PopoverClose |
+| `Dropdown` | ✅ Done | popover-anchor + portal + escape-stack + transition + roving-tabindex; DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel |
+| `Toast` | ⏳ Not yet | Needs portal + transition + escape-stack |
+| `ClipboardText` | ⏳ Not yet | Simple — clipboard API + transition for feedback state |
+| `Sidebar` | ⏳ Not yet | Needs focus-trap + portal + escape-stack (same pattern as Dialog) |
+| `Menubar` | ⏳ Not yet | Needs roving-tabindex across top-level items + Dropdown per item |
+| `Pagination` | ⏳ Not yet | Mostly static with roving-tabindex |
 
 **Notes:**
-- Compound API: ship `Dialog.astro`, `DialogTrigger.astro`, `DialogTitle.astro`, … each with `data-kumo-*` attributes; install scripts query by selector.
-- Coordination across siblings via `data-controls={id}` attributes — emulates Base UI's React-context-driven wiring with DOM relationships instead.
+- Compound API: each component uses `data-kumo-*` attributes; install scripts query by selector.
+- Dialog validated the full behavior module composition before generalizing to other overlays.
 - A11y parity must be tested. Add automated a11y assertions (axe-core in Playwright) per component.
 
 **Deliverable:** All overlay/disclosure components shipped with parity to React versions for keyboard + screen reader behavior.
 
 ---
 
-## Phase 5 — Form Controls (~10 components, 2–3 weeks)
+## Phase 5 — Form Controls 🔶 IN PROGRESS
 
-**Components:** `Field`, `Input`, `InputGroup`, `SensitiveInput`, `Checkbox`, `Switch`, `Radio`, `Select`, `Combobox`, `Autocomplete`, `Pagination`, `DatePicker`.
+> **Status:** Switch, Checkbox, Radio shipped early (alongside behavior modules). Remaining form controls not yet started.
+
+**Components:**
+
+| Component | Status |
+|---|---|
+| `Switch` | ✅ Done — toggle button + hidden checkbox, JS handles aria-checked/thumb |
+| `Checkbox` | ✅ Done — native input with appearance-none + inline SVG indicator |
+| `Radio` + `RadioGroup` | ✅ Done — standard and card appearance, fieldset wrapper |
+| `Field` | ⏳ Not yet |
+| `Input` | ⏳ Not yet |
+| `InputGroup` | ⏳ Not yet |
+| `SensitiveInput` | ⏳ Not yet |
+| `Select` | ⏳ Not yet — full Listbox keyboard implementation |
+| `Combobox` | ⏳ Not yet — async filtering, type-ahead, controlled state |
+| `Autocomplete` | ⏳ Not yet |
+| `Pagination` | ⏳ Not yet |
+| `DatePicker` | ⏳ Not yet — calendar widget with focus management |
 
 **Notes:**
 - `Combobox`/`Autocomplete` need async filtering, type-ahead, controlled state.

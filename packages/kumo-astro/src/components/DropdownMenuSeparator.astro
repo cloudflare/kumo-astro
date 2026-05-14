@@ -1,0 +1,6 @@
+---
+import { cn } from "../utils/cn";
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+---
+<div role="separator" class={cn("-mx-1 my-1 h-px bg-kumo-hairline", className)} />

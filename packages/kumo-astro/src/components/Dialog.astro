@@ -1,0 +1,59 @@
+---
+/**
+ * Dialog — the modal panel (content area).
+ *
+ * Must be placed inside a `<DialogRoot>`. The DialogRoot script sets
+ * `role` at runtime based on the root's `data-role` attribute.
+ *
+ * Usage:
+ * ```astro
+ * <DialogRoot>
+ *   <DialogTrigger>Open</DialogTrigger>
+ *   <Dialog>
+ *     <DialogBackdrop />
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Description</DialogDescription>
+ *     <DialogClose>Close</DialogClose>
+ *   </Dialog>
+ * </DialogRoot>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_DIALOG_VARIANTS,
+  KUMO_DIALOG_DEFAULT_VARIANTS,
+  type KumoDialogSize,
+} from "@cloudflare/kumo/components/dialog";
+
+interface Props {
+  size?: KumoDialogSize;
+  class?: string;
+}
+
+const {
+  size = KUMO_DIALOG_DEFAULT_VARIANTS.size,
+  class: className,
+} = Astro.props;
+
+const sizeClass = KUMO_DIALOG_VARIANTS.size[size].classes;
+---
+
+<div
+  data-kumo-dialog
+  role="dialog"
+  aria-modal="true"
+  hidden
+  class={cn(
+    "shadow-m ring ring-kumo-line fixed top-1/2 left-1/2 w-full sm:w-auto",
+    "max-w-[calc(100vw-2rem)] sm:max-w-[calc(100vw-3rem)]",
+    "-translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-xl",
+    "bg-kumo-base text-kumo-default",
+    "transition-all duration-150",
+    "data-[open]:opacity-100 data-[open]:scale-100",
+    "data-[closed]:opacity-0 data-[closed]:scale-90",
+    sizeClass,
+    className,
+  )}
+>
+  <slot />
+</div>

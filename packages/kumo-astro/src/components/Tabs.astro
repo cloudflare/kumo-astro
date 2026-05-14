@@ -1,0 +1,176 @@
+---
+/**
+ * Tabs — tab navigation with segmented or underline style.
+ *
+ * Usage:
+ * ```astro
+ * <Tabs
+ *   tabs={[
+ *     { value: "overview", label: "Overview" },
+ *     { value: "settings", label: "Settings" },
+ *   ]}
+ *   defaultValue="overview"
+ * />
+ * ```
+ *
+ * Each tab's corresponding panel content should be placed in a sibling element
+ * with `role="tabpanel"` and `aria-labelledby` matching the tab id.
+ */
+import { cn } from "../utils/cn";
+import { KUMO_TABS_DEFAULT_VARIANTS } from "@cloudflare/kumo/components/tabs";
+
+interface Props {
+  tabs: Array<{ value: string; label: string; class?: string }>;
+  /** Controlled active tab value */
+  value?: string;
+  /** Uncontrolled initial tab (falls back to first tab) */
+  defaultValue?: string;
+  variant?: "segmented" | "underline";
+  size?: "base" | "sm";
+  class?: string;
+  listClass?: string;
+}
+
+const {
+  tabs,
+  value: controlledValue,
+  defaultValue,
+  variant = KUMO_TABS_DEFAULT_VARIANTS.variant,
+  size = KUMO_TABS_DEFAULT_VARIANTS.size,
+  class: className,
+  listClass,
+} = Astro.props;
+
+const isSegmented = variant === "segmented";
+const isUnderline = variant === "underline";
+const isSm = size === "sm";
+
+// Determine the initial active tab
+const initialValue = controlledValue ?? defaultValue ?? tabs[0]?.value;
+
+// Generate unique IDs for tabs and panels
+const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<div
+  data-kumo-tabs
+  data-value={initialValue}
+  data-controlled={controlledValue !== undefined ? "" : undefined}
+  class={cn("relative isolate min-w-0 font-medium", className)}
+>
+  {/* Tab list */}
+  <div
+    role="tablist"
+    aria-orientation="horizontal"
+    class={cn(
+      "relative flex min-w-0 shrink items-stretch",
+      isSegmented && cn(
+        "kumo-tabs-list overflow-x-auto rounded-lg bg-kumo-recessed px-0.5 touch-pan-y ring ring-kumo-hairline/70",
+        isSm ? "h-6.5 rounded-md" : "h-9",
+      ),
+      isUnderline && cn(
+        "gap-4 border-b border-kumo-hairline pb-2",
+        isSm ? "h-6.5" : "h-7.5",
+      ),
+      listClass,
+    )}
+  >
+    {tabs.map((tab) => (
+      <button
+        type="button"
+        role="tab"
+        id={`${uid}-tab-${tab.value}`}
+        aria-controls={`${uid}-panel-${tab.value}`}
+        aria-selected={tab.value === initialValue ? "true" : "false"}
+        tabindex={tab.value === initialValue ? 0 : -1}
+        data-value={tab.value}
+        class={cn(
+          "relative z-2 flex cursor-pointer items-center rounded bg-transparent whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+          isSm ? "text-xs" : "text-base",
+          isSegmented && cn(
+            "my-0.5 rounded-md text-kumo-subtle hover:text-kumo-default aria-selected:text-kumo-default focus-visible:ring-inset",
+            isSm ? "px-2" : "px-2.5",
+          ),
+          isUnderline && cn(
+            "text-kumo-subtle hover:bg-kumo-tint hover:text-kumo-default aria-selected:hover:bg-kumo-tint aria-selected:font-medium aria-selected:text-kumo-default",
+            isSm ? "px-1.5 py-2.5" : "px-2 py-3",
+          ),
+          tab.class,
+        )}
+      >
+        {tab.label}
+      </button>
+    ))}
+  </div>
+
+  {/* Tab panels */}
+  {tabs.map((tab) => (
+    <div
+      id={`${uid}-panel-${tab.value}`}
+      role="tabpanel"
+      aria-labelledby={`${uid}-tab-${tab.value}`}
+      data-panel
+      data-value={tab.value}
+      hidden={tab.value !== initialValue || undefined}
+    >
+      <slot name={tab.value} />
+    </div>
+  ))}
+</div>
+
+<script>
+  import { createRovingTabindex } from "../lib/behaviors/roving-tabindex.js";
+
+  function initTabs(root: HTMLElement) {
+    const tablist = root.querySelector<HTMLElement>("[role='tablist']");
+    if (!tablist) return;
+
+    // Set up roving tabindex for arrow key navigation
+    const nav = createRovingTabindex(tablist, "[role='tab']", {
+      orientation: "horizontal",
+    });
+    nav.mount();
+
+    // Click handler: switch active tab
+    tablist.addEventListener("click", (e) => {
+      const target = (e.target as HTMLElement).closest<HTMLElement>("[role='tab']");
+      if (!target) return;
+
+      const newValue = target.dataset.value;
+      if (!newValue) return;
+
+      const currentValue = root.dataset.value;
+      if (newValue === currentValue) return;
+
+      // Deactivate old tab
+      const oldTab = tablist.querySelector<HTMLElement>(`[data-value="${currentValue}"]`);
+      if (oldTab) {
+        oldTab.setAttribute("aria-selected", "false");
+      }
+
+      // Activate new tab
+      target.setAttribute("aria-selected", "true");
+      root.dataset.value = newValue;
+
+      // Hide old panel, show new panel
+      const oldPanel = root.querySelector<HTMLElement>(`[data-panel][data-value="${currentValue}"]`);
+      if (oldPanel) {
+        oldPanel.setAttribute("hidden", "");
+      }
+
+      const newPanel = root.querySelector<HTMLElement>(`[data-panel][data-value="${newValue}"]`);
+      if (newPanel) {
+        newPanel.removeAttribute("hidden");
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-tabs]").forEach(initTabs);
+  }
+
+  initAll();
+
+  // Re-initialize for Astro view transitions
+  document.addEventListener("astro:page-load", initAll);
+</script>

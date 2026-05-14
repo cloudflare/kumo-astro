@@ -1,0 +1,146 @@
+---
+/**
+ * Checkbox — native checkbox with custom visual indicator.
+ *
+ * Usage:
+ * ```astro
+ * <Checkbox label="Accept terms and conditions" name="terms" />
+ * <Checkbox label="Remember me" defaultChecked={true} />
+ * <Checkbox variant="error" label="Required field" />
+ * <Checkbox aria-label="Select all" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_CHECKBOX_DEFAULT_VARIANTS,
+  type KumoCheckboxVariant,
+} from "@cloudflare/kumo/components/checkbox";
+
+interface Props {
+  variant?: KumoCheckboxVariant;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
+  label?: string;
+  name?: string;
+  value?: string;
+  controlFirst?: boolean;
+  required?: boolean;
+  class?: string;
+  "aria-label"?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_CHECKBOX_DEFAULT_VARIANTS.variant,
+  checked,
+  defaultChecked = false,
+  disabled = false,
+  label,
+  name,
+  value,
+  controlFirst = true,
+  required,
+  class: className,
+  "aria-label": ariaLabel,
+  ...rest
+} = Astro.props;
+
+const initialChecked = checked !== undefined ? checked : defaultChecked;
+const isError = variant === "error";
+
+const inputClass = cn(
+  "relative flex h-4 w-4 shrink-0 appearance-none items-center justify-center rounded-sm",
+  "border-0 bg-kumo-base ring focus:outline-none",
+  "transition-colors duration-100",
+  isError ? "ring-kumo-danger" : "ring-kumo-hairline",
+  !disabled && !isError && "hover:ring-kumo-hairline focus:ring-2 focus:ring-kumo-focus focus-visible:ring-2 focus-visible:ring-kumo-brand",
+  "checked:bg-kumo-contrast checked:ring-kumo-contrast",
+  disabled && "cursor-not-allowed opacity-50",
+  "[&:checked+div]:opacity-100 [&:checked+div]:visible",
+  className,
+);
+
+const indicatorClass = cn(
+  "pointer-events-none absolute flex h-4 w-4 shrink-0 items-center justify-center",
+  "text-kumo-inverse opacity-0 invisible transition-opacity duration-100",
+);
+---
+
+{label ? (
+  <label
+    class={cn(
+      "m-0 inline-flex items-center gap-2",
+      controlFirst ? "flex-row" : "flex-row-reverse justify-end",
+      disabled ? "cursor-not-allowed" : "cursor-pointer",
+    )}
+  >
+    <span class="relative flex items-center">
+      <input
+        type="checkbox"
+        name={name}
+        value={value}
+        checked={initialChecked || undefined}
+        disabled={disabled || undefined}
+        required={required || undefined}
+        aria-label={ariaLabel}
+        class={inputClass}
+        {...rest}
+      />
+      <div class={indicatorClass} aria-hidden="true">
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2.5 7L5.5 10L11.5 4"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </div>
+    </span>
+    <span class="text-base text-kumo-default">
+      {label}
+      {required === false && (
+        <span class="ml-1 text-sm text-kumo-subtle">(optional)</span>
+      )}
+    </span>
+  </label>
+) : (
+  <span class="relative inline-flex items-center">
+    <input
+      type="checkbox"
+      name={name}
+      value={value}
+      checked={initialChecked || undefined}
+      disabled={disabled || undefined}
+      required={required || undefined}
+      aria-label={ariaLabel}
+      class={inputClass}
+      {...rest}
+    />
+    <div class={indicatorClass} aria-hidden="true">
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 14 14"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M2.5 7L5.5 10L11.5 4"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </span>
+)}

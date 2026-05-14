@@ -1,0 +1,24 @@
+---
+/**
+ * DialogTitle — the accessible title for the dialog.
+ *
+ * Rendered as an `<h2>`. The DialogRoot script sets `aria-labelledby`
+ * on the dialog panel to point to this element automatically.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<h2
+  data-kumo-dialog-title
+  class={cn("text-lg font-semibold text-kumo-default", className)}
+  {...rest}
+>
+  <slot />
+</h2>

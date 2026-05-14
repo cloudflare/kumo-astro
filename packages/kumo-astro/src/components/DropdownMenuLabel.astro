@@ -1,0 +1,8 @@
+---
+import { cn } from "../utils/cn";
+interface Props { class?: string; }
+const { class: className } = Astro.props;
+---
+<div class={cn("px-2 py-1.5 text-base font-semibold text-kumo-subtle", className)}>
+  <slot />
+</div>

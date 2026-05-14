@@ -1,0 +1,103 @@
+---
+/**
+ * PopoverRoot — wrapper that wires trigger + content + behaviors.
+ *
+ * Usage:
+ * ```astro
+ * <PopoverRoot>
+ *   <PopoverTrigger>Open</PopoverTrigger>
+ *   <PopoverContent>
+ *     <p>Popover body</p>
+ *   </PopoverContent>
+ * </PopoverRoot>
+ * ```
+ */
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  side?: "top" | "bottom" | "left" | "right";
+  class?: string;
+  id?: string;
+}
+
+const {
+  side = "bottom",
+  class: className,
+  id = safeRandomId("kumo-popover"),
+} = Astro.props;
+---
+
+<span
+  data-kumo-popover-root
+  data-side={side}
+  id={id}
+  class={className}
+  style="display:contents"
+>
+  <slot />
+</span>
+
+<script>
+  import { createPopoverAnchor } from "../lib/behaviors/popover-anchor.js";
+  import { createPortal } from "../lib/behaviors/portal.js";
+  import { createTransition } from "../lib/behaviors/transition.js";
+  import { pushEscapeLayer, popEscapeLayer } from "../lib/behaviors/escape-stack.js";
+  import type { Placement } from "../lib/behaviors/popover-anchor.js";
+
+  function initPopover(root: HTMLElement) {
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-popover-trigger]");
+    const content = root.querySelector<HTMLElement>("[data-kumo-popover-content]");
+    if (!trigger || !content) return;
+
+    const placement = (root.dataset.side ?? "bottom") as Placement;
+    const anchor = createPopoverAnchor(trigger, content, { placement, offset: 8 });
+    const portal = createPortal(content);
+    const transition = createTransition(content);
+    let escId: symbol | null = null;
+    let isOpen = false;
+
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+      portal.mount();
+      content.removeAttribute("hidden");
+      anchor.mount();
+      transition.open();
+      trigger.setAttribute("aria-expanded", "true");
+      escId = pushEscapeLayer(close);
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      if (escId !== null) { popEscapeLayer(escId); escId = null; }
+      trigger.setAttribute("aria-expanded", "false");
+      transition.close(() => {
+        anchor.unmount();
+        content.setAttribute("hidden", "");
+        portal.unmount();
+      });
+    }
+
+    trigger.addEventListener("click", () => isOpen ? close() : open());
+
+    // Close on outside click
+    document.addEventListener("click", (e) => {
+      if (isOpen && !root.contains(e.target as Node) && !content.contains(e.target as Node)) {
+        close();
+      }
+    }, { capture: true });
+
+    // Close button inside content
+    content.addEventListener("click", (e) => {
+      if ((e.target as HTMLElement).closest("[data-kumo-popover-close]")) close();
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-popover-root]").forEach(initPopover);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

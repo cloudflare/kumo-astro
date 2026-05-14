@@ -1,0 +1,119 @@
+---
+/**
+ * DialogRoot — the invisible wrapper that wires trigger + panel + behaviors together.
+ *
+ * Usage:
+ * ```astro
+ * <DialogRoot>
+ *   <DialogTrigger>Open</DialogTrigger>
+ *   <Dialog>
+ *     <DialogBackdrop />
+ *     <DialogTitle>Title</DialogTitle>
+ *     <DialogDescription>Description</DialogDescription>
+ *     <DialogClose>Close</DialogClose>
+ *   </Dialog>
+ * </DialogRoot>
+ * ```
+ */
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Props {
+  id?: string;
+  role?: "dialog" | "alertdialog";
+  class?: string;
+}
+
+const {
+  id = safeRandomId("kumo-dialog-root"),
+  role = "dialog",
+  class: className,
+} = Astro.props;
+---
+
+<div
+  data-kumo-dialog-root
+  data-role={role}
+  id={id}
+  class={className}
+  style="display:contents"
+>
+  <slot />
+</div>
+
+<script>
+  import { createFocusTrap } from "../lib/behaviors/focus-trap.js";
+  import { createPortal } from "../lib/behaviors/portal.js";
+  import { createTransition } from "../lib/behaviors/transition.js";
+  import { pushEscapeLayer, popEscapeLayer } from "../lib/behaviors/escape-stack.js";
+
+  function initDialogRoot(rootEl: HTMLElement) {
+    const role = rootEl.dataset.role ?? "dialog";
+    const triggerEl = rootEl.querySelector<HTMLElement>("[data-kumo-dialog-trigger]");
+    const dialogEl = rootEl.querySelector<HTMLElement>("[data-kumo-dialog]");
+
+    if (!triggerEl || !dialogEl) return;
+
+    // Propagate role to dialog panel so it can set the correct aria role
+    dialogEl.setAttribute("role", role);
+
+    const trap = createFocusTrap(dialogEl);
+    const portal = createPortal(dialogEl);
+    const transition = createTransition(dialogEl);
+
+    let escId: symbol | null = null;
+
+    function openDialog() {
+      portal.mount();
+      dialogEl.removeAttribute("hidden");
+      dialogEl.setAttribute("aria-modal", "true");
+      transition.open();
+      trap.activate();
+      escId = pushEscapeLayer(() => closeDialog());
+      triggerEl.setAttribute("aria-expanded", "true");
+    }
+
+    function closeDialog() {
+      trap.deactivate(true);
+      if (escId !== null) {
+        popEscapeLayer(escId);
+        escId = null;
+      }
+      transition.close(() => {
+        dialogEl.setAttribute("hidden", "");
+        portal.unmount();
+      });
+      triggerEl.setAttribute("aria-expanded", "false");
+    }
+
+    // Trigger opens dialog
+    triggerEl.addEventListener("click", () => openDialog());
+
+    // Close buttons close dialog
+    rootEl.addEventListener("click", (e) => {
+      const target = e.target as HTMLElement;
+      if (target.closest("[data-kumo-dialog-close]")) {
+        closeDialog();
+      }
+    });
+
+    // Backdrop click closes for role="dialog" (not alertdialog)
+    if (role !== "alertdialog") {
+      dialogEl.addEventListener("click", (e) => {
+        const target = e.target as HTMLElement;
+        if (target.closest("[data-kumo-dialog-backdrop]")) {
+          closeDialog();
+        }
+      });
+    }
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-dialog-root]").forEach(initDialogRoot);
+  }
+
+  initAll();
+
+  document.addEventListener("astro:page-load", () => {
+    initAll();
+  });
+</script>

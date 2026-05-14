@@ -1,0 +1,139 @@
+---
+/**
+ * Radio — individual radio button item for single-select choices.
+ *
+ * Use inside RadioGroup for grouped behavior, or standalone.
+ *
+ * Usage:
+ * ```astro
+ * <!-- Inside RadioGroup -->
+ * <RadioGroup legend="Notification preference" name="notif">
+ *   <Radio label="Email" value="email" name="notif" />
+ *   <Radio label="SMS" value="sms" name="notif" />
+ * </RadioGroup>
+ *
+ * <!-- Card appearance -->
+ * <Radio
+ *   label="Professional"
+ *   description="For business use"
+ *   value="pro"
+ *   name="plan"
+ *   appearance="card"
+ * />
+ * ```
+ *
+ * Note: In Astro, context can't be passed to slot children. Radio items must
+ * have matching `name` props when used in a group.
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_RADIO_DEFAULT_VARIANTS,
+  type KumoRadioVariant,
+  type KumoRadioAppearance,
+} from "@cloudflare/kumo/components/radio";
+
+interface Props {
+  variant?: KumoRadioVariant;
+  appearance?: KumoRadioAppearance;
+  label: string;
+  description?: string;
+  value: string;
+  name?: string;
+  disabled?: boolean;
+  checked?: boolean;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_RADIO_DEFAULT_VARIANTS.variant,
+  appearance = KUMO_RADIO_DEFAULT_VARIANTS.appearance,
+  label,
+  description,
+  value,
+  name,
+  disabled = false,
+  checked,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const isError = variant === "error";
+const isCard = appearance === "card";
+
+// Radio input classes — appearance-none with custom checked/focus styles
+const radioClass = cn(
+  "relative flex h-4 w-4 shrink-0 appearance-none items-center justify-center rounded-full",
+  "border-0 bg-kumo-base ring focus:outline-none",
+  isError ? "ring-kumo-danger" : "ring-kumo-line",
+  !disabled && !isError && "hover:ring-kumo-hairline focus:ring-2 focus:ring-kumo-focus focus-visible:ring-2 focus-visible:ring-kumo-brand focus-visible:outline-offset-3",
+  !disabled && isError && "focus:ring-2 focus:ring-kumo-focus focus-visible:ring-2 focus-visible:ring-kumo-brand focus-visible:outline-offset-3",
+  "checked:bg-kumo-contrast",
+  disabled && "cursor-not-allowed",
+);
+
+// Inner dot indicator shown when checked — toggled via CSS sibling selector
+const indicatorClass = "pointer-events-none absolute flex h-4 w-4 shrink-0 items-center justify-center";
+---
+
+{isCard ? (
+  <label
+    class={cn(
+      "m-0 group relative flex items-start gap-3 rounded-lg border border-kumo-hairline bg-kumo-base p-3",
+      "transition-colors has-[:checked]:border-kumo-interact has-[:checked]:bg-kumo-tint",
+      isError && "border-kumo-danger has-[:checked]:border-kumo-danger has-[:checked]:bg-kumo-base",
+      disabled
+        ? "cursor-not-allowed opacity-50"
+        : cn(
+            "cursor-pointer",
+            !isError && "hover:bg-kumo-tint",
+          ),
+      className,
+    )}
+  >
+    <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+      <span class="text-base font-medium text-kumo-default">{label}</span>
+      {description && (
+        <span class="text-sm text-kumo-subtle">{description}</span>
+      )}
+    </div>
+    <span class="relative mt-0.5 flex items-center">
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        disabled={disabled || undefined}
+        checked={checked || undefined}
+        class={cn(radioClass, "mt-0.5 ring-2", isError ? "ring-kumo-danger" : "ring-kumo-line")}
+        {...rest}
+      />
+      <span class={indicatorClass} aria-hidden="true">
+        <span class="h-2 w-2 rounded-full bg-kumo-base opacity-0 [input:checked~&]:opacity-100 pointer-events-none absolute"></span>
+      </span>
+    </span>
+  </label>
+) : (
+  <label
+    class={cn(
+      "m-0 group relative inline-flex items-center gap-2",
+      disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+      className,
+    )}
+  >
+    <span class="relative flex items-center">
+      <input
+        type="radio"
+        name={name}
+        value={value}
+        disabled={disabled || undefined}
+        checked={checked || undefined}
+        class={radioClass}
+        {...rest}
+      />
+      <span class={indicatorClass} aria-hidden="true">
+        <span class="h-2 w-2 rounded-full bg-kumo-base opacity-0 peer-checked:opacity-100 pointer-events-none absolute"></span>
+      </span>
+    </span>
+    <span class="text-base text-kumo-default">{label}</span>
+  </label>
+)}

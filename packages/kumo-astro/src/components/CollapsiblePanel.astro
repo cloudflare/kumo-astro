@@ -1,0 +1,25 @@
+---
+/**
+ * CollapsiblePanel — the panel shown/hidden by Collapsible.
+ *
+ * Must be a direct or nested child of `<Collapsible>`.
+ * Hidden by default; the parent Collapsible script shows/hides it.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div
+  data-kumo-collapsible-panel
+  hidden
+  class={className}
+  {...rest}
+>
+  <slot />
+</div>

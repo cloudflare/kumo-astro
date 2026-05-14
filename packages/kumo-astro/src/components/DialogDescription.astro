@@ -1,0 +1,24 @@
+---
+/**
+ * DialogDescription — descriptive text for the dialog.
+ *
+ * The DialogRoot script sets `aria-describedby` on the dialog panel
+ * to point to this element automatically.
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<p
+  data-kumo-dialog-description
+  class={cn("text-sm text-kumo-subtle", className)}
+  {...rest}
+>
+  <slot />
+</p>

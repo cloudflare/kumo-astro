@@ -11,8 +11,6 @@
  * portal.mount();   // teleports element to document.body
  * portal.unmount(); // moves element back to original parent
  * ```
- *
- * @stub — Not yet implemented. Phase 3 deliverable.
  */
 
 export interface Portal {
@@ -29,17 +27,38 @@ export interface Portal {
  * @param element   The element to portal.
  * @param container Target container; defaults to `document.body`.
  */
-export function createPortal(
-  _element: HTMLElement,
-  _container?: HTMLElement,
-): Portal {
-  // TODO: Phase 3 — implement DOM teleportation with position restoration
+export function createPortal(element: HTMLElement, container?: HTMLElement): Portal {
+  let originalParent: ParentNode | null = null;
+  let originalNextSibling: ChildNode | null = null;
+  let mounted = false;
+
   return {
     mount() {
-      /* stub */
+      // If already mounted, unmount first to reset state
+      if (mounted) {
+        this.unmount();
+      }
+
+      originalParent = element.parentNode;
+      originalNextSibling = element.nextSibling;
+
+      const target = container ?? document.body;
+      target.appendChild(element);
+      mounted = true;
     },
+
     unmount() {
-      /* stub */
+      if (!mounted) return;
+
+      if (originalParent) {
+        originalParent.insertBefore(element, originalNextSibling);
+      } else if (element.parentNode) {
+        element.parentNode.removeChild(element);
+      }
+
+      originalParent = null;
+      originalNextSibling = null;
+      mounted = false;
     },
   };
 }

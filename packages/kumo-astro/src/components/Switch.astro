@@ -1,0 +1,249 @@
+---
+/**
+ * Switch — toggle control backed by a native checkbox for form support.
+ *
+ * Usage:
+ * ```astro
+ * <Switch label="Enable notifications" />
+ * <Switch label="Dark mode" defaultChecked={true} />
+ * <Switch variant="neutral" size="sm" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_SWITCH_DEFAULT_VARIANTS,
+  type KumoSwitchSize,
+  type KumoSwitchVariant,
+} from "@cloudflare/kumo/components/switch";
+
+interface Props {
+  size?: KumoSwitchSize;
+  variant?: KumoSwitchVariant;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
+  label?: string;
+  name?: string;
+  value?: string;
+  controlFirst?: boolean;
+  class?: string;
+  id?: string;
+  "aria-label"?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_SWITCH_DEFAULT_VARIANTS.size,
+  variant = KUMO_SWITCH_DEFAULT_VARIANTS.variant,
+  checked,
+  defaultChecked = false,
+  disabled = false,
+  label,
+  name,
+  value = "on",
+  controlFirst = true,
+  class: className,
+  id,
+  "aria-label": ariaLabel,
+  ...rest
+} = Astro.props;
+
+const isNeutral = variant === "neutral";
+
+// Use checked if explicitly provided, otherwise fall back to defaultChecked
+const initialChecked = checked !== undefined ? checked : defaultChecked;
+
+const sizeStyles = {
+  sm: { track: "h-4 w-8", thumb: "w-4", slide: "left-4" },
+  base: { track: "h-4.5 w-9", thumb: "w-4.5", slide: "left-4.5" },
+  lg: { track: "h-5 w-10", thumb: "w-5", slide: "left-5" },
+};
+const s = sizeStyles[size];
+
+const squircleRadius =
+  "rounded-[5px] supports-[corner-shape:squircle]:rounded-[10px] [corner-shape:squircle]";
+
+// Track colors — static class strings for Tailwind JIT compatibility
+const trackColorsDefault = "bg-neutral-200 ring-neutral-300";
+const trackColorsChecked = "bg-blue-500 ring-blue-600";
+const trackColorsNeutralDefault = "bg-neutral-150 ring-kumo-hairline";
+const trackColorsNeutralChecked = "bg-neutral-500 ring-neutral-600";
+
+const initialTrackColors = isNeutral
+  ? initialChecked
+    ? trackColorsNeutralChecked
+    : trackColorsNeutralDefault
+  : initialChecked
+    ? trackColorsChecked
+    : trackColorsDefault;
+
+const thumbColorsDefault = "bg-kumo-base";
+const thumbColorsChecked = "bg-kumo-base";
+
+const initialThumbPosition = initialChecked ? s.slide : "left-0";
+
+const trackClass = cn(
+  "relative inline-flex items-center ring cursor-pointer border-none p-0",
+  "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+  "transition-colors duration-150 ease-out motion-reduce:transition-none",
+  "disabled:cursor-not-allowed disabled:opacity-50",
+  s.track,
+  squircleRadius,
+  initialTrackColors,
+  className,
+);
+
+const thumbClass = cn(
+  "absolute top-0 bottom-0 shadow-[0_0_1px_0.5px_var(--color-kumo-shadow-edge),0_1px_2px_var(--color-kumo-shadow-drop)]",
+  s.thumb,
+  squircleRadius,
+  thumbColorsDefault,
+  "transition-all duration-150 ease-out motion-reduce:transition-none",
+  initialThumbPosition,
+);
+
+// Generate a unique ID for connecting label to input
+const uid = id ?? `kumo-switch-${Math.random().toString(36).slice(2, 9)}`;
+const inputId = `${uid}-input`;
+---
+
+{label ? (
+  <label
+    class={cn(
+      "m-0 inline-flex items-center gap-2",
+      !controlFirst && "flex-row-reverse justify-end",
+      disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+    )}
+  >
+    <input
+      type="checkbox"
+      id={inputId}
+      name={name}
+      value={value}
+      checked={initialChecked || undefined}
+      disabled={disabled || undefined}
+      class="sr-only"
+      aria-hidden="true"
+      tabindex="-1"
+    />
+    <button
+      id={uid}
+      type="button"
+      role="switch"
+      aria-checked={initialChecked}
+      aria-label={ariaLabel ?? label}
+      disabled={disabled || undefined}
+      data-kumo-switch
+      data-input-id={inputId}
+      data-size={size}
+      data-variant={variant}
+      class={trackClass}
+      {...rest}
+    >
+      <div class={thumbClass}></div>
+    </button>
+    <span class="text-base font-medium text-kumo-default">{label}</span>
+  </label>
+) : (
+  <>
+    <input
+      type="checkbox"
+      id={inputId}
+      name={name}
+      value={value}
+      checked={initialChecked || undefined}
+      disabled={disabled || undefined}
+      class="sr-only"
+      aria-hidden="true"
+      tabindex="-1"
+    />
+    <button
+      id={uid}
+      type="button"
+      role="switch"
+      aria-checked={initialChecked}
+      aria-label={ariaLabel}
+      disabled={disabled || undefined}
+      data-kumo-switch
+      data-input-id={inputId}
+      data-size={size}
+      data-variant={variant}
+      class={trackClass}
+      {...rest}
+    >
+      <div class={thumbClass}></div>
+    </button>
+  </>
+)}
+
+<script>
+  // Switch interactive behavior
+  // Toggles aria-checked, thumb position, and track colors on click
+  // Also syncs the hidden checkbox for form submission
+
+  const TRACK_COLORS = {
+    default: {
+      unchecked: "bg-neutral-200 ring-neutral-300",
+      checked: "bg-blue-500 ring-blue-600",
+    },
+    neutral: {
+      unchecked: "bg-neutral-150 ring-kumo-hairline",
+      checked: "bg-neutral-500 ring-neutral-600",
+    },
+  } as const;
+
+  const SLIDE_POSITIONS = {
+    sm: "left-4",
+    base: "left-4.5",
+    lg: "left-5",
+  } as const;
+
+  function initSwitch(button: HTMLElement) {
+    const inputId = button.dataset.inputId;
+    const input = inputId
+      ? (document.getElementById(inputId) as HTMLInputElement | null)
+      : null;
+    const thumb = button.querySelector("div");
+    const size = (button.dataset.size ?? "base") as keyof typeof SLIDE_POSITIONS;
+    const variant = (button.dataset.variant ?? "default") as keyof typeof TRACK_COLORS;
+
+    button.addEventListener("click", () => {
+      const isChecked = button.getAttribute("aria-checked") === "true";
+      const newChecked = !isChecked;
+
+      button.setAttribute("aria-checked", String(newChecked));
+
+      if (input) {
+        input.checked = newChecked;
+      }
+
+      if (thumb) {
+        const slideClass = SLIDE_POSITIONS[size];
+        if (newChecked) {
+          thumb.classList.remove("left-0");
+          thumb.classList.add(slideClass);
+        } else {
+          thumb.classList.remove(slideClass);
+          thumb.classList.add("left-0");
+        }
+      }
+
+      const colors = TRACK_COLORS[variant];
+      if (newChecked) {
+        colors.unchecked.split(" ").forEach((c) => button.classList.remove(c));
+        colors.checked.split(" ").forEach((c) => button.classList.add(c));
+      } else {
+        colors.checked.split(" ").forEach((c) => button.classList.remove(c));
+        colors.unchecked.split(" ").forEach((c) => button.classList.add(c));
+      }
+    });
+  }
+
+  // Initialize all switches on the page
+  document.querySelectorAll<HTMLElement>("[data-kumo-switch]").forEach(initSwitch);
+
+  // Re-initialize for Astro view transitions
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll<HTMLElement>("[data-kumo-switch]").forEach(initSwitch);
+  });
+</script>
