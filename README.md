@@ -130,11 +130,42 @@ See [AGENTS.md](./AGENTS.md) for comprehensive development documentation includi
 
 ```bash
 pnpm install
-pnpm dev                              # Start docs site at localhost:4321
-pnpm --filter @cloudflare/kumo test   # Run kumo unit tests
-pnpm test:astro                       # Run kumo-astro Playwright tests
+pnpm dev   # Start docs site at localhost:4321
+```
+
+> **Important:** `pnpm dev` (the docs site) depends on the built output of `@cloudflare/kumo`. If you get a "Cannot find module" error on first run, build the library first:
+>
+> ```bash
+> pnpm --filter @cloudflare/kumo build
+> pnpm dev
+> ```
+
+#### Working in each package
+
+| Package | What to run |
+|---|---|
+| `packages/kumo` | `pnpm --filter @cloudflare/kumo build` — build the library; `pnpm --filter @cloudflare/kumo test` — unit tests; `pnpm --filter @cloudflare/kumo new:component` — scaffold a new component |
+| `packages/kumo-docs-astro` | `pnpm dev` from repo root (or `pnpm --filter kumo-docs-astro dev`) — docs site at localhost:4321 |
+| `packages/kumo-figma` | `pnpm --filter @cloudflare/kumo-figma build` — build the Figma plugin |
+| `packages/kumo-screenshot-worker` | Used by CI only; no local dev workflow |
+
+**Build order matters.** The packages depend on each other in sequence:
+
+```
+1. pnpm --filter @cloudflare/kumo build           # Build the React library (generates dist/)
+2. pnpm dev                                        # Docs site (requires kumo dist/)
+3. pnpm --filter @cloudflare/kumo codegen:registry # Regenerate component registry (requires docs demos)
+4. pnpm --filter @cloudflare/kumo-figma build      # Figma plugin (requires component registry)
+```
+
+#### Common commands
+
+```bash
 pnpm lint
 pnpm typecheck
+pnpm --filter @cloudflare/kumo test   # Run kumo unit tests
+pnpm test:astro                       # Run kumo-astro Playwright tests
+pnpm changeset                        # Create a changeset (required when modifying kumo or kumo-astro)
 ```
 
 ### CI / GitHub Actions

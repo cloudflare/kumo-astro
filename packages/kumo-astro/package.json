@@ -83,7 +83,7 @@
     "typecheck": "astro check --root tests/smoke",
     "lint": "oxlint --config .oxlintrc.json src/",
     "test": "playwright test",
-    "test:build": "cd tests/smoke && node ../node_modules/astro/astro.js build"
+    "test:build": "astro build --root tests/smoke"
   },
   "peerDependencies": {
     "astro": ">=4.0.0",

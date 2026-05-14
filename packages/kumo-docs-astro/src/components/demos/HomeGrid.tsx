@@ -50,6 +50,24 @@ import {
   WarningOctagonIcon,
 } from "@phosphor-icons/react";
 
+// Components that have been migrated to @cloudflare/kumo-astro
+const astroComponents = new Set([
+  "badge",
+  "banner",
+  "breadcrumbs",
+  "button",
+  "empty",
+  "grid",
+  "label",
+  "layer-card",
+  "link",
+  "loader",
+  "meter",
+  "table",
+  "table-of-contents",
+  "text",
+]);
+
 const componentRoutes: Record<string, string> = {
   badge: "/components/badge",
   banner: "/components/banner",
@@ -679,12 +697,28 @@ export function HomeGrid() {
             {route ? (
               <a
                 href={route}
-                className="absolute top-4 left-4 text-base font-medium text-kumo-subtle hover:text-kumo-default"
+                className="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default"
               >
+                {astroComponents.has(c.id) && (
+                  <img
+                    src="/astro.svg"
+                    alt="Astro"
+                    title="Available in @cloudflare/kumo-astro"
+                    className="h-4 w-4 opacity-60"
+                  />
+                )}
                 {c.name}
               </a>
             ) : (
-              <span className="absolute top-4 left-4 text-base font-medium text-kumo-subtle italic">
+              <span className="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle italic">
+                {astroComponents.has(c.id) && (
+                  <img
+                    src="/astro.svg"
+                    alt="Astro"
+                    title="Available in @cloudflare/kumo-astro"
+                    className="h-4 w-4 opacity-60"
+                  />
+                )}
                 {c.name}
               </span>
             )}
