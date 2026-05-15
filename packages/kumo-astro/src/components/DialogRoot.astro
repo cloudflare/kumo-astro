@@ -88,22 +88,30 @@ const {
     // Trigger opens dialog
     triggerEl.addEventListener("click", () => openDialog());
 
-    // Close buttons close dialog
-    rootEl.addEventListener("click", (e) => {
+    // Close buttons close dialog.
+    // Listen on dialogEl (not rootEl) so clicks work after portalling to document.body.
+    dialogEl.addEventListener("click", (e) => {
       const target = e.target as HTMLElement;
       if (target.closest("[data-kumo-dialog-close]")) {
         closeDialog();
       }
     });
 
-    // Backdrop click closes for role="dialog" (not alertdialog)
+    // Backdrop click closes for role="dialog" (not alertdialog).
+    // The backdrop is pointer-events-none, so we detect "outside dialog content"
+    // clicks by listening at the document level and checking if the click
+    // target is within the dialog element itself (not just its backdrop child).
+    let dialogClickHandler: ((e: MouseEvent) => void) | null = null;
     if (role !== "alertdialog") {
-      dialogEl.addEventListener("click", (e) => {
+      dialogClickHandler = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
-        if (target.closest("[data-kumo-dialog-backdrop]")) {
+        // If the click is on the dialog element itself (not any content child), close it.
+        // This happens when users click in the area between panel edges and viewport edge.
+        if (target === dialogEl) {
           closeDialog();
         }
-      });
+      };
+      dialogEl.addEventListener("click", dialogClickHandler);
     }
   }
 

@@ -1,0 +1,128 @@
+---
+/**
+ * InputArea — styled textarea, optionally wrapped in a Field.
+ *
+ * Usage:
+ * ```astro
+ * <!-- Bare textarea -->
+ * <InputArea placeholder="Enter notes…" aria-label="Notes" rows={4} />
+ *
+ * <!-- With built-in Field wrapper -->
+ * <InputArea label="Description" placeholder="Describe your issue…" />
+ *
+ * <!-- With description and error -->
+ * <InputArea
+ *   label="Bio"
+ *   description="Tell us a bit about yourself."
+ *   error="Bio is required."
+ * />
+ * ```
+ *
+ * Port of the React `InputArea` / `Textarea` component. Uses the same
+ * `inputVariants` as `Input` with an added `h-auto py-2` override to suit
+ * multi-line content. When `label` is provided the textarea is wrapped in a
+ * `<Field>` and linked via a generated unique id.
+ */
+import { cn } from "../utils/cn";
+import { safeRandomId } from "../utils/safe-random-id";
+import Field from "./Field.astro";
+import {
+  inputVariants,
+  KUMO_INPUT_DEFAULT_VARIANTS,
+  type KumoInputSize,
+  type KumoInputVariant,
+} from "@cloudflare/kumo/components/input";
+
+interface Props {
+  /**
+   * Input size — controls padding, font size, and border radius.
+   * @default "base"
+   */
+  size?: KumoInputSize;
+  /**
+   * Visual variant.
+   * @default "default"
+   */
+  variant?: KumoInputVariant;
+  /** Label text — when provided, wraps the textarea in a Field. */
+  label?: string;
+  /** Helper text passed to the Field wrapper. */
+  description?: string;
+  /**
+   * Error message passed to the Field wrapper.
+   * Also auto-applies `variant="error"` styling to the textarea.
+   */
+  error?: string;
+  /** When `false`, shows "(optional)" indicator in the label. */
+  required?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  name?: string;
+  /** Number of visible text rows. */
+  rows?: number;
+  /** Explicit id — used for label association when wrapping in Field. */
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_INPUT_DEFAULT_VARIANTS.size,
+  variant: variantProp,
+  label,
+  description,
+  error,
+  required,
+  disabled,
+  placeholder,
+  name,
+  rows,
+  id: idProp,
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Auto-apply error variant when error prop is truthy
+const variant: KumoInputVariant = variantProp ?? (error ? "error" : "default");
+
+// Generate a stable unique ID when a label is provided but no explicit id given
+const uid = label ? (idProp ?? safeRandomId("kumo-input-area")) : idProp;
+
+const textareaClass = cn(
+  inputVariants({ size, variant, focusIndicator: true }),
+  "h-auto py-2",
+  className,
+);
+---
+
+{label ? (
+  <Field
+    label={label}
+    required={required}
+    description={description}
+    error={error}
+    for={uid}
+  >
+    <textarea
+      id={uid}
+      name={name}
+      rows={rows}
+      placeholder={placeholder}
+      disabled={disabled || undefined}
+      required={required || undefined}
+      class={textareaClass}
+      {...rest}
+    ></textarea>
+  </Field>
+) : (
+  <textarea
+    id={uid}
+    name={name}
+    rows={rows}
+    placeholder={placeholder}
+    disabled={disabled || undefined}
+    required={required || undefined}
+    class={textareaClass}
+    {...rest}
+  ></textarea>
+)}

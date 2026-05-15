@@ -1,0 +1,99 @@
+---
+/**
+ * Field — layout wrapper that pairs a form control with a label, optional
+ * description, and error message.
+ *
+ * Usage:
+ * ```astro
+ * <Field label="Email" for="email-input">
+ *   <input id="email-input" type="email" />
+ * </Field>
+ *
+ * <Field label="Phone" required={false} description="For account recovery only." for="phone-input">
+ *   <input id="phone-input" type="tel" />
+ * </Field>
+ *
+ * <Field label="Notes" error="This field is required." for="notes-input">
+ *   <textarea id="notes-input"></textarea>
+ * </Field>
+ * ```
+ *
+ * Port of the React `Field` component. Base UI Field context is not used here —
+ * the structure is rendered statically with an explicit `for` prop linking the
+ * label to the control.
+ */
+import { cn } from "../utils/cn";
+import Label from "./Label.astro";
+import { fieldVariants } from "@cloudflare/kumo/components/field";
+
+interface Props {
+  /** Label text shown above (or beside, for checkbox/switch) the control. */
+  label: string;
+  /**
+   * When explicitly `false`, shows gray "(optional)" text after the label.
+   * `true` or `undefined` shows no indicator.
+   */
+  required?: boolean;
+  /** Helper text displayed below the control (hidden when `error` is set). */
+  description?: string;
+  /** Error message displayed below the control (takes priority over description). */
+  error?: string;
+  /**
+   * When `true`, places the control before the label in checkbox/switch layouts
+   * (flex-row-reverse). Defaults to `false`.
+   */
+  controlFirst?: boolean;
+  /**
+   * When `true`, the `<label>` element is omitted entirely. Use when the child
+   * component provides its own accessible label.
+   * @default false
+   */
+  hideLabel?: boolean;
+  /**
+   * The `id` of the form control this label is associated with.
+   * Sets the `for` attribute on the rendered `<label>`.
+   */
+  for?: string;
+  /** Additional CSS classes. */
+  class?: string;
+  id?: string;
+  [key: string]: unknown;
+}
+
+const {
+  label,
+  required,
+  description,
+  error,
+  controlFirst = false,
+  hideLabel = false,
+  for: htmlFor,
+  class: className,
+  id,
+  ...rest
+} = Astro.props;
+
+const showOptional = required === false;
+---
+
+<div
+  id={id}
+  class={cn(fieldVariants({ controlFirst }), className)}
+  {...rest}
+>
+  {!hideLabel && (
+    <Label
+      for={htmlFor}
+      showOptional={showOptional}
+      class="select-none"
+    >
+      {label}
+    </Label>
+  )}
+  <slot />
+  {error ? (
+    <p class="text-sm leading-snug text-kumo-danger col-span-full">{error}</p>
+  ) : description ? (
+    <p class="text-sm leading-snug text-kumo-subtle col-span-full">{description}</p>
+  ) : null}
+</div>

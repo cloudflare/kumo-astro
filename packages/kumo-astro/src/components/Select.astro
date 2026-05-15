@@ -1,0 +1,505 @@
+---
+/**
+ * Select — accessible native-style select backed by a `<button>` trigger +
+ * floating listbox. Supports keyboard navigation, form submission, Field
+ * wrapper, and controlled/uncontrolled initial values.
+ *
+ * Usage:
+ * ```astro
+ * <Select
+ *   name="fruit"
+ *   placeholder="Choose a fruit…"
+ *   items={[
+ *     { label: "Apple", value: "apple" },
+ *     { label: "Banana", value: "banana" },
+ *     { label: "Cherry", value: "cherry" },
+ *   ]}
+ * />
+ *
+ * <Select
+ *   label="Country"
+ *   name="country"
+ *   defaultValue="us"
+ *   items={[
+ *     { label: "United States", value: "us" },
+ *     { label: "United Kingdom", value: "uk" },
+ *   ]}
+ * />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import { safeRandomId } from "../utils/safe-random-id";
+import { KUMO_INPUT_VARIANTS, type KumoInputSize } from "@cloudflare/kumo/components/input";
+import Field from "./Field.astro";
+
+interface SelectItem {
+  label: string;
+  value: string;
+  disabled?: boolean;
+}
+
+interface Props {
+  /** Array of options to display in the listbox. */
+  items: SelectItem[];
+  /** Controlled selected value. Pre-selects on render. */
+  value?: string;
+  /** Initial uncontrolled value. */
+  defaultValue?: string;
+  /** Placeholder text shown when no value is selected. */
+  placeholder?: string;
+  /** Size of the select trigger (xs / sm / base / lg). */
+  size?: KumoInputSize;
+  /** When provided, wraps the select in a Field with a visible label. */
+  label?: string;
+  /** Helper text displayed below the select (requires label). */
+  description?: string;
+  /** Error message — auto-applies error variant and shows in Field. */
+  error?: string;
+  required?: boolean;
+  disabled?: boolean;
+  /** Form field name for the hidden input. */
+  name?: string;
+  id?: string;
+  /** Preferred popup placement. */
+  side?: "top" | "bottom";
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  items,
+  value,
+  defaultValue,
+  placeholder = "Select…",
+  size = "base",
+  label,
+  description,
+  error,
+  required,
+  disabled = false,
+  name,
+  id = safeRandomId("kumo-select"),
+  side = "bottom",
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Determine the initial display value (controlled > uncontrolled > placeholder)
+const initialValue = value ?? defaultValue ?? "";
+const initialLabel = initialValue
+  ? (items.find((item) => item.value === initialValue)?.label ?? placeholder)
+  : placeholder;
+
+const hasError = Boolean(error);
+
+// Size classes derived from KUMO_INPUT_VARIANTS
+const sizeClasses: Record<KumoInputSize, string> = {
+  xs: KUMO_INPUT_VARIANTS.size.xs.classes,
+  sm: KUMO_INPUT_VARIANTS.size.sm.classes,
+  base: KUMO_INPUT_VARIANTS.size.base.classes,
+  lg: KUMO_INPUT_VARIANTS.size.lg.classes,
+};
+
+// Icon sizes per input size
+const caretSizes: Record<KumoInputSize, number> = {
+  xs: 12,
+  sm: 14,
+  base: 16,
+  lg: 18,
+};
+const caretSize = caretSizes[size];
+
+const triggerClass = cn(
+  // Base layout
+  "inline-flex w-full items-center justify-between gap-2",
+  // Input base (border-0 overrides ring-based border)
+  "border-0 bg-kumo-control text-kumo-default ring ring-kumo-line",
+  "outline-none focus:outline-none focus:ring-kumo-focus/50 focus:ring-[1.5px]",
+  "font-normal",
+  // Disabled
+  "disabled:cursor-not-allowed disabled:opacity-50",
+  // Size
+  sizeClasses[size],
+  // Error ring
+  hasError && "ring-kumo-danger focus:ring-kumo-danger/50",
+  className,
+);
+
+const listboxId = `${id}-listbox`;
+---
+
+{label ? (
+  <Field
+    label={label}
+    required={required}
+    description={description}
+    error={error}
+    for={id}
+    class="w-full"
+  >
+    <span
+      data-kumo-select
+      data-side={side}
+      data-size={size}
+      style="display:contents"
+      {...rest}
+    >
+      <input
+        type="hidden"
+        name={name}
+        value={initialValue}
+        data-kumo-select-input
+      />
+      <button
+        type="button"
+        id={id}
+        data-kumo-select-trigger
+        aria-haspopup="listbox"
+        aria-expanded="false"
+        aria-controls={listboxId}
+        disabled={disabled || undefined}
+        class={triggerClass}
+      >
+        <span data-kumo-select-value class={cn("min-w-0 truncate", !initialValue && "text-kumo-placeholder")}>
+          {initialLabel}
+        </span>
+        <svg
+          width={caretSize}
+          height={caretSize}
+          viewBox="0 0 256 256"
+          aria-hidden="true"
+          fill="currentColor"
+          class="shrink-0 text-kumo-subtle"
+        >
+          <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" />
+        </svg>
+      </button>
+
+      <div
+        id={listboxId}
+        data-kumo-select-listbox
+        role="listbox"
+        hidden
+        style="position:absolute;z-index:50"
+        class={cn(
+          "flex flex-col rounded-lg bg-kumo-elevated p-1.5 shadow-lg outline outline-1 outline-kumo-fill",
+          "min-w-[var(--kumo-select-width)]",
+          "transition-[transform,opacity] duration-150",
+          "data-[open]:opacity-100 data-[open]:scale-100",
+          "data-[closed]:opacity-0 data-[closed]:scale-90",
+        )}
+      >
+        {items.map((item) => (
+          <div
+            role="option"
+            data-kumo-select-option
+            data-value={item.value}
+            aria-selected={item.value === initialValue ? "true" : "false"}
+            aria-disabled={item.disabled ? "true" : undefined}
+            tabindex="-1"
+            class={cn(
+              "flex cursor-pointer items-center justify-between gap-2 rounded px-2 py-1.5 text-base text-kumo-default outline-none select-none",
+              "hover:bg-kumo-tint focus:bg-kumo-tint",
+              "aria-selected:font-medium",
+              "aria-[disabled=true]:cursor-not-allowed aria-[disabled=true]:opacity-50",
+            )}
+          >
+            <span>{item.label}</span>
+            {item.value === initialValue && (
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 256 256"
+                aria-hidden="true"
+                fill="currentColor"
+                data-kumo-select-check
+                class="shrink-0 text-kumo-brand"
+              >
+                <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
+              </svg>
+            )}
+            {item.value !== initialValue && (
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 256 256"
+                aria-hidden="true"
+                fill="currentColor"
+                data-kumo-select-check
+                class="shrink-0 text-kumo-brand invisible"
+              >
+                <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
+              </svg>
+            )}
+          </div>
+        ))}
+      </div>
+    </span>
+  </Field>
+) : (
+  <span
+    data-kumo-select
+    data-side={side}
+    data-size={size}
+    style="display:contents"
+    {...rest}
+  >
+    <input
+      type="hidden"
+      name={name}
+      value={initialValue}
+      data-kumo-select-input
+    />
+    <button
+      type="button"
+      id={id}
+      data-kumo-select-trigger
+      aria-haspopup="listbox"
+      aria-expanded="false"
+      aria-controls={listboxId}
+      disabled={disabled || undefined}
+      class={triggerClass}
+    >
+      <span data-kumo-select-value class={cn("min-w-0 truncate", !initialValue && "text-kumo-placeholder")}>
+        {initialLabel}
+      </span>
+      <svg
+        width={caretSize}
+        height={caretSize}
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+        fill="currentColor"
+        class="shrink-0 text-kumo-subtle"
+      >
+        <path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" />
+      </svg>
+    </button>
+
+    <div
+      id={listboxId}
+      data-kumo-select-listbox
+      role="listbox"
+      hidden
+      style="position:absolute;z-index:50"
+      class={cn(
+        "flex flex-col rounded-lg bg-kumo-elevated p-1.5 shadow-lg outline outline-1 outline-kumo-fill",
+        "min-w-[var(--kumo-select-width)]",
+        "transition-[transform,opacity] duration-150",
+        "data-[open]:opacity-100 data-[open]:scale-100",
+        "data-[closed]:opacity-0 data-[closed]:scale-90",
+      )}
+    >
+      {items.map((item) => (
+        <div
+          role="option"
+          data-kumo-select-option
+          data-value={item.value}
+          aria-selected={item.value === initialValue ? "true" : "false"}
+          aria-disabled={item.disabled ? "true" : undefined}
+          tabindex="-1"
+          class={cn(
+            "flex cursor-pointer items-center justify-between gap-2 rounded px-2 py-1.5 text-base text-kumo-default outline-none select-none",
+            "hover:bg-kumo-tint focus:bg-kumo-tint",
+            "aria-selected:font-medium",
+            "aria-[disabled=true]:cursor-not-allowed aria-[disabled=true]:opacity-50",
+          )}
+        >
+          <span>{item.label}</span>
+          {item.value === initialValue && (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 256 256"
+              aria-hidden="true"
+              fill="currentColor"
+              data-kumo-select-check
+              class="shrink-0 text-kumo-brand"
+            >
+              <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
+            </svg>
+          )}
+          {item.value !== initialValue && (
+            <svg
+              width="14"
+              height="14"
+              viewBox="0 0 256 256"
+              aria-hidden="true"
+              fill="currentColor"
+              data-kumo-select-check
+              class="shrink-0 text-kumo-brand invisible"
+            >
+              <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
+            </svg>
+          )}
+        </div>
+      ))}
+    </div>
+  </span>
+)}
+
+<script>
+  import { createPopoverAnchor } from "../lib/behaviors/popover-anchor.js";
+  import { createPortal } from "../lib/behaviors/portal.js";
+  import { createTransition } from "../lib/behaviors/transition.js";
+  import { createRovingTabindex } from "../lib/behaviors/roving-tabindex.js";
+  import { pushEscapeLayer, popEscapeLayer } from "../lib/behaviors/escape-stack.js";
+  import type { Placement } from "../lib/behaviors/popover-anchor.js";
+
+  function initSelect(root: HTMLElement) {
+    // Guard against double-initialization (initAll runs both on parse and on astro:page-load)
+    if (root.dataset.kumoSelectInit) return;
+    root.dataset.kumoSelectInit = "1";
+
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-select-trigger]");
+    const listbox = root.querySelector<HTMLElement>("[data-kumo-select-listbox]");
+    const hiddenInput = root.querySelector<HTMLInputElement>("[data-kumo-select-input]");
+    const valueSpan = root.querySelector<HTMLElement>("[data-kumo-select-value]");
+
+    if (!trigger || !listbox) return;
+
+    const side = (root.dataset.side ?? "bottom") as Placement;
+    const placement = side === "top" ? "top-start" : "bottom-start";
+
+    const anchor = createPopoverAnchor(trigger, listbox, { placement, offset: 6 });
+    const portal = createPortal(listbox);
+    const transition = createTransition(listbox);
+    let rovingNav = createRovingTabindex(
+      listbox,
+      "[data-kumo-select-option]:not([aria-disabled='true'])",
+      { orientation: "vertical" },
+    );
+    let escId: symbol | null = null;
+    let isOpen = false;
+
+    // Read current selected value from DOM
+    function getCurrentValue(): string {
+      const selected = listbox.querySelector<HTMLElement>("[data-kumo-select-option][aria-selected='true']");
+      return selected?.dataset.value ?? "";
+    }
+
+    function getOptions(): HTMLElement[] {
+      return Array.from(listbox.querySelectorAll<HTMLElement>("[data-kumo-select-option]"));
+    }
+
+    function selectOption(value: string, label: string) {
+      // Update hidden input
+      if (hiddenInput) hiddenInput.value = value;
+
+      // Update displayed value span
+      if (valueSpan) {
+        valueSpan.textContent = label;
+        valueSpan.classList.remove("text-kumo-placeholder");
+      }
+
+      // Update aria-selected and checkmarks on all options
+      getOptions().forEach((opt) => {
+        const isSelected = opt.dataset.value === value;
+        opt.setAttribute("aria-selected", isSelected ? "true" : "false");
+        const check = opt.querySelector<SVGElement>("[data-kumo-select-check]");
+        if (check) {
+          if (isSelected) {
+            check.classList.remove("invisible");
+          } else {
+            check.classList.add("invisible");
+          }
+        }
+        // Bold selected option
+        if (isSelected) {
+          opt.classList.add("font-medium");
+        } else {
+          opt.classList.remove("font-medium");
+        }
+      });
+    }
+
+    function open() {
+      if (isOpen) return;
+      isOpen = true;
+
+      // Set width CSS variable before mounting/positioning
+      listbox.style.setProperty("--kumo-select-width", `${trigger.offsetWidth}px`);
+
+      portal.mount();
+      listbox.removeAttribute("hidden");
+      anchor.mount();
+      transition.open();
+      trigger.setAttribute("aria-expanded", "true");
+      escId = pushEscapeLayer(close);
+
+      rovingNav = createRovingTabindex(
+        listbox,
+        "[data-kumo-select-option]:not([aria-disabled='true'])",
+        { orientation: "vertical" },
+      );
+      rovingNav.mount();
+
+      // Focus the currently selected option, or the first one
+      const currentVal = getCurrentValue();
+      const selectedOpt = currentVal
+        ? listbox.querySelector<HTMLElement>(`[data-kumo-select-option][data-value="${CSS.escape(currentVal)}"]`)
+        : null;
+      const focusTarget = selectedOpt ?? listbox.querySelector<HTMLElement>("[data-kumo-select-option]:not([aria-disabled='true'])");
+      focusTarget?.focus();
+    }
+
+    function close() {
+      if (!isOpen) return;
+      isOpen = false;
+      rovingNav.unmount();
+      if (escId !== null) { popEscapeLayer(escId); escId = null; }
+      trigger.setAttribute("aria-expanded", "false");
+      trigger.focus();
+      transition.close(() => {
+        anchor.unmount();
+        listbox.setAttribute("hidden", "");
+        portal.unmount();
+      });
+    }
+
+    trigger.addEventListener("click", () => isOpen ? close() : open());
+
+    // Close on outside click
+    document.addEventListener("click", (e) => {
+      if (isOpen && !root.contains(e.target as Node) && !listbox.contains(e.target as Node)) {
+        close();
+      }
+    }, { capture: true });
+
+    // Click on option — select and close
+    listbox.addEventListener("click", (e) => {
+      const opt = (e.target as HTMLElement).closest<HTMLElement>("[data-kumo-select-option]");
+      if (!opt) return;
+      if (opt.getAttribute("aria-disabled") === "true") return;
+      const val = opt.dataset.value ?? "";
+      const label = opt.querySelector("span")?.textContent ?? val;
+      selectOption(val, label);
+      close();
+    });
+
+    // Enter / Space on focused option selects it
+    listbox.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        const opt = document.activeElement?.closest<HTMLElement>("[data-kumo-select-option]");
+        if (opt && listbox.contains(opt)) {
+          e.preventDefault();
+          if (opt.getAttribute("aria-disabled") === "true") return;
+          const val = opt.dataset.value ?? "";
+          const label = opt.querySelector("span")?.textContent ?? val;
+          selectOption(val, label);
+          close();
+        }
+      }
+      // Tab closes the listbox without selecting
+      if (e.key === "Tab") {
+        close();
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-select]").forEach(initSelect);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

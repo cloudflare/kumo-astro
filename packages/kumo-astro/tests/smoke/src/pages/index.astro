@@ -49,6 +49,9 @@ import TableHead from "@cloudflare/kumo-astro/components/table-head";
 import TableCell from "@cloudflare/kumo-astro/components/table-cell";
 
 // ── Phase 3/4/5: Interactive ──────────────────────────────────────────────
+import Field from "@cloudflare/kumo-astro/components/field";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
 import Switch from "@cloudflare/kumo-astro/components/switch";
 import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
 import Radio from "@cloudflare/kumo-astro/components/radio";
@@ -75,6 +78,10 @@ import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-it
 import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
 import DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";
 import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
+import Select from "@cloudflare/kumo-astro/components/select";
+import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";
+import Pagination from "@cloudflare/kumo-astro/components/pagination";
+import Toast from "@cloudflare/kumo-astro/components/toast";
 ---
 
 <!doctype html>
@@ -300,6 +307,76 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
       </Table>
     </section>
 
+    <!-- ─── Field / Input / InputArea ──────────────────────────────────── -->
+    <section data-testid="field-input" class="space-y-4 max-w-sm">
+      <h2 class="text-lg font-semibold">Field / Input / InputArea</h2>
+
+      <!-- Bare input -->
+      <Input placeholder="Search…" aria-label="Search" />
+
+      <!-- Input with label -->
+      <Input label="Email" placeholder="you@example.com" type="email" />
+
+      <!-- Input with description -->
+      <Input
+        label="Username"
+        description="3–20 characters, letters and numbers only."
+        placeholder="your-handle"
+      />
+
+      <!-- Input with error -->
+      <Input
+        label="Password"
+        error="Password must be at least 8 characters."
+        type="password"
+        placeholder="••••••••"
+      />
+
+      <!-- Optional label -->
+      <Input label="Middle name" required={false} placeholder="(optional)" />
+
+      <!-- Disabled input -->
+      <Input label="Account ID" value="acc-0001" disabled />
+
+      <!-- Sizes -->
+      <div class="space-y-2">
+        <Input size="xs" placeholder="xs input" aria-label="Extra small input" />
+        <Input size="sm" placeholder="sm input" aria-label="Small input" />
+        <Input size="base" placeholder="base input" aria-label="Base input" />
+        <Input size="lg" placeholder="lg input" aria-label="Large input" />
+      </div>
+
+      <!-- Field used directly (wrapping custom control) -->
+      <Field label="Custom control" for="custom-sel">
+        <select id="custom-sel" class="w-full rounded-lg border border-kumo-line px-3 py-2 text-kumo-default">
+          <option>Option A</option>
+          <option>Option B</option>
+        </select>
+      </Field>
+
+      <!-- Bare textarea -->
+      <InputArea placeholder="Enter notes…" aria-label="Notes" rows={3} />
+
+      <!-- InputArea with label -->
+      <InputArea label="Description" placeholder="Describe your issue…" rows={4} />
+
+      <!-- InputArea with error -->
+      <InputArea
+        label="Bio"
+        error="Bio is required."
+        placeholder="Tell us about yourself…"
+        rows={3}
+      />
+
+      <!-- InputArea with description, optional -->
+      <InputArea
+        label="Additional comments"
+        required={false}
+        description="Anything else you'd like to share?"
+        rows={3}
+      />
+    </section>
+
     <!-- ─── Phase 3/5: Switch ───────────────────────────────────────────── -->
     <section data-testid="switch" class="space-y-3">
       <h2 class="text-lg font-semibold">Switch</h2>
@@ -399,8 +476,8 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
     <section data-testid="dialog" class="space-y-3">
       <h2 class="text-lg font-semibold">Dialog</h2>
       <DialogRoot id="demo-dialog">
-        <DialogTrigger>
-          <Button variant="primary">Open Dialog</Button>
+        <DialogTrigger class="inline-flex items-center justify-center rounded-md bg-kumo-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-kumo-brand/90">
+          Open Dialog
         </DialogTrigger>
         <Dialog>
           <DialogBackdrop />
@@ -408,11 +485,11 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
             <DialogTitle>Confirm action</DialogTitle>
             <DialogDescription>Are you sure you want to proceed? This cannot be undone.</DialogDescription>
             <div class="flex justify-end gap-2">
-              <DialogClose>
-                <Button variant="secondary">Cancel</Button>
+              <DialogClose class="inline-flex items-center rounded-md border border-kumo-hairline px-3 py-1.5 text-sm font-medium text-kumo-default">
+                Cancel
               </DialogClose>
-              <DialogClose>
-                <Button variant="destructive">Confirm</Button>
+              <DialogClose class="inline-flex items-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white">
+                Confirm
               </DialogClose>
             </div>
           </div>
@@ -424,15 +501,15 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
     <section data-testid="popover" class="space-y-3">
       <h2 class="text-lg font-semibold">Popover</h2>
       <PopoverRoot>
-        <PopoverTrigger>
-          <Button variant="secondary">Open Popover</Button>
+        <PopoverTrigger class="inline-flex items-center rounded-md border border-kumo-hairline px-3 py-1.5 text-sm font-medium text-kumo-default">
+          Open Popover
         </PopoverTrigger>
         <PopoverContent>
           <div class="p-4 space-y-2 max-w-xs">
             <p class="text-sm font-medium text-kumo-default">Popover heading</p>
             <p class="text-sm text-kumo-subtle">This is a popover with some content inside.</p>
-            <PopoverClose>
-              <Button variant="ghost" size="sm">Close</Button>
+            <PopoverClose class="inline-flex items-center rounded px-2 py-1 text-sm text-kumo-subtle hover:text-kumo-default">
+              Close
             </PopoverClose>
           </div>
         </PopoverContent>
@@ -443,8 +520,8 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
     <section data-testid="dropdown-menu" class="space-y-3">
       <h2 class="text-lg font-semibold">DropdownMenu</h2>
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <Button variant="secondary">Actions</Button>
+        <DropdownMenuTrigger class="inline-flex items-center rounded-md border border-kumo-hairline px-3 py-1.5 text-sm font-medium text-kumo-default">
+          Actions
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>Worker actions</DropdownMenuLabel>
@@ -461,14 +538,116 @@ import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
       <h2 class="text-lg font-semibold">Tooltip</h2>
       <div class="flex gap-4 items-center flex-wrap">
         <Tooltip content="Save your changes">
-          <Button variant="primary">Save</Button>
+          <button class="inline-flex items-center rounded-md bg-kumo-brand px-3 py-1.5 text-sm font-medium text-white">Save</button>
         </Tooltip>
         <Tooltip content="Remove this item" side="bottom">
-          <Button variant="destructive">Delete</Button>
+          <button class="inline-flex items-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white">Delete</button>
         </Tooltip>
         <Tooltip content="View documentation" side="right">
-          <Button variant="ghost">Docs</Button>
+          <button class="inline-flex items-center rounded-md px-3 py-1.5 text-sm font-medium text-kumo-default hover:bg-kumo-tint">Docs</button>
         </Tooltip>
+      </div>
+    </section>
+
+
+    <!-- ─── Select ─────────────────────────────────────────────────────────── -->
+    <section data-testid="select" class="space-y-4">
+      <h2 class="text-lg font-semibold">Select</h2>
+      <div class="flex flex-wrap gap-4 max-w-sm">
+        <Select
+          name="fruit"
+          placeholder="Choose a fruit…"
+          class="w-full"
+          items={[
+            { label: "Apple", value: "apple" },
+            { label: "Banana", value: "banana" },
+            { label: "Cherry", value: "cherry" },
+            { label: "Disabled option", value: "disabled", disabled: true },
+          ]}
+        />
+        <Select
+          label="Country"
+          name="country"
+          defaultValue="us"
+          class="w-full"
+          items={[
+            { label: "United States", value: "us" },
+            { label: "United Kingdom", value: "uk" },
+            { label: "Canada", value: "ca" },
+          ]}
+        />
+        <Select
+          label="Error example"
+          name="err-select"
+          error="Please select an option"
+          required={false}
+          class="w-full"
+          items={[
+            { label: "Option A", value: "a" },
+            { label: "Option B", value: "b" },
+          ]}
+        />
+      </div>
+    </section>
+
+    <!-- ─── ClipboardText ──────────────────────────────────────────────────── -->
+    <section data-testid="clipboard-text" class="space-y-3">
+      <h2 class="text-lg font-semibold">ClipboardText</h2>
+      <div class="flex flex-col gap-3 max-w-md">
+        <ClipboardText text="sk_live_abc123def456ghi789" />
+        <ClipboardText text="npm install @cloudflare/kumo" size="base" />
+        <ClipboardText text="tiny" size="sm" />
+      </div>
+    </section>
+
+    <!-- ─── Pagination ─────────────────────────────────────────────────────── -->
+    <section data-testid="pagination" class="space-y-4">
+      <h2 class="text-lg font-semibold">Pagination</h2>
+      <Pagination totalItems={100} pageSize={10} />
+      <Pagination totalItems={50} pageSize={10} controls="simple" />
+      <Pagination totalItems={200} pageSize={25} showPageSize />
+    </section>
+
+    <!-- ─── Toast ──────────────────────────────────────────────────────────── -->
+    <section data-testid="toast" class="space-y-3">
+      <h2 class="text-lg font-semibold">Toast</h2>
+      <Toast position="bottom-right" />
+      <div class="flex gap-2 flex-wrap">
+        <button
+          type="button"
+          onclick="kumoToast({ title: 'Success', description: 'Operation completed.', variant: 'success' })"
+          class="inline-flex items-center rounded-md bg-kumo-brand px-3 py-1.5 text-sm font-medium text-white"
+        >
+          Show success
+        </button>
+        <button
+          type="button"
+          onclick="kumoToast({ title: 'Error', description: 'Something went wrong.', variant: 'error' })"
+          class="inline-flex items-center rounded-md bg-kumo-danger px-3 py-1.5 text-sm font-medium text-white"
+        >
+          Show error
+        </button>
+        <button
+          type="button"
+          onclick="kumoToast({ title: 'Warning', description: 'Proceed with caution.', variant: 'warning' })"
+          class="inline-flex items-center rounded-md bg-kumo-warning px-3 py-1.5 text-sm font-medium text-white"
+        >
+          Show warning
+        </button>
+        <button
+          type="button"
+          onclick="kumoToast({ title: 'Info', description: 'Here is some information.', variant: 'info' })"
+          class="inline-flex items-center rounded-md bg-kumo-info px-3 py-1.5 text-sm font-medium text-white"
+        >
+          Show info
+        </button>
+        <button
+          type="button"
+          onclick="kumoToast({ title: 'Default toast', description: 'No variant specified.' })"
+          class="inline-flex items-center rounded-md border border-kumo-line px-3 py-1.5 text-sm font-medium text-kumo-default"
+        >
+          Show default
+        </button>
       </div>
     </section>
 

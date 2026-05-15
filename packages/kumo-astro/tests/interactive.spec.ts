@@ -320,7 +320,7 @@ test.describe("Popover", () => {
     await expect(content).toBeVisible();
 
     // Click on the page heading — safely outside the popover
-    await page.locator("h1").click();
+    await page.locator("h1").first().click();
     await expect(content).toBeHidden();
   });
 });
@@ -504,7 +504,7 @@ test.describe("Tooltip", () => {
     await expect(visibleTooltip).toBeVisible();
 
     // Move mouse to a neutral area to trigger mouseleave
-    await page.locator("h1").hover();
+    await page.locator("h1").first().hover();
 
     await expect(visibleTooltip).toBeHidden();
   });

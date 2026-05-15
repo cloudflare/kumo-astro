@@ -18,7 +18,8 @@ const { class: className } = Astro.props;
   data-kumo-dialog-backdrop
   aria-hidden="true"
   class={cn(
-    "fixed inset-0 bg-kumo-recessed",
+    "fixed inset-0 z-40 bg-kumo-recessed",
+    "pointer-events-none",
     "transition-opacity duration-150",
     "data-[open]:opacity-80 data-[closed]:opacity-0",
     className,

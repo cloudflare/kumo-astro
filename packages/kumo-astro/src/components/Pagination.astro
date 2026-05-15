@@ -1,0 +1,255 @@
+---
+/**
+ * Pagination — page navigation controls.
+ *
+ * Renders previous/next/first/last buttons, a "Page X of Y" display, and an
+ * optional page-size selector. All state lives in vanilla JS driven by
+ * `data-*` attributes — no React required.
+ *
+ * Usage:
+ * ```astro
+ * <Pagination totalItems={100} pageSize={10} />
+ * <Pagination totalItems={50} pageSize={10} controls="simple" />
+ * <Pagination totalItems={200} pageSize={25} showPageSize />
+ * ```
+ *
+ * Listen for page changes:
+ * ```js
+ * document.querySelector('[data-kumo-pagination]')
+ *   .addEventListener('kumo:page-change', (e) => {
+ *     console.log(e.detail.page, e.detail.pageSize);
+ *   });
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Total number of items across all pages. */
+  totalItems: number;
+  /** Items per page. @default 25 */
+  pageSize?: number;
+  /** Initial page (1-indexed). @default 1 */
+  defaultPage?: number;
+  /** Controlled current page (1-indexed). */
+  page?: number;
+  /** Controls variant. @default "full" */
+  controls?: "full" | "simple";
+  /** Show a page-size selector. @default false */
+  showPageSize?: boolean;
+  /** Available options for the page-size selector. @default [25, 50, 100, 250] */
+  pageSizeOptions?: number[];
+  /** Label shown before the page-size selector. @default "Per page:" */
+  pageSizeLabel?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  totalItems,
+  pageSize = 25,
+  defaultPage = 1,
+  page: controlledPage,
+  controls = "full",
+  showPageSize = false,
+  pageSizeOptions = [25, 50, 100, 250],
+  pageSizeLabel = "Per page:",
+  class: className,
+  ...rest
+} = Astro.props;
+
+const initialPage = controlledPage ?? defaultPage;
+const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+
+// Button classes shared by all nav buttons
+const navBtn = cn(
+  "inline-flex h-7 w-7 items-center justify-center rounded-md border-0",
+  "bg-kumo-control text-kumo-subtle ring ring-kumo-line",
+  "hover:text-kumo-default hover:bg-kumo-tint",
+  "focus:outline-none focus:ring-kumo-focus/50 focus-visible:ring-2 focus-visible:ring-kumo-brand",
+  "disabled:opacity-40 disabled:cursor-not-allowed transition-colors",
+);
+---
+
+<nav
+  data-kumo-pagination
+  data-page={String(initialPage)}
+  data-page-size={String(pageSize)}
+  data-total-items={String(totalItems)}
+  aria-label="Pagination"
+  class={cn("flex flex-wrap items-center gap-2", className)}
+  {...rest}
+>
+  {controls === "full" && (
+    <button
+      type="button"
+      data-kumo-pagination-first
+      aria-label="First page"
+      class={navBtn}
+      disabled={initialPage <= 1 || undefined}
+    >
+      <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+        <!-- CaretDoubleLeft -->
+        <path d="M109.66,133.66l-72,72A8,8,0,0,1,26.34,194.34L98.34,128,26.34,61.66A8,8,0,0,1,37.66,50.34l72,72A8,8,0,0,1,109.66,133.66Zm80,0-72,72A8,8,0,0,1,106.34,194.34L178.34,128,106.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,189.66,133.66Z" />
+      </svg>
+    </button>
+  )}
+
+  <button
+    type="button"
+    data-kumo-pagination-prev
+    aria-label="Previous page"
+    class={navBtn}
+    disabled={initialPage <= 1 || undefined}
+  >
+    <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+      <!-- CaretLeft -->
+      <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z" />
+    </svg>
+  </button>
+
+  <span class="flex items-center gap-1 text-sm text-kumo-default" aria-live="polite" aria-atomic="true">
+    <span>Page</span>
+    <span data-kumo-pagination-current class="font-medium tabular-nums">{initialPage}</span>
+    <span>of</span>
+    <span data-kumo-pagination-total class="font-medium tabular-nums">{totalPages}</span>
+  </span>
+
+  <button
+    type="button"
+    data-kumo-pagination-next
+    aria-label="Next page"
+    class={navBtn}
+    disabled={initialPage >= totalPages || undefined}
+  >
+    <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+      <!-- CaretRight -->
+      <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" />
+    </svg>
+  </button>
+
+  {controls === "full" && (
+    <button
+      type="button"
+      data-kumo-pagination-last
+      aria-label="Last page"
+      class={navBtn}
+      disabled={initialPage >= totalPages || undefined}
+    >
+      <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+        <!-- CaretDoubleRight -->
+        <path d="M149.66,133.66l-72,72A8,8,0,0,1,66.34,194.34L138.34,128,66.34,61.66A8,8,0,0,1,77.66,50.34l72,72A8,8,0,0,1,149.66,133.66Zm80,0-72,72A8,8,0,0,1,146.34,194.34L218.34,128,146.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,229.66,133.66Z" />
+      </svg>
+    </button>
+  )}
+
+  {showPageSize && (
+    <span class="ml-auto flex items-center gap-2 text-sm text-kumo-subtle">
+      <span>{pageSizeLabel}</span>
+      <select
+        data-kumo-pagination-page-size
+        aria-label="Page size"
+        class={cn(
+          "h-7 rounded-md border-0 bg-kumo-control px-2 text-sm text-kumo-default",
+          "ring ring-kumo-line focus:outline-none focus:ring-kumo-focus/50 focus:ring-[1.5px]",
+        )}
+      >
+        {pageSizeOptions.map((opt) => (
+          <option value={String(opt)} selected={opt === pageSize || undefined}>{opt}</option>
+        ))}
+      </select>
+    </span>
+  )}
+</nav>
+
+<script>
+  function initPagination(nav: HTMLElement) {
+    // Guard against double-init
+    if ((nav as any).__kumoPageInit) return;
+    (nav as any).__kumoPageInit = true;
+
+    let page = parseInt(nav.dataset.page ?? "1", 10);
+    const totalItems = parseInt(nav.dataset.totalItems ?? "0", 10);
+    let pageSize = parseInt(nav.dataset.pageSize ?? "25", 10);
+
+    function totalPages(): number {
+      return Math.max(1, Math.ceil(totalItems / pageSize));
+    }
+
+    function updateUI() {
+      const total = totalPages();
+
+      const currentEl = nav.querySelector<HTMLElement>("[data-kumo-pagination-current]");
+      const totalEl = nav.querySelector<HTMLElement>("[data-kumo-pagination-total]");
+      if (currentEl) currentEl.textContent = String(page);
+      if (totalEl) totalEl.textContent = String(total);
+
+      const first = nav.querySelector<HTMLButtonElement>("[data-kumo-pagination-first]");
+      const prev = nav.querySelector<HTMLButtonElement>("[data-kumo-pagination-prev]");
+      const next = nav.querySelector<HTMLButtonElement>("[data-kumo-pagination-next]");
+      const last = nav.querySelector<HTMLButtonElement>("[data-kumo-pagination-last]");
+
+      if (first) first.disabled = page <= 1;
+      if (prev) prev.disabled = page <= 1;
+      if (next) next.disabled = page >= total;
+      if (last) last.disabled = page >= total;
+
+      nav.dataset.page = String(page);
+    }
+
+    function dispatch() {
+      nav.dispatchEvent(
+        new CustomEvent("kumo:page-change", {
+          detail: { page, pageSize },
+          bubbles: true,
+        }),
+      );
+    }
+
+    nav.querySelector("[data-kumo-pagination-first]")?.addEventListener("click", () => {
+      if (page === 1) return;
+      page = 1;
+      updateUI();
+      dispatch();
+    });
+
+    nav.querySelector("[data-kumo-pagination-prev]")?.addEventListener("click", () => {
+      if (page <= 1) return;
+      page--;
+      updateUI();
+      dispatch();
+    });
+
+    nav.querySelector("[data-kumo-pagination-next]")?.addEventListener("click", () => {
+      if (page >= totalPages()) return;
+      page++;
+      updateUI();
+      dispatch();
+    });
+
+    nav.querySelector("[data-kumo-pagination-last]")?.addEventListener("click", () => {
+      const last = totalPages();
+      if (page === last) return;
+      page = last;
+      updateUI();
+      dispatch();
+    });
+
+    nav.querySelector("[data-kumo-pagination-page-size]")?.addEventListener("change", (e) => {
+      pageSize = parseInt((e.target as HTMLSelectElement).value, 10);
+      page = 1;
+      nav.dataset.pageSize = String(pageSize);
+      updateUI();
+      dispatch();
+    });
+
+    // Set initial disabled states in case SSR disabled attrs don't match
+    updateUI();
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-pagination]").forEach(initPagination);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

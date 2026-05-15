@@ -1,0 +1,92 @@
+---
+/**
+ * ClipboardText — read-only text with a one-click copy-to-clipboard button.
+ * Shows a brief "Copied!" state on the button for 2 seconds after copying.
+ *
+ * Usage:
+ * ```astro
+ * <ClipboardText text="sk_live_abc123" />
+ * <ClipboardText text="npm install @cloudflare/kumo" size="sm" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_CLIPBOARD_TEXT_VARIANTS,
+  KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS,
+  type KumoClipboardTextSize,
+} from "@cloudflare/kumo/components/clipboard-text";
+
+interface Props {
+  /** The text to display and copy to clipboard. */
+  text: string;
+  /** Size of the clipboard text field. */
+  size?: KumoClipboardTextSize;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  text,
+  size = KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS.size,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sizeTextClass = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size].classes;
+---
+
+<div
+  data-kumo-clipboard-text
+  data-text={text}
+  class={cn(
+    "flex items-center gap-2 rounded-lg bg-kumo-control ring ring-kumo-line overflow-hidden",
+    className,
+  )}
+  {...rest}
+>
+  <span class={cn("flex-1 truncate ps-3 pe-1 font-mono py-2", sizeTextClass)}>
+    {text}
+  </span>
+  <button
+    type="button"
+    data-kumo-clipboard-copy
+    aria-label="Copy to clipboard"
+    class="inline-flex shrink-0 items-center gap-1 rounded px-2 py-1.5 my-1 mr-1 text-kumo-subtle hover:text-kumo-default hover:bg-kumo-tint transition-colors"
+  >
+    <!-- Copy icon (phosphor CopyIcon) -->
+    <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+      <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-40H176V88a8,8,0,0,0-8-8H96V48H208Z" />
+    </svg>
+    <span data-kumo-clipboard-label class="text-xs">Copy</span>
+  </button>
+</div>
+
+<script>
+  function initClipboardText(root: HTMLElement) {
+    const text = root.dataset.text ?? "";
+    const btn = root.querySelector<HTMLButtonElement>("[data-kumo-clipboard-copy]");
+    const label = root.querySelector<HTMLElement>("[data-kumo-clipboard-label]");
+    if (!btn || !label) return;
+
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(text);
+        label.textContent = "Copied!";
+        btn.setAttribute("aria-label", "Copied!");
+        setTimeout(() => {
+          label.textContent = "Copy";
+          btn.setAttribute("aria-label", "Copy to clipboard");
+        }, 2000);
+      } catch {
+        // Clipboard API unavailable — silently fail
+      }
+    });
+  }
+
+  function initAll() {
+    document.querySelectorAll<HTMLElement>("[data-kumo-clipboard-text]").forEach(initClipboardText);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

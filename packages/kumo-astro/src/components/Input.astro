@@ -1,0 +1,130 @@
+---
+/**
+ * Input — styled text input, optionally wrapped in a Field.
+ *
+ * Usage:
+ * ```astro
+ * <!-- Bare input -->
+ * <Input placeholder="Search..." aria-label="Search" />
+ *
+ * <!-- With built-in Field wrapper -->
+ * <Input label="Email" placeholder="you@example.com" type="email" />
+ *
+ * <!-- With description and error -->
+ * <Input
+ *   label="Password"
+ *   description="Must be at least 8 characters"
+ *   error="Password is too short"
+ * />
+ * ```
+ *
+ * Port of the React `Input` component. When `label` is provided the input is
+ * automatically wrapped in a `<Field>` using a generated unique id to wire
+ * `<label for>` → `<input id>`.
+ */
+import { cn } from "../utils/cn";
+import { safeRandomId } from "../utils/safe-random-id";
+import Field from "./Field.astro";
+import {
+  inputVariants,
+  KUMO_INPUT_DEFAULT_VARIANTS,
+  type KumoInputSize,
+  type KumoInputVariant,
+} from "@cloudflare/kumo/components/input";
+
+interface Props {
+  /**
+   * Input size.
+   * @default "base"
+   */
+  size?: KumoInputSize;
+  /**
+   * Visual variant.
+   * @default "default"
+   */
+  variant?: KumoInputVariant;
+  /** Label text — when provided, wraps the input in a Field. */
+  label?: string;
+  /** Helper text passed to the Field wrapper. */
+  description?: string;
+  /**
+   * Error message passed to the Field wrapper.
+   * Also auto-applies `variant="error"` styling to the input.
+   */
+  error?: string;
+  /** When `false`, shows "(optional)" indicator in the label. */
+  required?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  /** HTML input type (text, email, password, …). */
+  type?: string;
+  name?: string;
+  value?: string;
+  /** Explicit id — used for label association when wrapping in Field. */
+  id?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_INPUT_DEFAULT_VARIANTS.size,
+  variant: variantProp,
+  label,
+  description,
+  error,
+  required,
+  disabled,
+  placeholder,
+  type = "text",
+  name,
+  value,
+  id: idProp,
+  class: className,
+  ...rest
+} = Astro.props;
+
+// Auto-apply error variant when error prop is truthy
+const variant: KumoInputVariant = variantProp ?? (error ? "error" : "default");
+
+// Generate a stable unique ID when a label is provided but no explicit id given
+const uid = label ? (idProp ?? safeRandomId("kumo-input")) : idProp;
+
+const inputClass = cn(
+  inputVariants({ size, variant, focusIndicator: true }),
+  className,
+);
+---
+
+{label ? (
+  <Field
+    label={label}
+    required={required}
+    description={description}
+    error={error}
+    for={uid}
+  >
+    <input
+      id={uid}
+      type={type}
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      disabled={disabled || undefined}
+      required={required || undefined}
+      class={inputClass}
+      {...rest}
+    />
+  </Field>
+) : (
+  <input
+    id={uid}
+    type={type}
+    name={name}
+    value={value}
+    placeholder={placeholder}
+    disabled={disabled || undefined}
+    required={required || undefined}
+    class={inputClass}
+    {...rest}
+  />
+)}
