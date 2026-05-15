@@ -2,7 +2,7 @@
 /**
  * Smoke test fixture page.
  *
- * Renders every Phase 1 and Phase 2 component so that:
+ * Renders every Phase 1–5 component so that:
  *   1. Astro build-time errors surface immediately (missing imports, bad props).
  *   2. Playwright can assert rendered HTML structure and accessible roles.
  *   3. Screenshots can be taken for visual regression baselines.
@@ -47,6 +47,34 @@ import TableBody from "@cloudflare/kumo-astro/components/table-body";
 import TableRow from "@cloudflare/kumo-astro/components/table-row";
 import TableHead from "@cloudflare/kumo-astro/components/table-head";
 import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+
+// ── Phase 3/4/5: Interactive ──────────────────────────────────────────────
+import Switch from "@cloudflare/kumo-astro/components/switch";
+import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
+import Radio from "@cloudflare/kumo-astro/components/radio";
+import RadioGroup from "@cloudflare/kumo-astro/components/radio-group";
+import Tabs from "@cloudflare/kumo-astro/components/tabs";
+import Collapsible from "@cloudflare/kumo-astro/components/collapsible";
+import CollapsibleTrigger from "@cloudflare/kumo-astro/components/collapsible-trigger";
+import CollapsiblePanel from "@cloudflare/kumo-astro/components/collapsible-panel";
+import DialogRoot from "@cloudflare/kumo-astro/components/dialog-root";
+import Dialog from "@cloudflare/kumo-astro/components/dialog";
+import DialogBackdrop from "@cloudflare/kumo-astro/components/dialog-backdrop";
+import DialogTrigger from "@cloudflare/kumo-astro/components/dialog-trigger";
+import DialogClose from "@cloudflare/kumo-astro/components/dialog-close";
+import DialogTitle from "@cloudflare/kumo-astro/components/dialog-title";
+import DialogDescription from "@cloudflare/kumo-astro/components/dialog-description";
+import PopoverRoot from "@cloudflare/kumo-astro/components/popover-root";
+import PopoverTrigger from "@cloudflare/kumo-astro/components/popover-trigger";
+import PopoverContent from "@cloudflare/kumo-astro/components/popover-content";
+import PopoverClose from "@cloudflare/kumo-astro/components/popover-close";
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
+import DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";
+import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
 ---
 
 <!doctype html>
@@ -270,6 +298,178 @@ import TableCell from "@cloudflare/kumo-astro/components/table-cell";
           </TableRow>
         </TableBody>
       </Table>
+    </section>
+
+    <!-- ─── Phase 3/5: Switch ───────────────────────────────────────────── -->
+    <section data-testid="switch" class="space-y-3">
+      <h2 class="text-lg font-semibold">Switch</h2>
+      <div class="flex flex-wrap gap-4 items-center">
+        <Switch label="Enable notifications" />
+        <Switch label="Dark mode" defaultChecked={true} />
+        <Switch label="Disabled off" disabled />
+        <Switch label="Disabled on" defaultChecked={true} disabled />
+        <Switch variant="neutral" label="Neutral" />
+        <Switch size="sm" label="Small" />
+        <Switch size="lg" label="Large" />
+      </div>
+    </section>
+
+    <!-- ─── Phase 3/5: Checkbox ──────────────────────────────────────────── -->
+    <section data-testid="checkbox" class="space-y-3">
+      <h2 class="text-lg font-semibold">Checkbox</h2>
+      <div class="flex flex-col gap-2">
+        <Checkbox label="Accept terms and conditions" name="terms" />
+        <Checkbox label="Remember me" defaultChecked={true} name="remember" />
+        <Checkbox label="Disabled" disabled name="disabled-check" />
+        <Checkbox label="Error state" variant="error" name="err-check" />
+        <Checkbox aria-label="Standalone checkbox (no label)" name="standalone" />
+      </div>
+    </section>
+
+    <!-- ─── Phase 3/5: RadioGroup ────────────────────────────────────────── -->
+    <section data-testid="radio-group" class="space-y-3">
+      <h2 class="text-lg font-semibold">RadioGroup</h2>
+      <RadioGroup legend="Notification preference" name="notif">
+        <Radio label="Email" value="email" name="notif" />
+        <Radio label="SMS" value="sms" name="notif" />
+        <Radio label="Push notification" value="push" name="notif" />
+      </RadioGroup>
+      <RadioGroup legend="Plan (card appearance)" name="plan">
+        <Radio label="Free" description="Up to 100k requests/day" value="free" name="plan" appearance="card" checked />
+        <Radio label="Pro" description="Up to 10M requests/day" value="pro" name="plan" appearance="card" />
+      </RadioGroup>
+    </section>
+
+    <!-- ─── Phase 3/5: Tabs ──────────────────────────────────────────────── -->
+    <section data-testid="tabs" class="space-y-4">
+      <h2 class="text-lg font-semibold">Tabs</h2>
+      <Tabs
+        tabs={[
+          { value: "overview", label: "Overview" },
+          { value: "settings", label: "Settings" },
+          { value: "logs", label: "Logs" },
+        ]}
+        defaultValue="overview"
+      >
+        <div role="tabpanel" data-panel data-value="overview" class="p-4 border border-kumo-hairline rounded-lg mt-2">
+          Overview panel content
+        </div>
+        <div role="tabpanel" data-panel data-value="settings" hidden class="p-4 border border-kumo-hairline rounded-lg mt-2">
+          Settings panel content
+        </div>
+        <div role="tabpanel" data-panel data-value="logs" hidden class="p-4 border border-kumo-hairline rounded-lg mt-2">
+          Logs panel content
+        </div>
+      </Tabs>
+      <Tabs
+        variant="underline"
+        tabs={[
+          { value: "all", label: "All" },
+          { value: "active", label: "Active" },
+        ]}
+        defaultValue="all"
+      >
+        <div role="tabpanel" data-panel data-value="all" class="p-4 mt-2">All items</div>
+        <div role="tabpanel" data-panel data-value="active" hidden class="p-4 mt-2">Active items only</div>
+      </Tabs>
+    </section>
+
+    <!-- ─── Phase 3/5: Collapsible ───────────────────────────────────────── -->
+    <section data-testid="collapsible" class="space-y-3">
+      <h2 class="text-lg font-semibold">Collapsible</h2>
+      <Collapsible class="border border-kumo-hairline rounded-lg">
+        <CollapsibleTrigger class="flex w-full items-center justify-between p-4 text-left font-medium">
+          What is Kumo?
+        </CollapsibleTrigger>
+        <CollapsiblePanel class="px-4 pb-4 text-kumo-subtle">
+          Kumo is Cloudflare's component library for building modern web applications.
+        </CollapsiblePanel>
+      </Collapsible>
+      <Collapsible defaultOpen class="border border-kumo-hairline rounded-lg">
+        <CollapsibleTrigger class="flex w-full items-center justify-between p-4 text-left font-medium">
+          Default open section
+        </CollapsibleTrigger>
+        <CollapsiblePanel class="px-4 pb-4 text-kumo-subtle">
+          This section starts open.
+        </CollapsiblePanel>
+      </Collapsible>
+    </section>
+
+    <!-- ─── Phase 4/5: Dialog ────────────────────────────────────────────── -->
+    <section data-testid="dialog" class="space-y-3">
+      <h2 class="text-lg font-semibold">Dialog</h2>
+      <DialogRoot id="demo-dialog">
+        <DialogTrigger>
+          <Button variant="primary">Open Dialog</Button>
+        </DialogTrigger>
+        <Dialog>
+          <DialogBackdrop />
+          <div class="p-6 space-y-4">
+            <DialogTitle>Confirm action</DialogTitle>
+            <DialogDescription>Are you sure you want to proceed? This cannot be undone.</DialogDescription>
+            <div class="flex justify-end gap-2">
+              <DialogClose>
+                <Button variant="secondary">Cancel</Button>
+              </DialogClose>
+              <DialogClose>
+                <Button variant="destructive">Confirm</Button>
+              </DialogClose>
+            </div>
+          </div>
+        </Dialog>
+      </DialogRoot>
+    </section>
+
+    <!-- ─── Phase 4/5: Popover ───────────────────────────────────────────── -->
+    <section data-testid="popover" class="space-y-3">
+      <h2 class="text-lg font-semibold">Popover</h2>
+      <PopoverRoot>
+        <PopoverTrigger>
+          <Button variant="secondary">Open Popover</Button>
+        </PopoverTrigger>
+        <PopoverContent>
+          <div class="p-4 space-y-2 max-w-xs">
+            <p class="text-sm font-medium text-kumo-default">Popover heading</p>
+            <p class="text-sm text-kumo-subtle">This is a popover with some content inside.</p>
+            <PopoverClose>
+              <Button variant="ghost" size="sm">Close</Button>
+            </PopoverClose>
+          </div>
+        </PopoverContent>
+      </PopoverRoot>
+    </section>
+
+    <!-- ─── Phase 4/5: DropdownMenu ─────────────────────────────────────── -->
+    <section data-testid="dropdown-menu" class="space-y-3">
+      <h2 class="text-lg font-semibold">DropdownMenu</h2>
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Button variant="secondary">Actions</Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>Worker actions</DropdownMenuLabel>
+          <DropdownMenuItem>Edit</DropdownMenuItem>
+          <DropdownMenuItem>Duplicate</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </section>
+
+    <!-- ─── Phase 4/5: Tooltip ───────────────────────────────────────────── -->
+    <section data-testid="tooltip" class="space-y-3">
+      <h2 class="text-lg font-semibold">Tooltip</h2>
+      <div class="flex gap-4 items-center flex-wrap">
+        <Tooltip content="Save your changes">
+          <Button variant="primary">Save</Button>
+        </Tooltip>
+        <Tooltip content="Remove this item" side="bottom">
+          <Button variant="destructive">Delete</Button>
+        </Tooltip>
+        <Tooltip content="View documentation" side="right">
+          <Button variant="ghost">Docs</Button>
+        </Tooltip>
+      </div>
     </section>
 
   </body>

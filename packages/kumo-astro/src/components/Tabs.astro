@@ -11,10 +11,29 @@
  *   ]}
  *   defaultValue="overview"
  * />
+ *
+ * <!-- Tab panels are sibling elements owned by the caller -->
+ * <div id="{uid}-panel-overview" role="tabpanel" data-panel data-value="overview">
+ *   Overview content
+ * </div>
+ * <div id="{uid}-panel-settings" role="tabpanel" data-panel data-value="settings" hidden>
+ *   Settings content
+ * </div>
  * ```
  *
- * Each tab's corresponding panel content should be placed in a sibling element
- * with `role="tabpanel"` and `aria-labelledby` matching the tab id.
+ * Note: Astro does not support dynamic slot names. Panels are intentionally
+ * rendered outside this component. Use the `uid` prop to coordinate IDs, or
+ * place panels as direct siblings and let the JS initialization wire them up
+ * via `data-panel` + `data-value` on a common ancestor set via `data-kumo-tabs`.
+ *
+ * Alternatively, wrap both Tabs and panels in a container div with `data-kumo-tabs`:
+ * ```astro
+ * <div data-kumo-tabs data-value="overview">
+ *   <Tabs tabs={...} defaultValue="overview" noRoot />
+ *   <div role="tabpanel" data-panel data-value="overview">Overview</div>
+ *   <div role="tabpanel" data-panel data-value="settings" hidden>Settings</div>
+ * </div>
+ * ```
  */
 import { cn } from "../utils/cn";
 import { KUMO_TABS_DEFAULT_VARIANTS } from "@cloudflare/kumo/components/tabs";
@@ -103,19 +122,8 @@ const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
     ))}
   </div>
 
-  {/* Tab panels */}
-  {tabs.map((tab) => (
-    <div
-      id={`${uid}-panel-${tab.value}`}
-      role="tabpanel"
-      aria-labelledby={`${uid}-tab-${tab.value}`}
-      data-panel
-      data-value={tab.value}
-      hidden={tab.value !== initialValue || undefined}
-    >
-      <slot name={tab.value} />
-    </div>
-  ))}
+  {/* Default slot — allows callers to place panel wrappers inside the root */}
+  <slot />
 </div>
 
 <script>

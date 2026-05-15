@@ -378,3 +378,223 @@ test.describe("Table", () => {
     await expect(selectedRow).toBeVisible();
   });
 });
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Phase 3: Interactive
+// ─────────────────────────────────────────────────────────────────────────────
+
+test.describe("Switch", () => {
+  test.beforeEach(({ page }) => page.goto("/"));
+
+  test("renders 7 switch buttons", async ({ page }) => {
+    const switches = section(page, "switch").locator("button[role='switch']");
+    await expect(switches).toHaveCount(7);
+  });
+
+  test("unchecked switch has aria-checked=false", async ({ page }) => {
+    const first = section(page, "switch").locator("button[role='switch']").first();
+    await expect(first).toHaveAttribute("aria-checked", "false");
+  });
+
+  test("defaultChecked switch has aria-checked=true", async ({ page }) => {
+    // Second switch has defaultChecked={true}
+    const second = section(page, "switch").locator("button[role='switch']").nth(1);
+    await expect(second).toHaveAttribute("aria-checked", "true");
+  });
+
+  test("clicking unchecked switch toggles aria-checked to true", async ({ page }) => {
+    const first = section(page, "switch").locator("button[role='switch']").first();
+    await expect(first).toHaveAttribute("aria-checked", "false");
+    await first.click();
+    await expect(first).toHaveAttribute("aria-checked", "true");
+  });
+
+  test("clicking checked switch toggles aria-checked to false", async ({ page }) => {
+    const second = section(page, "switch").locator("button[role='switch']").nth(1);
+    await expect(second).toHaveAttribute("aria-checked", "true");
+    await second.click();
+    await expect(second).toHaveAttribute("aria-checked", "false");
+  });
+
+  test("disabled switches have disabled attribute", async ({ page }) => {
+    // Third switch is disabled off, fourth is disabled on
+    const disabledOff = section(page, "switch").locator("button[role='switch']").nth(2);
+    const disabledOn = section(page, "switch").locator("button[role='switch']").nth(3);
+    await expect(disabledOff).toBeDisabled();
+    await expect(disabledOn).toBeDisabled();
+  });
+
+  test("all switch buttons are visible", async ({ page }) => {
+    const switches = section(page, "switch").locator("button[role='switch']");
+    const count = await switches.count();
+    for (let i = 0; i < count; i++) {
+      await expect(switches.nth(i)).toBeVisible();
+    }
+  });
+});
+
+test.describe("Checkbox", () => {
+  test.beforeEach(({ page }) => page.goto("/"));
+
+  test("renders 5 checkboxes", async ({ page }) => {
+    const checkboxes = section(page, "checkbox").locator("input[type='checkbox']");
+    await expect(checkboxes).toHaveCount(5);
+  });
+
+  test("first checkbox is unchecked by default", async ({ page }) => {
+    const first = section(page, "checkbox").locator("input[type='checkbox']").first();
+    await expect(first).not.toBeChecked();
+  });
+
+  test("'Remember me' checkbox starts checked", async ({ page }) => {
+    const remember = section(page, "checkbox").locator("input[name='remember']");
+    await expect(remember).toBeChecked();
+  });
+
+  test("disabled checkbox has disabled attribute", async ({ page }) => {
+    const disabled = section(page, "checkbox").locator("input[name='disabled-check']");
+    await expect(disabled).toBeDisabled();
+  });
+
+  test("clicking unchecked checkbox checks it", async ({ page }) => {
+    const terms = section(page, "checkbox").locator("input[name='terms']");
+    await expect(terms).not.toBeChecked();
+    await terms.click();
+    await expect(terms).toBeChecked();
+  });
+
+  test("clicking checked checkbox unchecks it", async ({ page }) => {
+    const remember = section(page, "checkbox").locator("input[name='remember']");
+    await expect(remember).toBeChecked();
+    await remember.click();
+    await expect(remember).not.toBeChecked();
+  });
+
+  test("all checkboxes are visible", async ({ page }) => {
+    const checkboxes = section(page, "checkbox").locator("input[type='checkbox']");
+    const count = await checkboxes.count();
+    for (let i = 0; i < count; i++) {
+      await expect(checkboxes.nth(i)).toBeVisible();
+    }
+  });
+});
+
+test.describe("Collapsible", () => {
+  test.beforeEach(({ page }) => page.goto("/"));
+
+  test("renders collapsible triggers", async ({ page }) => {
+    const triggers = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]");
+    await expect(triggers).toHaveCount(2);
+  });
+
+  test("first trigger is visible and starts collapsed", async ({ page }) => {
+    const trigger = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]").first();
+    await expect(trigger).toBeVisible();
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("first panel starts hidden", async ({ page }) => {
+    const panel = section(page, "collapsible").locator("[data-kumo-collapsible-panel]").first();
+    await expect(panel).toBeHidden();
+  });
+
+  test("clicking first trigger makes panel visible", async ({ page }) => {
+    const trigger = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]").first();
+    const panel = section(page, "collapsible").locator("[data-kumo-collapsible-panel]").first();
+
+    await trigger.click();
+    await expect(panel).toBeVisible();
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+  });
+
+  test("clicking open trigger collapses panel again", async ({ page }) => {
+    const trigger = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]").first();
+    const panel = section(page, "collapsible").locator("[data-kumo-collapsible-panel]").first();
+
+    await trigger.click();
+    await expect(panel).toBeVisible();
+    await trigger.click();
+    await expect(panel).toBeHidden();
+    await expect(trigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  test("second collapsible starts open (defaultOpen)", async ({ page }) => {
+    const trigger = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]").nth(1);
+    const panel = section(page, "collapsible").locator("[data-kumo-collapsible-panel]").nth(1);
+    await expect(trigger).toHaveAttribute("aria-expanded", "true");
+    await expect(panel).toBeVisible();
+  });
+
+  test("first trigger contains correct text", async ({ page }) => {
+    const trigger = section(page, "collapsible").locator("[data-kumo-collapsible-trigger]").first();
+    await expect(trigger).toContainText("What is Kumo?");
+  });
+});
+
+test.describe("RadioGroup", () => {
+  test.beforeEach(({ page }) => page.goto("/"));
+
+  test("renders fieldset elements", async ({ page }) => {
+    const fieldsets = section(page, "radio-group").locator("fieldset");
+    await expect(fieldsets).toHaveCount(2);
+  });
+
+  test("first fieldset has correct legend text", async ({ page }) => {
+    const legend = section(page, "radio-group").locator("fieldset").first().locator("legend");
+    await expect(legend).toContainText("Notification preference");
+  });
+
+  test("first radio group has 3 radio inputs", async ({ page }) => {
+    const radios = section(page, "radio-group").locator("fieldset").first().locator("input[type='radio']");
+    await expect(radios).toHaveCount(3);
+  });
+
+  test("notification radios have correct values", async ({ page }) => {
+    const firstFieldset = section(page, "radio-group").locator("fieldset").first();
+    await expect(firstFieldset.locator("input[value='email']")).toBeVisible();
+    await expect(firstFieldset.locator("input[value='sms']")).toBeVisible();
+    await expect(firstFieldset.locator("input[value='push']")).toBeVisible();
+  });
+
+  test("no notification radio is pre-selected by default", async ({ page }) => {
+    const radios = section(page, "radio-group").locator("fieldset").first().locator("input[type='radio']");
+    const count = await radios.count();
+    for (let i = 0; i < count; i++) {
+      await expect(radios.nth(i)).not.toBeChecked();
+    }
+  });
+
+  test("clicking a radio selects it", async ({ page }) => {
+    const emailRadio = section(page, "radio-group").locator("fieldset").first().locator("input[value='email']");
+    await emailRadio.click();
+    await expect(emailRadio).toBeChecked();
+  });
+
+  test("selecting a radio deselects others in the same group", async ({ page }) => {
+    const firstFieldset = section(page, "radio-group").locator("fieldset").first();
+    const emailRadio = firstFieldset.locator("input[value='email']");
+    const smsRadio = firstFieldset.locator("input[value='sms']");
+
+    await emailRadio.click();
+    await expect(emailRadio).toBeChecked();
+
+    await smsRadio.click();
+    await expect(smsRadio).toBeChecked();
+    await expect(emailRadio).not.toBeChecked();
+  });
+
+  test("card appearance radio group has 2 radios", async ({ page }) => {
+    const radios = section(page, "radio-group").locator("fieldset").nth(1).locator("input[type='radio']");
+    await expect(radios).toHaveCount(2);
+  });
+
+  test("'Free' plan radio is pre-checked", async ({ page }) => {
+    const freeRadio = section(page, "radio-group").locator("fieldset").nth(1).locator("input[value='free']");
+    await expect(freeRadio).toBeChecked();
+  });
+
+  test("second fieldset has correct legend text", async ({ page }) => {
+    const legend = section(page, "radio-group").locator("fieldset").nth(1).locator("legend");
+    await expect(legend).toContainText("Plan");
+  });
+});
