@@ -21,6 +21,8 @@
     "publish:beta": "echo 'ERROR: Publishing is disabled in this fork. See DOCS/PUBLISH.md.' && exit 1",
     "deploy:kumo-docs-preview": "bash ci/versioning/deploy-kumo-docs-preview.sh",
     "deploy:kumo-docs-staging": "bash ci/versioning/deploy-kumo-docs-staging.sh",
+    "deploy:kumo-docs-astro-preview": "bash ci/versioning/deploy-kumo-docs-astro-preview.sh",
+    "deploy:kumo-docs-astro-staging": "bash ci/versioning/deploy-kumo-docs-astro-staging.sh",
     "ci:post-pr-report": "tsx ci/scripts/post-pr-report.ts",
     "release": "echo 'ERROR: Publishing is disabled in this fork. See DOCS/PUBLISH.md.' && exit 1",
     "release:beta": "echo 'ERROR: Publishing is disabled in this fork. See DOCS/PUBLISH.md.' && exit 1",

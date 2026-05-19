@@ -1,0 +1,76 @@
+---
+/**
+ * HoverCardContent — the popover card panel. Must be used inside a HoverCard.
+ *
+ * Usage:
+ * ```astro
+ * <HoverCard>
+ *   <HoverCardTrigger>Hover me</HoverCardTrigger>
+ *   <HoverCardContent side="bottom" align="start">
+ *     <p>Card content</p>
+ *   </HoverCardContent>
+ * </HoverCard>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_HOVER_CARD_VARIANTS,
+  type KumoHoverCardSide,
+  type KumoHoverCardAlign,
+  KUMO_HOVER_CARD_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/hover-card";
+
+interface Props {
+  /**
+   * Side the card appears on relative to the trigger.
+   * - `"top"` — Above
+   * - `"bottom"` — Below
+   * - `"left"` — Left
+   * - `"right"` — Right
+   * @default "bottom"
+   */
+  side?: KumoHoverCardSide;
+  /**
+   * Alignment relative to the trigger.
+   * - `"start"` — Aligned to start edge
+   * - `"center"` — Centered
+   * - `"end"` — Aligned to end edge
+   * @default "start"
+   */
+  align?: KumoHoverCardAlign;
+  /** Additional CSS classes merged onto the content panel. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  side = KUMO_HOVER_CARD_DEFAULT_VARIANTS.side,
+  align = KUMO_HOVER_CARD_DEFAULT_VARIANTS.align,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sideConfig =
+  KUMO_HOVER_CARD_VARIANTS.side[side as KumoHoverCardSide] ??
+  KUMO_HOVER_CARD_VARIANTS.side[KUMO_HOVER_CARD_DEFAULT_VARIANTS.side];
+
+const alignConfig =
+  KUMO_HOVER_CARD_VARIANTS.align[align as KumoHoverCardAlign] ??
+  KUMO_HOVER_CARD_VARIANTS.align[KUMO_HOVER_CARD_DEFAULT_VARIANTS.align];
+---
+
+<div
+  data-kumo-hover-card-content
+  data-state="closed"
+  hidden
+  class={cn(
+    "absolute z-50",
+    sideConfig.classes,
+    alignConfig.classes,
+    "w-64 rounded-xl bg-kumo-elevated ring ring-kumo-hairline shadow-lg p-4",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</div>

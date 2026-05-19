@@ -1,0 +1,41 @@
+---
+import "../styles/global.css";
+import Sidebar from "../components/Sidebar.astro";
+import Button from "@cloudflare/kumo-astro/components/button";
+
+const { pageTitle = "Kumo Blocks" } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <div class="grid grid-cols-[48px_255px_1fr_48px]">
+      <!-- Fixed top header -->
+      <header class="sticky inset-x-0 top-0 z-50 h-12 bg-white col-span-4 border-b border-layout-border grid grid-cols-subgrid">
+        <div class="text-lg leading-none border-r border-layout-border center">雲</div>
+        <div class="flex items-center px-3 border-r border-layout-border">
+          <span class="text-sm font-medium text-gray-900">Kumo Blocks</span>
+        </div>
+        <div class="text-right border-r border-layout-border">something</div>
+        <div>
+          <Button>I</Button>
+        </div>
+      </header>
+
+      <!-- App shell: sidebar + main -->
+      <div class="col-start-2 border-x border-layout-border">
+        <Sidebar />
+      </div>
+      <main class="col-start-3">
+        <slot />
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,3 +1,10 @@
 name: kumo-astro
 icon: packages/kumo-docs-astro/public/favicon.png
-processes: {}
+processes:
+  pnpm:dev - blocks:
+    command: pnpm run dev
+    working_dir: /Users/adutton/Sites/kumo/kumo-astro/packages/kumo-blocks
+    auto_start: false
+    auto_restart: false
+    restart_when_changed: []
+    env: {}

@@ -1,0 +1,36 @@
+---
+/**
+ * NavigationMenuItem — a single item in the navigation menu list.
+ * Can contain a NavigationMenuLink (for direct links) or
+ * NavigationMenuTrigger + NavigationMenuContent (for dropdowns).
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenuItem>
+ *   <NavigationMenuLink href="/about">About</NavigationMenuLink>
+ * </NavigationMenuItem>
+ * <!-- or with a dropdown: -->
+ * <NavigationMenuItem>
+ *   <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+ *   <NavigationMenuContent>...</NavigationMenuContent>
+ * </NavigationMenuItem>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<li
+  data-kumo-nav-menu-item
+  class={cn("relative", className)}
+  {...rest}
+>
+  <slot />
+</li>

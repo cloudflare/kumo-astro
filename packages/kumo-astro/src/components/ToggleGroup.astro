@@ -1,0 +1,196 @@
+---
+/**
+ * ToggleGroup — a group of toggle buttons where one or multiple can be active.
+ * Use with ToggleGroupItem.
+ *
+ * Usage:
+ * ```astro
+ * <!-- Single selection (default) -->
+ * <ToggleGroup>
+ *   <ToggleGroupItem value="left">Left</ToggleGroupItem>
+ *   <ToggleGroupItem value="center">Center</ToggleGroupItem>
+ *   <ToggleGroupItem value="right">Right</ToggleGroupItem>
+ * </ToggleGroup>
+ *
+ * <!-- Multiple selection -->
+ * <ToggleGroup type="multiple" variant="outline">
+ *   <ToggleGroupItem value="bold">B</ToggleGroupItem>
+ *   <ToggleGroupItem value="italic">I</ToggleGroupItem>
+ * </ToggleGroup>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_TOGGLE_GROUP_VARIANTS,
+  type KumoToggleGroupType,
+  type KumoToggleGroupVariant,
+  type KumoToggleGroupSize,
+  KUMO_TOGGLE_GROUP_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/toggle-group";
+
+interface Props {
+  /**
+   * Selection type.
+   * - `"single"` — Only one item active at a time
+   * - `"multiple"` — Multiple items can be active
+   * @default "single"
+   */
+  type?: KumoToggleGroupType;
+  /**
+   * Default selected value(s) for uncontrolled usage.
+   * String for single, space-separated values for multiple.
+   */
+  defaultValue?: string;
+  /**
+   * Visual variant of the group.
+   * - `"default"` — Grouped with dividers
+   * - `"outline"` — Individual outlined buttons with spacing
+   * @default "default"
+   */
+  variant?: KumoToggleGroupVariant;
+  /**
+   * Size of all toggles in the group.
+   * - `"sm"` — Small
+   * - `"base"` — Default
+   * - `"lg"` — Large
+   * @default "base"
+   */
+  size?: KumoToggleGroupSize;
+  /** Disable all items in the group. */
+  disabled?: boolean;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  type = KUMO_TOGGLE_GROUP_DEFAULT_VARIANTS.type,
+  defaultValue = "",
+  variant = KUMO_TOGGLE_GROUP_DEFAULT_VARIANTS.variant,
+  size = KUMO_TOGGLE_GROUP_DEFAULT_VARIANTS.size,
+  disabled,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variantConfig =
+  KUMO_TOGGLE_GROUP_VARIANTS.variant[variant as KumoToggleGroupVariant] ??
+  KUMO_TOGGLE_GROUP_VARIANTS.variant[KUMO_TOGGLE_GROUP_DEFAULT_VARIANTS.variant];
+---
+
+<div
+  role="group"
+  data-kumo-toggle-group
+  data-type={type}
+  data-variant={variant}
+  data-size={size}
+  data-default-value={defaultValue}
+  data-disabled={disabled ? "" : undefined}
+  class={cn("inline-flex items-center", variantConfig.classes, className)}
+  {...rest}
+>
+  <slot />
+</div>
+
+<script>
+  const SIZE_CLASSES: Record<string, string> = {
+    sm: "h-7 px-2.5 text-sm",
+    base: "h-9 px-3 text-base",
+    lg: "h-10 px-4 text-base",
+  };
+
+  function initToggleGroup(root: HTMLElement) {
+    if (root.dataset.kumoToggleGroupInit) return;
+    root.dataset.kumoToggleGroupInit = "1";
+
+    const type = root.dataset.type ?? "single";
+    const variant = root.dataset.variant ?? "default";
+    const size = root.dataset.size ?? "base";
+    const groupDisabled = root.hasAttribute("data-disabled");
+
+    // Parse default values
+    const defaultValueStr = root.dataset.defaultValue ?? "";
+    let activeValues: string[] =
+      type === "multiple"
+        ? defaultValueStr ? defaultValueStr.split(" ").filter(Boolean) : []
+        : defaultValueStr ? [defaultValueStr] : [];
+
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-kumo-toggle-group-item]"),
+    );
+
+    function applyItemState(item: HTMLElement) {
+      const value = item.dataset.value ?? "";
+      const isActive = activeValues.includes(value);
+      item.setAttribute("aria-pressed", String(isActive));
+      item.dataset.state = isActive ? "on" : "off";
+    }
+
+    function applyItemStyles(item: HTMLElement) {
+      const itemDisabled = item.hasAttribute("data-disabled") || groupDisabled;
+      if (itemDisabled) {
+        item.setAttribute("disabled", "");
+      }
+
+      const sizeClass = SIZE_CLASSES[size] ?? SIZE_CLASSES.base;
+
+      // Apply variant-specific item styles
+      const baseClasses = [
+        "inline-flex shrink-0 items-center justify-center gap-1.5 font-medium select-none",
+        "transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand focus-visible:z-10",
+        "disabled:cursor-not-allowed disabled:opacity-50",
+        sizeClass,
+      ];
+
+      if (variant === "default") {
+        baseClasses.push(
+          "bg-kumo-base text-kumo-default hover:bg-kumo-tint data-[state=on]:bg-kumo-tint data-[state=on]:text-kumo-default",
+        );
+      } else {
+        baseClasses.push(
+          "rounded-lg ring ring-kumo-hairline bg-kumo-base text-kumo-default hover:bg-kumo-tint data-[state=on]:bg-kumo-tint",
+        );
+      }
+
+      // Only add base classes if not already initialized
+      if (!item.dataset.kumoToggleGroupItemInit) {
+        item.className = [item.className, ...baseClasses].filter(Boolean).join(" ");
+      }
+
+      applyItemState(item);
+    }
+
+    items.forEach((item) => {
+      if (item.dataset.kumoToggleGroupItemInit) return;
+      item.dataset.kumoToggleGroupItemInit = "1";
+
+      applyItemStyles(item);
+
+      item.addEventListener("click", () => {
+        if (item.hasAttribute("disabled")) return;
+        const value = item.dataset.value ?? "";
+
+        if (type === "multiple") {
+          if (activeValues.includes(value)) {
+            activeValues = activeValues.filter((v) => v !== value);
+          } else {
+            activeValues = [...activeValues, value];
+          }
+        } else {
+          activeValues = activeValues[0] === value ? [] : [value];
+        }
+
+        items.forEach(applyItemState);
+      });
+    });
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-toggle-group]")
+      .forEach(initToggleGroup);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

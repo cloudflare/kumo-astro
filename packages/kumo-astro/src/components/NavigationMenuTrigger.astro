@@ -1,0 +1,87 @@
+---
+/**
+ * NavigationMenuTrigger — a button that opens a NavigationMenuContent dropdown.
+ * Must be used inside NavigationMenuItem alongside NavigationMenuContent.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenuItem>
+ *   <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+ *   <NavigationMenuContent>...</NavigationMenuContent>
+ * </NavigationMenuItem>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<button
+  type="button"
+  aria-expanded="false"
+  aria-haspopup="true"
+  data-state="closed"
+  data-kumo-nav-menu-trigger
+  class={cn(
+    "inline-flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium",
+    "text-kumo-default hover:bg-kumo-tint hover:text-kumo-default",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+    "transition-colors select-none",
+    "data-[state=open]:bg-kumo-tint",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+    aria-hidden="true"
+    class="transition-transform duration-200 data-[state=open]:rotate-180"
+    data-kumo-nav-menu-chevron
+  >
+    <path
+      d="M2.5 4.5L6 8L9.5 4.5"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</button>
+
+<script>
+  // Sync the chevron's data-state to mirror the trigger's data-state
+  function syncChevrons() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-nav-menu-trigger]")
+      .forEach((trigger) => {
+        const chevron = trigger.querySelector<HTMLElement>(
+          "[data-kumo-nav-menu-chevron]",
+        );
+        if (!chevron) return;
+
+        const observer = new MutationObserver(() => {
+          chevron.dataset.state = trigger.dataset.state ?? "closed";
+        });
+        observer.observe(trigger, {
+          attributes: true,
+          attributeFilter: ["data-state"],
+        });
+
+        // Set initial state
+        chevron.dataset.state = trigger.dataset.state ?? "closed";
+      });
+  }
+
+  syncChevrons();
+  document.addEventListener("astro:page-load", syncChevrons);
+</script>

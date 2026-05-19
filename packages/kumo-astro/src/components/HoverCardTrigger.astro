@@ -1,0 +1,33 @@
+---
+/**
+ * HoverCardTrigger — the element that triggers the HoverCard on hover/focus.
+ * Must be used inside a HoverCard.
+ *
+ * Usage:
+ * ```astro
+ * <HoverCard>
+ *   <HoverCardTrigger>
+ *     <a href="#">@username</a>
+ *   </HoverCardTrigger>
+ *   <HoverCardContent>...</HoverCardContent>
+ * </HoverCard>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged onto the trigger wrapper. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<span
+  data-kumo-hover-card-trigger
+  class={cn("inline-block", className)}
+  {...rest}
+>
+  <slot />
+</span>

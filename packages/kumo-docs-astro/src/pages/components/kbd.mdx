@@ -1,0 +1,79 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Kbd"
+description: "Displays keyboard shortcuts and key combinations in a styled key cap."
+sourceFile: "components/kbd"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  KbdBasicDemo,
+  KbdSizesDemo,
+  KbdInlineDemo,
+  KbdShortcutsDemo,
+} from "~/components/demos/KbdDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Kbd primitive.
+
+<ComponentExample demo="KbdBasicDemo">
+  <KbdBasicDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { Kbd } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { Kbd } from "@cloudflare/kumo/components/kbd";
+```
+
+## Usage
+
+```tsx
+import { Kbd } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <p>
+      Press <Kbd>⌘K</Kbd> to search
+    </p>
+  );
+}
+```
+
+## Examples
+
+### Basic
+
+<ComponentExample demo="KbdBasicDemo">
+  <KbdBasicDemo client:visible />
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample demo="KbdSizesDemo">
+  <KbdSizesDemo client:visible />
+</ComponentExample>
+
+### Inline with text
+
+<ComponentExample demo="KbdInlineDemo">
+  <KbdInlineDemo client:visible />
+</ComponentExample>
+
+### Shortcut list
+
+<ComponentExample demo="KbdShortcutsDemo">
+  <KbdShortcutsDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+<PropsTable component="Kbd" />

@@ -1,0 +1,42 @@
+---
+/**
+ * NavigationMenuContent — the dropdown panel that appears when a NavigationMenuTrigger is activated.
+ * Must be used inside NavigationMenuItem alongside NavigationMenuTrigger.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenuItem>
+ *   <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+ *   <NavigationMenuContent>
+ *     <NavigationMenuSubLink href="/a" title="Product A" description="..." />
+ *   </NavigationMenuContent>
+ * </NavigationMenuItem>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div
+  data-kumo-nav-menu-content
+  data-state="closed"
+  hidden
+  class={cn("absolute top-full left-0 z-50 pt-1.5", className)}
+  {...rest}
+>
+  <div
+    class={cn(
+      "rounded-xl bg-kumo-elevated ring ring-kumo-hairline shadow-lg",
+      "p-2 min-w-[12rem]",
+    )}
+  >
+    <slot />
+  </div>
+</div>

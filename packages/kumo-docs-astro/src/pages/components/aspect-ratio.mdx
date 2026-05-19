@@ -1,0 +1,72 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Aspect Ratio"
+description: "Constrains content to a specified aspect ratio using a CSS padding technique."
+sourceFile: "components/aspect-ratio"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  AspectRatioWideDemo,
+  AspectRatioPresetsDemo,
+  AspectRatioCustomDemo,
+} from "~/components/demos/AspectRatioDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Aspect Ratio primitive.
+
+<ComponentExample demo="AspectRatioWideDemo">
+  <AspectRatioWideDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { AspectRatio } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { AspectRatio } from "@cloudflare/kumo/components/aspect-ratio";
+```
+
+## Usage
+
+```tsx
+import { AspectRatio } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <AspectRatio ratio="16/9">
+      <img src="..." className="h-full w-full object-cover rounded-lg" />
+    </AspectRatio>
+  );
+}
+```
+
+## Examples
+
+### Widescreen (16:9)
+
+<ComponentExample demo="AspectRatioWideDemo">
+  <AspectRatioWideDemo client:visible />
+</ComponentExample>
+
+### All presets
+
+<ComponentExample demo="AspectRatioPresetsDemo">
+  <AspectRatioPresetsDemo client:visible />
+</ComponentExample>
+
+### Custom numeric ratio
+
+<ComponentExample demo="AspectRatioCustomDemo">
+  <AspectRatioCustomDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+<PropsTable component="AspectRatio" />

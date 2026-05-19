@@ -1,0 +1,99 @@
+---
+/**
+ * A shimmering skeleton placeholder line for loading states.
+ *
+ * Width, shimmer duration, and delay are randomized per render to
+ * create a natural staggered appearance when multiple lines are used.
+ *
+ * Usage:
+ * ```astro
+ * <SkeletonLine />
+ * <SkeletonLine minWidth={50} maxWidth={80} />
+ * <SkeletonLine blockHeight={24} />
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  class?: string;
+  /**
+   * Minimum random width of the skeleton bar as a percentage.
+   * @default 30
+   */
+  minWidth?: number;
+  /**
+   * Maximum random width of the skeleton bar as a percentage.
+   * @default 100
+   */
+  maxWidth?: number;
+  /**
+   * Minimum shimmer animation duration in seconds.
+   * @default 1.3
+   */
+  minDuration?: number;
+  /**
+   * Maximum shimmer animation duration in seconds.
+   * @default 1.7
+   */
+  maxDuration?: number;
+  /**
+   * Minimum shimmer animation delay in seconds.
+   * @default 0
+   */
+  minDelay?: number;
+  /**
+   * Maximum shimmer animation delay in seconds.
+   * @default 0.5
+   */
+  maxDelay?: number;
+  /**
+   * Optional fixed height for the wrapping container. When set, the skeleton
+   * line is vertically centered inside a flex container of this height.
+   * Numbers are treated as pixels; strings are used as-is.
+   */
+  blockHeight?: string | number;
+}
+
+const {
+  class: className,
+  minWidth = 30,
+  maxWidth = 100,
+  minDuration = 1.3,
+  maxDuration = 1.7,
+  minDelay = 0,
+  maxDelay = 0.5,
+  blockHeight,
+} = Astro.props;
+
+const randomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1) + min);
+const randomFloat = (min: number, max: number) =>
+  (Math.random() * (max - min) + min).toFixed(2);
+
+const width = randomInt(minWidth, maxWidth);
+const duration = randomFloat(minDuration, maxDuration);
+const delay = randomFloat(minDelay, maxDelay);
+
+const lineStyle = [
+  `--skeleton-width:${width}%`,
+  `--shimmer-duration:${duration}s`,
+  `--shimmer-delay:${delay}s`,
+].join(";");
+
+const blockHeightValue =
+  blockHeight !== undefined
+    ? typeof blockHeight === "number"
+      ? `${blockHeight}px`
+      : blockHeight
+    : undefined;
+---
+
+{
+  blockHeightValue !== undefined ? (
+    <div class="flex items-center" style={`height:${blockHeightValue}`}>
+      <div class={cn("skeleton-line", className)} style={lineStyle} />
+    </div>
+  ) : (
+    <div class={cn("skeleton-line", className)} style={lineStyle} />
+  )
+}

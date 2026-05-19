@@ -307,6 +307,33 @@ export {
   KUMO_TABLE_OF_CONTENTS_DEFAULT_VARIANTS,
   type KumoTableOfContentsState,
 } from "./components/table-of-contents";
+export { ScrollArea, type ScrollAreaProps } from "./components/scroll-area";
+export { NativeSelect, type NativeSelectProps } from "./components/native-select";
+export { Kbd, type KbdProps } from "./components/kbd";
+export { Separator, type SeparatorProps } from "./components/separator";
+export {
+  NavigationMenu,
+  KUMO_NAVIGATION_MENU_VARIANTS,
+  KUMO_NAVIGATION_MENU_DEFAULT_VARIANTS,
+  type NavigationMenuProps,
+  type NavigationMenuListProps,
+  type NavigationMenuItemProps,
+  type NavigationMenuTriggerProps,
+  type NavigationMenuContentProps,
+  type NavigationMenuLinkProps,
+  type NavigationMenuSubLinkProps,
+  type KumoNavigationMenuIndicator,
+} from "./components/navigation-menu";
+export { AspectRatio, type AspectRatioProps } from "./components/aspect-ratio";
+export { Card, type CardProps } from "./components/card";
+export { Toggle, type ToggleProps } from "./components/toggle";
+export {
+  ToggleGroup,
+  type ToggleGroupProps,
+  type ToggleGroupItemProps,
+} from "./components/toggle-group";
+export { HoverCard, type HoverCardProps, type HoverCardTriggerProps, type HoverCardContentProps } from "./components/hover-card";
+export { Resizable, type ResizableProps, type ResizablePanelProps, type ResizableHandleProps } from "./components/resizable";
 // PLOP_INJECT_EXPORT
 
 // Utils

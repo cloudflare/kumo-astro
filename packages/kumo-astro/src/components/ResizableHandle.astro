@@ -1,0 +1,130 @@
+---
+/**
+ * ResizableHandle — the draggable divider between ResizablePanel elements.
+ * Must be used inside Resizable between two ResizablePanel elements.
+ *
+ * Usage:
+ * ```astro
+ * <Resizable>
+ *   <ResizablePanel>Left</ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel>Right</ResizablePanel>
+ * </Resizable>
+ *
+ * <!-- Without the grip dots -->
+ * <ResizableHandle withHandle={false} />
+ *
+ * <!-- Ghost variant -->
+ * <ResizableHandle variant="ghost" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_RESIZABLE_VARIANTS,
+  type KumoResizableHandleVariant,
+  KUMO_RESIZABLE_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/resizable";
+
+interface Props {
+  /**
+   * Visual variant of the handle.
+   * - `"default"` — Visible line with hover highlight
+   * - `"ghost"` — Invisible until hovered
+   * @default "default"
+   */
+  variant?: KumoResizableHandleVariant;
+  /**
+   * Show a grip icon in the center of the handle.
+   * @default true
+   */
+  withHandle?: boolean;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_RESIZABLE_DEFAULT_VARIANTS.handleVariant,
+  withHandle = true,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variantConfig =
+  KUMO_RESIZABLE_VARIANTS.handleVariant[variant as KumoResizableHandleVariant] ??
+  KUMO_RESIZABLE_VARIANTS.handleVariant[KUMO_RESIZABLE_DEFAULT_VARIANTS.handleVariant];
+---
+
+<div
+  data-kumo-resizable-handle
+  data-variant={variant}
+  data-with-handle={withHandle ? "" : undefined}
+  role="separator"
+  tabindex="0"
+  class={cn(
+    "relative flex shrink-0 items-center justify-center",
+    "transition-colors duration-100",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+    // Direction-specific sizing/cursor is applied by the JS in Resizable.astro
+    // At SSR time, default to horizontal (w-1.5, col-resize)
+    "w-1.5 cursor-col-resize flex-col",
+    variantConfig.classes,
+    className,
+  )}
+  {...rest}
+>
+  {withHandle && (
+    <div class="z-10 flex h-6 w-3 flex-col items-center justify-center gap-0.5 rounded-full bg-kumo-line">
+      <div class="h-0.5 w-1 rounded-full bg-kumo-subtle/60"></div>
+      <div class="h-0.5 w-1 rounded-full bg-kumo-subtle/60"></div>
+      <div class="h-0.5 w-1 rounded-full bg-kumo-subtle/60"></div>
+    </div>
+  )}
+</div>
+
+<script>
+  // Apply direction-specific classes to handles based on parent Resizable direction
+  function applyHandleDirection() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-resizable-handle]")
+      .forEach((handle) => {
+        const root = handle.closest<HTMLElement>("[data-kumo-resizable]");
+        if (!root) return;
+        const isHorizontal =
+          (root.dataset.direction ?? "horizontal") === "horizontal";
+
+        // Remove previous direction classes
+        handle.classList.remove(
+          "w-1.5", "cursor-col-resize", "flex-col",
+          "h-1.5", "cursor-row-resize", "flex-row",
+        );
+
+        if (isHorizontal) {
+          handle.classList.add("w-1.5", "cursor-col-resize", "flex-col");
+          handle.setAttribute("aria-orientation", "vertical");
+          // Update grip dot container for horizontal
+          const grip = handle.querySelector<HTMLElement>("div");
+          if (grip) {
+            grip.className = "z-10 flex h-6 w-3 flex-col items-center justify-center gap-0.5 rounded-full bg-kumo-line";
+            grip.querySelectorAll<HTMLElement>("div").forEach((dot) => {
+              dot.className = "h-0.5 w-1 rounded-full bg-kumo-subtle/60";
+            });
+          }
+        } else {
+          handle.classList.add("h-1.5", "cursor-row-resize", "flex-row");
+          handle.setAttribute("aria-orientation", "horizontal");
+          // Update grip dot container for vertical
+          const grip = handle.querySelector<HTMLElement>("div");
+          if (grip) {
+            grip.className = "z-10 flex h-3 w-6 flex-row items-center justify-center gap-0.5 rounded-full bg-kumo-line";
+            grip.querySelectorAll<HTMLElement>("div").forEach((dot) => {
+              dot.className = "h-1 w-0.5 rounded-full bg-kumo-subtle/60";
+            });
+          }
+        }
+      });
+  }
+
+  applyHandleDirection();
+  document.addEventListener("astro:page-load", applyHandleDirection);
+</script>

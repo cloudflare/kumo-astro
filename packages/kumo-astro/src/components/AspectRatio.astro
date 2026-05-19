@@ -1,0 +1,70 @@
+---
+/**
+ * AspectRatio — constrains its children to a specific aspect ratio.
+ *
+ * Usage:
+ * ```astro
+ * <AspectRatio ratio="16/9">
+ *   <img src="..." class="h-full w-full object-cover" />
+ * </AspectRatio>
+ * <AspectRatio ratio="1/1">
+ *   <img src="..." class="h-full w-full object-cover" />
+ * </AspectRatio>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  type KumoAspectRatio,
+  KUMO_ASPECT_RATIO_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/aspect-ratio";
+
+type AspectRatioValue = KumoAspectRatio | number;
+
+interface Props {
+  /**
+   * The aspect ratio to enforce. Can be a preset string or a custom number.
+   * - `"16/9"` — Widescreen
+   * - `"4/3"` — Standard
+   * - `"1/1"` — Square
+   * - `"3/2"` — Photo
+   * - `"9/16"` — Portrait
+   * Or pass a numeric ratio directly (e.g. `ratio={16/9}`).
+   * @default "16/9"
+   */
+  ratio?: AspectRatioValue;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const RATIO_MAP: Record<KumoAspectRatio, number> = {
+  "16/9": 16 / 9,
+  "4/3": 4 / 3,
+  "1/1": 1,
+  "3/2": 3 / 2,
+  "9/16": 9 / 16,
+};
+
+const {
+  ratio = KUMO_ASPECT_RATIO_DEFAULT_VARIANTS.ratio,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const numericRatio =
+  typeof ratio === "number"
+    ? ratio
+    : (RATIO_MAP[ratio as KumoAspectRatio] ?? 16 / 9);
+
+const paddingBottom = `${(1 / numericRatio) * 100}%`;
+---
+
+<div
+  style={`position:relative;width:100%;padding-bottom:${paddingBottom}`}
+  class={cn("overflow-hidden", className)}
+  {...rest}
+>
+  <div class="absolute inset-0">
+    <slot />
+  </div>
+</div>

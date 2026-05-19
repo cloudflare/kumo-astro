@@ -1,0 +1,26 @@
+---
+/**
+ * CardFooter — footer area of a Card, typically for actions.
+ *
+ * Usage:
+ * ```astro
+ * <CardFooter>
+ *   <Button>Cancel</Button>
+ *   <Button variant="primary">Save</Button>
+ * </CardFooter>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={cn("flex items-center gap-2 px-6 pb-6 pt-0", className)} {...rest}>
+  <slot />
+</div>

@@ -1,0 +1,88 @@
+---
+/**
+ * ScrollArea — a scrollable container with styled scrollbars consistent across browsers.
+ *
+ * Usage:
+ * ```astro
+ * <ScrollArea maxHeight={300}>
+ *   <ul>...</ul>
+ * </ScrollArea>
+ * <ScrollArea orientation="horizontal" maxWidth={400}>
+ *   <div class="flex gap-4">...</div>
+ * </ScrollArea>
+ * <ScrollArea orientation="both" maxHeight={300} maxWidth={400}>
+ *   <div>...</div>
+ * </ScrollArea>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  type KumoScrollAreaOrientation,
+  KUMO_SCROLL_AREA_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/scroll-area";
+
+interface Props {
+  /**
+   * Scroll direction(s) to enable.
+   * - `"vertical"` — Vertical scrollbar only
+   * - `"horizontal"` — Horizontal scrollbar only
+   * - `"both"` — Both scrollbars
+   * @default "vertical"
+   */
+  orientation?: KumoScrollAreaOrientation;
+  /**
+   * Maximum height for the scroll area. Set to enable vertical scrolling.
+   * Accepts a number (px) or a CSS string (e.g. "300px", "50vh").
+   */
+  maxHeight?: string | number;
+  /**
+   * Maximum width for the scroll area. Set to enable horizontal scrolling.
+   * Accepts a number (px) or a CSS string (e.g. "400px", "80vw").
+   */
+  maxWidth?: string | number;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+
+const {
+  orientation = KUMO_SCROLL_AREA_DEFAULT_VARIANTS.orientation,
+  maxHeight,
+  maxWidth,
+  class: className,
+  style: styleProp,
+  ...rest
+} = Astro.props;
+
+const overflowX = orientation === "horizontal" || orientation === "both" ? "auto" : "hidden";
+const overflowY = orientation === "vertical" || orientation === "both" ? "auto" : "hidden";
+
+const inlineStyle = [
+  `overflow-x:${overflowX}`,
+  `overflow-y:${overflowY}`,
+  maxHeight !== undefined
+    ? `max-height:${typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight}`
+    : null,
+  maxWidth !== undefined
+    ? `max-width:${typeof maxWidth === "number" ? `${maxWidth}px` : maxWidth}`
+    : null,
+  styleProp ?? null,
+]
+  .filter(Boolean)
+  .join(";");
+---
+
+<div
+  class={cn(
+    "[scrollbar-width:thin] [scrollbar-color:var(--color-kumo-line)_transparent]",
+    "[&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar]:h-1.5",
+    "[&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-kumo-line",
+    "[&::-webkit-scrollbar-track]:transparent",
+    className,
+  )}
+  style={inlineStyle}
+  {...rest}
+>
+  <slot />
+</div>

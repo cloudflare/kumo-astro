@@ -1,0 +1,103 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Card"
+description: "A generic contained surface for grouping related content with optional header, body, and footer."
+sourceFile: "components/card"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  CardBasicDemo,
+  CardElevatedDemo,
+  CardVariantsDemo,
+} from "~/components/demos/CardDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Card primitive.
+
+<ComponentExample demo="CardBasicDemo">
+  <CardBasicDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { Card } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { Card } from "@cloudflare/kumo/components/card";
+```
+
+## Usage
+
+```tsx
+import { Card, Button } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <Card>
+      <Card.Header>
+        <Card.Title>My Card</Card.Title>
+        <Card.Description>A description of the card content.</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        <p>Card body content goes here.</p>
+      </Card.Content>
+      <Card.Footer>
+        <Button size="sm">Action</Button>
+      </Card.Footer>
+    </Card>
+  );
+}
+```
+
+## Examples
+
+### Basic
+
+<ComponentExample demo="CardBasicDemo">
+  <CardBasicDemo client:visible />
+</ComponentExample>
+
+### Elevated
+
+<ComponentExample demo="CardElevatedDemo">
+  <CardElevatedDemo client:visible />
+</ComponentExample>
+
+### Variants
+
+<ComponentExample demo="CardVariantsDemo">
+  <CardVariantsDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+### Card
+
+<PropsTable component="Card" />
+
+### Card.Header
+
+<PropsTable component="Card.Header" />
+
+### Card.Title
+
+<PropsTable component="Card.Title" />
+
+### Card.Description
+
+<PropsTable component="Card.Description" />
+
+### Card.Content
+
+<PropsTable component="Card.Content" />
+
+### Card.Footer
+
+<PropsTable component="Card.Footer" />

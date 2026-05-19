@@ -1,9 +1,11 @@
 import { useState } from "react";
 import {
+  AspectRatio,
   Autocomplete,
   Badge,
   Banner,
   Button,
+  Card,
   Checkbox,
   ClipboardText,
   Collapsible,
@@ -14,19 +16,26 @@ import {
   Flow,
   Grid,
   GridItem,
+  HoverCard,
   Input,
   InputArea,
+  Kbd,
   Label,
   LayerCard,
   Link,
   Loader,
   MenuBar,
   Meter,
+  NativeSelect,
+  NavigationMenu,
   Pagination,
   Popover,
   Radio,
+  Resizable,
+  ScrollArea,
   Select,
   SensitiveInput,
+  Separator,
   SkeletonLine,
   Switch,
   Table,
@@ -34,6 +43,8 @@ import {
   Tabs,
   Text,
   Toasty,
+  Toggle,
+  ToggleGroup,
   Tooltip,
   TooltipProvider,
   useKumoToastManager,
@@ -56,28 +67,63 @@ const astroComponents = new Set([
   "banner",
   "breadcrumbs",
   "button",
+  "checkbox",
+  "clipboard-text",
+  "code-highlighted",
+  "collapsible",
+  "dialog",
+  "dropdown",
   "empty",
+  "field",
   "grid",
+  "input",
+  "input-area",
   "label",
   "layer-card",
   "link",
   "loader",
   "meter",
+  "pagination",
+  "popover",
+  "radio",
+  "select",
+  "skeleton-line",
+  "switch",
   "table",
   "table-of-contents",
+  "tabs",
   "text",
+  "toast",
+  "tooltip",
+]);
+
+// Components that are brand new (show "New" badge)
+const newComponents = new Set([
+  "aspect-ratio",
+  "card",
+  "hover-card",
+  "kbd",
+  "native-select",
+  "navigation-menu",
+  "resizable",
+  "scroll-area",
+  "separator",
+  "toggle",
+  "toggle-group",
 ]);
 
 const componentRoutes: Record<string, string> = {
+  "aspect-ratio": "/components/aspect-ratio",
+  autocomplete: "/components/autocomplete",
   badge: "/components/badge",
   banner: "/components/banner",
   breadcrumbs: "/components/breadcrumbs",
   button: "/components/button",
+  card: "/components/card",
   checkbox: "/components/checkbox",
   "clipboard-text": "/components/clipboard-text",
   "code-highlighted": "/components/code-highlighted",
   collapsible: "/components/collapsible",
-  autocomplete: "/components/autocomplete",
   combobox: "/components/combobox",
   "command-palette": "/components/command-palette",
   "date-picker": "/components/date-picker",
@@ -86,20 +132,27 @@ const componentRoutes: Record<string, string> = {
   empty: "/components/empty",
   flow: "/components/flow",
   grid: "/components/grid",
+  "hover-card": "/components/hover-card",
   input: "/components/input",
   "input-area": "/components/input-area",
   "input-group": "/components/input-group",
+  kbd: "/components/kbd",
   label: "/components/label",
   "layer-card": "/components/layer-card",
   link: "/components/link",
   loader: "/components/loader",
   "menu-bar": "/components/menu-bar",
   meter: "/components/meter",
+  "native-select": "/components/native-select",
+  "navigation-menu": "/components/navigation-menu",
   pagination: "/components/pagination",
   popover: "/components/popover",
   radio: "/components/radio",
+  resizable: "/components/resizable",
+  "scroll-area": "/components/scroll-area",
   select: "/components/select",
   "sensitive-input": "/components/sensitive-input",
+  separator: "/components/separator",
   "skeleton-line": "/components/skeleton-line",
   switch: "/components/switch",
   table: "/components/table",
@@ -107,6 +160,8 @@ const componentRoutes: Record<string, string> = {
   tabs: "/components/tabs",
   text: "/components/text",
   toast: "/components/toast",
+  toggle: "/components/toggle",
+  "toggle-group": "/components/toggle-group",
   tooltip: "/components/tooltip",
 };
 
@@ -683,15 +738,177 @@ export function HomeGrid() {
         </div>
       ),
     },
+    {
+      name: "AspectRatio",
+      id: "aspect-ratio",
+      Component: (
+        <div className="w-48">
+          <AspectRatio ratio="16/9">
+            <div className="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">
+              <span className="text-kumo-subtle text-xs">16 / 9</span>
+            </div>
+          </AspectRatio>
+        </div>
+      ),
+    },
+    {
+      name: "Card",
+      id: "card",
+      Component: (
+        <Card className="w-52">
+          <Card.Header>
+            <Card.Title>Workers</Card.Title>
+            <Card.Description>Deploy at the edge</Card.Description>
+          </Card.Header>
+          <Card.Content>
+            <p className="text-2xl font-bold text-kumo-default">1.2M</p>
+            <p className="text-xs text-kumo-subtle">requests / day</p>
+          </Card.Content>
+          <Card.Footer>
+            <Button size="sm">View</Button>
+          </Card.Footer>
+        </Card>
+      ),
+    },
+    {
+      name: "HoverCard",
+      id: "hover-card",
+      Component: (
+        <div className="relative inline-block">
+          <HoverCard openDelay={0} closeDelay={0}>
+            <HoverCard.Trigger>
+              <a href="#" className="text-kumo-link underline underline-offset-2 text-sm">
+                @cloudflare
+              </a>
+            </HoverCard.Trigger>
+            <HoverCard.Content>
+              <div className="flex flex-col gap-1.5">
+                <p className="text-sm font-semibold text-kumo-default">Cloudflare</p>
+                <p className="text-xs text-kumo-subtle">Building a better Internet.</p>
+              </div>
+            </HoverCard.Content>
+          </HoverCard>
+        </div>
+      ),
+    },
+    {
+      name: "Kbd",
+      id: "kbd",
+      Component: (
+        <div className="flex items-center gap-1.5 text-sm text-kumo-default">
+          <Kbd>⌘</Kbd>
+          <span>+</span>
+          <Kbd>K</Kbd>
+        </div>
+      ),
+    },
+    {
+      name: "NativeSelect",
+      id: "native-select",
+      Component: (
+        <NativeSelect aria-label="Region" defaultValue="workers">
+          <option value="workers">Workers</option>
+          <option value="pages">Pages</option>
+          <option value="r2">R2</option>
+        </NativeSelect>
+      ),
+    },
+    {
+      name: "NavigationMenu",
+      id: "navigation-menu",
+      Component: (
+        <NavigationMenu>
+          <NavigationMenu.List>
+            <NavigationMenu.Item>
+              <NavigationMenu.Link href="#" active>Home</NavigationMenu.Link>
+            </NavigationMenu.Item>
+            <NavigationMenu.Item value="products">
+              <NavigationMenu.Trigger>Products</NavigationMenu.Trigger>
+              <NavigationMenu.Content className="w-48">
+                <NavigationMenu.SubLink href="#" title="Workers" description="Edge functions" />
+                <NavigationMenu.SubLink href="#" title="Pages" description="JAMstack sites" />
+              </NavigationMenu.Content>
+            </NavigationMenu.Item>
+          </NavigationMenu.List>
+        </NavigationMenu>
+      ),
+    },
+    {
+      name: "Resizable",
+      id: "resizable",
+      Component: (
+        <Resizable className="h-24 w-52 rounded-lg border border-kumo-line">
+          <Resizable.Panel defaultSize={50} className="flex items-center justify-center">
+            <span className="text-xs text-kumo-subtle">Left</span>
+          </Resizable.Panel>
+          <Resizable.Handle />
+          <Resizable.Panel defaultSize={50} className="flex items-center justify-center">
+            <span className="text-xs text-kumo-subtle">Right</span>
+          </Resizable.Panel>
+        </Resizable>
+      ),
+    },
+    {
+      name: "ScrollArea",
+      id: "scroll-area",
+      Component: (
+        <ScrollArea maxHeight={96} className="w-40 rounded-md border border-kumo-line p-2">
+          {Array.from({ length: 12 }, (_, i) => (
+            <p key={i} className="py-0.5 text-xs text-kumo-default">Item {i + 1}</p>
+          ))}
+        </ScrollArea>
+      ),
+    },
+    {
+      name: "Separator",
+      id: "separator",
+      Component: (
+        <div className="flex flex-col gap-3 w-48">
+          <p className="text-sm text-kumo-default">Above</p>
+          <Separator />
+          <p className="text-sm text-kumo-default">Below</p>
+          <div className="flex h-5 items-center gap-3">
+            <span className="text-xs text-kumo-subtle">A</span>
+            <Separator orientation="vertical" />
+            <span className="text-xs text-kumo-subtle">B</span>
+            <Separator orientation="vertical" />
+            <span className="text-xs text-kumo-subtle">C</span>
+          </div>
+        </div>
+      ),
+    },
+    {
+      name: "Toggle",
+      id: "toggle",
+      Component: (
+        <div className="flex gap-1.5">
+          <Toggle aria-label="Bold" pressed>B</Toggle>
+          <Toggle aria-label="Italic">I</Toggle>
+          <Toggle aria-label="Underline">U</Toggle>
+        </div>
+      ),
+    },
+    {
+      name: "ToggleGroup",
+      id: "toggle-group",
+      Component: (
+        <ToggleGroup type="single" defaultValue="center">
+          <ToggleGroup.Item value="left">Left</ToggleGroup.Item>
+          <ToggleGroup.Item value="center">Center</ToggleGroup.Item>
+          <ToggleGroup.Item value="right">Right</ToggleGroup.Item>
+        </ToggleGroup>
+      ),
+    },
   ];
 
   return (
     <ul className="grid auto-rows-min grid-cols-1 gap-px bg-kumo-hairline md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
       {components.map((c) => {
         const route = componentRoutes[c.id] || null;
+        const isNew = newComponents.has(c.id);
         return (
           <li
-            className="relative flex aspect-square items-center justify-center bg-kumo-canvas"
+            className="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas"
             key={c.name}
           >
             {route ? (
@@ -720,6 +937,11 @@ export function HomeGrid() {
                   />
                 )}
                 {c.name}
+              </span>
+            )}
+            {isNew && (
+              <span className="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">
+                New
               </span>
             )}
             <div className="flex w-full items-center justify-center p-8 tracking-normal leading-normal">

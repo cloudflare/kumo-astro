@@ -1,0 +1,95 @@
+---
+/**
+ * ResizablePanel — a panel inside a Resizable container.
+ * Must be used inside Resizable, separated by ResizableHandle.
+ *
+ * Usage:
+ * ```astro
+ * <Resizable>
+ *   <ResizablePanel defaultSize={30} minSize={15}>
+ *     Sidebar
+ *   </ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel defaultSize={70}>
+ *     Main content
+ *   </ResizablePanel>
+ * </Resizable>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /**
+   * Default size as a percentage of the container (0–100).
+   * @default 50
+   */
+  defaultSize?: number;
+  /**
+   * Minimum size as a percentage of the container (0–100).
+   * @default 10
+   */
+  minSize?: number;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  style?: string;
+  [key: string]: unknown;
+}
+
+const {
+  defaultSize = 50,
+  minSize = 10,
+  class: className,
+  style: styleProp,
+  ...rest
+} = Astro.props;
+
+// We need to know the direction to set min-width vs min-height.
+// ResizablePanel reads the direction from the parent via a data attribute at runtime.
+// We set both and let the JS on Resizable clear the irrelevant one,
+// but for SSR we emit both as CSS custom properties instead.
+const inlineStyle = [
+  `flex-basis:${defaultSize}%`,
+  `flex-grow:0`,
+  `flex-shrink:0`,
+  `overflow:auto`,
+  // Store minSize as a data value so JS can apply the correct min-dimension
+  styleProp ?? null,
+]
+  .filter(Boolean)
+  .join(";");
+---
+
+<div
+  data-panel
+  data-min-size={minSize}
+  class={cn("relative", className)}
+  style={inlineStyle}
+  {...rest}
+>
+  <slot />
+</div>
+
+<script>
+  // Apply the correct min-width or min-height based on the parent direction
+  function applyMinSizes() {
+    document
+      .querySelectorAll<HTMLElement>("[data-panel]")
+      .forEach((panel) => {
+        const root = panel.closest<HTMLElement>("[data-kumo-resizable]");
+        if (!root) return;
+        const isHorizontal = (root.dataset.direction ?? "horizontal") === "horizontal";
+        const minSize = panel.dataset.minSize ?? "10";
+
+        if (isHorizontal) {
+          panel.style.minWidth = `${minSize}%`;
+          panel.style.minHeight = "";
+        } else {
+          panel.style.minHeight = `${minSize}%`;
+          panel.style.minWidth = "";
+        }
+      });
+  }
+
+  applyMinSizes();
+  document.addEventListener("astro:page-load", applyMinSizes);
+</script>

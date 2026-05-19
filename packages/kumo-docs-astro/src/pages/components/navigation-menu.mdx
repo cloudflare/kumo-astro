@@ -1,0 +1,101 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Navigation Menu"
+description: "A horizontal navigation bar with support for flyout dropdown submenus."
+sourceFile: "components/navigation-menu"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  NavigationMenuBasicDemo,
+  NavigationMenuWithFlyoutDemo,
+} from "~/components/demos/NavigationMenuDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Navigation Menu primitive.
+
+<ComponentExample demo="NavigationMenuBasicDemo">
+  <NavigationMenuBasicDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { NavigationMenu } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { NavigationMenu } from "@cloudflare/kumo/components/navigation-menu";
+```
+
+## Usage
+
+```tsx
+import { NavigationMenu } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <NavigationMenu>
+      <NavigationMenu.List>
+        <NavigationMenu.Item>
+          <NavigationMenu.Link href="/" active>Home</NavigationMenu.Link>
+        </NavigationMenu.Item>
+        <NavigationMenu.Item value="products">
+          <NavigationMenu.Trigger>Products</NavigationMenu.Trigger>
+          <NavigationMenu.Content>
+            <NavigationMenu.SubLink href="/workers" title="Workers" description="Edge functions" />
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+      </NavigationMenu.List>
+    </NavigationMenu>
+  );
+}
+```
+
+## Examples
+
+### Basic navigation
+
+<ComponentExample demo="NavigationMenuBasicDemo">
+  <NavigationMenuBasicDemo client:visible />
+</ComponentExample>
+
+### With flyout dropdown
+
+<ComponentExample demo="NavigationMenuWithFlyoutDemo">
+  <NavigationMenuWithFlyoutDemo client:load />
+</ComponentExample>
+
+## API Reference
+
+### NavigationMenu
+
+<PropsTable component="NavigationMenu" />
+
+### NavigationMenu.List
+
+<PropsTable component="NavigationMenu.List" />
+
+### NavigationMenu.Item
+
+<PropsTable component="NavigationMenu.Item" />
+
+### NavigationMenu.Trigger
+
+<PropsTable component="NavigationMenu.Trigger" />
+
+### NavigationMenu.Content
+
+<PropsTable component="NavigationMenu.Content" />
+
+### NavigationMenu.Link
+
+<PropsTable component="NavigationMenu.Link" />
+
+### NavigationMenu.SubLink
+
+<PropsTable component="NavigationMenu.SubLink" />

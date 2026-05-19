@@ -1,0 +1,26 @@
+---
+/**
+ * CardTitle — title heading inside a CardHeader.
+ *
+ * Usage:
+ * ```astro
+ * <CardTitle>Card Title</CardTitle>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<h3
+  class={cn("text-lg font-semibold leading-none text-kumo-default", className)}
+  {...rest}
+>
+  <slot />
+</h3>

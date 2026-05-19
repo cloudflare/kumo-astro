@@ -1,0 +1,88 @@
+---
+/**
+ * NativeSelect — a styled native `<select>` element with consistent appearance across browsers.
+ * For a custom-styled dropdown with search, use the `Select` component instead.
+ *
+ * Usage:
+ * ```astro
+ * <NativeSelect aria-label="Framework">
+ *   <option value="react">React</option>
+ *   <option value="vue">Vue</option>
+ * </NativeSelect>
+ * <NativeSelect size="sm" name="color">
+ *   <option value="red">Red</option>
+ * </NativeSelect>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_NATIVE_SELECT_VARIANTS,
+  type KumoNativeSelectSize,
+  KUMO_NATIVE_SELECT_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/native-select";
+
+interface Props {
+  /**
+   * Size of the select element.
+   * - `"sm"` — Small
+   * - `"base"` — Default
+   * - `"lg"` — Large
+   * @default "base"
+   */
+  size?: KumoNativeSelectSize;
+  /** Additional CSS classes on the outer wrapper `<div>`. */
+  wrapperClass?: string;
+  /** Additional CSS classes on the `<select>` element. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_NATIVE_SELECT_DEFAULT_VARIANTS.size,
+  wrapperClass,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sizeConfig =
+  KUMO_NATIVE_SELECT_VARIANTS.size[size as KumoNativeSelectSize] ??
+  KUMO_NATIVE_SELECT_VARIANTS.size[KUMO_NATIVE_SELECT_DEFAULT_VARIANTS.size];
+---
+
+<div class={cn("relative inline-flex", wrapperClass)}>
+  <select
+    class={cn(
+      "w-full appearance-none rounded-lg bg-kumo-base text-kumo-default",
+      "ring ring-kumo-hairline",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+      "disabled:cursor-not-allowed disabled:opacity-50",
+      "cursor-pointer",
+      sizeConfig.classes,
+      className,
+    )}
+    {...rest}
+  >
+    <slot />
+  </select>
+  <!-- Custom caret icon -->
+  <span
+    class="pointer-events-none absolute inset-y-0 right-2.5 flex items-center"
+    aria-hidden="true"
+  >
+    <svg
+      width="12"
+      height="12"
+      viewBox="0 0 12 12"
+      fill="none"
+      class="text-kumo-subtle"
+    >
+      <path
+        d="M2.5 4.5L6 8L9.5 4.5"
+        stroke="currentColor"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  </span>
+</div>

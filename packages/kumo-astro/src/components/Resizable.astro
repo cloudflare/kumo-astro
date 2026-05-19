@@ -1,0 +1,170 @@
+---
+/**
+ * Resizable — a container that splits into resizable panels separated by a draggable handle.
+ * Use with ResizablePanel and ResizableHandle.
+ *
+ * Usage:
+ * ```astro
+ * <Resizable>
+ *   <ResizablePanel defaultSize={30}>Left</ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel defaultSize={70}>Right</ResizablePanel>
+ * </Resizable>
+ *
+ * <Resizable direction="vertical">
+ *   <ResizablePanel>Top</ResizablePanel>
+ *   <ResizableHandle />
+ *   <ResizablePanel>Bottom</ResizablePanel>
+ * </Resizable>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  type KumoResizableDirection,
+  KUMO_RESIZABLE_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/resizable";
+
+interface Props {
+  /**
+   * Direction of the panel split.
+   * - `"horizontal"` — Side by side panels
+   * - `"vertical"` — Stacked panels
+   * @default "horizontal"
+   */
+  direction?: KumoResizableDirection;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  direction = KUMO_RESIZABLE_DEFAULT_VARIANTS.direction,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  data-kumo-resizable
+  data-direction={direction}
+  class={cn(
+    "flex overflow-hidden",
+    direction === "horizontal" ? "flex-row" : "flex-col",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</div>
+
+<script>
+  function initResizable(root: HTMLElement) {
+    if (root.dataset.kumoResizableInit) return;
+    root.dataset.kumoResizableInit = "1";
+
+    const direction = (root.dataset.direction ?? "horizontal") as
+      | "horizontal"
+      | "vertical";
+    const isHorizontal = direction === "horizontal";
+
+    const handles = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-kumo-resizable-handle]"),
+    );
+
+    handles.forEach((handle) => {
+      let isDragging = false;
+      let startPos = 0;
+      let startSizes: [number, number] = [0, 0];
+
+      handle.addEventListener("mousedown", (e: MouseEvent) => {
+        e.preventDefault();
+        isDragging = true;
+        startPos = isHorizontal ? e.clientX : e.clientY;
+
+        const prevPanel = handle.previousElementSibling as HTMLElement | null;
+        const nextPanel = handle.nextElementSibling as HTMLElement | null;
+        if (!prevPanel || !nextPanel) return;
+
+        startSizes = [
+          isHorizontal ? prevPanel.offsetWidth : prevPanel.offsetHeight,
+          isHorizontal ? nextPanel.offsetWidth : nextPanel.offsetHeight,
+        ];
+
+        const onMouseMove = (moveEvent: MouseEvent) => {
+          if (!isDragging) return;
+
+          const delta =
+            (isHorizontal ? moveEvent.clientX : moveEvent.clientY) - startPos;
+          const totalSize = isHorizontal
+            ? root.offsetWidth
+            : root.offsetHeight;
+          if (totalSize === 0) return;
+
+          const newPrevSize = Math.max(
+            10,
+            Math.min(90, ((startSizes[0] + delta) / totalSize) * 100),
+          );
+          const newNextSize = Math.max(
+            10,
+            Math.min(90, ((startSizes[1] - delta) / totalSize) * 100),
+          );
+
+          prevPanel.style.flexBasis = `${newPrevSize}%`;
+          nextPanel.style.flexBasis = `${newNextSize}%`;
+        };
+
+        const onMouseUp = () => {
+          isDragging = false;
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      // Keyboard support: arrow keys adjust panels by 1%
+      handle.addEventListener("keydown", (e: KeyboardEvent) => {
+        const prevPanel = handle.previousElementSibling as HTMLElement | null;
+        const nextPanel = handle.nextElementSibling as HTMLElement | null;
+        if (!prevPanel || !nextPanel) return;
+
+        const totalSize = isHorizontal ? root.offsetWidth : root.offsetHeight;
+        if (totalSize === 0) return;
+
+        const step = 1; // percent
+        const prevCurrent =
+          (isHorizontal ? prevPanel.offsetWidth : prevPanel.offsetHeight) /
+          totalSize *
+          100;
+        const nextCurrent =
+          (isHorizontal ? nextPanel.offsetWidth : nextPanel.offsetHeight) /
+          totalSize *
+          100;
+
+        const isIncrease =
+          (isHorizontal && e.key === "ArrowRight") ||
+          (!isHorizontal && e.key === "ArrowDown");
+        const isDecrease =
+          (isHorizontal && e.key === "ArrowLeft") ||
+          (!isHorizontal && e.key === "ArrowUp");
+
+        if (isIncrease || isDecrease) {
+          e.preventDefault();
+          const delta = isIncrease ? step : -step;
+          prevPanel.style.flexBasis = `${Math.max(10, Math.min(90, prevCurrent + delta))}%`;
+          nextPanel.style.flexBasis = `${Math.max(10, Math.min(90, nextCurrent - delta))}%`;
+        }
+      });
+    });
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-resizable]")
+      .forEach(initResizable);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

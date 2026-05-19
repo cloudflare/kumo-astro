@@ -1,0 +1,164 @@
+---
+/**
+ * NavigationMenu — a top-level navigation component with dropdown support.
+ * Use with NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger,
+ * NavigationMenuContent, NavigationMenuLink, and NavigationMenuSubLink.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenu>
+ *   <NavigationMenuList>
+ *     <NavigationMenuItem>
+ *       <NavigationMenuLink href="/about">About</NavigationMenuLink>
+ *     </NavigationMenuItem>
+ *     <NavigationMenuItem>
+ *       <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+ *       <NavigationMenuContent>
+ *         <NavigationMenuSubLink href="/products/a" title="Product A" description="..." />
+ *       </NavigationMenuContent>
+ *     </NavigationMenuItem>
+ *   </NavigationMenuList>
+ * </NavigationMenu>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Accessible label for the nav landmark. @default "Main navigation" */
+  "aria-label"?: string;
+  /** Additional CSS classes merged onto the nav element. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  "aria-label": ariaLabel = "Main navigation",
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<nav
+  data-kumo-nav-menu
+  aria-label={ariaLabel}
+  class={cn("relative", className)}
+  {...rest}
+>
+  <slot />
+</nav>
+
+<script>
+  function initNavMenu(root: HTMLElement) {
+    if (root.dataset.kumoNavMenuInit) return;
+    root.dataset.kumoNavMenuInit = "1";
+
+    let activeItem: HTMLElement | null = null;
+
+    function closeAll() {
+      if (!activeItem) return;
+      const trigger = activeItem.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-trigger]",
+      );
+      const content = activeItem.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-content]",
+      );
+      if (trigger) {
+        trigger.setAttribute("aria-expanded", "false");
+        trigger.dataset.state = "closed";
+      }
+      if (content) {
+        content.setAttribute("hidden", "");
+        content.dataset.state = "closed";
+      }
+      activeItem = null;
+    }
+
+    function openItem(item: HTMLElement) {
+      if (activeItem === item) return;
+      closeAll();
+      const trigger = item.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-trigger]",
+      );
+      const content = item.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-content]",
+      );
+      if (trigger) {
+        trigger.setAttribute("aria-expanded", "true");
+        trigger.dataset.state = "open";
+      }
+      if (content) {
+        content.removeAttribute("hidden");
+        content.dataset.state = "open";
+      }
+      activeItem = item;
+    }
+
+    const items = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-kumo-nav-menu-item]"),
+    );
+
+    items.forEach((item) => {
+      const trigger = item.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-trigger]",
+      );
+      const content = item.querySelector<HTMLElement>(
+        "[data-kumo-nav-menu-content]",
+      );
+
+      if (trigger) {
+        trigger.addEventListener("click", () => {
+          if (activeItem === item) {
+            closeAll();
+          } else {
+            openItem(item);
+          }
+        });
+
+        trigger.addEventListener("mouseenter", () => {
+          openItem(item);
+        });
+      }
+
+      if (content) {
+        content.addEventListener("mouseenter", () => {
+          openItem(item);
+        });
+      }
+
+      item.addEventListener("mouseleave", () => {
+        // Small delay so moving between trigger and content doesn't flicker
+        setTimeout(() => {
+          if (
+            !item.matches(":hover") &&
+            !item.querySelector(":hover")
+          ) {
+            if (activeItem === item) closeAll();
+          }
+        }, 100);
+      });
+    });
+
+    root.addEventListener("mouseleave", () => {
+      closeAll();
+    });
+
+    // Close on Escape
+    root.addEventListener("keydown", (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeAll();
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", (e: MouseEvent) => {
+      if (!root.contains(e.target as Node)) closeAll();
+    });
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-nav-menu]")
+      .forEach(initNavMenu);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

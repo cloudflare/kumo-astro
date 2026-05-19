@@ -40,8 +40,8 @@ catalog:
   wrangler: 4.87.0
 
 allowBuilds:
-  '@parcel/watcher': set this to true or false
-  esbuild: set this to true or false
-  lefthook: set this to true or false
-  sharp: set this to true or false
-  workerd: set this to true or false
+  '@parcel/watcher': true
+  esbuild: true
+  lefthook: true
+  sharp: true
+  workerd: true

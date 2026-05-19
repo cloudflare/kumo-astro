@@ -1,0 +1,57 @@
+---
+/**
+ * Card — a surface container for grouping related content.
+ * Use with CardHeader, CardTitle, CardDescription, CardContent, CardFooter.
+ *
+ * Usage:
+ * ```astro
+ * <Card>
+ *   <CardHeader>
+ *     <CardTitle>Title</CardTitle>
+ *     <CardDescription>Description</CardDescription>
+ *   </CardHeader>
+ *   <CardContent>Content here</CardContent>
+ *   <CardFooter><Button>Action</Button></CardFooter>
+ * </Card>
+ * <Card variant="elevated" />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_CARD_VARIANTS,
+  type KumoCardVariant,
+  KUMO_CARD_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/card";
+
+interface Props {
+  /**
+   * Visual surface variant.
+   * - `"default"` — Base background
+   * - `"elevated"` — Raised surface
+   * - `"recessed"` — Sunken surface
+   * - `"ghost"` — No background
+   * @default "default"
+   */
+  variant?: KumoCardVariant;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_CARD_DEFAULT_VARIANTS.variant,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const variantConfig =
+  KUMO_CARD_VARIANTS.variant[variant as KumoCardVariant] ??
+  KUMO_CARD_VARIANTS.variant[KUMO_CARD_DEFAULT_VARIANTS.variant];
+---
+
+<div
+  class={cn("rounded-xl shadow-xs", variantConfig.classes, className)}
+  {...rest}
+>
+  <slot />
+</div>

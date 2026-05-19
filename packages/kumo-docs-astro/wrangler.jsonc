@@ -18,5 +18,12 @@
         { "pattern": "staging.kumo-ui.com/*", "zone_name": "kumo-ui.com" },
       ],
     },
+    "astro-staging": {
+      "name": "kumo-docs-astro",
+      "account_id": "2f3dc21d188ba781322b520bbde5fb5a",
+      "workers_dev": true,
+      "preview_urls": false,
+      "routes": [],
+    },
   },
 }

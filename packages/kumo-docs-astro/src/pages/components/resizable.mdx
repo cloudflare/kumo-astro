@@ -1,0 +1,91 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Resizable"
+description: "Drag-to-resize panel splits for building flexible layouts."
+sourceFile: "components/resizable"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  ResizableHorizontalDemo,
+  ResizableThreePanelDemo,
+  ResizableVerticalDemo,
+  ResizableGhostHandleDemo,
+} from "~/components/demos/ResizableDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Resizable primitive.
+
+<ComponentExample demo="ResizableHorizontalDemo">
+  <ResizableHorizontalDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { Resizable } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { Resizable } from "@cloudflare/kumo/components/resizable";
+```
+
+## Usage
+
+```tsx
+import { Resizable } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <Resizable className="h-40">
+      <Resizable.Panel defaultSize={50}>Left</Resizable.Panel>
+      <Resizable.Handle />
+      <Resizable.Panel defaultSize={50}>Right</Resizable.Panel>
+    </Resizable>
+  );
+}
+```
+
+## Examples
+
+### Horizontal split
+
+<ComponentExample demo="ResizableHorizontalDemo">
+  <ResizableHorizontalDemo client:visible />
+</ComponentExample>
+
+### Three panels
+
+<ComponentExample demo="ResizableThreePanelDemo">
+  <ResizableThreePanelDemo client:visible />
+</ComponentExample>
+
+### Vertical split
+
+<ComponentExample demo="ResizableVerticalDemo">
+  <ResizableVerticalDemo client:visible />
+</ComponentExample>
+
+### Ghost handle
+
+<ComponentExample demo="ResizableGhostHandleDemo">
+  <ResizableGhostHandleDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+### Resizable
+
+<PropsTable component="Resizable" />
+
+### Resizable.Panel
+
+<PropsTable component="Resizable.Panel" />
+
+### Resizable.Handle
+
+<PropsTable component="Resizable.Handle" />

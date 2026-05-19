@@ -1,0 +1,56 @@
+---
+/**
+ * NavigationMenuSubLink — a rich link for use inside NavigationMenuContent,
+ * displaying a title, optional description, and/or slot content.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenuContent>
+ *   <NavigationMenuSubLink href="/products/a" title="Product A" description="Short description." />
+ *   <NavigationMenuSubLink href="/products/b" title="Product B">
+ *     <span>Custom content</span>
+ *   </NavigationMenuSubLink>
+ * </NavigationMenuContent>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  href?: string;
+  /** Primary label text. */
+  title?: string;
+  /** Supporting description text. */
+  description?: string;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  title,
+  description,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(
+    "block rounded-lg px-3 py-2 no-underline",
+    "hover:bg-kumo-tint",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+    "transition-colors",
+    className,
+  )}
+  {...rest}
+>
+  {title && (
+    <div class="text-sm font-medium text-kumo-default">{title}</div>
+  )}
+  {description && (
+    <div class="text-xs text-kumo-subtle mt-0.5 leading-snug">{description}</div>
+  )}
+  <slot />
+</a>

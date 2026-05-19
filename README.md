@@ -168,6 +168,52 @@ pnpm test:astro                       # Run kumo-astro Playwright tests
 pnpm changeset                        # Create a changeset (required when modifying kumo or kumo-astro)
 ```
 
+### Docs Deployment
+
+The docs site (`packages/kumo-docs-astro`) has two separate deployment targets, each with their own set of scripts.
+
+#### Original kumo-docs (account: `design-engineering`)
+
+| Script | Command | What it does |
+|---|---|---|
+| `deploy:kumo-docs-preview` | `bash ci/versioning/deploy-kumo-docs-preview.sh` | Uploads a new Worker version without making it live; produces a per-version preview URL for PR comments |
+| `deploy:kumo-docs-staging` | `bash ci/versioning/deploy-kumo-docs-staging.sh` | Deploys live to the `kumo-docs-staging` Worker (`staging.kumo-ui.com`) |
+
+#### Astro docs (account: `2f3dc21d...`, separate CF account)
+
+| Script | Command | What it does |
+|---|---|---|
+| `deploy:kumo-docs-astro-preview` | `bash ci/versioning/deploy-kumo-docs-astro-preview.sh` | Same as above but targets the `astro-staging` wrangler env on the new account |
+| `deploy:kumo-docs-astro-staging` | `bash ci/versioning/deploy-kumo-docs-astro-staging.sh` | Deploys live to the `kumo-docs-astro` Worker on the new account (workers.dev, no custom domain) |
+
+To run locally, export credentials first:
+
+```bash
+export CLOUDFLARE_API_TOKEN=your_token
+export CLOUDFLARE_ACCOUNT_ID=2f3dc21d188ba781322b520bbde5fb5a
+pnpm deploy:kumo-docs-astro-staging
+```
+
+#### Required secrets for Astro docs deployment
+
+The Astro docs scripts target a **separate Cloudflare account**. The `CLOUDFLARE_API_TOKEN` used must have permissions on that account. If your existing token only covers the original account, you have two options:
+
+1. **Grant the existing token access to the new account** in the Cloudflare dashboard (API Tokens → edit token → add the new account under "Account Resources").
+2. **Use a separate token** — introduce a new secret (e.g. `CLOUDFLARE_ASTRO_API_TOKEN`) and update the scripts to read from it instead of `CLOUDFLARE_API_TOKEN`.
+
+The scripts currently read `CLOUDFLARE_API_TOKEN`. If you add a separate secret, update the variable name in both `ci/versioning/deploy-kumo-docs-astro-preview.sh` and `ci/versioning/deploy-kumo-docs-astro-staging.sh`, and add the new secret to GitHub Actions (repo Settings → Secrets → Actions).
+
+#### Why `wrangler versions upload` instead of `wrangler deploy`?
+
+The preview scripts use `wrangler versions upload` rather than `wrangler deploy`. The difference:
+
+- **`wrangler versions upload`** — uploads a new version but does **not** make it live. Wrangler returns a per-version preview URL (`https://<version-prefix>-<worker-name>.<subdomain>.workers.dev`) that can be shared in a PR comment without affecting production or staging traffic.
+- **`wrangler deploy`** — immediately makes the new version live to 100% of traffic on the target environment.
+
+The extra code in the preview scripts captures the version ID/URL from wrangler's output (constructing it from the version ID if wrangler doesn't print it directly), then writes it to `ci/reports/kumo-docs-preview.json` so the PR reporter job can post it as a GitHub comment.
+
+If you don't need per-PR preview URLs in GitHub comments, the staging scripts — which are just a build + `wrangler deploy --env <env>` — are all you need.
+
 ### CI / GitHub Actions
 
 Five workflows run on every pull request:

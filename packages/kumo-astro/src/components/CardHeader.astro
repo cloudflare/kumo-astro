@@ -1,0 +1,26 @@
+---
+/**
+ * CardHeader — header section of a Card, typically contains CardTitle and CardDescription.
+ *
+ * Usage:
+ * ```astro
+ * <CardHeader>
+ *   <CardTitle>Title</CardTitle>
+ *   <CardDescription>Description</CardDescription>
+ * </CardHeader>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<div class={cn("flex flex-col gap-1.5 p-6", className)} {...rest}>
+  <slot />
+</div>

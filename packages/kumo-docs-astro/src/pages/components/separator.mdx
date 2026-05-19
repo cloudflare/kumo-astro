@@ -1,0 +1,74 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Separator"
+description: "A visual divider line for separating content horizontally or vertically."
+sourceFile: "components/separator"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  SeparatorHorizontalDemo,
+  SeparatorVerticalDemo,
+  SeparatorSemanticDemo,
+} from "~/components/demos/SeparatorDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Separator primitive.
+
+<ComponentExample demo="SeparatorHorizontalDemo">
+  <SeparatorHorizontalDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { Separator } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { Separator } from "@cloudflare/kumo/components/separator";
+```
+
+## Usage
+
+```tsx
+import { Separator } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <div>
+      <p>Above</p>
+      <Separator />
+      <p>Below</p>
+    </div>
+  );
+}
+```
+
+## Examples
+
+### Horizontal
+
+<ComponentExample demo="SeparatorHorizontalDemo">
+  <SeparatorHorizontalDemo client:visible />
+</ComponentExample>
+
+### Vertical
+
+<ComponentExample demo="SeparatorVerticalDemo">
+  <SeparatorVerticalDemo client:visible />
+</ComponentExample>
+
+### Semantic (non-decorative)
+
+<ComponentExample demo="SeparatorSemanticDemo">
+  <SeparatorSemanticDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+<PropsTable component="Separator" />

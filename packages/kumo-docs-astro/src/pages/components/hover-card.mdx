@@ -1,0 +1,82 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Hover Card"
+description: "A floating preview card that appears when hovering over a trigger element."
+sourceFile: "components/hover-card"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  HoverCardUserDemo,
+  HoverCardLinkPreviewDemo,
+} from "~/components/demos/HoverCardDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Hover Card primitive.
+
+<ComponentExample demo="HoverCardUserDemo">
+  <HoverCardUserDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { HoverCard } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { HoverCard } from "@cloudflare/kumo/components/hover-card";
+```
+
+## Usage
+
+```tsx
+import { HoverCard } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <div className="relative inline-block">
+      <HoverCard>
+        <HoverCard.Trigger>
+          <a href="#">@username</a>
+        </HoverCard.Trigger>
+        <HoverCard.Content>
+          <p>User profile preview</p>
+        </HoverCard.Content>
+      </HoverCard>
+    </div>
+  );
+}
+```
+
+## Examples
+
+### User profile preview
+
+<ComponentExample demo="HoverCardUserDemo">
+  <HoverCardUserDemo client:load />
+</ComponentExample>
+
+### Link preview
+
+<ComponentExample demo="HoverCardLinkPreviewDemo">
+  <HoverCardLinkPreviewDemo client:load />
+</ComponentExample>
+
+## API Reference
+
+### HoverCard
+
+<PropsTable component="HoverCard" />
+
+### HoverCard.Trigger
+
+<PropsTable component="HoverCard.Trigger" />
+
+### HoverCard.Content
+
+<PropsTable component="HoverCard.Content" />

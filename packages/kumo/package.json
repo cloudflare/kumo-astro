@@ -92,6 +92,10 @@
       "types": "./dist/src/components/layer-card/index.d.ts",
       "import": "./dist/components/layer-card.js"
     },
+    "./components/kbd": {
+      "types": "./dist/src/components/kbd/index.d.ts",
+      "import": "./dist/components/kbd.js"
+    },
     "./components/label": {
       "types": "./dist/src/components/label/index.d.ts",
       "import": "./dist/components/label.js"
@@ -115,6 +119,10 @@
     "./components/select": {
       "types": "./dist/src/components/select/index.d.ts",
       "import": "./dist/components/select.js"
+    },
+    "./components/separator": {
+      "types": "./dist/src/components/separator/index.d.ts",
+      "import": "./dist/components/separator.js"
     },
     "./components/sensitive-input": {
       "types": "./dist/src/components/sensitive-input/index.d.ts",
@@ -202,6 +210,42 @@
     "./components/table-of-contents": {
       "types": "./dist/src/components/table-of-contents/index.d.ts",
       "import": "./dist/components/table-of-contents.js"
+    },
+    "./components/scroll-area": {
+      "types": "./dist/src/components/scroll-area/index.d.ts",
+      "import": "./dist/components/scroll-area.js"
+    },
+    "./components/native-select": {
+      "types": "./dist/src/components/native-select/index.d.ts",
+      "import": "./dist/components/native-select.js"
+    },
+    "./components/navigation-menu": {
+      "types": "./dist/src/components/navigation-menu/index.d.ts",
+      "import": "./dist/components/navigation-menu.js"
+    },
+    "./components/aspect-ratio": {
+      "types": "./dist/src/components/aspect-ratio/index.d.ts",
+      "import": "./dist/components/aspect-ratio.js"
+    },
+    "./components/card": {
+      "types": "./dist/src/components/card/index.d.ts",
+      "import": "./dist/components/card.js"
+    },
+    "./components/toggle": {
+      "types": "./dist/src/components/toggle/index.d.ts",
+      "import": "./dist/components/toggle.js"
+    },
+    "./components/toggle-group": {
+      "types": "./dist/src/components/toggle-group/index.d.ts",
+      "import": "./dist/components/toggle-group.js"
+    },
+    "./components/hover-card": {
+      "types": "./dist/src/components/hover-card/index.d.ts",
+      "import": "./dist/components/hover-card.js"
+    },
+    "./components/resizable": {
+      "types": "./dist/src/components/resizable/index.d.ts",
+      "import": "./dist/components/resizable.js"
     },
     "./utils": {
       "types": "./dist/src/utils/index.d.ts",

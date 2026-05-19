@@ -1,0 +1,49 @@
+---
+/**
+ * NavigationMenuLink — a top-level navigation link (no dropdown).
+ * Must be used inside NavigationMenuItem.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenuItem>
+ *   <NavigationMenuLink href="/about">About</NavigationMenuLink>
+ * </NavigationMenuItem>
+ * <NavigationMenuItem>
+ *   <NavigationMenuLink href="/blog" active>Blog</NavigationMenuLink>
+ * </NavigationMenuItem>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  href?: string;
+  /** Whether this link is the currently active page. */
+  active?: boolean;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  active = false,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<a
+  href={href}
+  aria-current={active ? "page" : undefined}
+  class={cn(
+    "inline-flex items-center rounded-md px-3 py-2 text-sm font-medium no-underline",
+    "text-kumo-default hover:bg-kumo-tint",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand",
+    "transition-colors select-none",
+    active && "bg-kumo-tint font-semibold",
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</a>

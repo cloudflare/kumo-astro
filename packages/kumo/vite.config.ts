@@ -208,6 +208,44 @@ export default defineConfig(({ mode }) => {
             __dirname,
             "src/components/table-of-contents/index.ts",
           ),
+          "components/navigation-menu": resolve(
+            __dirname,
+            "src/components/navigation-menu/index.ts",
+          ),
+          "components/kbd": resolve(
+            __dirname,
+            "src/components/kbd/index.ts",
+          ),
+          "components/separator": resolve(
+            __dirname,
+            "src/components/separator/index.ts",
+          ),
+          "components/aspect-ratio": resolve(
+            __dirname,
+            "src/components/aspect-ratio/index.ts",
+          ),
+          "components/card": resolve(
+            __dirname,
+            "src/components/card/index.ts",
+          ),
+          "components/toggle": resolve(
+            __dirname,
+            "src/components/toggle/index.ts",
+          ),
+          "components/toggle-group": resolve(
+            __dirname,
+            "src/components/toggle-group/index.ts",
+          ),
+          "components/scroll-area": resolve(
+            __dirname,
+            "src/components/scroll-area/index.ts",
+          ),
+          "components/native-select": resolve(
+            __dirname,
+            "src/components/native-select/index.ts",
+          ),
+          "components/hover-card": resolve(__dirname, "src/components/hover-card/index.ts"),
+          "components/resizable": resolve(__dirname, "src/components/resizable/index.ts"),
           // PLOP_INJECT_COMPONENT_ENTRY
           // Utils entry point
           utils: resolve(__dirname, "src/utils/index.ts"),

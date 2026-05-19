@@ -1,0 +1,94 @@
+---
+/**
+ * HoverCard — a popover card that appears when hovering over a trigger element.
+ * Use with HoverCardTrigger and HoverCardContent.
+ *
+ * Usage:
+ * ```astro
+ * <HoverCard>
+ *   <HoverCardTrigger>
+ *     <a href="#">@username</a>
+ *   </HoverCardTrigger>
+ *   <HoverCardContent>
+ *     <p>User profile information</p>
+ *   </HoverCardContent>
+ * </HoverCard>
+ * ```
+ */
+interface Props {
+  /** Delay in ms before opening. @default 700 */
+  openDelay?: number;
+  /** Delay in ms before closing. @default 300 */
+  closeDelay?: number;
+  /** Additional CSS classes merged onto the wrapper. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  openDelay = 700,
+  closeDelay = 300,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<div
+  data-kumo-hover-card
+  data-open-delay={openDelay}
+  data-close-delay={closeDelay}
+  class={className}
+  style="position:relative;display:inline-block"
+  {...rest}
+>
+  <slot />
+</div>
+
+<script>
+  function initHoverCard(root: HTMLElement) {
+    if (root.dataset.kumoHoverCardInit) return;
+    root.dataset.kumoHoverCardInit = "1";
+
+    const trigger = root.querySelector<HTMLElement>("[data-kumo-hover-card-trigger]");
+    const content = root.querySelector<HTMLElement>("[data-kumo-hover-card-content]");
+    if (!trigger || !content) return;
+
+    const openDelay = Number(root.dataset.openDelay ?? 700);
+    const closeDelay = Number(root.dataset.closeDelay ?? 300);
+
+    let openTimer: ReturnType<typeof setTimeout> | null = null;
+    let closeTimer: ReturnType<typeof setTimeout> | null = null;
+
+    function show() {
+      if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
+      openTimer = setTimeout(() => {
+        content.removeAttribute("hidden");
+        content.dataset.state = "open";
+      }, openDelay);
+    }
+
+    function hide() {
+      if (openTimer) { clearTimeout(openTimer); openTimer = null; }
+      closeTimer = setTimeout(() => {
+        content.setAttribute("hidden", "");
+        content.dataset.state = "closed";
+      }, closeDelay);
+    }
+
+    trigger.addEventListener("mouseenter", show);
+    trigger.addEventListener("mouseleave", hide);
+    trigger.addEventListener("focusin", show);
+    trigger.addEventListener("focusout", hide);
+    content.addEventListener("mouseenter", show);
+    content.addEventListener("mouseleave", hide);
+  }
+
+  function initAll() {
+    document
+      .querySelectorAll<HTMLElement>("[data-kumo-hover-card]")
+      .forEach(initHoverCard);
+  }
+
+  initAll();
+  document.addEventListener("astro:page-load", initAll);
+</script>

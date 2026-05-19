@@ -1,0 +1,31 @@
+---
+/**
+ * NavigationMenuList — the list container for navigation menu items.
+ * Must be used inside NavigationMenu.
+ *
+ * Usage:
+ * ```astro
+ * <NavigationMenu>
+ *   <NavigationMenuList>
+ *     <NavigationMenuItem>...</NavigationMenuItem>
+ *   </NavigationMenuList>
+ * </NavigationMenu>
+ * ```
+ */
+import { cn } from "../utils/cn";
+
+interface Props {
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<ul
+  class={cn("flex items-center gap-1 list-none m-0 p-0", className)}
+  {...rest}
+>
+  <slot />
+</ul>

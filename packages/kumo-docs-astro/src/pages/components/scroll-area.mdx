@@ -1,0 +1,76 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Scroll Area"
+description: "A scrollable container with consistently styled scrollbars across browsers."
+sourceFile: "components/scroll-area"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  ScrollAreaVerticalDemo,
+  ScrollAreaHorizontalDemo,
+  ScrollAreaNotificationsDemo,
+} from "~/components/demos/ScrollAreaDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Scroll Area primitive.
+
+<ComponentExample demo="ScrollAreaVerticalDemo">
+  <ScrollAreaVerticalDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { ScrollArea } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { ScrollArea } from "@cloudflare/kumo/components/scroll-area";
+```
+
+## Usage
+
+```tsx
+import { ScrollArea } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <ScrollArea maxHeight={300}>
+      <ul>
+        {items.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
+    </ScrollArea>
+  );
+}
+```
+
+## Examples
+
+### Vertical scrolling
+
+<ComponentExample demo="ScrollAreaVerticalDemo">
+  <ScrollAreaVerticalDemo client:visible />
+</ComponentExample>
+
+### Horizontal scrolling
+
+<ComponentExample demo="ScrollAreaHorizontalDemo">
+  <ScrollAreaHorizontalDemo client:visible />
+</ComponentExample>
+
+### Notification list
+
+<ComponentExample demo="ScrollAreaNotificationsDemo">
+  <ScrollAreaNotificationsDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+<PropsTable component="ScrollArea" />

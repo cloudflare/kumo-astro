@@ -1,0 +1,46 @@
+---
+/**
+ * ToggleGroupItem — an individual toggle button inside a ToggleGroup.
+ *
+ * Usage:
+ * ```astro
+ * <ToggleGroup>
+ *   <ToggleGroupItem value="left" aria-label="Align left">Left</ToggleGroupItem>
+ *   <ToggleGroupItem value="center" aria-label="Align center">Center</ToggleGroupItem>
+ * </ToggleGroup>
+ * ```
+ */
+interface Props {
+  /** The value this item represents. Required. */
+  value: string;
+  /** Disable this specific item. */
+  disabled?: boolean;
+  /** Accessible label (required for icon-only items). */
+  "aria-label"?: string;
+  /** Additional CSS classes merged onto the button. */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  value,
+  disabled,
+  class: className,
+  ...rest
+} = Astro.props;
+---
+
+<button
+  type="button"
+  role="button"
+  aria-pressed="false"
+  data-state="off"
+  data-kumo-toggle-group-item
+  data-value={value}
+  data-disabled={disabled ? "" : undefined}
+  disabled={disabled || undefined}
+  class={className}
+  {...rest}
+>
+  <slot />
+</button>

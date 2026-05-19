@@ -1,0 +1,55 @@
+---
+/**
+ * Kbd — keyboard shortcut display element. Renders inline keyboard key(s).
+ *
+ * Usage:
+ * ```astro
+ * <Kbd>⌘K</Kbd>
+ * <Kbd size="sm">Ctrl</Kbd>
+ * <Kbd size="lg">Enter</Kbd>
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  KUMO_KBD_VARIANTS,
+  type KumoKbdSize,
+  KUMO_KBD_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/kbd";
+
+interface Props {
+  /**
+   * Size of the keyboard key display.
+   * - `"sm"` — Small for compact contexts
+   * - `"base"` — Default size
+   * - `"lg"` — Large for prominent display
+   * @default "base"
+   */
+  size?: KumoKbdSize;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  size = KUMO_KBD_DEFAULT_VARIANTS.size,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const sizeConfig =
+  KUMO_KBD_VARIANTS.size[size as KumoKbdSize] ??
+  KUMO_KBD_VARIANTS.size[KUMO_KBD_DEFAULT_VARIANTS.size];
+---
+
+<kbd
+  class={cn(
+    "inline-flex items-center justify-center font-mono font-medium",
+    "rounded-md border border-kumo-line bg-kumo-elevated text-kumo-subtle",
+    "shadow-[0_1px_0_var(--color-kumo-line)]",
+    sizeConfig.classes,
+    className,
+  )}
+  {...rest}
+>
+  <slot />
+</kbd>

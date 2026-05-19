@@ -1,0 +1,80 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Native Select"
+description: "A styled native select element for simple dropdown selection without JavaScript dependencies."
+sourceFile: "components/native-select"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import PropsTable from "~/components/docs/PropsTable.astro";
+import {
+  NativeSelectBasicDemo,
+  NativeSelectSizesDemo,
+  NativeSelectDisabledDemo,
+  NativeSelectGroupsDemo,
+} from "~/components/demos/NativeSelectDemo";
+
+> **New component** — Added to Kumo to fill the gap with shadcn/ui's Native Select primitive. For a fully custom-styled dropdown, use the [`Select`](/components/select) component.
+
+<ComponentExample demo="NativeSelectBasicDemo">
+  <NativeSelectBasicDemo client:visible />
+</ComponentExample>
+
+## Installation
+
+### Barrel
+
+```tsx
+import { NativeSelect } from "@cloudflare/kumo";
+```
+
+### Granular
+
+```tsx
+import { NativeSelect } from "@cloudflare/kumo/components/native-select";
+```
+
+## Usage
+
+```tsx
+import { NativeSelect } from "@cloudflare/kumo";
+
+export default function Example() {
+  return (
+    <NativeSelect aria-label="Region">
+      <option value="us">United States</option>
+      <option value="eu">Europe</option>
+    </NativeSelect>
+  );
+}
+```
+
+## Examples
+
+### Basic
+
+<ComponentExample demo="NativeSelectBasicDemo">
+  <NativeSelectBasicDemo client:visible />
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample demo="NativeSelectSizesDemo">
+  <NativeSelectSizesDemo client:visible />
+</ComponentExample>
+
+### Disabled
+
+<ComponentExample demo="NativeSelectDisabledDemo">
+  <NativeSelectDisabledDemo client:visible />
+</ComponentExample>
+
+### Option groups
+
+<ComponentExample demo="NativeSelectGroupsDemo">
+  <NativeSelectGroupsDemo client:visible />
+</ComponentExample>
+
+## API Reference
+
+<PropsTable component="NativeSelect" />

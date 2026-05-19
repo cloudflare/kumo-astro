@@ -1,0 +1,58 @@
+---
+/**
+ * Separator — a visual or semantic divider line.
+ *
+ * Usage:
+ * ```astro
+ * <Separator />
+ * <Separator orientation="vertical" />
+ * <Separator decorative={false} />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import {
+  type KumoSeparatorOrientation,
+  KUMO_SEPARATOR_DEFAULT_VARIANTS,
+} from "@cloudflare/kumo/components/separator";
+
+interface Props {
+  /**
+   * Orientation of the separator line.
+   * - `"horizontal"` — Full-width horizontal line
+   * - `"vertical"` — Full-height vertical line
+   * @default "horizontal"
+   */
+  orientation?: KumoSeparatorOrientation;
+  /**
+   * When true, renders as `aria-hidden` decorative element.
+   * When false, renders with `role="separator"`.
+   * @default true
+   */
+  decorative?: boolean;
+  /** Additional CSS classes merged via cn(). */
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  orientation = KUMO_SEPARATOR_DEFAULT_VARIANTS.orientation,
+  decorative = KUMO_SEPARATOR_DEFAULT_VARIANTS.decorative,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const ariaProps = decorative
+  ? { "aria-hidden": "true" }
+  : { role: "separator", "aria-orientation": orientation };
+---
+
+<div
+  data-orientation={orientation}
+  class={cn(
+    "shrink-0 bg-kumo-line",
+    orientation === "horizontal" ? "h-px w-full" : "h-full w-px",
+    className,
+  )}
+  {...ariaProps}
+  {...rest}
+/>
