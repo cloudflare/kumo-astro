@@ -1,0 +1,31 @@
+---
+import "@phosphor-icons/web/regular";
+import "@phosphor-icons/web/thin";
+import "@phosphor-icons/web/light";
+import "@phosphor-icons/web/bold";
+import "@phosphor-icons/web/fill";
+import "@phosphor-icons/web/duotone";
+
+type Weight = "regular" | "thin" | "light" | "bold" | "fill" | "duotone";
+
+interface Props {
+  name: string;
+  weight?: Weight;
+  size?: string | number;
+  class?: string;
+}
+
+const { name, weight = "regular", size, class: className } = Astro.props;
+
+// regular weight uses `.ph` as the base class; all others add `.ph-{weight}`
+const weightClass = weight === "regular" ? "ph" : `ph-${weight}`;
+const iconClass = [weightClass, `ph-${name}`, className].filter(Boolean).join(" ");
+---
+
+<i
+  class={iconClass}
+  aria-hidden="true"
+  style={size !== undefined
+    ? `font-size: ${typeof size === "number" ? `${size}px` : size}`
+    : undefined}
+></i>

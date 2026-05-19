@@ -9,6 +9,9 @@ catalogs:
     '@phosphor-icons/react':
       specifier: ^2.1.10
       version: 2.1.10
+    '@phosphor-icons/web':
+      specifier: ^2.1.2
+      version: 2.1.2
     '@tailwindcss/cli':
       specifier: ^4.1.17
       version: 4.1.17
@@ -350,9 +353,15 @@ importers:
       '@cloudflare/kumo':
         specifier: workspace:*
         version: link:../kumo
+      '@cloudflare/kumo-astro':
+        specifier: workspace:*
+        version: link:../kumo-astro
       '@phosphor-icons/react':
         specifier: 'catalog:'
         version: 2.1.10(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@phosphor-icons/web':
+        specifier: 'catalog:'
+        version: 2.1.2
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.17)

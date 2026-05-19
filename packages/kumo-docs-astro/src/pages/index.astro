@@ -1,7 +1,7 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import Header from "../components/Header.astro";
-import { HomeGrid } from "../components/demos/HomeGrid";
+import HomeGrid from "../components/demos/HomeGrid.astro";
 ---
 
 <MainLayout title="Kumo" description="Kumo – a modern component library">
@@ -11,7 +11,7 @@ import { HomeGrid } from "../components/demos/HomeGrid";
       <div
         class="mx-auto w-full grow md:border-r md:border-kumo-hairline"
       >
-        <HomeGrid client:only="react" />
+        <HomeGrid />
       </div>
     </main>
   </div>

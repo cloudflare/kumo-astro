@@ -1,17 +1,21 @@
 # KUMO KNOWLEDGE BASE
 
-**Generated:** 2026-03-18 | **Commit:** 38518e34 | **Branch:** rozenmd/fix-preview
+**Updated:** 2026-05-19
 
 ## OVERVIEW
 
-Cloudflare's React component library (`@cloudflare/kumo`). pnpm monorepo: component library (Base UI + Tailwind v4), Astro docs site, Figma plugin, screenshot worker. ESM-only, Node 24+.
+Cloudflare's component library system. pnpm monorepo: React component library (Base UI + Tailwind v4), Astro component library (same design system, no React), blocks showcase site, Astro docs site, Figma plugin, screenshot worker. ESM-only, Node 24+.
+
+Two npm packages are published: `@cloudflare/kumo` (React) and `@cloudflare/kumo-astro` (Astro, framework-agnostic).
 
 ## STRUCTURE
 
 ```
 kumo/
 ├── packages/
-│   ├── kumo/                     # Component library → see packages/kumo/AGENTS.md
+│   ├── kumo/                     # React component library → see packages/kumo/AGENTS.md
+│   ├── kumo-astro/               # Astro component library (no React required)
+│   ├── kumo-blocks/              # Astro showcase site for full-page layout blocks (private)
 │   ├── kumo-docs-astro/          # Astro docs site → see packages/kumo-docs-astro/AGENTS.md
 │   ├── kumo-figma/               # Figma plugin → see packages/kumo-figma/AGENTS.md
 │   └── kumo-screenshot-worker/   # Visual regression Worker → see packages/kumo-screenshot-worker/AGENTS.md
@@ -24,16 +28,19 @@ kumo/
 
 ## WHERE TO LOOK
 
-| Task                 | Location                                         | Notes                                                    |
-| -------------------- | ------------------------------------------------ | -------------------------------------------------------- |
-| Component API        | `packages/kumo/ai/component-registry.{json,md}`  | Source of truth. Query with `jq` or CLI                  |
-| Component source     | `packages/kumo/src/components/{name}/{name}.tsx` | Standard pattern                                         |
-| Blocks (installable) | `packages/kumo/src/blocks/`                      | NOT library exports; installed via CLI                   |
-| Semantic tokens      | `packages/kumo/src/styles/theme-kumo.css`        | AUTO-GENERATED; edit `scripts/theme-generator/config.ts` |
-| Custom lint rules    | `lint/` (4 rules) + `packages/kumo/lint/` (+1)   | Package copy adds `no-deprecated-props`                  |
-| Demo examples        | `packages/kumo-docs-astro/src/components/demos/` | Feed into registry codegen                               |
-| CI scripts           | `ci/`                                            | Reporter system, versioning, deployment                  |
-| Figma generators     | `packages/kumo-figma/src/generators/`            | 37 component generators                                  |
+| Task                        | Location                                           | Notes                                                    |
+| --------------------------- | -------------------------------------------------- | -------------------------------------------------------- |
+| Component API               | `packages/kumo/ai/component-registry.{json,md}`    | Source of truth. Query with `jq` or CLI                  |
+| React component source      | `packages/kumo/src/components/{name}/{name}.tsx`   | Standard pattern                                         |
+| Astro component source      | `packages/kumo-astro/src/components/{Name}.astro`  | 90 `.astro` files; no React                              |
+| Astro behavior modules      | `packages/kumo-astro/src/lib/behaviors/`           | Vanilla-JS interactivity (focus-trap, popover, etc.)     |
+| Blocks (installable via CLI)| `packages/kumo/src/blocks/`                        | NOT library exports; installed via `kumo add`            |
+| Blocks showcase pages       | `packages/kumo-blocks/src/pages/blocks/`           | Full-page layout examples (private site)                 |
+| Semantic tokens             | `packages/kumo/src/styles/theme-kumo.css`          | AUTO-GENERATED; edit `scripts/theme-generator/config.ts` |
+| Custom lint rules           | `lint/` (4 rules) + `packages/kumo/lint/` (+1)     | Package copy adds `no-deprecated-props`                  |
+| Demo examples               | `packages/kumo-docs-astro/src/components/demos/`   | Feed into registry codegen                               |
+| CI scripts                  | `ci/`                                              | Reporter system, versioning, deployment                  |
+| Figma generators            | `packages/kumo-figma/src/generators/`              | 37 component generators                                  |
 
 ## CONVENTIONS
 
@@ -60,9 +67,10 @@ kumo/
 
 ### Changesets
 
-- **Enforced for `packages/kumo/`**: Pre-push hook requires changeset for npm-published library
+- **Enforced for `packages/kumo/` and `packages/kumo-astro/`**: Pre-push hook requires changeset for npm-published libraries
 - **Optional for `kumo-docs-astro`**: Version appears in `/api/version` endpoint (debugging) but nothing depends on it
 - **Not needed for `kumo-figma`**: Figma plugin, not published to npm
+- **Not needed for `kumo-blocks`**: Private showcase site, not published
 - **Pre-push hook**: Lefthook validates before push. Bypass: `git push --no-verify`
 - **AI agents NEVER**: `pnpm version`, `pnpm release`, `pnpm publish:beta`, `pnpm release:production`
 
@@ -86,6 +94,101 @@ Rules:
 - If providing a justification (`because:` or `as follows:`), text must follow on the same line
 - Indentation is flexible — nested under headers is fine
 - Skip validation entirely with the `skip-pr-description-validation` label
+
+## KUMO-ASTRO PACKAGE
+
+`packages/kumo-astro` publishes `@cloudflare/kumo-astro` — framework-agnostic `.astro` components with the same design tokens and variants as `@cloudflare/kumo`. No React required.
+
+### Astro Component Pattern
+
+Astro components import **variant functions and types only** from `@cloudflare/kumo` sub-paths — never the React components themselves:
+
+```astro
+---
+import { cn } from "../utils/cn";
+import { badgeVariants, type KumoBadgeVariant, KUMO_BADGE_DEFAULT_VARIANTS }
+  from "@cloudflare/kumo/components/badge";
+
+interface Props {
+  variant?: KumoBadgeVariant;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const { variant = KUMO_BADGE_DEFAULT_VARIANTS.variant, class: className, ...rest } = Astro.props;
+---
+
+<span class={cn(badgeVariants({ variant }), className)} {...rest}><slot /></span>
+```
+
+| React convention   | Astro equivalent                                    |
+| ------------------ | --------------------------------------------------- |
+| `children`         | `<slot />`                                          |
+| `className` prop   | `class` prop (renamed via `class: className`)       |
+| `forwardRef`       | Not needed — static HTML                            |
+| Client interactivity | Inline `<script>` + vanilla-JS behavior modules  |
+
+### Behavior Modules
+
+Interactive components attach vanilla-JS behavior via modules in `src/lib/behaviors/`:
+
+- `focus-trap.ts` — keyboard focus trapping (Dialog, Sidebar)
+- `roving-tabindex.ts` — arrow-key navigation (Tabs, RadioGroup)
+- `escape-stack.ts` — nested Escape-key dismiss stack
+- `popover-anchor.ts` — Floating-UI DOM positioning wrapper
+- `portal.ts` — DOM teleportation for overlays
+- `controllable-state.ts` — controlled/uncontrolled state coordination
+- `transition.ts` — CSS transition controller
+
+Scripts attach via `data-kumo-*` attributes and re-initialize on `astro:page-load` for view-transition support.
+
+### Exports
+
+- **Main entry** (`"."`) — utils + behavior modules (TypeScript types + compiled JS)
+- **Per-component** (`"./components/{name}"`) — direct `.astro` source files
+- **Styles** (`"./styles"`) — `kumo-binding.css` (Tailwind v4 + design tokens)
+
+### kumo-astro Scripts
+
+```bash
+pnpm --filter @cloudflare/kumo-astro test          # Playwright smoke + interactive tests
+pnpm test:astro                                    # Alias from repo root
+pnpm --filter @cloudflare/kumo-astro typecheck     # astro check on test fixture
+```
+
+## KUMO-BLOCKS PACKAGE
+
+`packages/kumo-blocks` is a **private** Astro showcase site (not published to npm). It demonstrates higher-order UI layout blocks built entirely from `@cloudflare/kumo-astro` components — similar to [shadcn/ui Blocks](https://ui.shadcn.com/blocks).
+
+### Purpose
+
+- Full-page layout templates (Auth, Dashboard, Forms, Hero, Marketing, Navigation, Pricing, Settings)
+- Uses `@cloudflare/kumo-astro` as primitives; no React
+- Living catalog of reference patterns; not installable as a library
+
+### Structure
+
+```
+packages/kumo-blocks/
+├── src/
+│   ├── components/        # BlockCard.astro, Icon.astro, Sidebar.astro
+│   ├── data/nav.ts        # Typed NavSection[] for routing + sidebar
+│   ├── layouts/Layout.astro
+│   ├── pages/
+│   │   ├── index.astro    # Block category index
+│   │   └── blocks/        # Individual block pages (auth, dashboard, forms, hero, …)
+│   └── styles/global.css
+├── astro.config.mjs
+└── package.json
+```
+
+### kumo-blocks Scripts
+
+```bash
+pnpm --filter @cloudflare/kumo-blocks dev          # Dev server
+pnpm --filter @cloudflare/kumo-blocks build        # Static build
+pnpm --filter @cloudflare/kumo-blocks typecheck    # astro check
+```
 
 ## ANTI-PATTERNS
 
@@ -111,6 +214,8 @@ pnpm --filter @cloudflare/kumo build              # Build library
 pnpm --filter @cloudflare/kumo test               # Vitest
 pnpm --filter @cloudflare/kumo codegen:registry   # Regenerate component-registry
 pnpm --filter @cloudflare/kumo-figma build        # Build Figma plugin
+pnpm test:astro                                   # kumo-astro Playwright tests
+pnpm --filter @cloudflare/kumo-blocks dev         # Blocks showcase dev server
 ```
 
 ## BUILD PIPELINE

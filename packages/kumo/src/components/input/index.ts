@@ -1,4 +1,13 @@
-export { Input, inputVariants, type InputProps } from "./input";
+export {
+  Input,
+  inputVariants,
+  KUMO_INPUT_VARIANTS,
+  KUMO_INPUT_DEFAULT_VARIANTS,
+  KUMO_INPUT_STYLING,
+  type InputProps,
+  type KumoInputSize,
+  type KumoInputVariant,
+} from "./input";
 export { InputArea, Textarea, type InputAreaProps } from "./input-area";
 
 // Re-export InputGroup from its new dedicated directory so that the subpath

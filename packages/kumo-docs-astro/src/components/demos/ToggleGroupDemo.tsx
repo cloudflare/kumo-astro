@@ -1,23 +1,32 @@
 import { useState } from "react";
 import { ToggleGroup } from "@cloudflare/kumo";
-import { AlignLeft, AlignCenter, AlignRight, AlignJustify } from "@phosphor-icons/react";
+import {
+  TextAlignLeft,
+  TextAlignCenter,
+  TextAlignRight,
+  TextAlignJustify,
+} from "@phosphor-icons/react";
 
 /** Single-selection toggle group for text alignment */
 export function ToggleGroupAlignmentDemo() {
   const [alignment, setAlignment] = useState("left");
   return (
-    <ToggleGroup type="single" value={alignment} onValueChange={(v) => v && setAlignment(v as string)}>
+    <ToggleGroup
+      type="single"
+      value={alignment}
+      onValueChange={(v) => v && setAlignment(v as string)}
+    >
       <ToggleGroup.Item value="left" aria-label="Left">
-        <AlignLeft size={16} />
+        <TextAlignLeft size={16} />
       </ToggleGroup.Item>
       <ToggleGroup.Item value="center" aria-label="Center">
-        <AlignCenter size={16} />
+        <TextAlignCenter size={16} />
       </ToggleGroup.Item>
       <ToggleGroup.Item value="right" aria-label="Right">
-        <AlignRight size={16} />
+        <TextAlignRight size={16} />
       </ToggleGroup.Item>
       <ToggleGroup.Item value="justify" aria-label="Justify">
-        <AlignJustify size={16} />
+        <TextAlignJustify size={16} />
       </ToggleGroup.Item>
     </ToggleGroup>
   );
