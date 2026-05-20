@@ -1,5 +1,9 @@
 ---
 import { nav } from "../data/nav";
+import Icon from "./Icon.astro";
+import Collapsible from "@cloudflare/kumo-astro/components/collapsible";
+import CollapsibleTrigger from "@cloudflare/kumo-astro/components/collapsible-trigger";
+import CollapsiblePanel from "@cloudflare/kumo-astro/components/collapsible-panel";
 
 const currentPath = Astro.url.pathname;
 ---
@@ -7,36 +11,64 @@ const currentPath = Astro.url.pathname;
 <aside class="pt-3">
   <!-- Search -->
   <div class="relative mx-3 mb-2">
-    <input type="search" />
+    <!-- TODO: Move search over to a React Command Palette component to match kumo-ui.com -->
+    <label class="flex items-center gap-2">
+      <Icon name="magnifying-glass" size={16} weight="bold" class="text-gray-400" />
+      <input type="search" class="flex-1 border border-gray-200 rounded-md px-3 h-9" />
+    </label>
   </div>
 
   <!-- Nav -->
-  <nav class="py-1 px-3">
+  <nav class="py-1 border-b border-layout-border pb-4">
     {nav.map((section) => (
       <div class="mb-1">
-        {section.title && (
-          <div class="flex items-center justify-between px-4 py-1.5 text-[13px] font-semibold text-gray-900 cursor-pointer select-none">
-            <span>{section.title}</span>
-
+        {section.title ? (
+          <div class="border-t border-layout-border pt-5 mt-5 px-3">
+          <Collapsible defaultOpen={false}>
+            <CollapsibleTrigger class="button font-semibold">
+              <span class="flex-1 text-left">{section.title}</span>
+              <Icon name="caret-down" size={12} weight="bold" class="transition-transform in-data-open:rotate-180 text-gray-400" />
+            </CollapsibleTrigger>
+            <CollapsiblePanel>
+              <ul class="flex flex-col gap-1">
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class:list={[
+                        "button h-9",
+                        currentPath === item.href
+                          ? "bg-gray-100 text-gray-900 font-medium"
+                          : "text-gray-500 hover:bg-gray-100 hover:text-gray-900",
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </CollapsiblePanel>
+          </Collapsible>
           </div>
+        ) : (
+          <ul class="flex flex-col gap-1 px-3">
+            {section.items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class:list={[
+                    "button h-9",
+                    currentPath === item.href
+                      ? "bg-gray-100 text-gray-900 font-medium"
+                      : "text-gray-500 hover:bg-gray-100 hover:text-gray-900",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
         )}
-        <ul>
-          {section.items.map((item) => (
-            <li>
-              <a
-                href={item.href}
-                class:list={[
-                  "button",
-                  currentPath === item.href
-                    ? "bg-gray-100 text-gray-900 font-medium"
-                    : "text-gray-500 hover:bg-gray-100 hover:text-gray-900",
-                ]}
-              >
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
       </div>
     ))}
   </nav>

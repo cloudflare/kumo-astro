@@ -126,102 +126,294 @@
   },
   "typesVersions": {
     "*": {
-      "components/badge": ["./src/components/Badge.astro"],
-      "components/surface": ["./src/components/Surface.astro"],
-      "components/text": ["./src/components/Text.astro"],
-      "components/label": ["./src/components/Label.astro"],
-      "components/loader": ["./src/components/Loader.astro"],
-      "components/empty": ["./src/components/Empty.astro"],
-      "components/grid": ["./src/components/Grid.astro"],
-      "components/grid-item": ["./src/components/GridItem.astro"],
-      "components/layer-card": ["./src/components/LayerCard.astro"],
-      "components/layer-card-primary": ["./src/components/LayerCardPrimary.astro"],
-      "components/layer-card-secondary": ["./src/components/LayerCardSecondary.astro"],
-      "components/cloudflare-logo": ["./src/components/CloudflareLogo.astro"],
-      "components/code": ["./src/components/Code.astro"],
-      "components/button": ["./src/components/Button.astro"],
-      "components/link-button": ["./src/components/LinkButton.astro"],
-      "components/refresh-button": ["./src/components/RefreshButton.astro"],
-      "components/link": ["./src/components/Link.astro"],
-      "components/banner": ["./src/components/Banner.astro"],
-      "components/meter": ["./src/components/Meter.astro"],
-      "components/breadcrumbs": ["./src/components/Breadcrumbs.astro"],
-      "components/breadcrumbs-link": ["./src/components/BreadcrumbsLink.astro"],
-      "components/breadcrumbs-current": ["./src/components/BreadcrumbsCurrent.astro"],
-      "components/breadcrumbs-separator": ["./src/components/BreadcrumbsSeparator.astro"],
-      "components/table-of-contents": ["./src/components/TableOfContents.astro"],
-      "components/table-of-contents-title": ["./src/components/TableOfContentsTitle.astro"],
-      "components/table-of-contents-list": ["./src/components/TableOfContentsList.astro"],
-      "components/table-of-contents-item": ["./src/components/TableOfContentsItem.astro"],
-      "components/table": ["./src/components/Table.astro"],
-      "components/table-header": ["./src/components/TableHeader.astro"],
-      "components/table-body": ["./src/components/TableBody.astro"],
-      "components/table-footer": ["./src/components/TableFooter.astro"],
-      "components/table-row": ["./src/components/TableRow.astro"],
-      "components/table-head": ["./src/components/TableHead.astro"],
-      "components/table-cell": ["./src/components/TableCell.astro"],
-      "components/switch": ["./src/components/Switch.astro"],
-      "components/field": ["./src/components/Field.astro"],
-      "components/input": ["./src/components/Input.astro"],
-      "components/input-area": ["./src/components/InputArea.astro"],
-      "components/checkbox": ["./src/components/Checkbox.astro"],
-      "components/radio": ["./src/components/Radio.astro"],
-      "components/radio-group": ["./src/components/RadioGroup.astro"],
-      "components/tabs": ["./src/components/Tabs.astro"],
-      "components/collapsible": ["./src/components/Collapsible.astro"],
-      "components/collapsible-trigger": ["./src/components/CollapsibleTrigger.astro"],
-      "components/collapsible-panel": ["./src/components/CollapsiblePanel.astro"],
-      "components/dialog-root": ["./src/components/DialogRoot.astro"],
-      "components/dialog": ["./src/components/Dialog.astro"],
-      "components/dialog-backdrop": ["./src/components/DialogBackdrop.astro"],
-      "components/dialog-trigger": ["./src/components/DialogTrigger.astro"],
-      "components/dialog-close": ["./src/components/DialogClose.astro"],
-      "components/dialog-title": ["./src/components/DialogTitle.astro"],
-      "components/dialog-description": ["./src/components/DialogDescription.astro"],
-      "components/tooltip": ["./src/components/Tooltip.astro"],
-      "components/popover-root": ["./src/components/PopoverRoot.astro"],
-      "components/popover-trigger": ["./src/components/PopoverTrigger.astro"],
-      "components/popover-content": ["./src/components/PopoverContent.astro"],
-      "components/popover-close": ["./src/components/PopoverClose.astro"],
-      "components/dropdown-menu": ["./src/components/DropdownMenu.astro"],
-      "components/dropdown-menu-trigger": ["./src/components/DropdownMenuTrigger.astro"],
-      "components/dropdown-menu-content": ["./src/components/DropdownMenuContent.astro"],
-      "components/dropdown-menu-item": ["./src/components/DropdownMenuItem.astro"],
-      "components/dropdown-menu-separator": ["./src/components/DropdownMenuSeparator.astro"],
-      "components/dropdown-menu-label": ["./src/components/DropdownMenuLabel.astro"],
-      "components/select": ["./src/components/Select.astro"],
-      "components/clipboard-text": ["./src/components/ClipboardText.astro"],
-      "components/pagination": ["./src/components/Pagination.astro"],
-      "components/toast": ["./src/components/Toast.astro"],
-      "components/aspect-ratio": ["./src/components/AspectRatio.astro"],
-      "components/card": ["./src/components/Card.astro"],
-      "components/card-header": ["./src/components/CardHeader.astro"],
-      "components/card-title": ["./src/components/CardTitle.astro"],
-      "components/card-description": ["./src/components/CardDescription.astro"],
-      "components/card-content": ["./src/components/CardContent.astro"],
-      "components/card-footer": ["./src/components/CardFooter.astro"],
-      "components/hover-card": ["./src/components/HoverCard.astro"],
-      "components/hover-card-trigger": ["./src/components/HoverCardTrigger.astro"],
-      "components/hover-card-content": ["./src/components/HoverCardContent.astro"],
-      "components/kbd": ["./src/components/Kbd.astro"],
-      "components/native-select": ["./src/components/NativeSelect.astro"],
-      "components/navigation-menu": ["./src/components/NavigationMenu.astro"],
-      "components/navigation-menu-list": ["./src/components/NavigationMenuList.astro"],
-      "components/navigation-menu-item": ["./src/components/NavigationMenuItem.astro"],
-      "components/navigation-menu-trigger": ["./src/components/NavigationMenuTrigger.astro"],
-      "components/navigation-menu-content": ["./src/components/NavigationMenuContent.astro"],
-      "components/navigation-menu-link": ["./src/components/NavigationMenuLink.astro"],
-      "components/navigation-menu-sub-link": ["./src/components/NavigationMenuSubLink.astro"],
-      "components/resizable": ["./src/components/Resizable.astro"],
-      "components/resizable-panel": ["./src/components/ResizablePanel.astro"],
-      "components/resizable-handle": ["./src/components/ResizableHandle.astro"],
-      "components/scroll-area": ["./src/components/ScrollArea.astro"],
-      "components/separator": ["./src/components/Separator.astro"],
-      "components/skeleton-line": ["./src/components/SkeletonLine.astro"],
-      "components/toggle": ["./src/components/Toggle.astro"],
-      "components/toggle-group": ["./src/components/ToggleGroup.astro"],
-      "components/toggle-group-item": ["./src/components/ToggleGroupItem.astro"],
-      "utils": ["./dist/src/utils/index.d.ts"]
+      "components/badge": [
+        "./src/components/Badge.astro"
+      ],
+      "components/surface": [
+        "./src/components/Surface.astro"
+      ],
+      "components/text": [
+        "./src/components/Text.astro"
+      ],
+      "components/label": [
+        "./src/components/Label.astro"
+      ],
+      "components/loader": [
+        "./src/components/Loader.astro"
+      ],
+      "components/empty": [
+        "./src/components/Empty.astro"
+      ],
+      "components/grid": [
+        "./src/components/Grid.astro"
+      ],
+      "components/grid-item": [
+        "./src/components/GridItem.astro"
+      ],
+      "components/layer-card": [
+        "./src/components/LayerCard.astro"
+      ],
+      "components/layer-card-primary": [
+        "./src/components/LayerCardPrimary.astro"
+      ],
+      "components/layer-card-secondary": [
+        "./src/components/LayerCardSecondary.astro"
+      ],
+      "components/cloudflare-logo": [
+        "./src/components/CloudflareLogo.astro"
+      ],
+      "components/code": [
+        "./src/components/Code.astro"
+      ],
+      "components/button": [
+        "./src/components/Button.astro"
+      ],
+      "components/link-button": [
+        "./src/components/LinkButton.astro"
+      ],
+      "components/refresh-button": [
+        "./src/components/RefreshButton.astro"
+      ],
+      "components/link": [
+        "./src/components/Link.astro"
+      ],
+      "components/banner": [
+        "./src/components/Banner.astro"
+      ],
+      "components/meter": [
+        "./src/components/Meter.astro"
+      ],
+      "components/breadcrumbs": [
+        "./src/components/Breadcrumbs.astro"
+      ],
+      "components/breadcrumbs-link": [
+        "./src/components/BreadcrumbsLink.astro"
+      ],
+      "components/breadcrumbs-current": [
+        "./src/components/BreadcrumbsCurrent.astro"
+      ],
+      "components/breadcrumbs-separator": [
+        "./src/components/BreadcrumbsSeparator.astro"
+      ],
+      "components/table-of-contents": [
+        "./src/components/TableOfContents.astro"
+      ],
+      "components/table-of-contents-title": [
+        "./src/components/TableOfContentsTitle.astro"
+      ],
+      "components/table-of-contents-list": [
+        "./src/components/TableOfContentsList.astro"
+      ],
+      "components/table-of-contents-item": [
+        "./src/components/TableOfContentsItem.astro"
+      ],
+      "components/table": [
+        "./src/components/Table.astro"
+      ],
+      "components/table-header": [
+        "./src/components/TableHeader.astro"
+      ],
+      "components/table-body": [
+        "./src/components/TableBody.astro"
+      ],
+      "components/table-footer": [
+        "./src/components/TableFooter.astro"
+      ],
+      "components/table-row": [
+        "./src/components/TableRow.astro"
+      ],
+      "components/table-head": [
+        "./src/components/TableHead.astro"
+      ],
+      "components/table-cell": [
+        "./src/components/TableCell.astro"
+      ],
+      "components/switch": [
+        "./src/components/Switch.astro"
+      ],
+      "components/field": [
+        "./src/components/Field.astro"
+      ],
+      "components/input": [
+        "./src/components/Input.astro"
+      ],
+      "components/input-area": [
+        "./src/components/InputArea.astro"
+      ],
+      "components/checkbox": [
+        "./src/components/Checkbox.astro"
+      ],
+      "components/radio": [
+        "./src/components/Radio.astro"
+      ],
+      "components/radio-group": [
+        "./src/components/RadioGroup.astro"
+      ],
+      "components/tabs": [
+        "./src/components/Tabs.astro"
+      ],
+      "components/collapsible": [
+        "./src/components/Collapsible.astro"
+      ],
+      "components/collapsible-trigger": [
+        "./src/components/CollapsibleTrigger.astro"
+      ],
+      "components/collapsible-panel": [
+        "./src/components/CollapsiblePanel.astro"
+      ],
+      "components/dialog-root": [
+        "./src/components/DialogRoot.astro"
+      ],
+      "components/dialog": [
+        "./src/components/Dialog.astro"
+      ],
+      "components/dialog-backdrop": [
+        "./src/components/DialogBackdrop.astro"
+      ],
+      "components/dialog-trigger": [
+        "./src/components/DialogTrigger.astro"
+      ],
+      "components/dialog-close": [
+        "./src/components/DialogClose.astro"
+      ],
+      "components/dialog-title": [
+        "./src/components/DialogTitle.astro"
+      ],
+      "components/dialog-description": [
+        "./src/components/DialogDescription.astro"
+      ],
+      "components/tooltip": [
+        "./src/components/Tooltip.astro"
+      ],
+      "components/popover-root": [
+        "./src/components/PopoverRoot.astro"
+      ],
+      "components/popover-trigger": [
+        "./src/components/PopoverTrigger.astro"
+      ],
+      "components/popover-content": [
+        "./src/components/PopoverContent.astro"
+      ],
+      "components/popover-close": [
+        "./src/components/PopoverClose.astro"
+      ],
+      "components/dropdown-menu": [
+        "./src/components/DropdownMenu.astro"
+      ],
+      "components/dropdown-menu-trigger": [
+        "./src/components/DropdownMenuTrigger.astro"
+      ],
+      "components/dropdown-menu-content": [
+        "./src/components/DropdownMenuContent.astro"
+      ],
+      "components/dropdown-menu-item": [
+        "./src/components/DropdownMenuItem.astro"
+      ],
+      "components/dropdown-menu-separator": [
+        "./src/components/DropdownMenuSeparator.astro"
+      ],
+      "components/dropdown-menu-label": [
+        "./src/components/DropdownMenuLabel.astro"
+      ],
+      "components/select": [
+        "./src/components/Select.astro"
+      ],
+      "components/clipboard-text": [
+        "./src/components/ClipboardText.astro"
+      ],
+      "components/pagination": [
+        "./src/components/Pagination.astro"
+      ],
+      "components/toast": [
+        "./src/components/Toast.astro"
+      ],
+      "components/aspect-ratio": [
+        "./src/components/AspectRatio.astro"
+      ],
+      "components/card": [
+        "./src/components/Card.astro"
+      ],
+      "components/card-header": [
+        "./src/components/CardHeader.astro"
+      ],
+      "components/card-title": [
+        "./src/components/CardTitle.astro"
+      ],
+      "components/card-description": [
+        "./src/components/CardDescription.astro"
+      ],
+      "components/card-content": [
+        "./src/components/CardContent.astro"
+      ],
+      "components/card-footer": [
+        "./src/components/CardFooter.astro"
+      ],
+      "components/hover-card": [
+        "./src/components/HoverCard.astro"
+      ],
+      "components/hover-card-trigger": [
+        "./src/components/HoverCardTrigger.astro"
+      ],
+      "components/hover-card-content": [
+        "./src/components/HoverCardContent.astro"
+      ],
+      "components/kbd": [
+        "./src/components/Kbd.astro"
+      ],
+      "components/native-select": [
+        "./src/components/NativeSelect.astro"
+      ],
+      "components/navigation-menu": [
+        "./src/components/NavigationMenu.astro"
+      ],
+      "components/navigation-menu-list": [
+        "./src/components/NavigationMenuList.astro"
+      ],
+      "components/navigation-menu-item": [
+        "./src/components/NavigationMenuItem.astro"
+      ],
+      "components/navigation-menu-trigger": [
+        "./src/components/NavigationMenuTrigger.astro"
+      ],
+      "components/navigation-menu-content": [
+        "./src/components/NavigationMenuContent.astro"
+      ],
+      "components/navigation-menu-link": [
+        "./src/components/NavigationMenuLink.astro"
+      ],
+      "components/navigation-menu-sub-link": [
+        "./src/components/NavigationMenuSubLink.astro"
+      ],
+      "components/resizable": [
+        "./src/components/Resizable.astro"
+      ],
+      "components/resizable-panel": [
+        "./src/components/ResizablePanel.astro"
+      ],
+      "components/resizable-handle": [
+        "./src/components/ResizableHandle.astro"
+      ],
+      "components/scroll-area": [
+        "./src/components/ScrollArea.astro"
+      ],
+      "components/separator": [
+        "./src/components/Separator.astro"
+      ],
+      "components/skeleton-line": [
+        "./src/components/SkeletonLine.astro"
+      ],
+      "components/toggle": [
+        "./src/components/Toggle.astro"
+      ],
+      "components/toggle-group": [
+        "./src/components/ToggleGroup.astro"
+      ],
+      "components/toggle-group-item": [
+        "./src/components/ToggleGroupItem.astro"
+      ],
+      "utils": [
+        "./dist/src/utils/index.d.ts"
+      ]
     }
   },
   "files": [
@@ -247,8 +439,8 @@
     "test:build": "astro build --root tests/smoke"
   },
   "peerDependencies": {
-    "astro": ">=4.0.0",
-    "@phosphor-icons/web": ">=2.1.0"
+    "@phosphor-icons/web": ">=2.1.0",
+    "astro": ">=4.0.0"
   },
   "peerDependenciesMeta": {
     "@phosphor-icons/web": {
@@ -259,16 +451,17 @@
     "@cloudflare/kumo": "workspace:*",
     "@floating-ui/dom": "^1.7.6",
     "clsx": "catalog:",
+    "motion": "^12.34.1",
     "tailwind-merge": "catalog:"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.2.1",
+    "@playwright/test": "^1.59.1",
     "@tailwindcss/vite": "catalog:",
     "@types/node": "catalog:",
     "astro": "^5.18.1",
     "oxlint": "catalog:",
-    "@playwright/test": "^1.59.1",
     "playwright": "^1.59.1",
     "tailwindcss": "catalog:",
     "tsx": "catalog:",

@@ -47,41 +47,65 @@ const initialOpen = open !== undefined ? open : defaultOpen;
 </div>
 
 <script>
-  import { createTransition } from "../lib/behaviors/transition.js";
+  import { animate } from "motion";
 
   function initCollapsible(root: HTMLElement) {
     const trigger = root.querySelector<HTMLElement>("[data-kumo-collapsible-trigger]");
     const panel = root.querySelector<HTMLElement>("[data-kumo-collapsible-panel]");
     if (!trigger || !panel) return;
 
-    const transition = createTransition(panel);
-
-    // Apply initial state
+    // Apply initial state without animation
     const isOpen = root.hasAttribute("data-open");
     if (isOpen) {
       panel.removeAttribute("hidden");
       trigger.setAttribute("aria-expanded", "true");
-      transition.open();
     } else {
       panel.setAttribute("hidden", "");
       trigger.setAttribute("aria-expanded", "false");
     }
 
+    let currentAnimation: ReturnType<typeof animate> | null = null;
+
     trigger.addEventListener("click", () => {
       const nowOpen = root.hasAttribute("data-open");
+      currentAnimation?.stop();
+
       if (nowOpen) {
         // Close
         root.removeAttribute("data-open");
         trigger.setAttribute("aria-expanded", "false");
-        transition.close(() => {
+        panel.style.overflow = "hidden";
+        currentAnimation = animate(
+          panel,
+          { height: 0, opacity: 0 },
+          { duration: 0.2, ease: "easeIn" },
+        );
+        currentAnimation.finished.then(() => {
           panel.setAttribute("hidden", "");
+          panel.style.height = "";
+          panel.style.opacity = "";
+          panel.style.overflow = "";
+          currentAnimation = null;
         });
       } else {
         // Open
         root.setAttribute("data-open", "");
         trigger.setAttribute("aria-expanded", "true");
+        panel.style.height = "0px";
+        panel.style.opacity = "0";
+        panel.style.overflow = "hidden";
         panel.removeAttribute("hidden");
-        transition.open();
+        currentAnimation = animate(
+          panel,
+          { height: "auto", opacity: 1 },
+          { duration: 0.25, ease: "easeOut" },
+        );
+        currentAnimation.finished.then(() => {
+          panel.style.height = "";
+          panel.style.opacity = "";
+          panel.style.overflow = "";
+          currentAnimation = null;
+        });
       }
     });
   }

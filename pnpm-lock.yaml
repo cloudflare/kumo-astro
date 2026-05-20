@@ -273,6 +273,9 @@ importers:
       clsx:
         specifier: 'catalog:'
         version: 2.1.1
+      motion:
+        specifier: ^12.34.1
+        version: 12.34.1(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       tailwind-merge:
         specifier: 'catalog:'
         version: 3.4.0
@@ -322,6 +325,12 @@ importers:
       '@phosphor-icons/web':
         specifier: ^2.1.2
         version: 2.1.2
+      clsx:
+        specifier: 'catalog:'
+        version: 2.1.1
+      tailwind-merge:
+        specifier: 'catalog:'
+        version: 3.4.0
     devDependencies:
       '@astrojs/check':
         specifier: ^0.9.4

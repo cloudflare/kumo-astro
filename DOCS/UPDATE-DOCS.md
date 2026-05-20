@@ -45,48 +45,47 @@ Follow its patterns for every page below.
 
 | Page | Astro Component Exists | Done |
 |---|---|---|
+| `aspect-ratio.mdx` | `AspectRatio.astro` | YES |
+| `badge.mdx` | `Badge.astro` | YES |
+| `banner.mdx` | `Banner.astro` | YES |
+| `breadcrumbs.mdx` | `Breadcrumbs.astro` + sub-components | YES |
 | `button.mdx` | `Button.astro` | YES |
-| `skeleton-line.mdx` | `SkeletonLine.astro` | Partial — install section updated, demos still React |
-| `badge.mdx` | `Badge.astro` | NO |
-| `banner.mdx` | `Banner.astro` | NO |
-| `breadcrumbs.mdx` | `Breadcrumbs.astro` + sub-components | NO |
-| `card.mdx` | `Card.astro` + sub-components | NO |
-| `checkbox.mdx` | `Checkbox.astro` | NO |
-| `clipboard-text.mdx` | `ClipboardText.astro` | NO |
-| `cloudflare-logo.mdx` | `CloudflareLogo.astro` | NO |
-| `code-highlighted.mdx` | `Code.astro` | NO |
-| `collapsible.mdx` | `Collapsible.astro` + sub-components | NO |
-| `dialog.mdx` | `DialogRoot.astro` + `Dialog.astro` + sub-components | NO |
-| `dropdown.mdx` | `DropdownMenu.astro` + sub-components | NO |
-| `empty.mdx` | `Empty.astro` | NO |
-| `grid.mdx` | `Grid.astro` + `GridItem.astro` | NO |
-| `hover-card.mdx` | `HoverCard.astro` + sub-components | NO |
-| `input.mdx` | `Input.astro` | NO |
-| `input-area.mdx` | `InputArea.astro` | NO |
-| `kbd.mdx` | `Kbd.astro` | NO |
-| `label.mdx` | `Label.astro` | NO |
-| `layer-card.mdx` | `LayerCard.astro` + sub-components | NO |
-| `link.mdx` | `Link.astro` | NO |
-| `loader.mdx` | `Loader.astro` | NO |
-| `meter.mdx` | `Meter.astro` | NO |
-| `native-select.mdx` | `NativeSelect.astro` | NO |
-| `navigation-menu.mdx` | `NavigationMenu.astro` + sub-components | NO |
-| `pagination.mdx` | `Pagination.astro` | NO |
-| `popover.mdx` | `PopoverRoot.astro` + sub-components | NO |
-| `radio.mdx` | `Radio.astro` + `RadioGroup.astro` | NO |
-| `resizable.mdx` | `Resizable.astro` + sub-components | NO |
-| `scroll-area.mdx` | `ScrollArea.astro` | NO |
-| `select.mdx` | `Select.astro` | NO |
-| `separator.mdx` | `Separator.astro` | NO |
-| `switch.mdx` | `Switch.astro` | NO |
-| `table.mdx` | `Table.astro` + sub-components | NO |
-| `table-of-contents.mdx` | `TableOfContents.astro` + sub-components | NO |
-| `tabs.mdx` | `Tabs.astro` | NO |
-| `text.mdx` | `Text.astro` | NO |
-| `toast.mdx` | `Toast.astro` | NO |
-| `tooltip.mdx` | `Tooltip.astro` | NO |
-| `aspect-ratio.mdx` | `AspectRatio.astro` | NO |
-| `separator.mdx` | `Separator.astro` | NO |
+| `card.mdx` | `Card.astro` + sub-components | YES |
+| `checkbox.mdx` | `Checkbox.astro` | YES |
+| `clipboard-text.mdx` | `ClipboardText.astro` | YES |
+| `cloudflare-logo.mdx` | `CloudflareLogo.astro` | YES |
+| `code-highlighted.mdx` | `Code.astro` | YES |
+| `collapsible.mdx` | `Collapsible.astro` + sub-components | YES |
+| `dialog.mdx` | `DialogRoot.astro` + `Dialog.astro` + sub-components | YES |
+| `dropdown.mdx` | `DropdownMenu.astro` + sub-components | YES |
+| `empty.mdx` | `Empty.astro` | YES |
+| `grid.mdx` | `Grid.astro` + `GridItem.astro` | YES |
+| `hover-card.mdx` | `HoverCard.astro` + sub-components | YES |
+| `input.mdx` | `Input.astro` | YES |
+| `input-area.mdx` | `InputArea.astro` | YES |
+| `kbd.mdx` | `Kbd.astro` | YES |
+| `label.mdx` | `Label.astro` | YES |
+| `layer-card.mdx` | `LayerCard.astro` + sub-components | YES |
+| `link.mdx` | `Link.astro` | YES |
+| `loader.mdx` | `Loader.astro` | YES |
+| `meter.mdx` | `Meter.astro` | YES |
+| `native-select.mdx` | `NativeSelect.astro` | YES |
+| `navigation-menu.mdx` | `NavigationMenu.astro` + sub-components | YES |
+| `pagination.mdx` | `Pagination.astro` | YES |
+| `popover.mdx` | `PopoverRoot.astro` + sub-components | YES |
+| `radio.mdx` | `Radio.astro` + `RadioGroup.astro` | YES |
+| `resizable.mdx` | `Resizable.astro` + sub-components | YES |
+| `scroll-area.mdx` | `ScrollArea.astro` | YES |
+| `select.mdx` | `Select.astro` | YES |
+| `separator.mdx` | `Separator.astro` | YES |
+| `skeleton-line.mdx` | `SkeletonLine.astro` | YES |
+| `switch.mdx` | `Switch.astro` | YES |
+| `table.mdx` | `Table.astro` + sub-components | YES |
+| `table-of-contents.mdx` | `TableOfContents.astro` + sub-components | YES |
+| `tabs.mdx` | `Tabs.astro` | YES |
+| `text.mdx` | `Text.astro` | YES |
+| `toast.mdx` | `Toast.astro` | YES |
+| `tooltip.mdx` | `Tooltip.astro` | YES |
 | `sidebar.astro` | No Astro component yet | BLOCKED |
 | `sensitive-input.mdx` | No Astro component yet | BLOCKED |
 | `flow.mdx` | No Astro component yet | BLOCKED |
