@@ -1,26 +1,25 @@
 ---
 layout: ~/layouts/MdxDocLayout.astro
 title: "Meter"
-description: "A progress/percentage meter component for displaying numeric values within a known range."
+description: "A progress bar showing a measured value within a known range."
 sourceFile: "components/meter"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  MeterBasicDemo,
-  MeterCustomValueDemo,
-  MeterHiddenValueDemo,
-  MeterFullDemo,
-  MeterLowDemo,
-} from "~/components/demos/MeterDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Meter from "@cloudflare/kumo-astro/components/meter";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="MeterBasicDemo">
-    <MeterBasicDemo client:visible />
+  <ComponentExample
+    code={`<Meter label="Storage used" value={65} />`}
+    lang="astro"
+  >
+    <div class="w-full max-w-sm">
+      <Meter label="Storage used" value={65} />
+    </div>
   </ComponentExample>
 </ComponentSection>
 
@@ -30,17 +29,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Meter } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Meter } from "@cloudflare/kumo/components/meter";
-```
+  <CodeBlock
+    code={`import Meter from "@cloudflare/kumo-astro/components/meter";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -50,12 +42,12 @@ import { Meter } from "@cloudflare/kumo/components/meter";
 
 ## Usage
 
-```tsx
-import { Meter } from "@cloudflare/kumo";
+```astro
+---
+import Meter from "@cloudflare/kumo-astro/components/meter";
+---
 
-export default function Example() {
-  return <Meter label="Storage used" value={65} />;
-}
+<Meter label="Storage used" value={65} />
 ```
 
 </ComponentSection>
@@ -66,39 +58,59 @@ export default function Example() {
 
 ## Examples
 
-### Basic Meter
+### Basic
 
-<p>The default meter displays a label and percentage value.</p>
-<ComponentExample demo="MeterBasicDemo">
-  <MeterBasicDemo client:visible />
+<ComponentExample
+  code={`<Meter label="Storage used" value={65} />`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <Meter label="Storage used" value={65} />
+  </div>
 </ComponentExample>
 
 ### Custom Value Display
 
-<p>Use `customValue` to show a custom string instead of the percentage.</p>
-<ComponentExample demo="MeterCustomValueDemo">
-  <MeterCustomValueDemo client:visible />
+<ComponentExample
+  code={`<Meter label="API requests" value={75} customValue="750 / 1,000" />`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <Meter label="API requests" value={75} customValue="750 / 1,000" />
+  </div>
 </ComponentExample>
 
 ### Hidden Value
 
-<p>Set `showValue={false}` to hide the value display.</p>
-<ComponentExample demo="MeterHiddenValueDemo">
-  <MeterHiddenValueDemo client:visible />
+<ComponentExample
+  code={`<Meter label="Progress" value={40} showValue={false} />`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <Meter label="Progress" value={40} showValue={false} />
+  </div>
 </ComponentExample>
 
 ### Full Meter
 
-<p>A meter at 100% capacity.</p>
-<ComponentExample demo="MeterFullDemo">
-  <MeterFullDemo client:visible />
+<ComponentExample
+  code={`<Meter label="Quota reached" value={100} />`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <Meter label="Quota reached" value={100} />
+  </div>
 </ComponentExample>
 
 ### Low Value
 
-<p>A meter with a low value.</p>
-<ComponentExample demo="MeterLowDemo">
-  <MeterLowDemo client:visible />
+<ComponentExample
+  code={`<Meter label="Memory usage" value={15} />`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <Meter label="Memory usage" value={15} />
+  </div>
 </ComponentExample>
 
 </ComponentSection>
@@ -109,5 +121,73 @@ export default function Example() {
 
 ## API Reference
 
-  <PropsTable component="Meter" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text displayed above the meter track and used as the ARIA label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">value<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Current value within the min/max range.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">min</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>0</code></td>
+        <td class="px-4 py-3 text-xs">Minimum value.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">max</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>100</code></td>
+        <td class="px-4 py-3 text-xs">Maximum value.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">customValue</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Custom formatted value string (e.g. "750 / 1,000"). Overrides the default percentage display.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">showValue</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">Whether to display the value next to the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">trackClass</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes for the background track.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">indicatorClass</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes for the filled indicator bar.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the outer wrapper.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </ComponentSection>

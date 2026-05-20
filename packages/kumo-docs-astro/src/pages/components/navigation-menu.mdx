@@ -6,96 +6,220 @@ sourceFile: "components/navigation-menu"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  NavigationMenuBasicDemo,
-  NavigationMenuWithFlyoutDemo,
-} from "~/components/demos/NavigationMenuDemo";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import NavigationMenu from "@cloudflare/kumo-astro/components/navigation-menu";
+import NavigationMenuList from "@cloudflare/kumo-astro/components/navigation-menu-list";
+import NavigationMenuItem from "@cloudflare/kumo-astro/components/navigation-menu-item";
+import NavigationMenuTrigger from "@cloudflare/kumo-astro/components/navigation-menu-trigger";
+import NavigationMenuContent from "@cloudflare/kumo-astro/components/navigation-menu-content";
+import NavigationMenuLink from "@cloudflare/kumo-astro/components/navigation-menu-link";
+import NavigationMenuSubLink from "@cloudflare/kumo-astro/components/navigation-menu-sub-link";
 
-> **New component** — Added to Kumo to fill the gap with shadcn/ui's Navigation Menu primitive.
+{/* Hero Demo */}
 
-<ComponentExample demo="NavigationMenuBasicDemo">
-  <NavigationMenuBasicDemo client:visible />
-</ComponentExample>
+<ComponentSection>
+  <ComponentExample
+    code={`<NavigationMenu>\n  <NavigationMenuList>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/" active>Home</NavigationMenuLink>\n    </NavigationMenuItem>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>\n    </NavigationMenuItem>\n  </NavigationMenuList>\n</NavigationMenu>`}
+    lang="astro"
+  >
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/" active>Home</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
 
 ## Installation
 
-### Barrel
+  <CodeBlock
+    code={`import NavigationMenu from "@cloudflare/kumo-astro/components/navigation-menu";\nimport NavigationMenuList from "@cloudflare/kumo-astro/components/navigation-menu-list";\nimport NavigationMenuItem from "@cloudflare/kumo-astro/components/navigation-menu-item";\nimport NavigationMenuTrigger from "@cloudflare/kumo-astro/components/navigation-menu-trigger";\nimport NavigationMenuContent from "@cloudflare/kumo-astro/components/navigation-menu-content";\nimport NavigationMenuLink from "@cloudflare/kumo-astro/components/navigation-menu-link";\nimport NavigationMenuSubLink from "@cloudflare/kumo-astro/components/navigation-menu-sub-link";`}
+    lang="astro"
+  />
 
-```tsx
-import { NavigationMenu } from "@cloudflare/kumo";
-```
+</ComponentSection>
 
-### Granular
+{/* Usage */}
 
-```tsx
-import { NavigationMenu } from "@cloudflare/kumo/components/navigation-menu";
-```
+<ComponentSection>
 
 ## Usage
 
-```tsx
-import { NavigationMenu } from "@cloudflare/kumo";
+```astro
+---
+import NavigationMenu from "@cloudflare/kumo-astro/components/navigation-menu";
+import NavigationMenuList from "@cloudflare/kumo-astro/components/navigation-menu-list";
+import NavigationMenuItem from "@cloudflare/kumo-astro/components/navigation-menu-item";
+import NavigationMenuLink from "@cloudflare/kumo-astro/components/navigation-menu-link";
+---
 
-export default function Example() {
-  return (
-    <NavigationMenu>
-      <NavigationMenu.List>
-        <NavigationMenu.Item>
-          <NavigationMenu.Link href="/" active>Home</NavigationMenu.Link>
-        </NavigationMenu.Item>
-        <NavigationMenu.Item value="products">
-          <NavigationMenu.Trigger>Products</NavigationMenu.Trigger>
-          <NavigationMenu.Content>
-            <NavigationMenu.SubLink href="/workers" title="Workers" description="Edge functions" />
-          </NavigationMenu.Content>
-        </NavigationMenu.Item>
-      </NavigationMenu.List>
-    </NavigationMenu>
-  );
-}
+<NavigationMenu>
+  <NavigationMenuList>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/" active>Home</NavigationMenuLink>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+    </NavigationMenuItem>
+  </NavigationMenuList>
+</NavigationMenu>
 ```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
 
 ## Examples
 
-### Basic navigation
+### Basic Navigation
 
-<ComponentExample demo="NavigationMenuBasicDemo">
-  <NavigationMenuBasicDemo client:visible />
+<ComponentExample
+  code={`<NavigationMenu>\n  <NavigationMenuList>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/" active>Home</NavigationMenuLink>\n    </NavigationMenuItem>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>\n    </NavigationMenuItem>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/components">Components</NavigationMenuLink>\n    </NavigationMenuItem>\n  </NavigationMenuList>\n</NavigationMenu>`}
+  lang="astro"
+>
+  <NavigationMenu>
+    <NavigationMenuList>
+      <NavigationMenuItem>
+        <NavigationMenuLink href="/" active>Home</NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink href="/docs">Docs</NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuLink href="/components">Components</NavigationMenuLink>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  </NavigationMenu>
 </ComponentExample>
 
-### With flyout dropdown
+### With Flyout Dropdown
 
-<ComponentExample demo="NavigationMenuWithFlyoutDemo">
-  <NavigationMenuWithFlyoutDemo client:load />
+<ComponentExample
+  code={`<NavigationMenu>\n  <NavigationMenuList>\n    <NavigationMenuItem>\n      <NavigationMenuLink href="/" active>Home</NavigationMenuLink>\n    </NavigationMenuItem>\n    <NavigationMenuItem>\n      <NavigationMenuTrigger>Products</NavigationMenuTrigger>\n      <NavigationMenuContent>\n        <NavigationMenuSubLink href="/workers" title="Workers" description="Edge functions at scale" />\n        <NavigationMenuSubLink href="/pages" title="Pages" description="Deploy frontend apps" />\n      </NavigationMenuContent>\n    </NavigationMenuItem>\n  </NavigationMenuList>\n</NavigationMenu>`}
+  lang="astro"
+>
+  <NavigationMenu>
+    <NavigationMenuList>
+      <NavigationMenuItem>
+        <NavigationMenuLink href="/" active>Home</NavigationMenuLink>
+      </NavigationMenuItem>
+      <NavigationMenuItem>
+        <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+        <NavigationMenuContent>
+          <NavigationMenuSubLink href="/workers" title="Workers" description="Edge functions at scale" />
+          <NavigationMenuSubLink href="/pages" title="Pages" description="Deploy frontend apps" />
+          <NavigationMenuSubLink href="/r2" title="R2" description="Object storage" />
+        </NavigationMenuContent>
+      </NavigationMenuItem>
+    </NavigationMenuList>
+  </NavigationMenu>
 </ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
 
 ## API Reference
 
 ### NavigationMenu
 
-<PropsTable component="NavigationMenu" />
+<p>Root <code>&lt;nav&gt;</code> wrapper. Accepts <code>class</code> and any nav attributes.</p>
 
-### NavigationMenu.List
+### NavigationMenuList
 
-<PropsTable component="NavigationMenu.List" />
+<p>Renders a <code>&lt;ul&gt;</code> with flex layout. Accepts <code>class</code>.</p>
 
-### NavigationMenu.Item
+### NavigationMenuItem
 
-<PropsTable component="NavigationMenu.Item" />
+<p>Renders a <code>&lt;li&gt;</code> with relative positioning. Accepts <code>class</code>.</p>
 
-### NavigationMenu.Trigger
+### NavigationMenuLink
 
-<PropsTable component="NavigationMenu.Trigger" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">href<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Link destination.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">active</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Marks the link as the current page (<code>aria-current="page"</code>).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### NavigationMenu.Content
+### NavigationMenuTrigger
 
-<PropsTable component="NavigationMenu.Content" />
+<p>Renders a <code>&lt;button&gt;</code> with a chevron icon that toggles a dropdown. Must be paired with <code>NavigationMenuContent</code> inside a <code>NavigationMenuItem</code>.</p>
 
-### NavigationMenu.Link
+### NavigationMenuContent
 
-<PropsTable component="NavigationMenu.Link" />
+<p>The dropdown panel. Must be inside <code>NavigationMenuItem</code> alongside <code>NavigationMenuTrigger</code>.</p>
 
-### NavigationMenu.SubLink
+### NavigationMenuSubLink
 
-<PropsTable component="NavigationMenu.SubLink" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">href<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Link destination.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">title</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Link title text.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Supporting description text shown below the title.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

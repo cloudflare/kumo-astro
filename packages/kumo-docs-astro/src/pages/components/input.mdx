@@ -1,36 +1,23 @@
 ---
 layout: ~/layouts/MdxDocLayout.astro
 title: "Input"
-description: "A text input field for user input with built-in label, description, and error support."
+description: "A styled text input with optional label, description, and error support."
 sourceFile: "components/input"
-baseUIComponent: "input"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
 import CodeBlock from "~/components/docs/CodeBlock.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  InputBasicDemo,
-  InputWithLabelDemo,
-  InputErrorStringDemo,
-  InputErrorObjectDemo,
-  InputSizesDemo,
-  InputDisabledDemo,
-  InputBareDemo,
-  InputTypesDemo,
-  InputOptionalFieldDemo,
-  InputLabelTooltipDemo,
-  InputReactNodeLabelDemo,
-  InputControlledOnChangeDemo,
-  InputControlledOnValueChangeDemo,
-} from "~/components/demos/InputDemo";
+import Input from "@cloudflare/kumo-astro/components/input";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="InputBasicDemo">
-    <InputBasicDemo client:visible />
+  <ComponentExample
+    code={`<Input label="Email" placeholder="you@example.com" description="We'll never share your email." />`}
+    lang="astro"
+  >
+    <Input label="Email" placeholder="you@example.com" description="We'll never share your email." />
   </ComponentExample>
 </ComponentSection>
 
@@ -40,16 +27,11 @@ import {
 
 ## Installation
 
-### Barrel
-
-  <CodeBlock code={`import { Input } from "@cloudflare/kumo";`} lang="tsx" />
-
-### Granular
-
   <CodeBlock
-    code={`import { Input } from "@cloudflare/kumo/components/input";`}
-    lang="tsx"
+    code={`import Input from "@cloudflare/kumo-astro/components/input";`}
+    lang="astro"
   />
+
 </ComponentSection>
 
 {/* Usage */}
@@ -60,37 +42,22 @@ import {
 
 ### With Built-in Field (Recommended)
 
-  <p>
-    Use the `label` prop to enable the built-in Field wrapper with label, description, and error support.
-  </p>
+<p>Use the <code>label</code> prop to enable the built-in Field wrapper with label, description, and error support.</p>
 
-```tsx
-import { Input } from "@cloudflare/kumo";
+```astro
+---
+import Input from "@cloudflare/kumo-astro/components/input";
+---
 
-export default function Example() {
-  return (
-    <Input
-      label="Email"
-      placeholder="you@example.com"
-      description="We'll never share your email"
-    />
-  );
-}
+<Input label="Email" placeholder="you@example.com" />
 ```
 
-### Bare Input (Custom Layouts)
+### Bare Input
 
-<p>
-  For custom form layouts, use Input without `label`. Must provide `aria-label`
-  or `aria-labelledby` for accessibility.
-</p>
+<p>For custom layouts, omit <code>label</code> and provide <code>aria-label</code> for accessibility.</p>
 
-```tsx
-import { Input } from "@cloudflare/kumo";
-
-export default function Example() {
-  return <Input placeholder="Search..." aria-label="Search products" />;
-}
+```astro
+<Input placeholder="Search..." aria-label="Search products" />
 ```
 
 </ComponentSection>
@@ -101,109 +68,69 @@ export default function Example() {
 
 ## Examples
 
-### With Label and Description
+### With Label
 
-<p>
-  The `label` prop enables the built-in Field wrapper with automatic vertical
-  layout (label above input).
-</p>
-<ComponentExample demo="InputWithLabelDemo">
-  <InputWithLabelDemo client:visible />
+<ComponentExample
+  code={`<Input label="Username" placeholder="Choose a username" description="3-20 characters, alphanumeric only" />`}
+  lang="astro"
+>
+  <Input label="Username" placeholder="Choose a username" description="3-20 characters, alphanumeric only" />
 </ComponentExample>
 
-### With Error (String)
+### Error State
 
-<p>
-  Pass `error` as a string for simple error messages. Error styling is
-  automatically applied when the `error` prop is truthy.
-</p>
-<ComponentExample demo="InputErrorStringDemo">
-  <InputErrorStringDemo client:visible />
+<ComponentExample
+  code={`<Input label="Email" placeholder="you@example.com" value="invalid-email" error="Please enter a valid email address" />`}
+  lang="astro"
+>
+  <Input label="Email" placeholder="you@example.com" value="invalid-email" error="Please enter a valid email address" />
 </ComponentExample>
 
-### With Error (Validation Object)
+### Sizes
 
-<p>
-  Pass `error` as an object with `message` and `match` for HTML5 validation.
-  Error shows when field validity matches.
-</p>
-<ComponentExample demo="InputErrorObjectDemo">
-  <InputErrorObjectDemo client:visible />
-</ComponentExample>
-
-### Input Sizes
-
-<p>Four sizes available: `xs`, `sm`, `base` (default), `lg`.</p>
-<ComponentExample demo="InputSizesDemo">
-  <InputSizesDemo client:visible />
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Input size="xs" label="Extra Small" placeholder="xs" />\n  <Input size="sm" label="Small" placeholder="sm" />\n  <Input label="Base (default)" placeholder="base" />\n  <Input size="lg" label="Large" placeholder="lg" />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Input size="xs" label="Extra Small" placeholder="xs" />
+    <Input size="sm" label="Small" placeholder="sm" />
+    <Input label="Base (default)" placeholder="base" />
+    <Input size="lg" label="Large" placeholder="lg" />
+  </div>
 </ComponentExample>
 
 ### Disabled
 
-<ComponentExample demo="InputDisabledDemo">
-  <InputDisabledDemo client:visible />
+<ComponentExample
+  code={`<Input label="Disabled field" placeholder="Cannot edit" disabled />`}
+  lang="astro"
+>
+  <Input label="Disabled field" placeholder="Cannot edit" disabled />
 </ComponentExample>
 
 ### Optional Field
 
-<p>Set `required={false}` to show "(optional)" text after the label.</p>
-<ComponentExample demo="InputOptionalFieldDemo">
-  <InputOptionalFieldDemo client:visible />
-</ComponentExample>
-
-### With Label Tooltip
-
-<p>Use `labelTooltip` to add an info icon with additional context on hover.</p>
-<ComponentExample demo="InputLabelTooltipDemo">
-  <InputLabelTooltipDemo client:visible />
-</ComponentExample>
-
-### ReactNode Label
-
-<p>The `label` prop accepts ReactNode for rich formatting.</p>
-<ComponentExample demo="InputReactNodeLabelDemo">
-  <InputReactNodeLabelDemo client:visible />
-</ComponentExample>
-
-### Controlled with onChange
-
-<p>
-  The standard React `onChange` handler receives the full event object. Use
-  `e.target.value` to get the value.
-</p>
-<ComponentExample demo="InputControlledOnChangeDemo">
-  <InputControlledOnChangeDemo client:load />
-</ComponentExample>
-
-### Controlled with onValueChange
-
-<p>
-  `onValueChange` is a convenience handler from Base UI that gives you the
-  string value directly — no event unwrapping needed. This is the same pattern
-  used by `Select`, `Combobox`, and `Radio.Group`.
-</p>
-<ComponentExample demo="InputControlledOnValueChangeDemo">
-  <InputControlledOnValueChangeDemo client:load />
-</ComponentExample>
-
-### Bare Input (No Label)
-
-<p>
-  Input without `label` renders as a bare input. Must provide `aria-label` for
-  accessibility.
-</p>
-<ComponentExample demo="InputBareDemo">
-  <InputBareDemo client:visible />
+<ComponentExample
+  code={`<Input label="Phone Number" required={false} placeholder="+1 (555) 000-0000" />`}
+  lang="astro"
+>
+  <Input label="Phone Number" required={false} placeholder="+1 (555) 000-0000" />
 </ComponentExample>
 
 ### Input Types
 
-  <p>
-    Supports all HTML input types: `text`, `email`, `password`, `number`, `tel`, `url`, etc.
-  </p>
-  <ComponentExample demo="InputTypesDemo">
-    <InputTypesDemo client:visible />
-  </ComponentExample>
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Input type="email" label="Email" placeholder="you@example.com" />\n  <Input type="password" label="Password" placeholder="••••••••" />\n  <Input type="number" label="Age" placeholder="18" />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Input type="email" label="Email" placeholder="you@example.com" />
+    <Input type="password" label="Password" placeholder="••••••••" />
+    <Input type="number" label="Age" placeholder="18" />
+  </div>
+</ComponentExample>
+
 </ComponentSection>
 
 {/* API Reference */}
@@ -212,93 +139,93 @@ export default function Example() {
 
 ## API Reference
 
-  <p>
-    Input accepts all standard HTML input attributes plus the following:
-  </p>
-  <PropsTable component="Input" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text. When provided, wraps the input in a Field with an auto-linked label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Helper text shown below the input.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">error</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Error message. Also auto-applies error styling to the input.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"xs" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Input size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "error"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual variant. Automatically set to <code>"error"</code> when the <code>error</code> prop is provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">required</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When <code>false</code>, shows "(optional)" in the label and sets the HTML required attribute to false.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the input.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">type</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"text"</code></td>
+        <td class="px-4 py-3 text-xs">HTML input type.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">placeholder</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Placeholder text.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name attribute for form submission.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">value</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Default value for the input.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes applied to the input element.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### Validation Error Types
+<p>All standard HTML input attributes are forwarded to the underlying <code>&lt;input&gt;</code> element.</p>
 
-  <p>
-    When using `error` as an object, the `match` property corresponds to HTML5 ValidityState values:
-  </p>
-  <div class="overflow-x-auto">
-    <table class="w-full text-sm">
-      <thead>
-        <tr class="border-b border-kumo-hairline">
-          <th class="px-4 py-3 text-left font-semibold">Match</th>
-          <th class="px-4 py-3 text-left font-semibold">Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">valueMissing</td>
-          <td class="px-4 py-3 text-xs">Required field is empty</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">typeMismatch</td>
-          <td class="px-4 py-3 text-xs">Value doesn't match type (e.g., invalid email)</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">patternMismatch</td>
-          <td class="px-4 py-3 text-xs">Value doesn't match pattern attribute</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">tooShort</td>
-          <td class="px-4 py-3 text-xs">Value shorter than minLength</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">tooLong</td>
-          <td class="px-4 py-3 text-xs">Value longer than maxLength</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">rangeUnderflow</td>
-          <td class="px-4 py-3 text-xs">Value less than min</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">rangeOverflow</td>
-          <td class="px-4 py-3 text-xs">Value greater than max</td>
-        </tr>
-        <tr class="border-b border-kumo-hairline">
-          <td class="px-4 py-3 font-mono text-xs">true</td>
-          <td class="px-4 py-3 text-xs">Always show error (for server-side validation)</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</ComponentSection>
-
-{/* Accessibility */}
-
-<ComponentSection>
-
-## Accessibility
-
-  <div class="space-y-4 text-sm">
-    <div>
-
-      ### Label Requirement
-
-      <p>
-        Inputs require an accessible name via one of:
-      </p>
-      <ul class="mt-2 ml-4 list-disc space-y-1">
-        <li>`label` prop (recommended)</li>
-        <li>`placeholder` + `aria-label` for bare inputs</li>
-        <li>`aria-labelledby` for custom label association</li>
-      </ul>
-      <p class="mt-2">
-        Missing accessible names trigger console warnings in development.
-      </p>
-    </div>
-    <div>
-
-      ### Error Association
-
-      <p>
-        Error messages are automatically associated with the input via ARIA
-        attributes for screen reader announcement.
-      </p>
-    </div>
-  </div>
 </ComponentSection>

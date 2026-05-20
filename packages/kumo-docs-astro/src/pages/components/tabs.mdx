@@ -1,27 +1,30 @@
 ---
 layout: ~/layouts/MdxDocLayout.astro
 title: "Tabs"
-description: "A set of layered sections of content, known as tab panels, displayed one at a time."
+description: "A set of layered sections of content—known as tab panels—that are displayed one at a time."
 sourceFile: "components/tabs"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  TabsDefaultDemo,
-  TabsSegmentedDemo,
-  TabsUnderlineDemo,
-  TabsSmDemo,
-  TabsControlledDemo,
-  TabsManyDemo,
-} from "~/components/demos/TabsDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Tabs from "@cloudflare/kumo-astro/components/tabs";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="TabsDefaultDemo">
-    <TabsDefaultDemo client:visible />
+  <ComponentExample
+    code={`<Tabs\n  tabs={[\n    { value: "overview", label: "Overview" },\n    { value: "settings", label: "Settings" },\n    { value: "billing", label: "Billing" },\n  ]}\n  defaultValue="overview"\n/>`}
+    lang="astro"
+  >
+    <Tabs
+      tabs={[
+        { value: "overview", label: "Overview" },
+        { value: "settings", label: "Settings" },
+        { value: "billing", label: "Billing" },
+      ]}
+      defaultValue="overview"
+    />
   </ComponentExample>
 </ComponentSection>
 
@@ -31,17 +34,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Tabs } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Tabs } from "@cloudflare/kumo/components/tabs";
-```
+  <CodeBlock
+    code={`import Tabs from "@cloudflare/kumo-astro/components/tabs";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -51,21 +47,39 @@ import { Tabs } from "@cloudflare/kumo/components/tabs";
 
 ## Usage
 
-```tsx
-import { Tabs } from "@cloudflare/kumo";
+```astro
+---
+import Tabs from "@cloudflare/kumo-astro/components/tabs";
+---
 
-export default function Example() {
-  return (
-    <Tabs
-      tabs={[
-        { value: "overview", label: "Overview" },
-        { value: "settings", label: "Settings" },
-      ]}
-      selectedValue="overview"
-    />
-  );
-}
+<Tabs
+  tabs={[
+    { value: "account", label: "Account" },
+    { value: "password", label: "Password" },
+  ]}
+  defaultValue="account"
+/>
+
+<div role="tabpanel" data-panel data-value="account">
+  Account settings here
+</div>
+<div role="tabpanel" data-panel data-value="password" hidden>
+  Password settings here
+</div>
 ```
+
+<p>
+  The Astro <code>Tabs</code> component differs from the React version in an important way:
+  <strong>tab panels live outside the <code>Tabs</code> component</strong> as sibling elements.
+  Astro does not support dynamic slot names, so panels cannot be passed as children.
+  Each panel needs <code>role="tabpanel"</code>, <code>data-panel</code>, and a <code>data-value</code>
+  attribute matching the tab's <code>value</code>. The JS script wires them up automatically.
+</p>
+
+<p>
+  Tabs and panels must share a common ancestor with <code>data-kumo-tabs</code>, or panels must be
+  direct siblings of the <code>Tabs</code> component.
+</p>
 
 </ComponentSection>
 
@@ -75,47 +89,76 @@ export default function Example() {
 
 ## Examples
 
-### Variants
+### Segmented (Default)
 
-#### Segmented (Default)
-
-<p>A pill-shaped indicator slides between tabs on a subtle background.</p>
-<ComponentExample demo="TabsSegmentedDemo">
-  <TabsSegmentedDemo client:visible />
+<ComponentExample
+  code={`<Tabs\n  tabs={[\n    { value: "tab1", label: "Tab 1" },\n    { value: "tab2", label: "Tab 2" },\n    { value: "tab3", label: "Tab 3" },\n  ]}\n  defaultValue="tab1"\n/>`}
+  lang="astro"
+>
+  <Tabs
+    tabs={[
+      { value: "tab1", label: "Tab 1" },
+      { value: "tab2", label: "Tab 2" },
+      { value: "tab3", label: "Tab 3" },
+    ]}
+    defaultValue="tab1"
+  />
 </ComponentExample>
 
-#### Underline
+### Underline
 
-<p>
-  A bottom border with a primary-colored indicator. The active tab has bolder
-  text for emphasis.
-</p>
-<ComponentExample demo="TabsUnderlineDemo">
-  <TabsUnderlineDemo client:visible />
+<ComponentExample
+  code={`<Tabs\n  variant="underline"\n  tabs={[\n    { value: "tab1", label: "Tab 1" },\n    { value: "tab2", label: "Tab 2" },\n    { value: "tab3", label: "Tab 3" },\n  ]}\n  defaultValue="tab1"\n/>`}
+  lang="astro"
+>
+  <Tabs
+    variant="underline"
+    tabs={[
+      { value: "tab1", label: "Tab 1" },
+      { value: "tab2", label: "Tab 2" },
+      { value: "tab3", label: "Tab 3" },
+    ]}
+    defaultValue="tab1"
+  />
 </ComponentExample>
 
 ### Small Size
 
-<p>
-  Use `size="sm"` for a compact tab bar that matches `Input size="sm"` height (h-6.5 / 26px).
-  Useful inside toolbars and filter rows.
-</p>
-<ComponentExample demo="TabsSmDemo">
-  <TabsSmDemo client:visible />
+<ComponentExample
+  code={`<Tabs\n  size="sm"\n  tabs={[\n    { value: "a", label: "Tab A" },\n    { value: "b", label: "Tab B" },\n  ]}\n  defaultValue="a"\n/>`}
+  lang="astro"
+>
+  <Tabs
+    size="sm"
+    tabs={[
+      { value: "a", label: "Tab A" },
+      { value: "b", label: "Tab B" },
+    ]}
+    defaultValue="a"
+  />
 </ComponentExample>
 
-### Controlled
+### With Panels
 
-<p>Use the `value` and `onValueChange` props for controlled state.</p>
-<ComponentExample demo="TabsControlledDemo">
-  <TabsControlledDemo client:visible />
-</ComponentExample>
-
-### Many Tabs
-
-<p>Tabs automatically scroll horizontally when there are many items.</p>
-<ComponentExample demo="TabsManyDemo">
-  <TabsManyDemo client:visible />
+<ComponentExample
+  code={`<Tabs\n  tabs={[\n    { value: "account", label: "Account" },\n    { value: "password", label: "Password" },\n  ]}\n  defaultValue="account"\n/>\n\n<div role="tabpanel" data-panel data-value="account" class="pt-4">\n  <p class="text-sm text-kumo-default">Account settings content</p>\n</div>\n<div role="tabpanel" data-panel data-value="password" hidden class="pt-4">\n  <p class="text-sm text-kumo-default">Password settings content</p>\n</div>`}
+  lang="astro"
+>
+  <div>
+    <Tabs
+      tabs={[
+        { value: "account2", label: "Account" },
+        { value: "password2", label: "Password" },
+      ]}
+      defaultValue="account2"
+    />
+    <div role="tabpanel" data-panel data-value="account2" class="pt-4">
+      <p class="text-sm text-kumo-default">Account settings content</p>
+    </div>
+    <div role="tabpanel" data-panel data-value="password2" hidden class="pt-4">
+      <p class="text-sm text-kumo-default">Password settings content</p>
+    </div>
+  </div>
 </ComponentExample>
 
 </ComponentSection>
@@ -126,34 +169,58 @@ export default function Example() {
 
 ## API Reference
 
-  <PropsTable component="Tabs" />
-
-### TabsItem
-
-<div class="overflow-x-auto">
+<div class="not-prose overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-kumo-hairline">
-        <th class="px-4 py-3 text-left font-semibold">Property</th>
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
         <th class="px-4 py-3 text-left font-semibold">Type</th>
-        <th class="px-4 py-3 text-left font-semibold">Required</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
       </tr>
     </thead>
-    <tbody class="text-kumo-subtle">
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">tabs<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">{"{ value: string; label: string; class?: string }[]"}</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Array of tab definitions.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultValue</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">First tab</td>
+        <td class="px-4 py-3 text-xs">Initially active tab value (uncontrolled).</td>
+      </tr>
       <tr class="border-b border-kumo-hairline">
         <td class="px-4 py-3 font-mono text-xs">value</td>
-        <td class="px-4 py-3 font-mono text-xs">string</td>
-        <td class="px-4 py-3 font-mono text-xs">Yes</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled active tab value.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">label</td>
-        <td class="px-4 py-3 font-mono text-xs">ReactNode</td>
-        <td class="px-4 py-3 font-mono text-xs">Yes</td>
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"segmented" | "underline"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"segmented"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">className</td>
-        <td class="px-4 py-3 font-mono text-xs">string</td>
-        <td class="px-4 py-3 font-mono text-xs">No</td>
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base" | "sm"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Tab size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">listClass</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes applied to the tablist container.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the outer wrapper.</td>
       </tr>
     </tbody>
   </table>

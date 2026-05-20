@@ -3,37 +3,29 @@ layout: ~/layouts/MdxDocLayout.astro
 title: "Select"
 description: "Displays a list of options for the user to pick from—triggered by a button."
 sourceFile: "components/select"
-baseUIComponent: "select"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
 import CodeBlock from "~/components/docs/CodeBlock.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  SelectBasicDemo,
-  SelectSizesDemo,
-  SelectWithoutLabelDemo,
-  SelectWithFieldDemo,
-  SelectPlaceholderDemo,
-  SelectWithTooltipDemo,
-  SelectCustomRenderingDemo,
-  SelectLoadingDemo,
-  SelectLoadingDataDemo,
-  SelectMultipleDemo,
-  SelectComplexDemo,
-  SelectDisabledOptionsDemo,
-  SelectDisabledItemsDemo,
-  SelectGroupedDemo,
-  SelectGroupedWithDisabledDemo,
-  SelectLongListDemo,
-} from "~/components/demos/SelectDemo";
+import Select from "@cloudflare/kumo-astro/components/select";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="SelectBasicDemo">
-    <SelectBasicDemo client:load />
+  <ComponentExample
+    code={`<Select\n  label="Favorite Fruit"\n  placeholder="Choose a fruit…"\n  items={[\n    { label: "Apple", value: "apple" },\n    { label: "Banana", value: "banana" },\n    { label: "Cherry", value: "cherry" },\n  ]}\n/>`}
+    lang="astro"
+  >
+    <Select
+      label="Favorite Fruit"
+      placeholder="Choose a fruit…"
+      items={[
+        { label: "Apple", value: "apple" },
+        { label: "Banana", value: "banana" },
+        { label: "Cherry", value: "cherry" },
+      ]}
+    />
   </ComponentExample>
 </ComponentSection>
 
@@ -43,16 +35,11 @@ import {
 
 ## Installation
 
-### Barrel
-
-  <CodeBlock code={`import { Select } from "@cloudflare/kumo";`} lang="tsx" />
-
-### Granular
-
   <CodeBlock
-    code={`import { Select } from "@cloudflare/kumo/components/select";`}
-    lang="tsx"
+    code={`import Select from "@cloudflare/kumo-astro/components/select";`}
+    lang="astro"
   />
+
 </ComponentSection>
 
 {/* Usage */}
@@ -61,22 +48,28 @@ import {
 
 ## Usage
 
-```tsx
-import { Select } from "@cloudflare/kumo";
+```astro
+---
+import Select from "@cloudflare/kumo-astro/components/select";
+---
 
-export default function Example() {
-  const [value, setValue] = useState("apple");
-
-  return (
-    <Select
-      label="Favorite Fruit"
-      value={value}
-      onValueChange={(v) => setValue(v ?? "apple")}
-      items={{ apple: "Apple", banana: "Banana", cherry: "Cherry" }}
-    />
-  );
-}
+<Select
+  name="fruit"
+  placeholder="Choose a fruit…"
+  items={[
+    { label: "Apple", value: "apple" },
+    { label: "Banana", value: "banana" },
+  ]}
+/>
 ```
+
+<p>
+  The Astro <code>Select</code> differs from the React version in one key way:
+  options are always passed as an <strong>array of <code>{`{ label, value }`}</code> objects</strong>
+  via the <code>items</code> prop. There are no <code>&lt;Select.Option&gt;</code>,
+  <code>&lt;Select.Group&gt;</code>, or <code>&lt;Select.Separator&gt;</code> sub-components.
+  Grouping and disabled options are handled via the <code>items</code> array.
+</p>
 
 </ComponentSection>
 
@@ -86,311 +79,90 @@ export default function Example() {
 
 ## Examples
 
-### Basic
+### With Label
 
-<p>
-  A select with a visible label. When you provide the{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">label</code> prop,
-  the select automatically renders inside a Field wrapper with the label
-  displayed above it.
-</p>
+<ComponentExample
+  code={`<Select\n  label="Country"\n  name="country"\n  defaultValue="us"\n  items={[\n    { label: "United States", value: "us" },\n    { label: "United Kingdom", value: "uk" },\n    { label: "Germany", value: "de" },\n  ]}\n/>`}
+  lang="astro"
+>
+  <Select
+    label="Country"
+    name="country"
+    defaultValue="us"
+    items={[
+      { label: "United States", value: "us" },
+      { label: "United Kingdom", value: "uk" },
+      { label: "Germany", value: "de" },
+    ]}
+  />
+</ComponentExample>
 
-  <ComponentExample demo="SelectBasicDemo">
-    <SelectBasicDemo client:load />
-  </ComponentExample>
-</ComponentSection>
+### Without Label
 
-{/* Sizes */}
-
-<ComponentSection>
-
-### Sizes
-
-  <p>
-    Use the <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">size</code> prop
-    to match Input sizing (xs, sm, base, lg).
-  </p>
-
-  <ComponentExample demo="SelectSizesDemo">
-    <SelectSizesDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Without Visible Label */}
-
-<ComponentSection>
-
-### Without Visible Label
-
-  <p>
-    When a visible label isn't needed (e.g., in compact UIs or when context is clear),
-    use `aria-label` for accessibility.
-  </p>
-
-  <ComponentExample demo="SelectWithoutLabelDemo">
-    <SelectWithoutLabelDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* With Description and Error */}
-
-<ComponentSection>
+<ComponentExample
+  code={`<Select\n  aria-label="Framework"\n  placeholder="Choose…"\n  items={[\n    { label: "Astro", value: "astro" },\n    { label: "React", value: "react" },\n    { label: "Vue", value: "vue" },\n  ]}\n/>`}
+  lang="astro"
+>
+  <Select
+    aria-label="Framework"
+    placeholder="Choose…"
+    items={[
+      { label: "Astro", value: "astro" },
+      { label: "React", value: "react" },
+      { label: "Vue", value: "vue" },
+    ]}
+  />
+</ComponentExample>
 
 ### With Description and Error
 
-  <p>
-    Select integrates with the Field wrapper to show description text and validation errors.
-  </p>
-
-  <ComponentExample demo="SelectWithFieldDemo">
-    <SelectWithFieldDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Placeholder */}
-
-<ComponentSection>
-
-### Placeholder
-
-  <p>
-    Use the <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">placeholder</code> prop
-    to show text when no value is selected. When using <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">renderValue</code> to
-    customize the display of selected values, the placeholder is shown instead of
-    calling <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">renderValue</code> when the value is <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">null</code>.
-  </p>
-
-```tsx
-<Select
-  placeholder="Select a user..."
-  value={user}
-  renderValue={(user) => user.name} // Only called when user is not null
-/>
-```
-
-  <ComponentExample demo="SelectPlaceholderDemo">
-    <SelectPlaceholderDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Label Tooltip */}
-
-<ComponentSection>
-
-### Label with Tooltip
-
-  <p>
-    Add a tooltip icon next to the label for additional context using <code
-      class="rounded bg-kumo-control px-1 py-0.5 text-sm">labelTooltip</code>.
-  </p>
-
-  <ComponentExample demo="SelectWithTooltipDemo">
-    <SelectWithTooltipDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Custom Rendering */}
-
-<ComponentSection>
-
-### Custom Rendering
-
-  <p>
-    Use <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">renderValue</code> to customize how the selected value
-    appears in the trigger button. This is useful when working with complex object
-    data structures instead of simple string values.
-  </p>
-
-<ComponentExample demo="SelectCustomRenderingDemo">
-  <SelectCustomRenderingDemo client:load />
+<ComponentExample
+  code={`<Select\n  label="Region"\n  description="Choose the closest region to your users."\n  error="Region is required."\n  placeholder="Select a region…"\n  items={[\n    { label: "US East", value: "us-east" },\n    { label: "EU West", value: "eu-west" },\n  ]}\n/>`}
+  lang="astro"
+>
+  <Select
+    label="Region"
+    description="Choose the closest region to your users."
+    error="Region is required."
+    placeholder="Select a region…"
+    items={[
+      { label: "US East", value: "us-east" },
+      { label: "EU West", value: "eu-west" },
+    ]}
+  />
 </ComponentExample>
-
-<p>
-  The{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">renderValue</code>{" "}
-  function is only called when a value is selected. Use{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">placeholder</code>{" "}
-  to define what to show when no value is selected.
-</p>
-
-<p>
-  Select compares value with items to find which one is selected. For object
-  items, it will compare if the object is the same reference not by value by
-  default. If you want to compare object items by value, you can use{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">
-    isItemEqualToValue
-  </code>{" "}
-  prop.
-</p>
-
-```tsx
-<Select
-  className="w-[200px]"
-  placeholder="Select a language..."
-  renderValue={(v) => (
-    <span>
-      {v.emoji} {v.label}
-    </span>
-  )}
-  value={value}
-  onValueChange={(v) => setValue(v)}
-  // Provides custom comparison logic
-  isItemEqualToValue={(item, value) => item.value === value.value}
->
-  {languages.map((language) => (
-    <Select.Option key={language.value} value={language}>
-      {language.emoji} {language.label}
-    </Select.Option>
-  ))}
-</Select>
-```
-
-</ComponentSection>
-
-{/* Loading */}
-
-<ComponentSection>
-
-### Loading
-
-  <p>
-    A select component with loading state. The loading state is passed to
-    the component via the <code
-      class="rounded bg-kumo-control px-1 py-0.5 text-sm">loading</code> prop.
-  </p>
-
-  <ComponentExample demo="SelectLoadingDemo">
-    <div class="flex flex-col gap-4">
-      <p class="text-kumo-default">Loading State</p>
-      <SelectLoadingDemo client:load />
-      <p class="text-kumo-default">Loading From Server (simulated 2s delay)</p>
-      <SelectLoadingDataDemo client:load />
-    </div>
-  </ComponentExample>
-</ComponentSection>
-
-{/* Multiple Item */}
-
-<ComponentSection>
-
-### Multiple Selection
-
-  <p>
-    Enable multiple selection with the <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">multiple</code> prop.
-    The value becomes an array of selected items. Use <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">placeholder</code> for the empty state
-    and <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">renderValue</code> to customize how selections are displayed.
-  </p>
-
-```tsx
-<Select
-  multiple
-  placeholder="Select columns..."
-  value={selectedColumns}
-  renderValue={(columns) => columns.join(", ")}
-  onValueChange={setSelectedColumns}
->
-  <Select.Option value="name">Name</Select.Option>
-  <Select.Option value="email">Email</Select.Option>
-</Select>
-```
-
-  <ComponentExample demo="SelectMultipleDemo">
-    <SelectMultipleDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* More Example */}
-
-<ComponentSection>
-
-### More Example
-
-  <ComponentExample demo="SelectComplexDemo">
-    <SelectComplexDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Disabled Options */}
-
-<ComponentSection>
 
 ### Disabled Options
 
-  <p>
-    Options can be disabled with the <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">disabled</code> prop.
-    Disabled options are greyed out and cannot be selected.
-  </p>
+<ComponentExample
+  code={`<Select\n  aria-label="Plan"\n  placeholder="Choose a plan…"\n  items={[\n    { label: "Free", value: "free" },\n    { label: "Pro", value: "pro" },\n    { label: "Enterprise (contact us)", value: "enterprise", disabled: true },\n  ]}\n/>`}
+  lang="astro"
+>
+  <Select
+    aria-label="Plan"
+    placeholder="Choose a plan…"
+    items={[
+      { label: "Free", value: "free" },
+      { label: "Pro", value: "pro" },
+      { label: "Enterprise (contact us)", value: "enterprise", disabled: true },
+    ]}
+  />
+</ComponentExample>
 
-  <ComponentExample demo="SelectDisabledOptionsDemo">
-    <SelectDisabledOptionsDemo client:load />
-  </ComponentExample>
-</ComponentSection>
+### Sizes
 
-{/* Disabled Items via Prop */}
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Select size="xs" aria-label="xs" placeholder="xs" items={[{ label: "Option A", value: "a" }]} />\n  <Select size="sm" aria-label="sm" placeholder="sm" items={[{ label: "Option A", value: "a" }]} />\n  <Select size="base" aria-label="base" placeholder="base" items={[{ label: "Option A", value: "a" }]} />\n  <Select size="lg" aria-label="lg" placeholder="lg" items={[{ label: "Option A", value: "a" }]} />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Select size="xs" aria-label="xs" placeholder="xs" items={[{ label: "Option A", value: "a" }]} />
+    <Select size="sm" aria-label="sm" placeholder="sm" items={[{ label: "Option A", value: "a" }]} />
+    <Select size="base" aria-label="base" placeholder="base (default)" items={[{ label: "Option A", value: "a" }]} />
+    <Select size="lg" aria-label="lg" placeholder="lg" items={[{ label: "Option A", value: "a" }]} />
+  </div>
+</ComponentExample>
 
-<ComponentSection>
-
-### Disabled Items (via items prop)
-
-  <p>
-    The <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">items</code> object-map prop
-    accepts descriptor objects with <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">disabled</code> alongside
-    plain string values.
-  </p>
-
-  <ComponentExample demo="SelectDisabledItemsDemo">
-    <SelectDisabledItemsDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Grouped Options */}
-
-<ComponentSection>
-
-### Grouped Options
-
-  <p>
-    Use <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Group</code>,{" "}
-    <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.GroupLabel</code>, and{" "}
-    <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Separator</code> to
-    organize options under labeled headers with visual dividers.
-  </p>
-
-  <ComponentExample demo="SelectGroupedDemo">
-    <SelectGroupedDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Groups with Disabled */}
-
-<ComponentSection>
-
-### Groups with Disabled Options
-
-  <p>
-    Combine groups, separators, and disabled options with info tooltips to
-    clearly separate available and unavailable choices.
-  </p>
-
-  <ComponentExample demo="SelectGroupedWithDisabledDemo">
-    <SelectGroupedWithDisabledDemo client:load />
-  </ComponentExample>
-</ComponentSection>
-
-{/* Long List - Test scrolling behavior */}
-
-<ComponentSection>
-
-### Long List (Scrolling Test)
-
-  <p>
-    A select component with many options to test popup scrolling behavior.
-    The popup should scroll smoothly without bounce/overscroll issues.
-  </p>
-
-  <ComponentExample demo="SelectLongListDemo">
-    <SelectLongListDemo client:load />
-  </ComponentExample>
 </ComponentSection>
 
 {/* API Reference */}
@@ -399,35 +171,97 @@ export default function Example() {
 
 ## API Reference
 
-### Select
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">items<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">{"{ label: string; value: string; disabled?: boolean }[]"}</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Array of options to display.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">value</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled selected value.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultValue</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Initial uncontrolled selected value.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">placeholder</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"Select…"</code></td>
+        <td class="px-4 py-3 text-xs">Text shown when no value is selected.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When provided, wraps the select in a Field with a visible label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Helper text shown below the select (requires <code>label</code>).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">error</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Error message. Also auto-applies error styling.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"xs" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Trigger size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom"</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Preferred popup placement.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">required</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When <code>false</code>, shows "(optional)" in the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the entire select.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name for the hidden form input.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <PropsTable component="Select" />
-
-### Select.Option
-
-<PropsTable component="Select.Option" />
-
-### Select.Group
-
-<p>
-  Groups related options together with an accessible{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="group"</code>.
-  Use with{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">
-    Select.GroupLabel
-  </code>{" "}
-  to provide a visible heading.
-</p>
-
-### Select.GroupLabel
-
-<p>
-  A visible heading for a{" "}
-  <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">Select.Group</code>.
-  Automatically associated with its parent group for accessibility.
-</p>
-
-### Select.Separator
-
-  <p>A visual divider line between option groups. Renders with <code class="rounded bg-kumo-control px-1 py-0.5 text-sm">role="separator"</code>.</p>
 </ComponentSection>

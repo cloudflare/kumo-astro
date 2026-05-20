@@ -1,35 +1,28 @@
 ---
 layout: ~/layouts/MdxDocLayout.astro
 title: "Radio"
-description: "A control that allows the user to select one option from a set. Always used within a Radio.Group."
+description: "A control that allows the user to select one option from a set."
 sourceFile: "components/radio"
-baseUIComponent: "radio-group"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  RadioBasicDemo,
-  RadioDefaultDemo,
-  RadioHorizontalDemo,
-  RadioDescriptionDemo,
-  RadioErrorDemo,
-  RadioDisabledDemo,
-  RadioControlPositionDemo,
-  RadioCardDemo,
-  RadioCardControlStartDemo,
-  RadioCardHorizontalDemo,
-  RadioRichLabelDemo,
-  RadioLegendSrOnlyDemo,
-  RadioLegendCustomDemo,
-} from "~/components/demos/RadioDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Radio from "@cloudflare/kumo-astro/components/radio";
+import RadioGroup from "@cloudflare/kumo-astro/components/radio-group";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="RadioBasicDemo">
-    <RadioBasicDemo client:visible />
+  <ComponentExample
+    code={`<RadioGroup legend="Choose an option" name="plan">\n  <Radio label="Option A" value="a" name="plan" />\n  <Radio label="Option B" value="b" name="plan" />\n  <Radio label="Option C" value="c" name="plan" />\n</RadioGroup>`}
+    lang="astro"
+  >
+    <RadioGroup legend="Choose an option" name="plan">
+      <Radio label="Option A" value="a" name="plan" />
+      <Radio label="Option B" value="b" name="plan" />
+      <Radio label="Option C" value="c" name="plan" />
+    </RadioGroup>
   </ComponentExample>
 </ComponentSection>
 
@@ -39,17 +32,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Radio } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Radio } from "@cloudflare/kumo/components/radio";
-```
+  <CodeBlock
+    code={`import Radio from "@cloudflare/kumo-astro/components/radio";\nimport RadioGroup from "@cloudflare/kumo-astro/components/radio-group";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -59,18 +45,23 @@ import { Radio } from "@cloudflare/kumo/components/radio";
 
 ## Usage
 
-```tsx
-import { Radio } from "@cloudflare/kumo";
+```astro
+---
+import Radio from "@cloudflare/kumo-astro/components/radio";
+import RadioGroup from "@cloudflare/kumo-astro/components/radio-group";
+---
 
-export default function Example() {
-  return (
-    <Radio.Group legend="Choose an option" defaultValue="a">
-      <Radio.Item label="Option A" value="a" />
-      <Radio.Item label="Option B" value="b" />
-    </Radio.Group>
-  );
-}
+<RadioGroup legend="Notification preference" name="notif">
+  <Radio label="Email" value="email" name="notif" />
+  <Radio label="SMS" value="sms" name="notif" />
+</RadioGroup>
 ```
+
+<p>
+  In Astro, there is no React context to propagate the <code>name</code> prop from
+  <code>RadioGroup</code> to its children. Each <code>Radio</code> must have a matching
+  <code>name</code> prop set explicitly.
+</p>
 
 </ComponentSection>
 
@@ -82,113 +73,76 @@ export default function Example() {
 
 ### Default (Vertical)
 
-<p>
-  Radio groups display vertically by default. Each radio has a label displayed
-  to its right.
-</p>
-<ComponentExample demo="RadioDefaultDemo">
-  <RadioDefaultDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Notification preference" name="notif">\n  <Radio label="Email" value="email" name="notif" />\n  <Radio label="SMS" value="sms" name="notif" />\n  <Radio label="Push" value="push" name="notif" />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Notification preference" name="notif">
+    <Radio label="Email" value="email" name="notif" />
+    <Radio label="SMS" value="sms" name="notif" />
+    <Radio label="Push" value="push" name="notif" />
+  </RadioGroup>
 </ComponentExample>
 
 ### Horizontal
 
-<p>
-  Use `orientation="horizontal"` for inline layouts. Items wrap when there isn't
-  enough space.
-</p>
-<ComponentExample demo="RadioHorizontalDemo">
-  <RadioHorizontalDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Size" name="size" orientation="horizontal">\n  <Radio label="Small" value="sm" name="size" />\n  <Radio label="Medium" value="md" name="size" />\n  <Radio label="Large" value="lg" name="size" />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Size" name="size" orientation="horizontal">
+    <Radio label="Small" value="sm" name="size" />
+    <Radio label="Medium" value="md" name="size" />
+    <Radio label="Large" value="lg" name="size" />
+  </RadioGroup>
 </ComponentExample>
 
 ### With Description
 
-<p>Add helper text below the radio items using the `description` prop.</p>
-<ComponentExample demo="RadioDescriptionDemo">
-  <RadioDescriptionDemo client:visible />
-</ComponentExample>
-
-### Control Position
-
-<p>Use `controlPosition="end"` to place labels before radio buttons.</p>
-<ComponentExample demo="RadioControlPositionDemo">
-  <RadioControlPositionDemo client:visible />
-</ComponentExample>
-
-### Radio Card
-
-<p>
-  Use `appearance="card"` on the group to display each option as a selectable
-  card. Combine with the `description` prop on each item for richer content.
-</p>
-<ComponentExample demo="RadioCardDemo">
-  <RadioCardDemo client:visible />
-</ComponentExample>
-
-### Radio Card (Control on the Left)
-
-<p>
-  Use `controlPosition="start"` on a card radio group to place the radio control
-  on the left of the label and description.
-</p>
-<ComponentExample demo="RadioCardControlStartDemo">
-  <RadioCardControlStartDemo client:visible />
-</ComponentExample>
-
-### Rich Label Content
-
-<p>
-  The `label` prop on `Radio.Item` accepts React nodes, so you can embed icons,
-  badges, or other markup alongside the text.
-</p>
-<ComponentExample demo="RadioRichLabelDemo">
-  <RadioRichLabelDemo client:visible />
-</ComponentExample>
-
-### Radio Card (Horizontal)
-
-<p>
-  Combine `appearance="card"` with `orientation="horizontal"` for a side-by-side
-  card layout.
-</p>
-<ComponentExample demo="RadioCardHorizontalDemo">
-  <RadioCardHorizontalDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Plan" description="Choose the plan that fits your needs." name="plan2">\n  <Radio label="Free" value="free" name="plan2" />\n  <Radio label="Pro" value="pro" name="plan2" />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Plan" description="Choose the plan that fits your needs." name="plan2">
+    <Radio label="Free" value="free" name="plan2" />
+    <Radio label="Pro" value="pro" name="plan2" />
+  </RadioGroup>
 </ComponentExample>
 
 ### With Error
 
-<p>Show validation errors at the group level using the `error` prop.</p>
-<ComponentExample demo="RadioErrorDemo">
-  <RadioErrorDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Required field" error="Please select an option." name="plan3">\n  <Radio label="Option A" value="a" name="plan3" />\n  <Radio label="Option B" value="b" name="plan3" />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Required field" error="Please select an option." name="plan3">
+    <Radio label="Option A" value="a" name="plan3" />
+    <Radio label="Option B" value="b" name="plan3" />
+  </RadioGroup>
 </ComponentExample>
 
 ### Disabled
 
-<p>Disable the entire group or individual items.</p>
-<ComponentExample demo="RadioDisabledDemo">
-  <RadioDisabledDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Disabled group" name="plan4" disabled>\n  <Radio label="Option A" value="a" name="plan4" />\n  <Radio label="Option B" value="b" name="plan4" />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Disabled group" name="plan4" disabled>
+    <Radio label="Option A" value="a" name="plan4" />
+    <Radio label="Option B" value="b" name="plan4" />
+  </RadioGroup>
 </ComponentExample>
 
-### Visually Hidden Legend
+### Card Appearance
 
-<p>
-  Use `Radio.Legend` with `className="sr-only"` to keep the legend accessible to
-  screen readers while hiding it visually. This is useful when the radio group
-  is already labeled by a parent `Field` or heading, and showing the legend
-  would create a redundant label.
-</p>
-<ComponentExample demo="RadioLegendSrOnlyDemo">
-  <RadioLegendSrOnlyDemo client:visible />
-</ComponentExample>
-
-### Custom Legend Styling
-
-<p>
-  `Radio.Legend` accepts `className` for full control over legend presentation.
-  Use it instead of the `legend` string prop when you need custom typography,
-  colors, or layout.
-</p>
-<ComponentExample demo="RadioLegendCustomDemo">
-  <RadioLegendCustomDemo client:visible />
+<ComponentExample
+  code={`<RadioGroup legend="Plan" name="plan5" appearance="card">\n  <Radio\n    label="Free"\n    description="For personal projects"\n    value="free"\n    name="plan5"\n    appearance="card"\n  />\n  <Radio\n    label="Pro"\n    description="For teams and businesses"\n    value="pro"\n    name="plan5"\n    appearance="card"\n  />\n</RadioGroup>`}
+  lang="astro"
+>
+  <RadioGroup legend="Plan" name="plan5" appearance="card">
+    <Radio label="Free" description="For personal projects" value="free" name="plan5" appearance="card" />
+    <Radio label="Pro" description="For teams and businesses" value="pro" name="plan5" appearance="card" />
+  </RadioGroup>
 </ComponentExample>
 
 </ComponentSection>
@@ -199,58 +153,122 @@ export default function Example() {
 
 ## API Reference
 
-### Radio.Group
+### RadioGroup
 
-<p>Container for radio buttons with legend, description, and error support.</p>
-<PropsTable component="Radio.Group" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">legend</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Group legend text rendered in a <code>&lt;legend&gt;</code> element.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">orientation</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"vertical" | "horizontal"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"vertical"</code></td>
+        <td class="px-4 py-3 text-xs">Layout direction of the radio items.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">appearance</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "card"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style. <code>"card"</code> renders each option as a selectable card.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Helper text shown below the legend.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">error</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Error message shown below the group.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables all radio items in the group.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name attribute. Note: must also be set on each <code>Radio</code> item explicitly in Astro.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### Radio.Legend
+### Radio
 
-<p>
-  Composable legend sub-component for Radio.Group. Accepts `className` for full
-  styling control (e.g. `className="sr-only"` to visually hide). Use instead of
-  the `legend` string prop when you need custom legend styling.
-</p>
-<PropsTable component="Radio.Legend" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text for this option.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">value<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Value submitted with the form.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name. Must match the parent <code>RadioGroup</code>'s name.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Supporting text shown below the label (useful with <code>appearance="card"</code>).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">appearance</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "card"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style. Should match the parent <code>RadioGroup</code>'s appearance.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">checked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Pre-selects this option.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables this option.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### Radio.Item
-
-<p>Individual radio button within Radio.Group.</p>
-<PropsTable component="Radio.Item" />
-
-</ComponentSection>
-
-{/* Accessibility */}
-
-<ComponentSection>
-
-## Accessibility
-
-  <div class="space-y-4 text-sm">
-    <div>
-
-      ### Semantic HTML
-
-      <p>
-        Radio.Group uses semantic `<fieldset>` and `<legend>` elements for proper grouping and screen reader announcement.
-      </p>
-    </div>
-    <div>
-
-      ### Keyboard Navigation
-
-      <p>
-        <kbd class="rounded bg-kumo-control px-1.5 py-0.5">Arrow Up/Down</kbd> or <kbd class="rounded bg-kumo-control px-1.5 py-0.5">Arrow Left/Right</kbd> moves between options. <kbd class="rounded bg-kumo-control px-1.5 py-0.5">Space</kbd> selects the focused option. <kbd class="rounded bg-kumo-control px-1.5 py-0.5">Tab</kbd> moves focus to and from the radio group.
-      </p>
-    </div>
-    <div>
-
-      ### Screen Readers
-
-      <p>
-        Each radio is announced with its label and selection state. The group legend provides context for all options.
-      </p>
-    </div>
-
-  </div>
 </ComponentSection>

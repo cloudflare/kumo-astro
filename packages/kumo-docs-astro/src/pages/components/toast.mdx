@@ -7,26 +7,24 @@ sourceFile: "components/toast"
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  ToastBasicDemo,
-  ToastTitleOnlyDemo,
-  ToastDescriptionOnlyDemo,
-  ToastSuccessDemo,
-  ToastMultipleDemo,
-  ToastErrorDemo,
-  ToastWarningDemo,
-  ToastInfoDemo,
-  ToastCustomContentDemo,
-  ToastActionsDemo,
-  ToastPromiseDemo,
-} from "~/components/demos/ToastDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Toast from "@cloudflare/kumo-astro/components/toast";
+import Button from "@cloudflare/kumo-astro/components/button";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="ToastBasicDemo">
-    <ToastBasicDemo client:visible />
+  <ComponentExample
+    code={`<!-- Place once in your layout -->\n<Toast position="bottom-right" />\n\n<!-- Trigger from anywhere -->\n<script>\n  kumoToast({ title: "Saved!", description: "Changes saved successfully.", variant: "success" });\n</script>`}
+    lang="astro"
+  >
+    <div class="flex flex-wrap gap-2">
+      <Toast position="bottom-right" />
+      <Button variant="secondary" onclick="kumoToast({ title: 'Default', description: 'This is a default toast.' })">Default</Button>
+      <Button variant="secondary" onclick="kumoToast({ title: 'Success', description: 'Changes saved.', variant: 'success' })">Success</Button>
+      <Button variant="secondary" onclick="kumoToast({ title: 'Error', description: 'Something went wrong.', variant: 'error' })">Error</Button>
+      <Button variant="secondary" onclick="kumoToast({ title: 'Warning', description: 'Please review.', variant: 'warning' })">Warning</Button>
+    </div>
   </ComponentExample>
 </ComponentSection>
 
@@ -36,17 +34,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Toasty, useKumoToastManager } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Toasty, useKumoToastManager } from "@cloudflare/kumo/components/toast";
-```
+  <CodeBlock
+    code={`import Toast from "@cloudflare/kumo-astro/components/toast";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -56,60 +47,28 @@ import { Toasty, useKumoToastManager } from "@cloudflare/kumo/components/toast";
 
 ## Usage
 
-  <p>
-    The toast system consists of two parts: the `Toasty` provider component and the `useKumoToastManager()` hook for triggering toasts.
-  </p>
+```astro
+---
+import Toast from "@cloudflare/kumo-astro/components/toast";
+---
 
-```tsx
-import { Toasty, useKumoToastManager, Button } from "@cloudflare/kumo";
+<!-- Place once in your layout or page -->
+<Toast position="bottom-right" />
 
-function ToastTrigger() {
-  const toastManager = useKumoToastManager();
-
-  return (
-    <Button
-      onClick={() =>
-        toastManager.add({
-          title: "Success!",
-          description: "Your changes have been saved.",
-        })
-      }
-    >
-      Save changes
-    </Button>
-  );
-}
-
-export default function App() {
-  return (
-    <Toasty>
-      <ToastTrigger />
-      {/* Rest of your app */}
-    </Toasty>
-  );
-}
+<script>
+  // Call from anywhere on the page
+  kumoToast({ title: "Saved!", variant: "success" });
+</script>
 ```
 
-</ComponentSection>
+<p>
+  The Astro <code>Toast</code> differs significantly from the React version:
+</p>
 
-{/* Setup */}
-
-<ComponentSection>
-
-## Setup
-
-  <p>
-    Wrap your application (or a section of it) with the `Toasty` provider. This sets up the toast context and renders the toast viewport.
-  </p>
-
-```tsx
-// In your app root or layout
-import { Toasty } from "@cloudflare/kumo";
-
-export function Layout({ children }) {
-  return <Toasty>{children}</Toasty>;
-}
-```
+- It renders an **empty container**. All toasts are injected at runtime via `window.kumoToast()`.
+- There is no React context, no `Toasty` provider, and no `useKumoToastManager` hook.
+- Place the `<Toast />` component **once** in your layout or page — multiple instances on the same page are not needed.
+- Call `kumoToast(options)` from any `<script>` tag, `onclick` attribute, or inline JS.
 
 </ComponentSection>
 
@@ -119,87 +78,40 @@ export function Layout({ children }) {
 
 ## Examples
 
-### Title and Description
+### Variants
 
-<p>A complete toast with both title and description.</p>
-<ComponentExample demo="ToastBasicDemo">
-  <ToastBasicDemo client:visible />
+<ComponentExample
+  code={`<Toast position="bottom-right" />\n\n<script>\n  // Default\n  kumoToast({ title: "Update available", description: "A new version is ready." });\n\n  // Success\n  kumoToast({ title: "Saved!", variant: "success" });\n\n  // Error\n  kumoToast({ title: "Failed", description: "Could not save.", variant: "error" });\n\n  // Warning\n  kumoToast({ title: "Warning", description: "Storage almost full.", variant: "warning" });\n\n  // Info\n  kumoToast({ title: "Info", description: "New features available.", variant: "info" });\n</script>`}
+  lang="astro"
+>
+  <div class="flex flex-wrap gap-2">
+    <Button variant="secondary" size="sm" onclick="kumoToast({ title: 'Update available', description: 'A new version is ready.' })">Default</Button>
+    <Button variant="secondary" size="sm" onclick="kumoToast({ title: 'Saved!', variant: 'success' })">Success</Button>
+    <Button variant="secondary" size="sm" onclick="kumoToast({ title: 'Failed', description: 'Could not save.', variant: 'error' })">Error</Button>
+    <Button variant="secondary" size="sm" onclick="kumoToast({ title: 'Warning', description: 'Storage almost full.', variant: 'warning' })">Warning</Button>
+    <Button variant="secondary" size="sm" onclick="kumoToast({ title: 'Info', description: 'New features available.', variant: 'info' })">Info</Button>
+  </div>
 </ComponentExample>
 
-### Title Only
+### Custom Duration
 
-<p>A simple toast with just a title for brief messages.</p>
-<ComponentExample demo="ToastTitleOnlyDemo">
-  <ToastTitleOnlyDemo client:visible />
-</ComponentExample>
+```astro
+<script>
+  // Auto-dismiss after 10 seconds
+  kumoToast({ title: "Long toast", duration: 10000 });
 
-### Description Only
+  // Persist until manually dismissed (duration: 0)
+  kumoToast({ title: "Sticky toast", duration: 0 });
+</script>
+```
 
-<p>A toast with only a description for more detailed messages.</p>
-<ComponentExample demo="ToastDescriptionOnlyDemo">
-  <ToastDescriptionOnlyDemo client:visible />
-</ComponentExample>
+### Positions
 
-### Success Variant
-
-<p>Use the success variant for confirmations and positive outcomes.</p>
-<ComponentExample demo="ToastSuccessDemo">
-  <ToastSuccessDemo client:visible />
-</ComponentExample>
-
-### Multiple Toasts
-
-<p>
-  Multiple toasts stack and animate smoothly. Hover over the stack to expand
-  them.
-</p>
-<ComponentExample demo="ToastMultipleDemo">
-  <ToastMultipleDemo client:visible />
-</ComponentExample>
-
-### Error Variant
-
-<p>Use the error variant for critical issues that need attention.</p>
-<ComponentExample demo="ToastErrorDemo">
-  <ToastErrorDemo client:visible />
-</ComponentExample>
-
-### Warning Variant
-
-<p>Use the warning variant for cautionary messages.</p>
-<ComponentExample demo="ToastWarningDemo">
-  <ToastWarningDemo client:visible />
-</ComponentExample>
-
-### Info Variant
-
-<p>Use the info variant for neutral informational messages.</p>
-<ComponentExample demo="ToastInfoDemo">
-  <ToastInfoDemo client:visible />
-</ComponentExample>
-
-### Custom Content
-
-<p>Use the content prop to render completely custom toast content.</p>
-<ComponentExample demo="ToastCustomContentDemo">
-  <ToastCustomContentDemo client:visible />
-</ComponentExample>
-
-### Action Buttons
-
-<p>Add action buttons to toasts for user interaction.</p>
-<ComponentExample demo="ToastActionsDemo">
-  <ToastActionsDemo client:visible />
-</ComponentExample>
-
-### Promise
-
-<p>
-  Use the promise method to show loading, success, and error states
-  automatically.
-</p>
-<ComponentExample demo="ToastPromiseDemo">
-  <ToastPromiseDemo client:visible />
+<ComponentExample
+  code={`<!-- Top right -->\n<Toast position="top-right" />\n\n<!-- Bottom center -->\n<Toast position="bottom-center" />`}
+  lang="astro"
+>
+  <p class="text-sm text-kumo-subtle">Available positions: <code>top-right</code>, <code>bottom-right</code>, <code>top-left</code>, <code>bottom-left</code>, <code>top-center</code>, <code>bottom-center</code></p>
 </ComponentExample>
 
 </ComponentSection>
@@ -210,85 +122,65 @@ export function Layout({ children }) {
 
 ## API Reference
 
-### Toasty
+### Toast Component
 
-<p>The provider component that wraps your app and manages the toast system.</p>
-<PropsTable component="Toasty" />
-
-### useKumoToastManager()
-
-<p>A hook that returns the toast manager for creating toasts.</p>
-
-```tsx
-const toastManager = useKumoToastManager();
-
-// Add a toast
-toastManager.add(options);
-
-// Promise-based toast
-toastManager.promise(asyncFn(), {
-  loading: options,
-  success: (data) => options,
-  error: (err) => options,
-});
-```
-
-### Toast Options
-
-<p>Options passed to `toastManager.add()` and promise handlers.</p>
-<div class="overflow-x-auto">
-  <table class="w-full text-left text-sm">
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-kumo-hairline">
-        <th class="py-3 pr-4 font-semibold">Prop</th>
-        <th class="py-3 pr-4 font-semibold">Type</th>
-        <th class="py-3 pr-4 font-semibold">Default</th>
-        <th class="py-3 font-semibold">Description</th>
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
       </tr>
     </thead>
-    <tbody class="text-kumo-subtle">
+    <tbody class="text-kumo-strong">
       <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">title</td>
-        <td class="py-3 pr-4 font-mono">string</td>
-        <td class="py-3 pr-4">—</td>
-        <td class="py-3">The toast title displayed prominently.</td>
+        <td class="px-4 py-3 font-mono text-xs">position</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"top-right" | "bottom-right" | "top-left" | "bottom-left" | "top-center" | "bottom-center"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"bottom-right"</code></td>
+        <td class="px-4 py-3 text-xs">Where the toast container is anchored on the screen.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### `kumoToast(options)` API
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Option</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">title</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Primary heading text of the toast.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">description</td>
-        <td class="py-3 pr-4 font-mono">string</td>
-        <td class="py-3 pr-4">—</td>
-        <td class="py-3">Secondary text displayed below the title.</td>
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Supporting description text.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">variant</td>
-        <td class="py-3 pr-4 font-mono">
-          "default" | "success" | "error" | "warning" | "info"
-        </td>
-        <td class="py-3 pr-4 font-mono">"default"</td>
-        <td class="py-3">Visual style of the toast.</td>
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "success" | "error" | "warning" | "info"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style of the toast.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">content</td>
-        <td class="py-3 pr-4 font-mono">ReactNode</td>
-        <td class="py-3 pr-4">—</td>
-        <td class="py-3">
-          Custom content to render inside the toast. Overrides title and
-          description.
-        </td>
-      </tr>
-      <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">actions</td>
-        <td class="py-3 pr-4 font-mono">ButtonProps[]</td>
-        <td class="py-3 pr-4">—</td>
-        <td class="py-3">Array of button props to render as action buttons.</td>
-      </tr>
-      <tr class="border-b border-kumo-hairline">
-        <td class="py-3 pr-4 font-mono text-kumo-default">timeout</td>
-        <td class="py-3 pr-4 font-mono">number</td>
-        <td class="py-3 pr-4 font-mono">5000</td>
-        <td class="py-3">
-          Time in milliseconds before the toast auto-dismisses.
-        </td>
+        <td class="px-4 py-3 font-mono text-xs">duration</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>4000</code></td>
+        <td class="px-4 py-3 text-xs">Auto-dismiss time in milliseconds. Set to <code>0</code> to disable auto-dismiss.</td>
       </tr>
     </tbody>
   </table>

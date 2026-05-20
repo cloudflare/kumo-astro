@@ -1,26 +1,24 @@
 ---
 layout: ~/layouts/MdxDocLayout.astro
 title: "Label"
-description: "A label component for form fields with support for required/optional indicators and tooltips."
+description: "A label component for form fields with support for required/optional indicators."
 sourceFile: "components/label"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import {
-  LabelBasicDemo,
-  LabelOptionalFieldDemo,
-  LabelWithTooltipDemo,
-  LabelReactNodeDemo,
-  LabelFormMixedDemo,
-  LabelStandaloneDemo,
-} from "~/components/demos/LabelDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Input from "@cloudflare/kumo-astro/components/input";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="LabelBasicDemo">
-    <LabelBasicDemo client:visible />
+  <ComponentExample
+    code={`<Label for="name">Display name</Label>`}
+    lang="astro"
+  >
+    <Label for="name">Display name</Label>
   </ComponentExample>
 </ComponentSection>
 
@@ -30,17 +28,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Label } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Label } from "@cloudflare/kumo/components/label";
-```
+  <CodeBlock
+    code={`import Label from "@cloudflare/kumo-astro/components/label";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -52,39 +43,31 @@ import { Label } from "@cloudflare/kumo/components/label";
 
 ### With Form Components (Recommended)
 
-  <p>
-    Label features are automatically available through form components like `Input`, `Select`, `Checkbox`, and `Switch` via the `required` and `labelTooltip` props.
-  </p>
+<p>
+  Label features are automatically available through form components like <code>Input</code>, <code>Select</code>,
+  <code>Checkbox</code>, and <code>Switch</code> via their <code>label</code> and <code>required</code> props.
+</p>
 
-```tsx
-import { Input } from "@cloudflare/kumo";
+```astro
+---
+import Input from "@cloudflare/kumo-astro/components/input";
+---
 
-export default function Example() {
-  return (
-    <>
-      {/* Optional field with "(optional)" text */}
-      <Input label="Phone" required={false} placeholder="+1 555-0000" />
-
-      {/* With tooltip */}
-      <Input
-        label="API Key"
-        labelTooltip="Find this in your dashboard settings"
-      />
-    </>
-  );
-}
+<!-- Optional field with "(optional)" text -->
+<Input label="Phone" required={false} placeholder="+1 555-0000" />
 ```
 
 ### Standalone Label
 
-<p>For custom form layouts, use the `Label` component directly.</p>
+<p>For custom form layouts, use the <code>Label</code> component directly with a <code>for</code> attribute.</p>
 
-```tsx
-import { Label } from "@cloudflare/kumo";
+```astro
+---
+import Label from "@cloudflare/kumo-astro/components/label";
+---
 
-export default function Example() {
-  return <Label tooltip="This field is mandatory">Username</Label>;
-}
+<Label for="username">Username</Label>
+<input id="username" type="text" />
 ```
 
 </ComponentSection>
@@ -97,37 +80,38 @@ export default function Example() {
 
 ### Optional Field
 
-<p>Shows gray "(optional)" text when `required={false}`.</p>
-<ComponentExample demo="LabelOptionalFieldDemo">
-  <LabelOptionalFieldDemo client:visible />
-</ComponentExample>
+<p>Shows gray "(optional)" text when <code>showOptional</code> is true.</p>
 
-### With Tooltip
-
-<p>Shows an info icon with a tooltip for additional context.</p>
-<ComponentExample demo="LabelWithTooltipDemo">
-  <LabelWithTooltipDemo client:visible />
-</ComponentExample>
-
-### ReactNode Label Content
-
-<p>Labels support ReactNode content for rich formatting.</p>
-<ComponentExample demo="LabelReactNodeDemo">
-  <LabelReactNodeDemo client:visible />
+<ComponentExample
+  code={`<Label showOptional>Phone number</Label>`}
+  lang="astro"
+>
+  <Label showOptional>Phone number</Label>
 </ComponentExample>
 
 ### Form with Mixed Fields
 
 <p>Real-world example showing required and optional fields together.</p>
-<ComponentExample demo="LabelFormMixedDemo">
-  <LabelFormMixedDemo client:visible />
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Input label="Email" placeholder="you@example.com" />\n  <Input label="Phone" required={false} placeholder="+1 555-0000" />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Input label="Email" placeholder="you@example.com" />
+    <Input label="Phone" required={false} placeholder="+1 555-0000" />
+  </div>
 </ComponentExample>
 
 ### Standalone Label
 
-<p>Use Label directly for custom layouts or non-form contexts.</p>
-<ComponentExample demo="LabelStandaloneDemo">
-  <LabelStandaloneDemo client:visible />
+<p>Use <code>Label</code> directly for custom layouts.</p>
+
+<ComponentExample
+  code={`<Label for="api-key">API Key</Label>`}
+  lang="astro"
+>
+  <Label for="api-key">API Key</Label>
 </ComponentExample>
 
 </ComponentSection>
@@ -140,8 +124,7 @@ export default function Example() {
 
 ### Label Props
 
-<p>Props for the standalone Label component:</p>
-<div class="overflow-x-auto">
+<div class="not-prose overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-kumo-hairline">
@@ -151,32 +134,30 @@ export default function Example() {
         <th class="px-4 py-3 text-left font-semibold">Description</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="text-kumo-strong">
       <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">children</td>
-        <td class="px-4 py-3 font-mono text-xs">ReactNode</td>
+        <td class="px-4 py-3 font-mono text-xs">for</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
         <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">Label content (required)</td>
+        <td class="px-4 py-3 text-xs">HTML <code>for</code> attribute linking the label to a form control.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
         <td class="px-4 py-3 font-mono text-xs">showOptional</td>
-        <td class="px-4 py-3 font-mono text-xs">boolean</td>
-        <td class="px-4 py-3 font-mono text-xs">false</td>
-        <td class="px-4 py-3 text-xs">
-          Shows gray "(optional)" text (only when required is false)
-        </td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Appends gray "(optional)" text after the label content.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">tooltip</td>
-        <td class="px-4 py-3 font-mono text-xs">ReactNode</td>
-        <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">Tooltip content shown via info icon</td>
+        <td class="px-4 py-3 font-mono text-xs">asContent</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Renders a <code>&lt;span&gt;</code> instead of a <code>&lt;label&gt;</code> for non-form contexts.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">className</td>
-        <td class="px-4 py-3 font-mono text-xs">string</td>
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
         <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">Additional CSS classes</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
       </tr>
     </tbody>
   </table>
@@ -184,11 +165,9 @@ export default function Example() {
 
 ### Form Component Label Props
 
-<p>
-  These props are available on Input, InputArea, Select, Checkbox, Switch,
-  SensitiveInput, and Combobox:
-</p>
-<div class="overflow-x-auto">
+<p>These props are available on <code>Input</code>, <code>InputArea</code>, <code>Select</code>, <code>Checkbox</code>, and <code>Switch</code>:</p>
+
+<div class="not-prose overflow-x-auto">
   <table class="w-full text-sm">
     <thead>
       <tr class="border-b border-kumo-hairline">
@@ -198,29 +177,18 @@ export default function Example() {
         <th class="px-4 py-3 text-left font-semibold">Description</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="text-kumo-strong">
       <tr class="border-b border-kumo-hairline">
         <td class="px-4 py-3 font-mono text-xs">label</td>
-        <td class="px-4 py-3 font-mono text-xs">ReactNode</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
         <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">Label content (enables Field wrapper)</td>
+        <td class="px-4 py-3 text-xs">Label text. When provided, wraps the control in a <code>Field</code> with an auto-linked <code>&lt;label&gt;</code>.</td>
       </tr>
       <tr class="border-b border-kumo-hairline">
         <td class="px-4 py-3 font-mono text-xs">required</td>
-        <td class="px-4 py-3 font-mono text-xs">boolean</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
         <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">
-          When false: shows "(optional)" text. Also sets HTML required
-          attribute.
-        </td>
-      </tr>
-      <tr class="border-b border-kumo-hairline">
-        <td class="px-4 py-3 font-mono text-xs">labelTooltip</td>
-        <td class="px-4 py-3 font-mono text-xs">ReactNode</td>
-        <td class="px-4 py-3 font-mono text-xs">-</td>
-        <td class="px-4 py-3 text-xs">
-          Tooltip content shown via info icon next to label
-        </td>
+        <td class="px-4 py-3 text-xs">When <code>false</code>, shows "(optional)" text and sets the HTML <code>required</code> attribute to false.</td>
       </tr>
     </tbody>
   </table>
@@ -234,42 +202,15 @@ export default function Example() {
 
 ## Design Guidelines
 
-  <div class="space-y-4 text-sm">
-    <div>
+### When to Use Optional Indicators
 
-      ### When to Use Optional Indicators
+- Use "(optional)" for optional fields when most fields in the form are required
+- Be consistent within a form
+- Fields with no indicator are assumed required by users
 
-      <ul class="ml-4 list-disc space-y-1">
-        <li>
-          Use "(optional)" for optional fields when most fields are required
-        </li>
-        <li>Be consistent within a form</li>
-        <li>Default fields (no indicator) are assumed required by users</li>
-      </ul>
-    </div>
-    <div>
+### Accessibility
 
-      ### When to Use Tooltips
+- The `for` attribute links the label to its control for screen readers
+- Optional indicators are purely visual — use the `required` attribute for validation
 
-      <ul class="ml-4 list-disc space-y-1">
-        <li>Provide additional context that doesn't fit in the label</li>
-        <li>Explain format requirements or validation rules</li>
-        <li>Link to help documentation for complex fields</li>
-        <li>Keep tooltip content concise - 1-2 sentences max</li>
-      </ul>
-    </div>
-    <div>
-
-      ### Accessibility
-
-      <ul class="ml-4 list-disc space-y-1">
-        <li>
-          Optional indicators are purely visual - use the `required` attribute
-          for validation
-        </li>
-        <li>Tooltips are accessible via keyboard focus on the info icon</li>
-        <li>Screen readers will announce tooltip content when focused</li>
-      </ul>
-    </div>
-  </div>
 </ComponentSection>

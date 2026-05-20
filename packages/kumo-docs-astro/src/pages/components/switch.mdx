@@ -3,32 +3,21 @@ layout: ~/layouts/MdxDocLayout.astro
 title: "Switch"
 description: "A two-state button that can be either on or off."
 sourceFile: "components/switch"
-baseUIComponent: "switch"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  SwitchBasicDemo,
-  SwitchOffDemo,
-  SwitchOnDemo,
-  SwitchDisabledDemo,
-  SwitchNeutralDemo,
-  SwitchNeutralStatesDemo,
-  SwitchVariantsDemo,
-  SwitchSizesDemo,
-  SwitchCustomIdDemo,
-  SwitchGroupDemo,
-  SwitchLegendSrOnlyDemo,
-  SwitchLegendCustomDemo,
-} from "~/components/demos/SwitchDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Switch from "@cloudflare/kumo-astro/components/switch";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="SwitchBasicDemo">
-    <SwitchBasicDemo client:visible />
+  <ComponentExample
+    code={`<Switch label="Enable notifications" />`}
+    lang="astro"
+  >
+    <Switch label="Enable notifications" />
   </ComponentExample>
 </ComponentSection>
 
@@ -38,17 +27,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Switch } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Switch } from "@cloudflare/kumo/components/switch";
-```
+  <CodeBlock
+    code={`import Switch from "@cloudflare/kumo-astro/components/switch";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -58,18 +40,20 @@ import { Switch } from "@cloudflare/kumo/components/switch";
 
 ## Usage
 
-```tsx
-import { Switch } from "@cloudflare/kumo";
-import { useState } from "react";
+```astro
+---
+import Switch from "@cloudflare/kumo-astro/components/switch";
+---
 
-export default function Example() {
-  const [checked, setChecked] = useState(false);
-
-  return (
-    <Switch checked={checked} onCheckedChange={(val) => setChecked(val)} />
-  );
-}
+<Switch label="Dark mode" />
 ```
+
+<p>
+  The Astro <code>Switch</code> is interactive via an inline script — no <code>client:</code> directive needed.
+  It uses a hidden <code>&lt;input type="checkbox"&gt;</code> for form submission and a styled <code>&lt;button role="switch"&gt;</code>
+  for the visual toggle. There is no <code>onCheckedChange</code> prop — use native <code>oninput</code>
+  on the hidden input via HTML attributes if you need to respond to changes.
+</p>
 
 </ComponentSection>
 
@@ -81,96 +65,56 @@ export default function Example() {
 
 ### Off State
 
-<ComponentExample demo="SwitchOffDemo">
-  <SwitchOffDemo client:visible />
+<ComponentExample
+  code={`<Switch label="Switch" />`}
+  lang="astro"
+>
+  <Switch label="Switch" />
 </ComponentExample>
 
-### On State
+### Pre-checked
 
-<ComponentExample demo="SwitchOnDemo">
-  <SwitchOnDemo client:visible />
+<ComponentExample
+  code={`<Switch label="Dark mode" defaultChecked={true} />`}
+  lang="astro"
+>
+  <Switch label="Dark mode" defaultChecked={true} />
 </ComponentExample>
 
 ### Disabled
 
-<ComponentExample demo="SwitchDisabledDemo">
-  <SwitchDisabledDemo client:visible />
+<ComponentExample
+  code={`<Switch label="Disabled" disabled />`}
+  lang="astro"
+>
+  <Switch label="Disabled" disabled />
 </ComponentExample>
 
 ### Variants
 
-<p>
-  The Switch supports two variants: `default` (blue when on) and `neutral`
-  (monochrome). Both use a squircle shape.
-</p>
-<ComponentExample demo="SwitchVariantsDemo">
-  <SwitchVariantsDemo client:visible />
-</ComponentExample>
-
-### Neutral Variant
-
-<p>
-  The neutral variant uses monochrome colors and a squircle shape, ideal for
-  subtle, less prominent toggles.
-</p>
-<ComponentExample demo="SwitchNeutralDemo">
-  <SwitchNeutralDemo client:visible />
-</ComponentExample>
-
-### Neutral States
-
-<ComponentExample demo="SwitchNeutralStatesDemo">
-  <SwitchNeutralStatesDemo client:visible />
+<ComponentExample
+  code={`<div class="grid grid-cols-2 gap-x-8 gap-y-4">\n  <Switch label="Default off" />\n  <Switch label="Default on" defaultChecked={true} />\n  <Switch label="Neutral off" variant="neutral" />\n  <Switch label="Neutral on" variant="neutral" defaultChecked={true} />\n</div>`}
+  lang="astro"
+>
+  <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+    <Switch label="Default off" />
+    <Switch label="Default on" defaultChecked={true} />
+    <Switch label="Neutral off" variant="neutral" />
+    <Switch label="Neutral on" variant="neutral" defaultChecked={true} />
+  </div>
 </ComponentExample>
 
 ### Sizes
 
-<p>Three sizes available: `sm`, `base` (default), and `lg`.</p>
-<ComponentExample demo="SwitchSizesDemo">
-  <SwitchSizesDemo client:visible />
-</ComponentExample>
-
-### Custom ID
-
-<p>
-  When a custom `id` is provided, clicking the label still toggles the switch.
-  The `id` is forwarded to Base UI so the label's `htmlFor` stays in sync.
-</p>
-<ComponentExample demo="SwitchCustomIdDemo">
-  <SwitchCustomIdDemo client:visible />
-</ComponentExample>
-
-### Switch Group
-
-<p>
-  Group related switches with `Switch.Group`. Provides a shared legend,
-  description, and error message for the group.
-</p>
-<ComponentExample demo="SwitchGroupDemo">
-  <SwitchGroupDemo client:visible />
-</ComponentExample>
-
-### Visually Hidden Legend
-
-<p>
-  Use `Switch.Legend` with `className="sr-only"` to keep the legend accessible
-  to screen readers while hiding it visually. This is useful when the group is
-  already labeled by a parent `Field` or heading, and showing the legend would
-  create a redundant label.
-</p>
-<ComponentExample demo="SwitchLegendSrOnlyDemo">
-  <SwitchLegendSrOnlyDemo client:visible />
-</ComponentExample>
-
-### Custom Legend Styling
-
-<p>
-  `Switch.Legend` accepts `className` for full control over legend presentation.
-  Use it instead of the `legend` string prop when you need custom typography,
-  colors, or layout.
-</p>
-<ComponentExample demo="SwitchLegendCustomDemo">
-  <SwitchLegendCustomDemo client:visible />
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Switch label="Small" size="sm" defaultChecked={true} />\n  <Switch label="Base (default)" size="base" defaultChecked={true} />\n  <Switch label="Large" size="lg" defaultChecked={true} />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Switch label="Small" size="sm" defaultChecked={true} />
+    <Switch label="Base (default)" size="base" defaultChecked={true} />
+    <Switch label="Large" size="lg" defaultChecked={true} />
+  </div>
 </ComponentExample>
 
 </ComponentSection>
@@ -181,30 +125,85 @@ export default function Example() {
 
 ## API Reference
 
-### Switch
-
-<p>Individual switch toggle with built-in label.</p>
-<PropsTable component="Switch" />
-
-### Switch.Group
-
-<p>
-  Container for multiple switches with legend, description, and error support.
-</p>
-<PropsTable component="Switch.Group" />
-
-### Switch.Legend
-
-<p>
-  Composable legend sub-component for Switch.Group. Accepts `className` for full
-  styling control (e.g. `className="sr-only"` to visually hide). Use instead of
-  the `legend` string prop when you need custom legend styling.
-</p>
-<PropsTable component="Switch.Legend" />
-
-### Switch.Item
-
-<p>Individual switch within Switch.Group.</p>
-<PropsTable component="Switch.Item" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text rendered beside the switch.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "neutral"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs"><code>default</code> — blue when on. <code>neutral</code> — monochrome.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Switch size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">checked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled checked state.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultChecked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Initial checked state (uncontrolled).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the switch.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">controlFirst</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">When <code>true</code>, the toggle appears before the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name attribute for form submission.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML id for the switch button. Auto-generated if not provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Accessible label when no visible label is provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 </ComponentSection>

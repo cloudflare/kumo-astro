@@ -7,18 +7,24 @@ sourceFile: "components/text"
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import { Text } from "@cloudflare/kumo";
-import {
-  TextVariantsDemo,
-  TextTruncateDemo,
-} from "~/components/demos/TextDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Text from "@cloudflare/kumo-astro/components/text";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="TextVariantsDemo">
-    <TextVariantsDemo client:visible />
+  <ComponentExample
+    code={`<div class="flex flex-col gap-2">\n  <Text variant="heading1" as="h1">Heading 1</Text>\n  <Text variant="heading2" as="h2">Heading 2</Text>\n  <Text variant="heading3" as="h3">Heading 3</Text>\n  <Text>Body</Text>\n  <Text variant="secondary">Secondary</Text>\n  <Text variant="mono">Monospace</Text>\n</div>`}
+    lang="astro"
+  >
+    <div class="flex flex-col gap-2">
+      <Text variant="heading1" as="h1">Heading 1</Text>
+      <Text variant="heading2" as="h2">Heading 2</Text>
+      <Text variant="heading3" as="h3">Heading 3</Text>
+      <Text>Body</Text>
+      <Text variant="secondary">Secondary</Text>
+      <Text variant="mono">Monospace</Text>
+    </div>
   </ComponentExample>
 </ComponentSection>
 
@@ -28,17 +34,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { Text } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { Text } from "@cloudflare/kumo/components/text";
-```
+  <CodeBlock
+    code={`import Text from "@cloudflare/kumo-astro/components/text";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -48,101 +47,125 @@ import { Text } from "@cloudflare/kumo/components/text";
 
 ## Usage
 
-```tsx
-import { Text } from "@cloudflare/kumo";
+```astro
+---
+import Text from "@cloudflare/kumo-astro/components/text";
+---
 
-export default function Example() {
-  return <Text>Your content here</Text>;
-}
+<Text>Your content here</Text>
 ```
 
-<section class="mt-8 space-y-4">
-  <Text variant="heading3" as="h3">Semantic HTML</Text>
-  <Text>
-    The `variant` prop controls visual styling only—it does not determine the HTML element rendered.
-    Heading variants **require** the `as` prop to avoid silently excluding real section headings from
-    the document outline. Body and monospace variants have sensible defaults (`<p>` and `<span>`
-    respectively) and accept `as` optionally.
-  </Text>
+### Semantic HTML
 
-```tsx
-// Heading variants REQUIRE `as` — TypeScript will flag usages missing it
-<Text variant="heading1">Page Title</Text> // Doesn't compile
+The `variant` prop controls visual styling only — it does not determine the HTML element rendered. Heading variants **require** the `as` prop to set the correct element for the document outline. Body and monospace variants default to `<p>` and `<span>` respectively.
 
-// Real section headings (contribute to the document outline)
+```astro
+<!-- Real section headings (contribute to the document outline) -->
 <Text variant="heading1" as="h1">Page Title</Text>
 <Text variant="heading2" as="h2">Section Title</Text>
 
-// Decorative heading-styled text that is NOT a section heading
+<!-- Decorative heading-styled text that is NOT a section heading -->
 <Text variant="heading1" as="span">Big bold card label</Text>
 
-// Visually one size, semantically another
+<!-- Visually one size, semantically another -->
 <Text variant="heading1" as="h3">Visually large, but semantically h3</Text>
 ```
 
-  <Text>
-    The `as` prop accepts: `"h1"` through `"h6"`, `"p"`, and `"span"`.
-    Body variants default to `"p"`, monospace variants default to `"span"`,
-    and heading variants have no default — you must choose explicitly.
-  </Text>
-</section>
+The `as` prop accepts: `"h1"` through `"h6"`, `"p"`, `"span"`, and other HTML phrasing elements. Body variants default to `"p"`, monospace variants default to `"span"`, and heading variants have no default — you must choose explicitly.
 
-<section class="mt-8 space-y-4">
-  <Text variant="heading3" as="h3">Restrictions</Text>
-  <Text>
-    The `bold` and `size` props are intentionally restricted to the `base`, `secondary`, `success`, and `error` text variants.
-  </Text>
+### Restrictions
 
-```tsx
+The `bold` and `size` props only apply to `base`, `secondary`, `success`, and `error` variants.
+
+```astro
 <Text size="sm" bold>Body</Text>
 <Text variant="secondary" bold>Body secondary</Text>
 <Text variant="success" size="lg">Success</Text>
 <Text variant="error">Error</Text>
 ```
 
-<Text>
-  Monospace variants (`mono` and `mono-secondary`) can only set `size` to `lg`
-  and cannot use the `bold` prop:
-</Text>
-
-```tsx
-<Text variant="mono">Monospace</Text>
-<Text variant="mono" size="lg">Monospace</Text>
-<Text variant="mono" bold>Monospace</Text> // Doesn't compile
-```
-
-<Text>
-  Headings (i.e. `heading1`, `heading2` and `heading3` variants) cannot use
-  these props at all:
-</Text>
-
-```tsx
-<Text variant="heading1" bold>
-  Heading 1
-</Text> // Doesn't compile
-```
-
-</section>
+Monospace variants (`mono` and `mono-secondary`) accept `size="lg"` but not `bold`. Heading variants do not accept `size` or `bold` at all.
 
 </ComponentSection>
 
-{/* Truncate */}
+{/* Examples */}
 
 <ComponentSection>
 
-## Truncate
+## Examples
 
-<Text>
-  Use the `truncate` prop to clip overflowing text with an ellipsis. This adds `truncate min-w-0` classes, which is useful when `Text` is inside a flex or grid container.
-</Text>
+### All Variants
 
-<ComponentExample demo="TextTruncateDemo">
-  <TextTruncateDemo client:visible />
+<ComponentExample
+  code={`<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">\n  <Text variant="heading1" as="h1">Heading 1</Text>\n  <Text variant="heading2" as="h2">Heading 2</Text>\n  <Text variant="heading3" as="h3">Heading 3</Text>\n  <Text>Body</Text>\n  <Text bold>Body bold</Text>\n  <Text size="lg">Body lg</Text>\n  <Text size="sm">Body sm</Text>\n  <Text variant="secondary">Secondary</Text>\n  <Text variant="mono">Monospace</Text>\n  <Text variant="mono-secondary">Monospace secondary</Text>\n  <Text variant="success">Success</Text>\n  <Text variant="error">Error</Text>\n</div>`}
+  lang="astro"
+>
+  <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="heading1" as="h1">Heading 1</Text>
+      <Text variant="mono-secondary">text-3xl (30px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="heading2" as="h2">Heading 2</Text>
+      <Text variant="mono-secondary">text-2xl (24px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="heading3" as="h3">Heading 3</Text>
+      <Text variant="mono-secondary">text-lg (16px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text>Body</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text bold>Body bold</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text size="lg">Body lg</Text>
+      <Text variant="mono-secondary">text-lg (16px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text size="sm">Body sm</Text>
+      <Text variant="mono-secondary">text-sm (13px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="secondary">Secondary</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="mono">Monospace</Text>
+      <Text variant="mono-secondary">text-sm (13px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="mono-secondary">Monospace secondary</Text>
+      <Text variant="mono-secondary">text-sm (13px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="success">Success</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+    <div class="flex flex-col gap-1 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+      <Text variant="error">Error</Text>
+      <Text variant="mono-secondary">text-base (14px)</Text>
+    </div>
+  </div>
 </ComponentExample>
 
-```tsx
-<Text truncate>This is a long piece of text that will be truncated...</Text>
-```
+### Truncate
+
+<p>Use the <code>truncate</code> prop to clip overflowing text with an ellipsis. Adds <code>truncate min-w-0</code>, useful inside flex or grid containers.</p>
+
+<ComponentExample
+  code={`<div class="w-64 rounded-lg border border-kumo-hairline bg-kumo-base p-4">\n  <Text truncate>\n    This is a long piece of text that will be truncated with an ellipsis.\n  </Text>\n</div>`}
+  lang="astro"
+>
+  <div class="w-64 rounded-lg border border-kumo-hairline bg-kumo-base p-4">
+    <Text truncate>
+      This is a long piece of text that will be truncated with an ellipsis when it overflows its container.
+    </Text>
+  </div>
+</ComponentExample>
 
 </ComponentSection>
 
@@ -152,5 +175,55 @@ export default function Example() {
 
 ## API Reference
 
-  <PropsTable component="Text" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"body" | "secondary" | "success" | "error" | "mono" | "mono-secondary" | "heading1" | "heading2" | "heading3"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"body"</code></td>
+        <td class="px-4 py-3 text-xs">Text style variant.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"xs" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Text size. Only applies to body, secondary, success, and error variants.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">bold</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Bold font weight. Only applies to body variants.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">truncate</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Clips overflowing text with an ellipsis.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">as</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "span" | ...</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"p"</code> / <code>"span"</code></td>
+        <td class="px-4 py-3 text-xs">HTML element to render. Required for heading variants. Defaults to <code>"p"</code> for body variants and <code>"span"</code> for heading/mono variants.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </ComponentSection>

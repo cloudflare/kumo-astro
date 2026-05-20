@@ -3,28 +3,45 @@ layout: ~/layouts/MdxDocLayout.astro
 title: "Dialog"
 description: "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert."
 sourceFile: "components/dialog"
-baseUIComponent: "dialog"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
 import CodeBlock from "~/components/docs/CodeBlock.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  DialogBasicDemo,
-  DialogWithActionsDemo,
-  DialogConfirmationDemo,
-  DialogAlertDemo,
-  DialogWithSelectDemo,
-  DialogWithComboboxDemo,
-  DialogWithDropdownDemo,
-} from "~/components/demos/DialogDemo";
+import DialogRoot from "@cloudflare/kumo-astro/components/dialog-root";
+import Dialog from "@cloudflare/kumo-astro/components/dialog";
+import DialogBackdrop from "@cloudflare/kumo-astro/components/dialog-backdrop";
+import DialogTrigger from "@cloudflare/kumo-astro/components/dialog-trigger";
+import DialogClose from "@cloudflare/kumo-astro/components/dialog-close";
+import DialogTitle from "@cloudflare/kumo-astro/components/dialog-title";
+import DialogDescription from "@cloudflare/kumo-astro/components/dialog-description";
+import Button from "@cloudflare/kumo-astro/components/button";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="DialogWithActionsDemo">
-    <DialogWithActionsDemo client:load />
+  <ComponentExample
+    code={`<DialogRoot>\n  <DialogTrigger>Open Dialog</DialogTrigger>\n  <Dialog>\n    <DialogBackdrop />\n    <DialogTitle>Dialog Title</DialogTitle>\n    <DialogDescription>This is the dialog content.</DialogDescription>\n    <div class="flex justify-end gap-2 mt-4">\n      <DialogClose>Cancel</DialogClose>\n      <DialogClose>Confirm</DialogClose>\n    </div>\n  </Dialog>\n</DialogRoot>`}
+    lang="astro"
+  >
+    <DialogRoot>
+      <DialogTrigger>Open Dialog</DialogTrigger>
+      <Dialog>
+        <DialogBackdrop />
+        <div class="p-6 flex flex-col gap-3">
+          <DialogTitle>Dialog Title</DialogTitle>
+          <DialogDescription>This is the dialog content. It renders above the backdrop and traps keyboard focus.</DialogDescription>
+          <div class="flex justify-end gap-2 mt-2">
+            <DialogClose>
+              <Button variant="secondary" size="sm">Cancel</Button>
+            </DialogClose>
+            <DialogClose>
+              <Button variant="primary" size="sm">Confirm</Button>
+            </DialogClose>
+          </div>
+        </div>
+      </Dialog>
+    </DialogRoot>
   </ComponentExample>
 </ComponentSection>
 
@@ -34,16 +51,11 @@ import {
 
 ## Installation
 
-### Barrel
-
-  <CodeBlock code={`import { Dialog } from "@cloudflare/kumo";`} lang="tsx" />
-
-### Granular
-
   <CodeBlock
-    code={`import { Dialog } from "@cloudflare/kumo/components/dialog";`}
-    lang="tsx"
+    code={`import DialogRoot from "@cloudflare/kumo-astro/components/dialog-root";\nimport Dialog from "@cloudflare/kumo-astro/components/dialog";\nimport DialogBackdrop from "@cloudflare/kumo-astro/components/dialog-backdrop";\nimport DialogTrigger from "@cloudflare/kumo-astro/components/dialog-trigger";\nimport DialogClose from "@cloudflare/kumo-astro/components/dialog-close";\nimport DialogTitle from "@cloudflare/kumo-astro/components/dialog-title";\nimport DialogDescription from "@cloudflare/kumo-astro/components/dialog-description";`}
+    lang="astro"
   />
+
 </ComponentSection>
 
 {/* Usage */}
@@ -52,30 +64,32 @@ import {
 
 ## Usage
 
-```tsx
-import { Dialog, Button } from "@cloudflare/kumo";
+```astro
+---
+import DialogRoot from "@cloudflare/kumo-astro/components/dialog-root";
+import Dialog from "@cloudflare/kumo-astro/components/dialog";
+import DialogBackdrop from "@cloudflare/kumo-astro/components/dialog-backdrop";
+import DialogTrigger from "@cloudflare/kumo-astro/components/dialog-trigger";
+import DialogClose from "@cloudflare/kumo-astro/components/dialog-close";
+import DialogTitle from "@cloudflare/kumo-astro/components/dialog-title";
+import DialogDescription from "@cloudflare/kumo-astro/components/dialog-description";
+---
 
-export default function Example() {
-  return (
-    <Dialog.Root>
-      <Dialog.Trigger render={(p) => <Button {...p}>Open</Button>} />
-      <Dialog>
-        <Dialog.Title>Dialog Title</Dialog.Title>
-        <Dialog.Description>Dialog content goes here.</Dialog.Description>
-        <div className="flex justify-end gap-2 mt-4">
-          <Dialog.Close
-            render={(p) => (
-              <Button variant="secondary" {...p}>
-                Cancel
-              </Button>
-            )}
-          />
-        </div>
-      </Dialog>
-    </Dialog.Root>
-  );
-}
+<DialogRoot>
+  <DialogTrigger>Open</DialogTrigger>
+  <Dialog>
+    <DialogBackdrop />
+    <DialogTitle>Title</DialogTitle>
+    <DialogDescription>Content here.</DialogDescription>
+    <DialogClose>Close</DialogClose>
+  </Dialog>
+</DialogRoot>
 ```
+
+<p>
+  The dialog is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  There is no <code>open</code>/<code>defaultOpen</code>/<code>onOpenChange</code>. The dialog is always uncontrolled.
+</p>
 
 </ComponentSection>
 
@@ -85,41 +99,30 @@ export default function Example() {
 
 ## Dialog vs Alert Dialog
 
-  <p>
-    The Dialog component supports two ARIA roles to properly convey semantic
-    meaning to assistive technologies:
-  </p>
+<div class="overflow-hidden rounded-lg border border-kumo-hairline">
+  <table class="w-full text-sm">
+    <thead class="bg-kumo-elevated">
+      <tr>
+        <th class="px-4 py-3 text-left font-medium">Role</th>
+        <th class="px-4 py-3 text-left font-medium">Use Case</th>
+        <th class="px-4 py-3 text-left font-medium">Behavior</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-kumo-hairline">
+      <tr>
+        <td class="px-4 py-3 font-mono text-xs">dialog (default)</td>
+        <td class="px-4 py-3 text-xs">General modals, forms, content display</td>
+        <td class="px-4 py-3 text-xs">Dismissible by clicking backdrop</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-3 font-mono text-xs">alertdialog</td>
+        <td class="px-4 py-3 text-xs">Destructive actions, confirmations, critical warnings</td>
+        <td class="px-4 py-3 text-xs">Backdrop click does not dismiss</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <div class="overflow-hidden rounded-lg border border-kumo-hairline">
-    <table class="w-full text-sm">
-      <thead class="bg-kumo-elevated">
-        <tr>
-          <th class="px-4 py-3 text-left font-medium">Role</th>
-          <th class="px-4 py-3 text-left font-medium">Use Case</th>
-          <th class="px-4 py-3 text-left font-medium">Behavior</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-kumo-hairline">
-        <tr>
-          <td class="px-4 py-3">
-            `role="dialog"`
-            <span class="ml-2 text-kumo-subtle">(default)</span>
-          </td>
-          <td class="px-4 py-3">
-            General-purpose modals, forms, content display
-          </td>
-          <td class="px-4 py-3">Dismissible by default</td>
-        </tr>
-        <tr>
-          <td class="px-4 py-3">`role="alertdialog"`</td>
-          <td class="px-4 py-3">
-            Destructive actions, confirmations, critical warnings
-          </td>
-          <td class="px-4 py-3">Requires explicit user acknowledgment</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </ComponentSection>
 
 {/* Examples */}
@@ -128,72 +131,70 @@ export default function Example() {
 
 ## Examples
 
-### Basic Dialog
+### Basic
 
-<ComponentExample demo="DialogBasicDemo">
-  <DialogBasicDemo client:load />
+<ComponentExample
+  code={`<DialogRoot>\n  <DialogTrigger>Open</DialogTrigger>\n  <Dialog>\n    <DialogBackdrop />\n    <div class="p-6">\n      <DialogTitle>Basic Dialog</DialogTitle>\n      <DialogDescription class="mt-2">Dialog content goes here.</DialogDescription>\n      <div class="flex justify-end mt-4">\n        <DialogClose>Close</DialogClose>\n      </div>\n    </div>\n  </Dialog>\n</DialogRoot>`}
+  lang="astro"
+>
+  <DialogRoot>
+    <DialogTrigger>Open</DialogTrigger>
+    <Dialog>
+      <DialogBackdrop />
+      <div class="p-6">
+        <DialogTitle>Basic Dialog</DialogTitle>
+        <DialogDescription class="mt-2">Dialog content goes here.</DialogDescription>
+        <div class="flex justify-end mt-4">
+          <DialogClose><Button variant="secondary" size="sm">Close</Button></DialogClose>
+        </div>
+      </div>
+    </Dialog>
+  </DialogRoot>
 </ComponentExample>
 
-### Alert Dialog (`role="alertdialog"`)
+### Alert Dialog
 
-<p>
-  For destructive or confirmation dialogs, use `role="alertdialog"` on
-  `Dialog.Root`. This provides proper accessibility semantics by rendering the
-  dialog with `role="alertdialog"` instead of `role="dialog"`.
-</p>
-<div class="mb-4 rounded-lg border border-kumo-info/30 bg-kumo-info/10 p-4 text-sm text-kumo-info">
-  <p class="font-medium mb-2 text-sm">
-    When to use{" "}
-    <code class="bg-kumo-info/20 px-1 rounded">role="alertdialog"</code>:
-  </p>
-  <ul class="list-disc list-inside space-y-1 ml-2 mb-0">
-    <li>Destructive actions (delete, discard, remove)</li>
-    <li>Confirmation flows requiring explicit user acknowledgment</li>
-    <li>Actions that cannot be undone</li>
-    <li>Critical warnings or errors</li>
-  </ul>
-</div>
-<ComponentExample demo="DialogAlertDemo">
-  <DialogAlertDemo client:load />
+<ComponentExample
+  code={`<DialogRoot role="alertdialog">\n  <DialogTrigger>Delete item</DialogTrigger>\n  <Dialog>\n    <DialogBackdrop />\n    <div class="p-6">\n      <DialogTitle>Are you sure?</DialogTitle>\n      <DialogDescription class="mt-2">This action cannot be undone.</DialogDescription>\n      <div class="flex justify-end gap-2 mt-4">\n        <DialogClose>Cancel</DialogClose>\n        <DialogClose>Delete</DialogClose>\n      </div>\n    </div>\n  </Dialog>\n</DialogRoot>`}
+  lang="astro"
+>
+  <DialogRoot role="alertdialog">
+    <DialogTrigger>Delete item</DialogTrigger>
+    <Dialog>
+      <DialogBackdrop />
+      <div class="p-6">
+        <DialogTitle>Are you sure?</DialogTitle>
+        <DialogDescription class="mt-2">This action cannot be undone. This will permanently delete the item.</DialogDescription>
+        <div class="flex justify-end gap-2 mt-4">
+          <DialogClose><Button variant="secondary" size="sm">Cancel</Button></DialogClose>
+          <DialogClose><Button variant="destructive" size="sm">Delete</Button></DialogClose>
+        </div>
+      </div>
+    </Dialog>
+  </DialogRoot>
 </ComponentExample>
 
-### Confirmation Dialog (with `disablePointerDismissal`)
+### Sizes
 
-<p>
-  For confirmation dialogs that should not be dismissed by clicking outside, use
-  `disablePointerDismissal` on `Dialog.Root`. This can be combined with
-  `role="alertdialog"` for proper accessibility.
-</p>
-<ComponentExample demo="DialogConfirmationDemo">
-  <DialogConfirmationDemo client:load />
+<ComponentExample
+  code={`<DialogRoot>\n  <DialogTrigger>Open (small)</DialogTrigger>\n  <Dialog size="sm">\n    <DialogBackdrop />\n    <div class="p-6">\n      <DialogTitle>Small Dialog</DialogTitle>\n      <DialogDescription class="mt-2">A compact dialog panel.</DialogDescription>\n      <div class="flex justify-end mt-4">\n        <DialogClose>Close</DialogClose>\n      </div>\n    </div>\n  </Dialog>\n</DialogRoot>`}
+  lang="astro"
+>
+  <DialogRoot>
+    <DialogTrigger>Open (small)</DialogTrigger>
+    <Dialog size="sm">
+      <DialogBackdrop />
+      <div class="p-6">
+        <DialogTitle>Small Dialog</DialogTitle>
+        <DialogDescription class="mt-2">A compact dialog panel.</DialogDescription>
+        <div class="flex justify-end mt-4">
+          <DialogClose><Button variant="secondary" size="sm">Close</Button></DialogClose>
+        </div>
+      </div>
+    </Dialog>
+  </DialogRoot>
 </ComponentExample>
 
-### With Actions
-
-<ComponentExample demo="DialogWithActionsDemo">
-  <DialogWithActionsDemo client:load />
-</ComponentExample>
-
-### With Select
-
-<p>Dialog containing a Select dropdown.</p>
-<ComponentExample demo="DialogWithSelectDemo">
-  <DialogWithSelectDemo client:load />
-</ComponentExample>
-
-### With Combobox
-
-<p>Dialog containing a Combobox for searchable selection.</p>
-<ComponentExample demo="DialogWithComboboxDemo">
-  <DialogWithComboboxDemo client:load />
-</ComponentExample>
-
-### With Dropdown
-
-  <p>Dialog containing a Dropdown menu.</p>
-  <ComponentExample demo="DialogWithDropdownDemo">
-    <DialogWithDropdownDemo client:load />
-  </ComponentExample>
 </ComponentSection>
 
 {/* API Reference */}
@@ -202,67 +203,76 @@ export default function Example() {
 
 ## API Reference
 
-### Dialog
+### DialogRoot
 
-<p>The main dialog container that renders the modal overlay and popup.</p>
-<PropsTable component="Dialog" />
-
-### Dialog.Root
-
-<p>
-  Controls the open state of the dialog. Doesn't render its own HTML element.
-</p>
-<div class="mb-4 overflow-hidden rounded-lg border border-kumo-hairline">
+<div class="not-prose overflow-x-auto">
   <table class="w-full text-sm">
-    <thead class="bg-kumo-elevated">
-      <tr>
-        <th class="px-4 py-2 text-left font-medium">Prop</th>
-        <th class="px-4 py-2 text-left font-medium">Type</th>
-        <th class="px-4 py-2 text-left font-medium">Default</th>
-        <th class="px-4 py-2 text-left font-medium">Description</th>
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
       </tr>
     </thead>
-    <tbody class="divide-y divide-kumo-hairline">
-      <tr>
-        <td class="px-4 py-2 font-mono text-xs">role</td>
-        <td class="px-4 py-2 font-mono text-xs">"dialog" | "alertdialog"</td>
-        <td class="px-4 py-2 font-mono text-xs">"dialog"</td>
-        <td class="px-4 py-2 text-kumo-subtle">
-          The ARIA role for the dialog. Use `"alertdialog"` for destructive or
-          confirmation flows.
-        </td>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">role</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"dialog" | "alertdialog"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"dialog"</code></td>
+        <td class="px-4 py-3 text-xs">ARIA role. Use <code>"alertdialog"</code> for destructive or confirmation flows.</td>
       </tr>
-      <tr>
-        <td class="px-4 py-2 font-mono text-xs">disablePointerDismissal</td>
-        <td class="px-4 py-2 font-mono text-xs">boolean</td>
-        <td class="px-4 py-2 font-mono text-xs">false</td>
-        <td class="px-4 py-2 text-kumo-subtle">
-          When true, prevents the dialog from being dismissed by clicking
-          outside.
-        </td>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">Auto-generated</td>
+        <td class="px-4 py-3 text-xs">HTML id for the dialog root.</td>
       </tr>
     </tbody>
   </table>
 </div>
-<PropsTable component="Dialog.Root" />
 
-### Dialog.Trigger
+### Dialog
 
-<p>A button that opens the dialog when clicked.</p>
-<PropsTable component="Dialog.Trigger" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg" | "xl"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Width of the dialog panel.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### Dialog.Title
+### DialogTrigger
 
-<p>A heading that labels the dialog for accessibility.</p>
-<PropsTable component="Dialog.Title" />
+<p>Renders a <code>&lt;button&gt;</code> that opens the dialog. Accepts any button attributes.</p>
 
-### Dialog.Description
+### DialogBackdrop
 
-<p>A paragraph providing additional context about the dialog.</p>
-<PropsTable component="Dialog.Description" />
+<p>The translucent backdrop. Place as first child of <code>Dialog</code>. For <code>role="dialog"</code>, clicking the backdrop closes the dialog. For <code>role="alertdialog"</code> it does not.</p>
 
-### Dialog.Close
+### DialogClose
 
-  <p>A button that closes the dialog when clicked.</p>
-  <PropsTable component="Dialog.Close" />
+<p>Renders a <code>&lt;button&gt;</code> that closes the dialog. Accepts any button attributes. Wrap your styled button in the slot.</p>
+
+### DialogTitle
+
+<p>Renders an <code>&lt;h2&gt;</code>. Auto-wired to the dialog's <code>aria-labelledby</code>.</p>
+
+### DialogDescription
+
+<p>Renders a <code>&lt;p&gt;</code>. Auto-wired to the dialog's <code>aria-describedby</code>.</p>
+
 </ComponentSection>

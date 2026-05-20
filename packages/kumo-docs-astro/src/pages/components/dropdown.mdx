@@ -3,27 +3,36 @@ layout: ~/layouts/MdxDocLayout.astro
 title: "Dropdown Menu"
 description: "Displays a menu to the user—such as a set of actions or functions—triggered by a button."
 sourceFile: "components/dropdown"
-baseUIComponent: "menu"
 ---
 
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  DropdownBasicDemo,
-  DropdownInsetDemo,
-  DropdownOnClickDemo,
-  DropdownCheckboxDemo,
-  DropdownNestedDemo,
-  DropdownAvatarTriggerDemo,
-  DropdownLinkItemDemo,
-} from "~/components/demos/DropdownDemo";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Icon from "~/components/docs/Icon.astro";
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";
+import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
+import Button from "@cloudflare/kumo-astro/components/button";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="DropdownBasicDemo">
-    <DropdownBasicDemo client:load />
+  <ComponentExample
+    code={`<DropdownMenu>\n  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Edit</DropdownMenuItem>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+    lang="astro"
+  >
+    <DropdownMenu>
+      <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Duplicate</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   </ComponentExample>
 </ComponentSection>
 
@@ -33,17 +42,10 @@ import {
 
 ## Installation
 
-### Barrel
-
-```tsx
-import { DropdownMenu } from "@cloudflare/kumo";
-```
-
-### Granular
-
-```tsx
-import { DropdownMenu } from "@cloudflare/kumo/components/dropdown";
-```
+  <CodeBlock
+    code={`import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";\nimport DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";\nimport DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";\nimport DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";\nimport DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";\nimport DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";`}
+    lang="astro"
+  />
 
 </ComponentSection>
 
@@ -53,32 +55,30 @@ import { DropdownMenu } from "@cloudflare/kumo/components/dropdown";
 
 ## Usage
 
-```tsx
-import { DropdownMenu, Button } from "@cloudflare/kumo";
+```astro
+---
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
+---
 
-export default function Example() {
-  return (
-    <DropdownMenu>
-      <DropdownMenu.Trigger render={<Button>Menu</Button>} />
-      <DropdownMenu.Content>
-        <DropdownMenu.Item onClick={() => console.log("edit")}>
-          Edit
-        </DropdownMenu.Item>
-        <DropdownMenu.Item onClick={() => console.log("duplicate")}>
-          Duplicate
-        </DropdownMenu.Item>
-        <DropdownMenu.Separator />
-        <DropdownMenu.Item
-          variant="danger"
-          onClick={() => console.log("delete")}
-        >
-          Delete
-        </DropdownMenu.Item>
-      </DropdownMenu.Content>
-    </DropdownMenu>
-  );
-}
+<DropdownMenu>
+  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
 ```
+
+<p>
+  The dropdown is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  There are no <code>onClick</code> props on menu items — use native <code>onclick</code> HTML attributes
+  or standard anchor <code>&lt;a&gt;</code> tags inside items for navigation.
+</p>
 
 </ComponentSection>
 
@@ -88,71 +88,82 @@ export default function Example() {
 
 ## Examples
 
-### Basic Dropdown
+### Basic
 
-<ComponentExample demo="DropdownBasicDemo">
-  <DropdownBasicDemo client:load />
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Edit</DropdownMenuItem>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Edit</DropdownMenuItem>
+      <DropdownMenuItem>Duplicate</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </ComponentExample>
 
-### Inset Items
+### With Label and Icons
 
-<p>
-  Use `inset` on items without an icon to align their text with items that have one.
-</p>
-<ComponentExample demo="DropdownInsetDemo">
-  <DropdownInsetDemo client:load />
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger>Options</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuLabel>Account</DropdownMenuLabel>\n    <DropdownMenuItem>\n      <Icon name="user" />\n      Profile\n    </DropdownMenuItem>\n    <DropdownMenuItem>\n      <Icon name="gear" />\n      Settings\n    </DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">\n      <Icon name="sign-out" />\n      Sign out\n    </DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger>Options</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Account</DropdownMenuLabel>
+      <DropdownMenuItem>
+        <Icon name="user" />
+        Profile
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <Icon name="gear" />
+        Settings
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem variant="danger">
+        <Icon name="sign-out" />
+        Sign out
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </ComponentExample>
 
-### Handling Item Clicks
+### Custom Trigger
 
-<p>
-  Use `onClick` on `DropdownMenu.Item` to handle actions. Each item receives a standard React mouse event handler.
-</p>
-<ComponentExample demo="DropdownOnClickDemo">
-  <DropdownOnClickDemo client:load />
+<p>Style the trigger however you like — any content can go in the <code>DropdownMenuTrigger</code> slot.</p>
+
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm bg-kumo-base ring ring-kumo-line hover:bg-kumo-tint">\n    Options\n    <Icon name="caret-down" />\n  </DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Action</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm bg-kumo-base ring ring-kumo-line hover:bg-kumo-tint">
+      Options
+      <Icon name="caret-down" />
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Action</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </ComponentExample>
 
-### Checkbox Items
+### Placement
 
-<p>
-  Use `DropdownMenu.CheckboxItem` for toggleable options that can be
-  independently checked or unchecked.
-</p>
-<ComponentExample demo="DropdownCheckboxDemo">
-  <DropdownCheckboxDemo client:load />
-</ComponentExample>
-
-### Nested Menu with Radio Selection
-
-<p>
-  Use `DropdownMenu.Sub`, `DropdownMenu.SubTrigger`, and
-  `DropdownMenu.SubContent` to create nested submenus. For single-selection
-  lists like language or timezone, use `DropdownMenu.RadioGroup` and
-  `DropdownMenu.RadioItem`.
-</p>
-<ComponentExample demo="DropdownNestedDemo">
-  <DropdownNestedDemo client:load />
-</ComponentExample>
-
-### Custom Trigger with Avatar
-
-<p>
-  Use the `render` prop to customize the trigger element while passing children
-  to render inside it. This is useful when you need a non-button trigger (like
-  an avatar) wrapped in an accessible button element.
-</p>
-<ComponentExample demo="DropdownAvatarTriggerDemo">
-  <DropdownAvatarTriggerDemo client:load />
-</ComponentExample>
-
-### Navigation Links
-
-<p>
-  Use `DropdownMenu.LinkItem` for menu items that navigate to a URL.
-  This renders a semantic `<a>` element with full control over link attributes like `target` and `rel`.
-</p>
-<ComponentExample demo="DropdownLinkItemDemo">
-  <DropdownLinkItemDemo client:load />
+<ComponentExample
+  code={`<DropdownMenu side="top">\n  <DropdownMenuTrigger>Opens upward</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Option A</DropdownMenuItem>\n    <DropdownMenuItem>Option B</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu side="top">
+    <DropdownMenuTrigger>Opens upward</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Option A</DropdownMenuItem>
+      <DropdownMenuItem>Option B</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
 </ComponentExample>
 
 </ComponentSection>
@@ -165,80 +176,76 @@ export default function Example() {
 
 ### DropdownMenu
 
-<p>Root component that manages the dropdown state.</p>
-<PropsTable component="DropdownMenu" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom" | "left" | "right"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"bottom"</code></td>
+        <td class="px-4 py-3 text-xs">Preferred side for the menu to appear.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">Auto-generated</td>
+        <td class="px-4 py-3 text-xs">HTML id for the dropdown root.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### DropdownMenu.Trigger
+### DropdownMenuTrigger
 
-<p>Button that opens the dropdown when clicked.</p>
-<PropsTable component="DropdownMenu.Trigger" />
+<p>Renders a <code>&lt;button&gt;</code>. Accepts <code>class</code> and any button attributes. Content goes in the default slot.</p>
 
-### DropdownMenu.Item
+### DropdownMenuContent
 
-<p>Individual menu item for actions.</p>
-<PropsTable component="DropdownMenu.Item" />
+<p>Renders the menu panel with <code>role="menu"</code>. Accepts <code>class</code> and any div attributes.</p>
 
-### DropdownMenu.LinkItem
+### DropdownMenuItem
 
-<p>
-  A menu item that navigates to a URL. Renders a semantic `<a>` element. Use this instead of `Item` for navigation links.
-</p>
-<PropsTable component="DropdownMenu.LinkItem" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "danger"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style. Use <code>"danger"</code> for destructive actions.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the item.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-### DropdownMenu.CheckboxItem
+### DropdownMenuLabel
 
-<p>
-  A menu item that can be toggled on or off. Use for independent boolean
-  options.
-</p>
-<PropsTable component="DropdownMenu.CheckboxItem" />
+<p>Renders a non-interactive label. Accepts <code>class</code>.</p>
 
-### DropdownMenu.Sub
+### DropdownMenuSeparator
 
-<p>
-  Root component for a nested submenu. Wrap SubTrigger and SubContent inside
-  this.
-</p>
-<PropsTable component="DropdownMenu.Sub" />
-
-### DropdownMenu.SubTrigger
-
-<p>
-  Menu item that opens a nested submenu when hovered or clicked. Displays a
-  caret icon automatically.
-</p>
-<PropsTable component="DropdownMenu.SubTrigger" />
-
-### DropdownMenu.SubContent
-
-<p>Container for submenu items. Positioned relative to the SubTrigger.</p>
-<PropsTable component="DropdownMenu.SubContent" />
-
-### DropdownMenu.Separator
-
-<p>A visual divider between menu items.</p>
-<PropsTable component="DropdownMenu.Separator" />
-
-### DropdownMenu.RadioGroup
-
-<p>
-  Groups radio items for single-selection behavior. Only one item can be
-  selected at a time.
-</p>
-<PropsTable component="DropdownMenu.RadioGroup" />
-
-### DropdownMenu.RadioItem
-
-<p>
-  A menu item that works like a radio button. Must be used inside a RadioGroup.
-</p>
-<PropsTable component="DropdownMenu.RadioItem" />
-
-### DropdownMenu.RadioItemIndicator
-
-<p>
-  Shows the selected state for a RadioItem. Displays a checkmark by default.
-</p>
-<PropsTable component="DropdownMenu.RadioItemIndicator" />
+<p>Renders a horizontal divider. Accepts <code>class</code>. No props required.</p>
 
 </ComponentSection>

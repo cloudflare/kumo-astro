@@ -8,23 +8,28 @@ sourceFile: "components/banner"
 import ComponentExample from "~/components/docs/ComponentExample.astro";
 import ComponentSection from "~/components/docs/ComponentSection.astro";
 import CodeBlock from "~/components/docs/CodeBlock.astro";
-import PropsTable from "~/components/docs/PropsTable.astro";
-import {
-  BannerVariantsDemo,
-  BannerDefaultDemo,
-  BannerAlertDemo,
-  BannerErrorDemo,
-  BannerWithIconDemo,
-  BannerWithActionDemo,
-  BannerWithActionsDemo,
-  BannerCustomContentDemo,
-} from "~/components/demos/BannerDemo";
+import Icon from "~/components/docs/Icon.astro";
+import Banner from "@cloudflare/kumo-astro/components/banner";
+import Button from "@cloudflare/kumo-astro/components/button";
 
 {/* Hero Demo */}
 
 <ComponentSection>
-  <ComponentExample demo="BannerVariantsDemo">
-    <BannerVariantsDemo client:visible />
+  <ComponentExample
+    code={`<div class="w-full space-y-3">\n  <Banner title="Update available" description="A new version is ready to install.">\n    <Icon slot="icon" name="info" weight="fill" />\n  </Banner>\n  <Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">\n    <Icon slot="icon" name="warning" weight="fill" />\n  </Banner>\n  <Banner variant="error" title="Save failed" description="We couldn't save your changes. Please try again.">\n    <Icon slot="icon" name="warning-circle" weight="fill" />\n  </Banner>\n</div>`}
+    lang="astro"
+  >
+    <div class="w-full space-y-3">
+      <Banner title="Update available" description="A new version is ready to install.">
+        <Icon slot="icon" name="info" weight="fill" />
+      </Banner>
+      <Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">
+        <Icon slot="icon" name="warning" weight="fill" />
+      </Banner>
+      <Banner variant="error" title="Save failed" description="We couldn't save your changes. Please try again.">
+        <Icon slot="icon" name="warning-circle" weight="fill" />
+      </Banner>
+    </div>
   </ComponentExample>
 </ComponentSection>
 
@@ -34,16 +39,11 @@ import {
 
 ## Installation
 
-### Barrel
-
-  <CodeBlock code={`import { Banner } from "@cloudflare/kumo";`} lang="tsx" />
-
-### Granular
-
   <CodeBlock
-    code={`import { Banner } from "@cloudflare/kumo/components/banner";`}
-    lang="tsx"
+    code={`import Banner from "@cloudflare/kumo-astro/components/banner";`}
+    lang="astro"
   />
+
 </ComponentSection>
 
 {/* Usage */}
@@ -52,20 +52,22 @@ import {
 
 ## Usage
 
-```tsx
-import { Banner } from "@cloudflare/kumo";
-import { Info } from "@phosphor-icons/react";
+```astro
+---
+import Banner from "@cloudflare/kumo-astro/components/banner";
+import Icon from "~/components/docs/Icon.astro";
+---
 
-export default function Example() {
-  return (
-    <Banner
-      icon={<Info weight="fill" />}
-      title="Update available"
-      description="A new version is ready to install."
-    />
-  );
-}
+<Banner title="Update available" description="A new version is ready to install.">
+  <Icon slot="icon" name="info" weight="fill" />
+</Banner>
 ```
+
+<p>
+  Icons are passed via the named <code>icon</code> slot. Actions (buttons) are passed via
+  the named <code>action</code> slot. For freeform content, use the default slot — this is
+  used when neither <code>title</code> nor <code>description</code> are provided.
+</p>
 
 </ComponentSection>
 
@@ -79,45 +81,89 @@ export default function Example() {
 
 #### Default
 
-<ComponentExample demo="BannerDefaultDemo">
-  <BannerDefaultDemo client:visible />
+<ComponentExample
+  code={`<Banner title="Update available" description="A new version is ready to install.">\n  <Icon slot="icon" name="info" weight="fill" />\n</Banner>`}
+  lang="astro"
+>
+  <Banner title="Update available" description="A new version is ready to install.">
+    <Icon slot="icon" name="info" weight="fill" />
+  </Banner>
 </ComponentExample>
 
 #### Alert
 
-<ComponentExample demo="BannerAlertDemo">
-  <BannerAlertDemo client:visible />
+<ComponentExample
+  code={`<Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">\n  <Icon slot="icon" name="warning" weight="fill" />\n</Banner>`}
+  lang="astro"
+>
+  <Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">
+    <Icon slot="icon" name="warning" weight="fill" />
+  </Banner>
 </ComponentExample>
 
 #### Error
 
-<ComponentExample demo="BannerErrorDemo">
-  <BannerErrorDemo client:visible />
+<ComponentExample
+  code={`<Banner variant="error" title="Save failed" description="We couldn't save your changes.">\n  <Icon slot="icon" name="warning-circle" weight="fill" />\n</Banner>`}
+  lang="astro"
+>
+  <Banner variant="error" title="Save failed" description="We couldn't save your changes.">
+    <Icon slot="icon" name="warning-circle" weight="fill" />
+  </Banner>
 </ComponentExample>
 
-### With icon
+### With Action
 
-<ComponentExample demo="BannerWithIconDemo">
-  <BannerWithIconDemo client:visible />
+<ComponentExample
+  code={`<Banner title="Update available" description="A new version is ready to install.">\n  <Icon slot="icon" name="info" weight="fill" />\n  <Button slot="action" size="sm">Update now</Button>\n</Banner>`}
+  lang="astro"
+>
+  <Banner title="Update available" description="A new version is ready to install.">
+    <Icon slot="icon" name="info" weight="fill" />
+    <Button slot="action" size="sm">Update now</Button>
+  </Banner>
 </ComponentExample>
 
-### With action
+### With Multiple Actions
 
-  <ComponentExample demo="BannerWithActionDemo">
-    <BannerWithActionDemo client:visible />
-  </ComponentExample>
+<ComponentExample
+  code={`<Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">\n  <Icon slot="icon" name="warning" weight="fill" />\n  <div slot="action" class="flex gap-2">\n    <Button size="sm" variant="secondary">Dismiss</Button>\n    <Button size="sm">Extend session</Button>\n  </div>\n</Banner>`}
+  lang="astro"
+>
+  <Banner variant="alert" title="Session expiring" description="Your session will expire in 5 minutes.">
+    <Icon slot="icon" name="warning" weight="fill" />
+    <div slot="action" class="flex gap-2">
+      <Button size="sm" variant="secondary">Dismiss</Button>
+      <Button size="sm">Extend session</Button>
+    </div>
+  </Banner>
+</ComponentExample>
 
-### With multiple actions
+### Dismissible
 
-  <ComponentExample demo="BannerWithActionsDemo">
-    <BannerWithActionsDemo client:visible />
-  </ComponentExample>
+<ComponentExample
+  code={`<Banner title="Update available" description="A new version is ready to install." dismissible>\n  <Icon slot="icon" name="info" weight="fill" />\n</Banner>`}
+  lang="astro"
+>
+  <Banner title="Update available" description="A new version is ready to install." dismissible>
+    <Icon slot="icon" name="info" weight="fill" />
+  </Banner>
+</ComponentExample>
 
-### Custom content
+### Custom Content
 
-  <ComponentExample demo="BannerCustomContentDemo">
-    <BannerCustomContentDemo client:visible />
-  </ComponentExample>
+<p>Use the default slot for freeform content when <code>title</code> and <code>description</code> are omitted.</p>
+
+<ComponentExample
+  code={`<Banner>\n  <Icon slot="icon" name="info" weight="fill" />\n  This banner supports <strong>custom content</strong> in the default slot.\n</Banner>`}
+  lang="astro"
+>
+  <Banner>
+    <Icon slot="icon" name="info" weight="fill" />
+    This banner supports <strong>custom content</strong> in the default slot.
+  </Banner>
+</ComponentExample>
+
 </ComponentSection>
 
 {/* API Reference */}
@@ -126,5 +172,82 @@ export default function Example() {
 
 ## API Reference
 
-  <PropsTable component="Banner" />
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "alert" | "error"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style of the banner.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">title</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Primary heading text.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Secondary description text.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">dismissible</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Shows a dismiss button that hides the banner on click.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML id for the banner element. Auto-generated when <code>dismissible</code> is true.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Slots
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Slot</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">icon</td>
+        <td class="px-4 py-3 text-xs">Icon rendered at the leading edge of the banner.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">action</td>
+        <td class="px-4 py-3 text-xs">Action button(s) rendered at the trailing edge.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">(default)</td>
+        <td class="px-4 py-3 text-xs">Freeform content — used when <code>title</code> and <code>description</code> are omitted.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 </ComponentSection>
