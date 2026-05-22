@@ -11,11 +11,13 @@ const currentPath = Astro.url.pathname;
 <aside class="pt-3">
   <!-- Search -->
   <div class="relative mx-3 mb-2">
-    <!-- TODO: Move search over to a React Command Palette component to match kumo-ui.com -->
-    <label class="flex items-center gap-2">
-      <Icon name="magnifying-glass" size={16} weight="bold" class="text-gray-400" />
-      <input type="search" class="flex-1 border border-gray-200 rounded-md px-3 h-9" />
-    </label>
+    <button
+      type="button"
+      class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm bg-kumo-base text-kumo-subtle ring ring-kumo-hairline transition-[color,background-color,padding,box-shadow] duration-250 ease-[cubic-bezier(0.77,0,0.175,1)] hover:bg-kumo-overlay focus-visible:ring-2 focus-visible:ring-kumo-brand"
+    >
+      <Icon name="magnifying-glass" size={16} weight="bold" class="shrink-0 text-kumo-subtle" />
+      <span class="flex-1 truncate text-left">Search...</span>
+    </button>
   </div>
 
   <!-- Nav -->
