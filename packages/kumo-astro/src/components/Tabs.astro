@@ -120,6 +120,22 @@ const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
         {tab.label}
       </button>
     ))}
+
+    {/* Active-tab indicator — absolutely positioned via CSS vars set by JS */}
+    <div
+      data-kumo-tabs-indicator
+      data-rendered="false"
+      class={cn(
+        "pointer-events-none absolute z-1 left-0",
+        "w-(--active-tab-width) translate-x-(--active-tab-left) transition-all duration-200 motion-reduce:transition-none",
+        "data-[rendered=false]:opacity-0",
+        isSegmented && cn(
+          "top-(--active-tab-top) h-(--active-tab-height) bg-kumo-base shadow-sm ring ring-kumo-line",
+          isSm ? "rounded" : "rounded-md",
+        ),
+        isUnderline && "bottom-0 h-0.5 bg-kumo-brand",
+      )}
+    />
   </div>
 
   {/* Default slot — allows callers to place panel wrappers inside the root */}
@@ -128,6 +144,20 @@ const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
 
 <script>
   import { createRovingTabindex } from "../lib/behaviors/roving-tabindex.js";
+
+  function positionIndicator(tablist: HTMLElement, activeTab: HTMLElement | null) {
+    const indicator = tablist.querySelector<HTMLElement>("[data-kumo-tabs-indicator]");
+    if (!indicator || !activeTab) return;
+
+    const tablistRect = tablist.getBoundingClientRect();
+    const tabRect = activeTab.getBoundingClientRect();
+
+    tablist.style.setProperty("--active-tab-left", `${tabRect.left - tablistRect.left}px`);
+    tablist.style.setProperty("--active-tab-top", `${tabRect.top - tablistRect.top}px`);
+    tablist.style.setProperty("--active-tab-width", `${tabRect.width}px`);
+    tablist.style.setProperty("--active-tab-height", `${tabRect.height}px`);
+    indicator.setAttribute("data-rendered", "true");
+  }
 
   function initTabs(root: HTMLElement) {
     const tablist = root.querySelector<HTMLElement>("[role='tablist']");
@@ -138,6 +168,18 @@ const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
       orientation: "horizontal",
     });
     nav.mount();
+
+    // Position the indicator over the initially-active tab. Defer to next frame
+    // so the browser has laid out the flex children with their final widths.
+    const initialActive = tablist.querySelector<HTMLElement>("[role='tab'][aria-selected='true']");
+    requestAnimationFrame(() => positionIndicator(tablist, initialActive));
+
+    // Re-position when the viewport (or container) resizes
+    const resizeObserver = new ResizeObserver(() => {
+      const active = tablist.querySelector<HTMLElement>("[role='tab'][aria-selected='true']");
+      positionIndicator(tablist, active);
+    });
+    resizeObserver.observe(tablist);
 
     // Click handler: switch active tab
     tablist.addEventListener("click", (e) => {
@@ -159,6 +201,9 @@ const uid = `kumo-tabs-${Math.random().toString(36).slice(2, 9)}`;
       // Activate new tab
       target.setAttribute("aria-selected", "true");
       root.dataset.value = newValue;
+
+      // Slide the indicator to the new active tab
+      positionIndicator(tablist, target);
 
       // Hide old panel, show new panel
       const oldPanel = root.querySelector<HTMLElement>(`[data-panel][data-value="${currentValue}"]`);

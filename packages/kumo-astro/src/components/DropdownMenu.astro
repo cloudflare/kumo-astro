@@ -75,7 +75,9 @@ const {
       rovingNav = createRovingTabindex(menu, "[data-kumo-dropdown-item]:not([disabled]):not([aria-disabled='true'])", { orientation: "vertical" });
       rovingNav.mount();
       const firstItem = menu.querySelector<HTMLElement>("[data-kumo-dropdown-item]:not([disabled])");
-      firstItem?.focus();
+      // preventScroll: floating-ui positions the menu near the trigger; without this flag
+      // the browser scrolls the page to wherever the portaled element sat before positioning.
+      firstItem?.focus({ preventScroll: true });
     }
 
     function close() {

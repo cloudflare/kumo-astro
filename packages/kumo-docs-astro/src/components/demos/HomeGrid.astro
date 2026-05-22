@@ -18,6 +18,7 @@ import CardHeader from "@cloudflare/kumo-astro/components/card-header";
 import CardTitle from "@cloudflare/kumo-astro/components/card-title";
 import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
 import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";
+import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
 import HoverCard from "@cloudflare/kumo-astro/components/hover-card";
 import HoverCardContent from "@cloudflare/kumo-astro/components/hover-card-content";
 import HoverCardTrigger from "@cloudflare/kumo-astro/components/hover-card-trigger";
@@ -66,6 +67,7 @@ import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
 import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
 import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
 import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import Icon from "~/components/docs/Icon.astro";
 
 // React islands for items that require React state
 import {
@@ -95,8 +97,14 @@ import {
     </a>
     <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
       <div class="grid gap-3">
-        <Button>Create Worker</Button>
-        <Button variant="primary">Create Worker</Button>
+        <Button>
+          <Icon name="plus" slot="icon" />
+          Create Worker
+        </Button>
+        <Button variant="primary">
+          <Icon name="plus" slot="icon" />
+          Create Worker
+        </Button>
         <Button loading>Create Worker</Button>
       </div>
     </div>
@@ -169,8 +177,8 @@ import {
         label="Email"
         placeholder="name@example.com"
         type="email"
-        variant="error"
-        error="Please enter a valid email."
+        value="invalid-email"
+        error={{ message: "Please enter a valid email.", match: "typeMismatch" }}
         description="The email to send notifications to."
       />
     </div>
@@ -195,11 +203,15 @@ import {
     </a>
     <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
       <div class="flex gap-2">
-        <Tooltip content="Add" side="top">
-          <Button aria-label="Add">+</Button>
+        <Tooltip content="Add" side="top" open>
+          <Button shape="square" aria-label="Add">
+            <Icon name="plus" />
+          </Button>
         </Tooltip>
         <Tooltip content="Change language" side="top">
-          <Button aria-label="Change language">T</Button>
+          <Button shape="square" aria-label="Change language">
+            <Icon name="translate" />
+          </Button>
         </Tooltip>
       </div>
     </div>
@@ -213,7 +225,10 @@ import {
     </a>
     <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
       <DropdownMenu>
-        <DropdownMenuTrigger>Add</DropdownMenuTrigger>
+        <DropdownMenuTrigger>
+          <Icon slot="icon" name="plus" />
+          Add
+        </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Worker</DropdownMenuItem>
           <DropdownMenuItem>Pages</DropdownMenuItem>
@@ -293,8 +308,12 @@ import {
     <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
       <div class="flex flex-col gap-2">
         <Banner title="This is a default banner." />
-        <Banner title="This is an alert banner." variant="alert" />
-        <Banner title="This is an error banner." variant="error" />
+        <Banner title="This is an alert banner." variant="alert">
+          <Icon slot="icon" name="warning" weight="fill" />
+        </Banner>
+        <Banner title="This is an error banner." variant="error">
+          <Icon slot="icon" name="warning-octagon" weight="fill" />
+        </Banner>
       </div>
     </div>
   </li>
@@ -435,6 +454,22 @@ import {
     </div>
   </li>
 
+  <!-- CodeHighlighted -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/code-highlighted" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      CodeHighlighted
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <CodeHighlighted
+        lang="typescript"
+        code={`const sum = (a: number, b: number) => {
+  return a + b;
+};`}
+      />
+    </div>
+  </li>
+
   <!-- CommandPalette -->
   <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
     <a href="/components/command-palette" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
@@ -491,7 +526,7 @@ import {
       Grid
     </a>
     <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
-      <div class="grid grid-cols-2 gap-1 w-[140px]">
+      <div class="grid grid-cols-2 gap-3 w-[140px]">
         <div class="rounded bg-kumo-control p-3 text-center text-xs">1</div>
         <div class="rounded bg-kumo-control p-3 text-center text-xs">2</div>
         <div class="rounded bg-kumo-control p-3 text-center text-xs">3</div>
@@ -597,7 +632,7 @@ import {
       <div class="flex flex-col gap-1">
         <Text size="lg" bold>Large Bold Text</Text>
         <Text size="base">Regular text content</Text>
-        <Text size="sm" variant="secondary">Small subtle text</Text>
+        <Text size="sm">Small subtle text</Text>
       </div>
     </div>
   </li>

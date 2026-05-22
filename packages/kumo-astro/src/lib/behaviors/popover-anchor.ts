@@ -81,13 +81,16 @@ export function createPopoverAnchor(
   }
 
   async function updatePosition(): Promise<void> {
-    const { x, y } = await computePosition(referenceEl, floatingEl, {
+    const { x, y, placement: actualPlacement } = await computePosition(referenceEl, floatingEl, {
       placement: options.placement ?? "bottom",
       middleware: buildMiddleware(),
     });
     floatingEl.style.position = "absolute";
     floatingEl.style.left = `${x}px`;
     floatingEl.style.top = `${y}px`;
+    // Expose the (possibly flipped) side so consumers like Tooltip can rotate an arrow accordingly.
+    floatingEl.dataset.placement = actualPlacement;
+    floatingEl.dataset.side = actualPlacement.split("-")[0];
   }
 
   return {

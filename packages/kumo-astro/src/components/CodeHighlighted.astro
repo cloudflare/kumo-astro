@@ -1,0 +1,185 @@
+---
+/**
+ * Syntax-highlighted code block powered by Shiki.
+ *
+ * Runs Shiki at build/SSR time — no client JS required for highlighting itself.
+ * Uses `github-light` (light mode) and `vesper` (dark mode) themes to match
+ * the React `CodeHighlighted` component exactly.
+ *
+ * Usage:
+ * ```astro
+ * <CodeHighlighted code={`const x = 1;`} lang="typescript" />
+ * <CodeHighlighted code={snippet} lang="tsx" showLineNumbers highlightLines={[2, 4]} />
+ * <CodeHighlighted code={`npm install`} lang="bash" showCopyButton />
+ * ```
+ */
+import { cn } from "../utils/cn";
+import { highlightCode } from "@cloudflare/kumo/code/server";
+import type { SupportedLanguage } from "@cloudflare/kumo/code";
+import { safeRandomId } from "../utils/safe-random-id";
+
+interface Labels {
+  /** Label for the copy button (default: "Copy") */
+  copy?: string;
+  /** Label shown after copying (default: "Copied!") */
+  copied?: string;
+}
+
+interface Props {
+  /** Source code to display. */
+  code: string;
+  /** Language identifier for syntax highlighting. */
+  lang: SupportedLanguage;
+  /** Display a line-number gutter alongside the code. */
+  showLineNumbers?: boolean;
+  /** Lines to visually emphasize (1-indexed). */
+  highlightLines?: number[];
+  /** Show a copy-to-clipboard button. */
+  showCopyButton?: boolean;
+  /** Override default copy-button labels. */
+  labels?: Labels;
+  /** Additional CSS classes for the container. */
+  class?: string;
+}
+
+const {
+  code,
+  lang,
+  showLineNumbers = false,
+  highlightLines,
+  showCopyButton = false,
+  labels: labelOverrides,
+  class: className,
+} = Astro.props;
+
+const labels = {
+  copy: "Copy",
+  copied: "Copied!",
+  ...labelOverrides,
+};
+
+const lineCount = code.split("\n").length;
+const isSingleLine = lineCount === 1;
+
+// Run Shiki at build/SSR time. Fall back to escaped plain text if it fails.
+let highlighted = "";
+let highlightingFailed = false;
+try {
+  highlighted = await highlightCode(code, lang);
+} catch {
+  highlightingFailed = true;
+  highlighted = `<pre><code>${code
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")}</code></pre>`;
+}
+
+// Mirror React's `highlightLines` post-processing — add `line-highlighted`
+// to the Nth `<span class="line">` for each highlighted line.
+if (!highlightingFailed && highlightLines?.length) {
+  const highlightSet = new Set(highlightLines);
+  let lineNumber = 0;
+  highlighted = highlighted.replace(/<span class="line">/g, () => {
+    lineNumber += 1;
+    return highlightSet.has(lineNumber)
+      ? '<span class="line line-highlighted">'
+      : '<span class="line">';
+  });
+}
+
+const copyBtnId = showCopyButton ? safeRandomId("kumo-code-copy") : undefined;
+---
+
+<div
+  class={cn(
+    "group relative m-0 w-full min-w-0 rounded-md border border-kumo-fill bg-kumo-base p-0",
+    showCopyButton && isSingleLine && "flex items-center",
+    className,
+  )}
+>
+  {showLineNumbers && !isSingleLine ? (
+    <div class="flex w-full">
+      <div
+        class="kumo-line-numbers shrink-0 select-none py-4 pr-4 text-right font-mono text-sm opacity-40"
+        aria-hidden="true"
+      >
+        {Array.from({ length: lineCount }, (_, i) => (
+          <div class="leading-relaxed">{i + 1}</div>
+        ))}
+      </div>
+      <div class="min-w-0 flex-1 overflow-x-auto">
+        <div
+          class="kumo-shiki [&>pre]:!m-0 [&>pre]:!border-0 [&>pre]:!rounded-none [&>pre]:!bg-transparent [&>pre]:!p-4 [&>pre]:font-mono [&>pre]:text-sm [&>pre]:leading-relaxed [&_code]:!m-0 [&_code]:!p-0 [&_code]:!bg-transparent [&_code]:!border-0"
+          set:html={highlighted}
+        />
+      </div>
+    </div>
+  ) : (
+    <div class={isSingleLine ? "min-w-0 flex-1 overflow-x-auto" : "overflow-x-auto"}>
+      <div
+        class="kumo-shiki [&>pre]:!m-0 [&>pre]:!border-0 [&>pre]:!rounded-none [&>pre]:!bg-transparent [&>pre]:!p-4 [&>pre]:font-mono [&>pre]:text-sm [&>pre]:leading-relaxed [&_code]:!m-0 [&_code]:!p-0 [&_code]:!bg-transparent [&_code]:!border-0"
+        set:html={highlighted}
+      />
+    </div>
+  )}
+
+  {showCopyButton && (
+    <div
+      class={cn(
+        isSingleLine ? "shrink-0 px-2" : "absolute right-2 top-2",
+        "opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100 group-data-[copied]:opacity-100",
+      )}
+      data-kumo-code-copy-wrap
+    >
+      <button
+        id={copyBtnId}
+        type="button"
+        data-code={code}
+        data-label-copy={labels.copy}
+        data-label-copied={labels.copied}
+        aria-label={labels.copy}
+        class="inline-flex h-8 items-center justify-center gap-1.5 rounded-md border border-kumo-line bg-kumo-control px-2.5 text-sm font-medium text-kumo-default transition-colors hover:bg-kumo-tint focus:outline-none focus-visible:ring-2 focus-visible:ring-kumo-brand"
+      >
+        <span data-kumo-code-copy-label>{labels.copy}</span>
+      </button>
+    </div>
+  )}
+</div>
+
+{showCopyButton && copyBtnId && (
+  <script define:vars={{ copyBtnId }}>
+    function initCopyButton() {
+      const btn = document.getElementById(copyBtnId);
+      if (!btn || btn.dataset.kumoCodeCopyInit === "true") return;
+      btn.dataset.kumoCodeCopyInit = "true";
+
+      const labelEl = btn.querySelector("[data-kumo-code-copy-label]");
+      const wrap = btn.closest("[data-kumo-code-copy-wrap]");
+      const labelCopy = btn.dataset.labelCopy || "Copy";
+      const labelCopied = btn.dataset.labelCopied || "Copied!";
+
+      btn.addEventListener("click", async () => {
+        const code = btn.dataset.code;
+        if (!code) return;
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch {
+          return;
+        }
+
+        if (labelEl) labelEl.textContent = labelCopied;
+        btn.setAttribute("aria-label", labelCopied);
+        if (wrap) wrap.setAttribute("data-copied", "");
+
+        setTimeout(() => {
+          if (labelEl) labelEl.textContent = labelCopy;
+          btn.setAttribute("aria-label", labelCopy);
+          if (wrap) wrap.removeAttribute("data-copied");
+        }, 2000);
+      });
+    }
+
+    initCopyButton();
+    document.addEventListener("astro:page-load", initCopyButton);
+  </script>
+)}

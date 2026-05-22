@@ -25,7 +25,7 @@
  */
 import { cn } from "../utils/cn";
 import { safeRandomId } from "../utils/safe-random-id";
-import Field from "./Field.astro";
+import Field, { type FieldError } from "./Field.astro";
 import {
   inputVariants,
   KUMO_INPUT_DEFAULT_VARIANTS,
@@ -49,10 +49,11 @@ interface Props {
   /** Helper text passed to the Field wrapper. */
   description?: string;
   /**
-   * Error message passed to the Field wrapper.
-   * Also auto-applies `variant="error"` styling to the textarea.
+   * Error passed to the Field wrapper. Accepts a plain string (always shown)
+   * or `{ message, match }` to gate visibility on the textarea's
+   * `ValidityState`. Also auto-applies `variant="error"` styling.
    */
-  error?: string;
+  error?: FieldError;
   /** When `false`, shows "(optional)" indicator in the label. */
   required?: boolean;
   disabled?: boolean;

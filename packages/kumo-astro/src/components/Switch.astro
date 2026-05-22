@@ -63,11 +63,13 @@ const s = sizeStyles[size];
 const squircleRadius =
   "rounded-[5px] supports-[corner-shape:squircle]:rounded-[10px] [corner-shape:squircle]";
 
-// Track colors — static class strings for Tailwind JIT compatibility
-const trackColorsDefault = "bg-neutral-200 ring-neutral-300";
-const trackColorsChecked = "bg-blue-500 ring-blue-600";
-const trackColorsNeutralDefault = "bg-neutral-150 ring-kumo-hairline";
-const trackColorsNeutralChecked = "bg-neutral-500 ring-neutral-600";
+// Track colors — static class strings for Tailwind JIT compatibility.
+// Mirrors React Switch including `dark:` variants (the kumo `dark` variant is
+// triggered by `data-mode="dark"` on an ancestor, not OS prefers-color-scheme).
+const trackColorsDefault = "bg-neutral-200 dark:bg-neutral-700 ring-neutral-300 dark:ring-neutral-600";
+const trackColorsChecked = "bg-blue-500 dark:bg-blue-600 ring-blue-600 dark:ring-blue-500";
+const trackColorsNeutralDefault = "bg-neutral-150 dark:bg-kumo-base ring-kumo-hairline";
+const trackColorsNeutralChecked = "bg-neutral-500 dark:bg-kumo-base ring-neutral-600 dark:ring-neutral-700";
 
 const initialTrackColors = isNeutral
   ? initialChecked
@@ -77,8 +79,18 @@ const initialTrackColors = isNeutral
     ? trackColorsChecked
     : trackColorsDefault;
 
-const thumbColorsDefault = "bg-kumo-base";
-const thumbColorsChecked = "bg-kumo-base";
+const thumbColorsDefault = "bg-kumo-base dark:bg-neutral-850";
+const thumbColorsChecked = "bg-kumo-base dark:bg-blue-300";
+const thumbColorsNeutralDefault = "bg-kumo-base dark:bg-neutral-850";
+const thumbColorsNeutralChecked = "bg-kumo-base dark:bg-neutral-400";
+
+const initialThumbColors = isNeutral
+  ? initialChecked
+    ? thumbColorsNeutralChecked
+    : thumbColorsNeutralDefault
+  : initialChecked
+    ? thumbColorsChecked
+    : thumbColorsDefault;
 
 const initialThumbPosition = initialChecked ? s.slide : "left-0";
 
@@ -97,7 +109,7 @@ const thumbClass = cn(
   "absolute top-0 bottom-0 shadow-[0_0_1px_0.5px_var(--color-kumo-shadow-edge),0_1px_2px_var(--color-kumo-shadow-drop)]",
   s.thumb,
   squircleRadius,
-  thumbColorsDefault,
+  initialThumbColors,
   "transition-all duration-150 ease-out motion-reduce:transition-none",
   initialThumbPosition,
 );
@@ -183,12 +195,23 @@ const inputId = `${uid}-input`;
 
   const TRACK_COLORS = {
     default: {
-      unchecked: "bg-neutral-200 ring-neutral-300",
-      checked: "bg-blue-500 ring-blue-600",
+      unchecked: "bg-neutral-200 dark:bg-neutral-700 ring-neutral-300 dark:ring-neutral-600",
+      checked: "bg-blue-500 dark:bg-blue-600 ring-blue-600 dark:ring-blue-500",
     },
     neutral: {
-      unchecked: "bg-neutral-150 ring-kumo-hairline",
-      checked: "bg-neutral-500 ring-neutral-600",
+      unchecked: "bg-neutral-150 dark:bg-kumo-base ring-kumo-hairline",
+      checked: "bg-neutral-500 dark:bg-kumo-base ring-neutral-600 dark:ring-neutral-700",
+    },
+  } as const;
+
+  const THUMB_COLORS = {
+    default: {
+      unchecked: "bg-kumo-base dark:bg-neutral-850",
+      checked: "bg-kumo-base dark:bg-blue-300",
+    },
+    neutral: {
+      unchecked: "bg-kumo-base dark:bg-neutral-850",
+      checked: "bg-kumo-base dark:bg-neutral-400",
     },
   } as const;
 
@@ -225,6 +248,15 @@ const inputId = `${uid}-input`;
         } else {
           thumb.classList.remove(slideClass);
           thumb.classList.add("left-0");
+        }
+
+        const thumbColors = THUMB_COLORS[variant];
+        if (newChecked) {
+          thumbColors.unchecked.split(" ").forEach((c) => thumb.classList.remove(c));
+          thumbColors.checked.split(" ").forEach((c) => thumb.classList.add(c));
+        } else {
+          thumbColors.checked.split(" ").forEach((c) => thumb.classList.remove(c));
+          thumbColors.unchecked.split(" ").forEach((c) => thumb.classList.add(c));
         }
       }
 

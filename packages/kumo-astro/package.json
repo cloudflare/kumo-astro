@@ -35,6 +35,7 @@
     "./components/layer-card-secondary": "./src/components/LayerCardSecondary.astro",
     "./components/cloudflare-logo": "./src/components/CloudflareLogo.astro",
     "./components/code": "./src/components/Code.astro",
+    "./components/code-highlighted": "./src/components/CodeHighlighted.astro",
     "./components/button": "./src/components/Button.astro",
     "./components/link-button": "./src/components/LinkButton.astro",
     "./components/refresh-button": "./src/components/RefreshButton.astro",
@@ -164,6 +165,9 @@
       ],
       "components/code": [
         "./src/components/Code.astro"
+      ],
+      "components/code-highlighted": [
+        "./src/components/CodeHighlighted.astro"
       ],
       "components/button": [
         "./src/components/Button.astro"

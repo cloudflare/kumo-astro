@@ -32,6 +32,8 @@ interface Props {
   delay?: number;
   /** Delay before hiding in ms */
   closeDelay?: number;
+  /** When true, keeps the tooltip visible permanently (no hover/focus logic). */
+  open?: boolean;
   class?: string;
 }
 
@@ -40,6 +42,7 @@ const {
   side = "top",
   delay = 600,
   closeDelay = 0,
+  open = false,
   class: className,
 } = Astro.props;
 
@@ -56,6 +59,7 @@ const placement: Placement = side;
   data-placement={placement}
   data-delay={delay}
   data-close-delay={closeDelay}
+  data-open={open ? "" : undefined}
   class={cn("inline-flex", className)}
   style="position:relative"
 >
@@ -71,23 +75,43 @@ const placement: Placement = side;
   <div
     id={popupId}
     data-kumo-tooltip-popup
+    data-side={side}
     role="tooltip"
     hidden
-    style="position:absolute;z-index:50;pointer-events:none"
+    style="position:absolute;z-index:50;pointer-events:none;top:0;left:0"
     class={cn(
-      "flex flex-col rounded-md bg-kumo-base px-2.5 py-1.5 text-sm text-kumo-default",
+      "group/kt-tooltip flex flex-col rounded-md bg-kumo-base px-2.5 py-1.5 text-sm text-kumo-default",
       "shadow-lg outline outline-1 outline-kumo-fill",
       "transition-[transform,opacity] duration-150",
       "data-[open]:opacity-100 data-[open]:scale-100",
       "data-[closed]:opacity-0 data-[closed]:scale-90",
     )}
   >
+    {/* Arrow — rotated/positioned via the popup's data-side (group variant). */}
+    <span
+      data-kumo-tooltip-arrow
+      aria-hidden="true"
+      class={cn(
+        "pointer-events-none absolute left-1/2 -translate-x-1/2",
+        "group-data-[side=bottom]/kt-tooltip:top-[-8px]",
+        "group-data-[side=left]/kt-tooltip:right-[-13px] group-data-[side=left]/kt-tooltip:top-1/2 group-data-[side=left]/kt-tooltip:-translate-y-1/2 group-data-[side=left]/kt-tooltip:rotate-90 group-data-[side=left]/kt-tooltip:left-auto",
+        "group-data-[side=right]/kt-tooltip:left-[-13px] group-data-[side=right]/kt-tooltip:top-1/2 group-data-[side=right]/kt-tooltip:-translate-y-1/2 group-data-[side=right]/kt-tooltip:-rotate-90 group-data-[side=right]/kt-tooltip:translate-x-0",
+        "group-data-[side=top]/kt-tooltip:bottom-[-9px] group-data-[side=top]/kt-tooltip:rotate-180",
+      )}
+    >
+      <svg width="20" height="10" viewBox="0 0 20 10" fill="none">
+        <path d="M9.66437 2.60207L4.80758 6.97318C4.07308 7.63423 3.11989 8 2.13172 8H0V10H20V8H18.5349C17.5468 8 16.5936 7.63423 15.8591 6.97318L11.0023 2.60207C10.622 2.2598 10.0447 2.25979 9.66437 2.60207Z" class="fill-kumo-base" />
+        <path d="M8.99542 1.85876C9.75604 1.17425 10.9106 1.17422 11.6713 1.85878L16.5281 6.22989C17.0789 6.72568 17.7938 7.00001 18.5349 7.00001L15.89 7L11.0023 2.60207C10.622 2.2598 10.0447 2.2598 9.66436 2.60207L4.77734 7L2.13171 7.00001C2.87284 7.00001 3.58774 6.72568 4.13861 6.22989L8.99542 1.85876Z" class="fill-kumo-tip-shadow" />
+        <path d="M10.3333 3.34539L5.47654 7.71648C4.55842 8.54279 3.36693 9 2.13172 9H0V8H2.13172C3.11989 8 4.07308 7.63423 4.80758 6.97318L9.66437 2.60207C10.0447 2.25979 10.622 2.2598 11.0023 2.60207L15.8591 6.97318C16.5936 7.63423 17.5468 8 18.5349 8H20V9H18.5349C17.2998 9 16.1083 8.54278 15.1901 7.71648L10.3333 3.34539Z" class="fill-kumo-tip-stroke" />
+      </svg>
+    </span>
     {content}
   </div>
 </span>
 
 <script>
   import { createPopoverAnchor } from "../lib/behaviors/popover-anchor.js";
+  import { createPortal } from "../lib/behaviors/portal.js";
   import { createTransition } from "../lib/behaviors/transition.js";
   import type { Placement } from "../lib/behaviors/popover-anchor.js";
 
@@ -101,7 +125,18 @@ const placement: Placement = side;
     const closeDelay = Number(root.dataset.closeDelay ?? 0);
 
     const anchor = createPopoverAnchor(trigger, popup, { placement, offset: 10 });
+    const portal = createPortal(popup);
     const transition = createTransition(popup);
+
+    // `data-open` on the root means "force permanently visible" (mirrors React's `open` prop).
+    // Skip the hover/focus listeners and just show the tooltip immediately.
+    if (root.dataset.open !== undefined) {
+      portal.mount();
+      popup.removeAttribute("hidden");
+      anchor.mount();
+      transition.open();
+      return;
+    }
 
     let openTimer: ReturnType<typeof setTimeout> | null = null;
     let closeTimer: ReturnType<typeof setTimeout> | null = null;
@@ -109,6 +144,10 @@ const placement: Placement = side;
     function show() {
       if (closeTimer) { clearTimeout(closeTimer); closeTimer = null; }
       openTimer = setTimeout(() => {
+        // Portal to body BEFORE positioning so floating-ui's coordinates are not
+        // shifted by a relatively-positioned ancestor. (Was the root cause of the
+        // tooltip showing up "between" buttons instead of above the trigger.)
+        portal.mount();
         popup.removeAttribute("hidden");
         anchor.mount();
         transition.open();
@@ -121,6 +160,7 @@ const placement: Placement = side;
         transition.close(() => {
           popup.setAttribute("hidden", "");
           anchor.unmount();
+          portal.unmount();
         });
       }, closeDelay);
     }

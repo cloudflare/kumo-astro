@@ -1,5 +1,6 @@
 @source "../../../kumo/dist/**/*.{js,jsx,ts,tsx}";
 @source "../../../kumo/src/**/*.{ts,tsx}";
+@source "../../../kumo-astro/src/**/*.astro";
 @import "@cloudflare/kumo/styles";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
