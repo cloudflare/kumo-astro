@@ -1,4 +1,3 @@
-@source "../../../kumo/dist/**/*.{js,jsx,ts,tsx}";
 @source "../../../kumo/src/**/*.{ts,tsx}";
 @source "../../../kumo-astro/src/**/*.astro";
 @import "tailwindcss";
