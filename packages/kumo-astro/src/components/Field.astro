@@ -25,6 +25,9 @@
 import { cn } from "../utils/cn";
 import Label from "./Label.astro";
 import { fieldVariants } from "@cloudflare/kumo/components/field";
+import type { FieldError, FieldErrorMatch } from "../utils/field-error";
+
+export type { FieldError, FieldErrorMatch };
 
 interface Props {
   /** Label text shown above (or beside, for checkbox/switch) the control. */
@@ -36,8 +39,12 @@ interface Props {
   required?: boolean;
   /** Helper text displayed below the control (hidden when `error` is set). */
   description?: string;
-  /** Error message displayed below the control (takes priority over description). */
-  error?: string;
+  /**
+   * Error message displayed below the control (takes priority over description).
+   * String → always shown. Object with `match` → only shown when the wrapped
+   * input's `validity[match]` is true (cleared input hides the error).
+   */
+  error?: FieldError;
   /**
    * When `true`, places the control before the label in checkbox/switch layouts
    * (flex-row-reverse). Defaults to `false`.
@@ -74,11 +81,30 @@ const {
 } = Astro.props;
 
 const showOptional = required === false;
+
+// Normalise error into { message, match? }
+const errorObj = !error
+  ? null
+  : typeof error === "string"
+    ? { message: error, match: undefined }
+    : { message: error.message, match: error.match };
+
+// When a match key is provided, attach behavior to reactively show/hide the
+// error based on the wrapped input's ValidityState. Otherwise the error is
+// always shown (legacy string-error behavior).
+const reactive = errorObj?.match !== undefined;
+const matchAttr =
+  errorObj?.match === undefined
+    ? undefined
+    : typeof errorObj.match === "boolean"
+      ? String(errorObj.match)
+      : errorObj.match;
 ---
 
 <div
   id={id}
   class={cn(fieldVariants({ controlFirst }), className)}
+  data-kumo-field={reactive ? "" : undefined}
   {...rest}
 >
   {!hideLabel && (
@@ -91,9 +117,70 @@ const showOptional = required === false;
     </Label>
   )}
   <slot />
-  {error ? (
-    <p class="text-sm leading-snug text-kumo-danger col-span-full">{error}</p>
+  {errorObj ? (
+    <p
+      class="text-sm leading-snug text-kumo-danger col-span-full"
+      data-kumo-field-error
+      data-kumo-field-error-match={matchAttr}
+    >{errorObj.message}</p>
   ) : description ? (
-    <p class="text-sm leading-snug text-kumo-subtle col-span-full">{description}</p>
+    <p
+      class="text-sm leading-snug text-kumo-subtle col-span-full"
+      data-kumo-field-description
+    >{description}</p>
   ) : null}
 </div>
+
+<script>
+  // Reactive validation: for any Field with [data-kumo-field], toggle the
+  // error <p> based on the wrapped input/textarea's ValidityState. This
+  // matches React's Base UI Field.Error `match` behavior: clearing an invalid
+  // email empties typeMismatch, which hides the error.
+  function initKumoFields(root = document) {
+    const fields = root.querySelectorAll("[data-kumo-field]");
+    for (const field of fields) {
+      const err = field.querySelector("[data-kumo-field-error]");
+      const control = field.querySelector("input, textarea, select");
+      if (!err || !control) continue;
+      const matchAttr = err.getAttribute("data-kumo-field-error-match");
+      if (!matchAttr) continue;
+
+      const isMatching = () => {
+        const validity = control.validity;
+        if (!validity) return false;
+        if (matchAttr === "true") return !validity.valid;
+        if (matchAttr === "false") return validity.valid;
+        return Boolean(validity[matchAttr]);
+      };
+
+      const showError = () => {
+        const invalid = isMatching();
+        err.hidden = !invalid;
+        control.setAttribute("aria-invalid", invalid ? "true" : "false");
+      };
+
+      const hideError = () => {
+        err.hidden = true;
+        control.removeAttribute("aria-invalid");
+      };
+
+      // Start hidden — only reveal after the user explicitly submits (Enter).
+      hideError();
+
+      // Enter validates and reveals the error if invalid.
+      control.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          // Prevent native form submission so we just show the message.
+          event.preventDefault();
+          showError();
+        }
+      });
+
+      // Any edit (typing or deleting) immediately hides the error again.
+      control.addEventListener("input", hideError);
+    }
+  }
+
+  initKumoFields();
+  document.addEventListener("astro:page-load", () => initKumoFields());
+</script>

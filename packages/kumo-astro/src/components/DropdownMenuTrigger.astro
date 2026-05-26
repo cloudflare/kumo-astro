@@ -1,15 +1,52 @@
 ---
+/**
+ * Trigger for a DropdownMenu. Renders as a styled Button by default and accepts
+ * the same `variant` / `size` / `shape` props plus a named `icon` slot.
+ *
+ * Usage:
+ * ```astro
+ * <DropdownMenuTrigger>
+ *   <Icon slot="icon" name="plus" />
+ *   Add
+ * </DropdownMenuTrigger>
+ * ```
+ */
 import { cn } from "../utils/cn";
-interface Props { class?: string; [key: string]: unknown; }
-const { class: className, ...rest } = Astro.props;
+import {
+  buttonVariants,
+  KUMO_BUTTON_DEFAULT_VARIANTS,
+  type KumoButtonVariant,
+  type KumoButtonSize,
+  type KumoButtonShape,
+} from "@cloudflare/kumo/components/button";
+
+interface Props {
+  variant?: KumoButtonVariant;
+  size?: KumoButtonSize;
+  shape?: KumoButtonShape;
+  class?: string;
+  "aria-label"?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = KUMO_BUTTON_DEFAULT_VARIANTS.variant,
+  size = KUMO_BUTTON_DEFAULT_VARIANTS.size,
+  shape = KUMO_BUTTON_DEFAULT_VARIANTS.shape,
+  class: className,
+  ...rest
+} = Astro.props;
 ---
 <button
   type="button"
   data-kumo-dropdown-trigger
   aria-expanded="false"
   aria-haspopup="menu"
-  class={className}
+  class={cn(buttonVariants({ variant, size, shape }), className)}
   {...rest}
 >
-  <slot />
+  <span class="contents">
+    <slot name="icon" />
+    <slot />
+  </span>
 </button>

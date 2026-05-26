@@ -50,20 +50,20 @@ const initialChecked = checked !== undefined ? checked : defaultChecked;
 const isError = variant === "error";
 
 const inputClass = cn(
-  "relative flex h-4 w-4 shrink-0 appearance-none items-center justify-center rounded-sm",
+  "peer relative flex h-4 w-4 shrink-0 appearance-none items-center justify-center rounded-sm",
   "border-0 bg-kumo-base ring focus:outline-none",
   "transition-colors duration-100",
   isError ? "ring-kumo-danger" : "ring-kumo-hairline",
   !disabled && !isError && "hover:ring-kumo-hairline focus:ring-2 focus:ring-kumo-focus focus-visible:ring-2 focus-visible:ring-kumo-brand",
   "checked:bg-kumo-contrast checked:ring-kumo-contrast",
   disabled && "cursor-not-allowed opacity-50",
-  "[&:checked+div]:opacity-100 [&:checked+div]:visible",
   className,
 );
 
 const indicatorClass = cn(
   "pointer-events-none absolute flex h-4 w-4 shrink-0 items-center justify-center",
   "text-kumo-inverse opacity-0 invisible transition-opacity duration-100",
+  "peer-checked:opacity-100 peer-checked:visible",
 );
 ---
 

@@ -17,11 +17,9 @@ import { cn } from "../utils/cn";
 import {
   bannerVariants,
   KUMO_BANNER_DEFAULT_VARIANTS,
-  KUMO_BANNER_VARIANTS,
   type KumoBannerVariant,
 } from "@cloudflare/kumo/components/banner";
 import { safeRandomId } from "../utils/safe-random-id";
-import { resolveVariant } from "../utils/resolve-variant";
 
 interface Props {
   /** Primary heading text for the banner. */
@@ -52,7 +50,6 @@ const {
 } = Astro.props;
 
 const bannerId = providedId ?? (dismissible ? safeRandomId("banner") : undefined);
-const variantConfig = resolveVariant(KUMO_BANNER_VARIANTS.variant, variant, KUMO_BANNER_DEFAULT_VARIANTS.variant);
 ---
 
 <div
@@ -61,10 +58,8 @@ const variantConfig = resolveVariant(KUMO_BANNER_VARIANTS.variant, variant, KUMO
   role="alert"
   {...rest}
 >
-  {/* Icon slot — rendered at leading edge */}
-  <slot name="icon">
-    <span class={cn("shrink-0 flex items-center h-[1.375em]", variantConfig.iconClasses)} />
-  </slot>
+  {/* Icon slot — rendered at leading edge. No fallback: when omitted, no space is reserved (matches React's `{icon && ...}`). */}
+  <slot name="icon" />
 
   {(title || description) ? (
     <div class="flex min-w-0 flex-1 items-center justify-between gap-3">

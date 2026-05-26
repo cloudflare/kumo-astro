@@ -15,6 +15,7 @@ import {
   KUMO_CLIPBOARD_TEXT_DEFAULT_VARIANTS,
   type KumoClipboardTextSize,
 } from "@cloudflare/kumo/components/clipboard-text";
+import { inputVariants } from "@cloudflare/kumo/components/input";
 
 interface Props {
   /** The text to display and copy to clipboard. */
@@ -32,51 +33,78 @@ const {
   ...rest
 } = Astro.props;
 
-const sizeTextClass = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size].classes;
+const sizeConfig = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size];
+const sizeTextClass = sizeConfig.classes;
+const buttonSize = sizeConfig.buttonSize;
 ---
 
 <div
   data-kumo-clipboard-text
   data-text={text}
   class={cn(
-    "flex items-center gap-2 rounded-lg bg-kumo-control ring ring-kumo-line overflow-hidden",
+    inputVariants({ size: buttonSize }),
+    "flex items-center overflow-hidden bg-kumo-base px-0 font-mono",
     className,
   )}
   {...rest}
 >
-  <span class={cn("flex-1 truncate ps-3 pe-1 font-mono py-2", sizeTextClass)}>
+  <span class={cn("grow truncate ps-4 pe-2", sizeTextClass)}>
     {text}
   </span>
   <button
     type="button"
     data-kumo-clipboard-copy
     aria-label="Copy to clipboard"
-    class="inline-flex shrink-0 items-center gap-1 rounded px-2 py-1.5 my-1 mr-1 text-kumo-subtle hover:text-kumo-default hover:bg-kumo-tint transition-colors"
+    class={cn(
+      "group relative isolate inline-flex shrink-0 items-center justify-center self-stretch overflow-hidden",
+      "border-l border-kumo-line px-3 text-kumo-subtle transition-colors hover:bg-kumo-tint hover:text-kumo-default",
+      "focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-kumo-brand",
+    )}
   >
-    <!-- Copy icon (phosphor CopyIcon) -->
-    <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
-      <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-40H176V88a8,8,0,0,0-8-8H96V48H208Z" />
-    </svg>
-    <span data-kumo-clipboard-label class="text-xs">Copy</span>
+    <!-- Copy icon — visible by default, slides UP and out when copied -->
+    <span
+      data-kumo-clipboard-icon="copy"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-100 translate-y-0 transition-all duration-200 group-data-[copied]:opacity-0 group-data-[copied]:-translate-y-full"
+    >
+      <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+        <path d="M216,32H88a8,8,0,0,0-8,8V80H40a8,8,0,0,0-8,8V216a8,8,0,0,0,8,8H168a8,8,0,0,0,8-8V176h40a8,8,0,0,0,8-8V40A8,8,0,0,0,216,32ZM160,208H48V96H160Zm48-40H176V88a8,8,0,0,0-8-8H96V48H208Z" />
+      </svg>
+    </span>
+    <!-- Check icon — starts BELOW, slides up into place when copied -->
+    <span
+      data-kumo-clipboard-icon="check"
+      class="pointer-events-none absolute inset-0 flex items-center justify-center opacity-0 translate-y-full transition-all duration-200 group-data-[copied]:opacity-100 group-data-[copied]:translate-y-0"
+    >
+      <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true" fill="currentColor">
+        <path d="M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z" />
+      </svg>
+    </span>
+    <!-- Spacer so the button has the same width as a single icon -->
+    <span class="invisible">
+      <svg width="14" height="14" viewBox="0 0 256 256" aria-hidden="true"></svg>
+    </span>
+    <span class="sr-only" data-kumo-clipboard-label>Copy</span>
   </button>
 </div>
 
 <script>
-  function initClipboardText(root: HTMLElement) {
+  function initClipboardText(root) {
     const text = root.dataset.text ?? "";
-    const btn = root.querySelector<HTMLButtonElement>("[data-kumo-clipboard-copy]");
-    const label = root.querySelector<HTMLElement>("[data-kumo-clipboard-label]");
+    const btn = root.querySelector("[data-kumo-clipboard-copy]");
+    const label = root.querySelector("[data-kumo-clipboard-label]");
     if (!btn || !label) return;
 
     btn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(text);
+        btn.setAttribute("data-copied", "");
         label.textContent = "Copied!";
         btn.setAttribute("aria-label", "Copied!");
         setTimeout(() => {
+          btn.removeAttribute("data-copied");
           label.textContent = "Copy";
           btn.setAttribute("aria-label", "Copy to clipboard");
-        }, 2000);
+        }, 1500);
       } catch {
         // Clipboard API unavailable — silently fail
       }
@@ -84,7 +112,9 @@ const sizeTextClass = KUMO_CLIPBOARD_TEXT_VARIANTS.size[size].classes;
   }
 
   function initAll() {
-    document.querySelectorAll<HTMLElement>("[data-kumo-clipboard-text]").forEach(initClipboardText);
+    document
+      .querySelectorAll("[data-kumo-clipboard-text]")
+      .forEach(initClipboardText);
   }
 
   initAll();
