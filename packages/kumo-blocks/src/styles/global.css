@@ -1,3 +1,5 @@
+@source "../../../kumo/src/**/*.{ts,tsx}";
+@source "../../../kumo-astro/src/**/*.astro";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @import "@cloudflare/kumo/styles";
@@ -9,7 +11,7 @@
     "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --color-layout-border: var(--color-gray-200);
+  --color-layout-border: var(--color-kumo-line);
 }
 
 @utility center {
@@ -19,7 +21,7 @@
 @layer base {
   html,
   body {
-    @apply h-full text-sm text-gray-900 bg-white antialiased;
+    @apply h-full text-sm text-kumo-default bg-kumo-base antialiased;
     scrollbar-gutter: stable;
   }
 
