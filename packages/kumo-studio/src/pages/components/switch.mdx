@@ -1,0 +1,209 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Switch"
+description: "A two-state button that can be either on or off."
+sourceFile: "components/switch"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Switch from "@cloudflare/kumo-astro/components/switch";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Switch label="Enable notifications" />`}
+    lang="astro"
+  >
+    <Switch label="Enable notifications" />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Switch from "@cloudflare/kumo-astro/components/switch";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Switch from "@cloudflare/kumo-astro/components/switch";
+---
+
+<Switch label="Dark mode" />
+```
+
+<p>
+  The Astro <code>Switch</code> is interactive via an inline script — no <code>client:</code> directive needed.
+  It uses a hidden <code>&lt;input type="checkbox"&gt;</code> for form submission and a styled <code>&lt;button role="switch"&gt;</code>
+  for the visual toggle. There is no <code>onCheckedChange</code> prop — use native <code>oninput</code>
+  on the hidden input via HTML attributes if you need to respond to changes.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Off State
+
+<ComponentExample
+  code={`<Switch label="Switch" />`}
+  lang="astro"
+>
+  <Switch label="Switch" />
+</ComponentExample>
+
+### Pre-checked
+
+<ComponentExample
+  code={`<Switch label="Dark mode" defaultChecked={true} />`}
+  lang="astro"
+>
+  <Switch label="Dark mode" defaultChecked={true} />
+</ComponentExample>
+
+### Disabled
+
+<ComponentExample
+  code={`<Switch label="Disabled" disabled />`}
+  lang="astro"
+>
+  <Switch label="Disabled" disabled />
+</ComponentExample>
+
+### Variants
+
+<ComponentExample
+  code={`<div class="grid grid-cols-2 gap-x-8 gap-y-4">\n  <Switch label="Default off" />\n  <Switch label="Default on" defaultChecked={true} />\n  <Switch label="Neutral off" variant="neutral" />\n  <Switch label="Neutral on" variant="neutral" defaultChecked={true} />\n</div>`}
+  lang="astro"
+>
+  <div class="grid grid-cols-2 gap-x-8 gap-y-4">
+    <Switch label="Default off" />
+    <Switch label="Default on" defaultChecked={true} />
+    <Switch label="Neutral off" variant="neutral" />
+    <Switch label="Neutral on" variant="neutral" defaultChecked={true} />
+  </div>
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Switch label="Small" size="sm" defaultChecked={true} />\n  <Switch label="Base (default)" size="base" defaultChecked={true} />\n  <Switch label="Large" size="lg" defaultChecked={true} />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Switch label="Small" size="sm" defaultChecked={true} />
+    <Switch label="Base (default)" size="base" defaultChecked={true} />
+    <Switch label="Large" size="lg" defaultChecked={true} />
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text rendered beside the switch.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "neutral"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs"><code>default</code> — blue when on. <code>neutral</code> — monochrome.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Switch size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">checked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled checked state.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultChecked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Initial checked state (uncontrolled).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the switch.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">controlFirst</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">When <code>true</code>, the toggle appears before the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name attribute for form submission.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML id for the switch button. Auto-generated if not provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Accessible label when no visible label is provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

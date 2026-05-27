@@ -1,0 +1,251 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Dropdown Menu"
+description: "Displays a menu to the user—such as a set of actions or functions—triggered by a button."
+sourceFile: "components/dropdown"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Icon from "~/components/docs/Icon.astro";
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";
+import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
+import Button from "@cloudflare/kumo-astro/components/button";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<DropdownMenu>\n  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Edit</DropdownMenuItem>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+    lang="astro"
+  >
+    <DropdownMenu>
+      <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem>Duplicate</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";\nimport DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";\nimport DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";\nimport DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";\nimport DropdownMenuLabel from "@cloudflare/kumo-astro/components/dropdown-menu-label";\nimport DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import DropdownMenuSeparator from "@cloudflare/kumo-astro/components/dropdown-menu-separator";
+---
+
+<DropdownMenu>
+  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuItem>Edit</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+<p>
+  The dropdown is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  There are no <code>onClick</code> props on menu items — use native <code>onclick</code> HTML attributes
+  or standard anchor <code>&lt;a&gt;</code> tags inside items for navigation.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger>Actions</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Edit</DropdownMenuItem>\n    <DropdownMenuItem>Duplicate</DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Edit</DropdownMenuItem>
+      <DropdownMenuItem>Duplicate</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem variant="danger">Delete</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</ComponentExample>
+
+### With Label and Icons
+
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger>Options</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuLabel>Account</DropdownMenuLabel>\n    <DropdownMenuItem>\n      <Icon name="user" />\n      Profile\n    </DropdownMenuItem>\n    <DropdownMenuItem>\n      <Icon name="gear" />\n      Settings\n    </DropdownMenuItem>\n    <DropdownMenuSeparator />\n    <DropdownMenuItem variant="danger">\n      <Icon name="sign-out" />\n      Sign out\n    </DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger>Options</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuLabel>Account</DropdownMenuLabel>
+      <DropdownMenuItem>
+        <Icon name="user" />
+        Profile
+      </DropdownMenuItem>
+      <DropdownMenuItem>
+        <Icon name="gear" />
+        Settings
+      </DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem variant="danger">
+        <Icon name="sign-out" />
+        Sign out
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</ComponentExample>
+
+### Custom Trigger
+
+<p>Style the trigger however you like — any content can go in the <code>DropdownMenuTrigger</code> slot.</p>
+
+<ComponentExample
+  code={`<DropdownMenu>\n  <DropdownMenuTrigger class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm bg-kumo-base ring ring-kumo-line hover:bg-kumo-tint">\n    Options\n    <Icon name="caret-down" />\n  </DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Action</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu>
+    <DropdownMenuTrigger class="inline-flex items-center gap-1 rounded-md px-3 py-1.5 text-sm bg-kumo-base ring ring-kumo-line hover:bg-kumo-tint">
+      Options
+      <Icon name="caret-down" />
+    </DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Action</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</ComponentExample>
+
+### Placement
+
+<ComponentExample
+  code={`<DropdownMenu side="top">\n  <DropdownMenuTrigger>Opens upward</DropdownMenuTrigger>\n  <DropdownMenuContent>\n    <DropdownMenuItem>Option A</DropdownMenuItem>\n    <DropdownMenuItem>Option B</DropdownMenuItem>\n  </DropdownMenuContent>\n</DropdownMenu>`}
+  lang="astro"
+>
+  <DropdownMenu side="top">
+    <DropdownMenuTrigger>Opens upward</DropdownMenuTrigger>
+    <DropdownMenuContent>
+      <DropdownMenuItem>Option A</DropdownMenuItem>
+      <DropdownMenuItem>Option B</DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### DropdownMenu
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom" | "left" | "right"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"bottom"</code></td>
+        <td class="px-4 py-3 text-xs">Preferred side for the menu to appear.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">Auto-generated</td>
+        <td class="px-4 py-3 text-xs">HTML id for the dropdown root.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### DropdownMenuTrigger
+
+<p>Renders a <code>&lt;button&gt;</code>. Accepts <code>class</code> and any button attributes. Content goes in the default slot.</p>
+
+### DropdownMenuContent
+
+<p>Renders the menu panel with <code>role="menu"</code>. Accepts <code>class</code> and any div attributes.</p>
+
+### DropdownMenuItem
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "danger"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual style. Use <code>"danger"</code> for destructive actions.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the item.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### DropdownMenuLabel
+
+<p>Renders a non-interactive label. Accepts <code>class</code>.</p>
+
+### DropdownMenuSeparator
+
+<p>Renders a horizontal divider. Accepts <code>class</code>. No props required.</p>
+
+</ComponentSection>

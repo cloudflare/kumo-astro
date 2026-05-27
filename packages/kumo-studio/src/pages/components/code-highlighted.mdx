@@ -1,0 +1,354 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "CodeHighlighted"
+description: "Server-side syntax highlighted code block with line numbers, line highlighting, and an optional copy button."
+sourceFile: "components/code-highlighted"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<CodeHighlighted code={\`const greeting = "Hello, World!";\nconsole.log(greeting);\`} lang="typescript" />`}
+    lang="astro"
+  >
+    <CodeHighlighted code={`const greeting = "Hello, World!";
+console.log(greeting);`} lang="typescript" />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Overview */}
+
+<ComponentSection>
+
+## Overview
+
+<p>
+  A Shiki-powered syntax highlighter for Astro. Supports 200+ languages with TextMate grammars and dual light/dark themes baked into every code block.
+</p>
+
+<p>
+  Highlighting runs at build time in Astro's SSR frontmatter, so the colored HTML is shipped pre-rendered — no JavaScript is loaded in the browser for the highlighting itself, and no <code>client:</code> directive is needed.
+</p>
+
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Basic Usage */}
+
+<ComponentSection>
+
+## Basic Usage
+
+```astro
+---
+import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
+---
+
+<CodeHighlighted code={`const x = 1;`} lang="typescript" />
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Languages
+
+CodeHighlighted supports 200+ languages through Shiki. A curated subset is pre-bundled out of the box — see the `SupportedLanguage` type for the full list.
+
+### TypeScript
+
+<ComponentExample
+  code={`<CodeHighlighted code={\`function greet(name: string): string {\n  return \\\`Hello, \\\${name}!\\\`;\n}\`} lang="typescript" />`}
+  lang="astro"
+>
+  <CodeHighlighted code={`function greet(name: string): string {
+  return \`Hello, \${name}!\`;
+}`} lang="typescript" />
+</ComponentExample>
+
+### TSX
+
+<ComponentExample
+  code={`<CodeHighlighted code={\`import { useState } from "react";\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  return <button onClick={() => setCount(count + 1)}>{count}</button>;\n}\`} lang="tsx" />`}
+  lang="astro"
+>
+  <CodeHighlighted code={`import { useState } from "react";
+
+export function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
+}`} lang="tsx" />
+</ComponentExample>
+
+### Bash
+
+<ComponentExample
+  code={`<CodeHighlighted code="npm install @cloudflare/kumo-astro" lang="bash" />`}
+  lang="astro"
+>
+  <CodeHighlighted code="npm install @cloudflare/kumo-astro" lang="bash" />
+</ComponentExample>
+
+### JSON
+
+<ComponentExample
+  code={`<CodeHighlighted code={\`{\n  "name": "my-worker",\n  "version": "1.0.0"\n}\`} lang="json" />`}
+  lang="astro"
+>
+  <CodeHighlighted code={`{
+  "name": "my-worker",
+  "version": "1.0.0"
+}`} lang="json" />
+</ComponentExample>
+
+### CSS
+
+<ComponentExample
+  code={`<CodeHighlighted code={\`.button {\n  background: var(--color-brand);\n  border-radius: 0.5rem;\n  padding: 0.5rem 1rem;\n\n  &:hover {\n    background: var(--color-brand-hover);\n  }\n}\`} lang="css" />`}
+  lang="astro"
+>
+  <CodeHighlighted code={`.button {
+  background: var(--color-brand);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+
+  &:hover {
+    background: var(--color-brand-hover);
+  }
+}`} lang="css" />
+</ComponentExample>
+
+### With Line Numbers
+
+<ComponentExample
+  code={`<CodeHighlighted\n  code={...}\n  lang="typescript"\n  showLineNumbers\n/>`}
+  lang="astro"
+>
+  <CodeHighlighted code={`import { useState, useEffect } from "react";
+
+export function useWindowSize() {
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return size;
+}`} lang="tsx" showLineNumbers />
+</ComponentExample>
+
+### With Highlighted Lines
+
+<ComponentExample
+  code={`<CodeHighlighted\n  code={...}\n  lang="typescript"\n  highlightLines={[3, 4]}\n/>`}
+  lang="astro"
+>
+  <CodeHighlighted code={`function processData(items: string[]) {
+  // Filter out empty items
+  const filtered = items.filter(Boolean);
+  const sorted = filtered.sort();
+  return sorted.map((item) => item.toUpperCase());
+}`} lang="typescript" highlightLines={[3, 4]} />
+</ComponentExample>
+
+### With Copy Button
+
+<ComponentExample
+  code={`<CodeHighlighted code="npm install @cloudflare/kumo-astro" lang="bash" showCopyButton />`}
+  lang="astro"
+>
+  <CodeHighlighted code="npm install @cloudflare/kumo-astro" lang="bash" showCopyButton />
+</ComponentExample>
+
+### Full Featured
+
+<ComponentExample
+  code={`<CodeHighlighted\n  code={...}\n  lang="tsx"\n  showLineNumbers\n  highlightLines={[2]}\n  showCopyButton\n/>`}
+  lang="astro"
+>
+  <CodeHighlighted code={`import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
+
+export function CodeExample({ code, language }) {
+  return <CodeHighlighted code={code} lang={language} showCopyButton />;
+}`} lang="tsx" showLineNumbers highlightLines={[2]} showCopyButton />
+</ComponentExample>
+
+### Localized Copy Button
+
+<ComponentExample
+  code={`<CodeHighlighted\n  code="npm install @cloudflare/kumo-astro"\n  lang="bash"\n  showCopyButton\n  labels={{ copy: "Copier", copied: "Copié!" }}\n/>`}
+  lang="astro"
+>
+  <CodeHighlighted code="npm install @cloudflare/kumo-astro" lang="bash" showCopyButton labels={{ copy: "Copier", copied: "Copié!" }} />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* Themes */}
+
+<ComponentSection>
+
+## Themes
+
+CodeHighlighted uses hardcoded themes for consistent styling across all kumo applications:
+
+- **Light mode:** `github-light`
+- **Dark mode:** `vesper`
+
+Theme customization is not supported. This ensures visual consistency across every code block in your application.
+
+</ComponentSection>
+
+{/* Custom Highlight Color */}
+
+<ComponentSection>
+
+## Custom Highlight Color
+
+The background color used by `highlightLines` is controlled by the `--kumo-code-highlight-bg` CSS custom property. Override it on the component (or any ancestor) to tint highlighted lines a different color.
+
+<ComponentExample
+  code={`<CodeHighlighted\n  code={...}\n  lang="typescript"\n  highlightLines={[2]}\n  style="--kumo-code-highlight-bg: hsla(220, 80%, 50%, 0.15);"\n/>`}
+  lang="astro"
+>
+  <CodeHighlighted code={`function greet(name: string) {
+  console.log(\`Hello, \${name}!\`);
+  return name.toUpperCase();
+}`} lang="typescript" highlightLines={[2]} class="[--kumo-code-highlight-bg:hsla(220,80%,50%,0.15)]" />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* Server-Side Rendering */}
+
+<ComponentSection>
+
+## Server-Side Rendering
+
+`CodeHighlighted.astro` already runs at build time — Shiki is invoked in the component's frontmatter, so the highlighted HTML is baked into the page. There's no separate "server" API to call.
+
+If you need to highlight code outside of a component (e.g. in a custom Astro endpoint or a build script), use the same `highlightCode()` helper directly:
+
+```astro
+---
+import { highlightCode } from "@cloudflare/kumo/code/server";
+
+const html = await highlightCode(`const x = 1;`, "typescript");
+---
+
+<div class="kumo-shiki" set:html={html} />
+```
+
+</ComponentSection>
+
+{/* Migration */}
+
+<ComponentSection>
+
+## Migration from `Code`
+
+The earlier `Code.astro` component (exported from `@cloudflare/kumo-astro/components/code`) only supported `code`, `lang`, `showCopyButton`, and `class`. `CodeHighlighted` is a drop-in superset of that API — same defaults, same rendered output, plus `showLineNumbers`, `highlightLines`, and `labels`.
+
+```astro
+{/* Before */}
+import Code from "@cloudflare/kumo-astro/components/code";
+<Code code="const x = 1;" lang="typescript" />
+
+{/* After */}
+import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
+<CodeHighlighted code="const x = 1;" lang="typescript" />
+```
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">code<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">The source code string to highlight.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">lang<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>SupportedLanguage</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Language identifier for syntax highlighting (e.g. <code>"typescript"</code>, <code>"tsx"</code>, <code>"bash"</code>, <code>"json"</code>).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">showLineNumbers</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Display a line-number gutter alongside the code.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">highlightLines</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number[]</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">1-indexed array of lines to visually emphasize.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">showCopyButton</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Shows a copy-to-clipboard button on hover.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">labels</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>{`{ copy?: string; copied?: string }`}</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>{`{ copy: "Copy", copied: "Copied!" }`}</code></td>
+        <td class="px-4 py-3 text-xs">Override the copy button's labels (useful for localization).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the outer wrapper.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

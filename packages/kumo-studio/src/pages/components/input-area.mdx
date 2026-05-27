@@ -1,0 +1,215 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Input Area"
+description: "A styled multi-line textarea with optional label, description, and error support."
+sourceFile: "components/input"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<InputArea label="Description" placeholder="Enter a description..." description="Provide details about your project" />`}
+    lang="astro"
+  >
+    <InputArea label="Description" placeholder="Enter a description..." description="Provide details about your project" />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import InputArea from "@cloudflare/kumo-astro/components/input-area";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+### With Built-in Field (Recommended)
+
+```astro
+---
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+---
+
+<InputArea
+  label="Description"
+  placeholder="Enter a description..."
+  description="Provide details about your project"
+/>
+```
+
+### Bare InputArea
+
+<p>For custom layouts, omit <code>label</code> and provide <code>aria-label</code> for accessibility.</p>
+
+```astro
+<InputArea placeholder="Add notes..." aria-label="Notes" rows={3} />
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### With Label
+
+<ComponentExample
+  code={`<InputArea label="Bio" placeholder="Tell us about yourself" description="Max 500 characters" />`}
+  lang="astro"
+>
+  <InputArea label="Bio" placeholder="Tell us about yourself" description="Max 500 characters" />
+</ComponentExample>
+
+### Custom Row Count
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <InputArea label="2 rows" placeholder="Small area" rows={2} />\n  <InputArea label="4 rows (default)" placeholder="Medium area" rows={4} />\n  <InputArea label="8 rows" placeholder="Large area" rows={8} />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <InputArea label="2 rows" placeholder="Small area" rows={2} />
+    <InputArea label="4 rows (default)" placeholder="Medium area" rows={4} />
+    <InputArea label="8 rows" placeholder="Large area" rows={8} />
+  </div>
+</ComponentExample>
+
+### Error State
+
+<ComponentExample
+  code={`<InputArea label="Message" placeholder="Enter your message" error="Message must be at least 10 characters" />`}
+  lang="astro"
+>
+  <InputArea label="Message" placeholder="Enter your message" error="Message must be at least 10 characters" />
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <InputArea size="xs" label="Extra Small" placeholder="xs" />\n  <InputArea size="sm" label="Small" placeholder="sm" />\n  <InputArea label="Base (default)" placeholder="base" />\n  <InputArea size="lg" label="Large" placeholder="lg" />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <InputArea size="xs" label="Extra Small" placeholder="xs" />
+    <InputArea size="sm" label="Small" placeholder="sm" />
+    <InputArea label="Base (default)" placeholder="base" />
+    <InputArea size="lg" label="Large" placeholder="lg" />
+  </div>
+</ComponentExample>
+
+### Disabled
+
+<ComponentExample
+  code={`<InputArea label="Disabled field" placeholder="Cannot edit" disabled />`}
+  lang="astro"
+>
+  <InputArea label="Disabled field" placeholder="Cannot edit" disabled />
+</ComponentExample>
+
+### Optional Field
+
+<ComponentExample
+  code={`<InputArea label="Additional Notes" required={false} placeholder="Any additional information..." />`}
+  lang="astro"
+>
+  <InputArea label="Additional Notes" required={false} placeholder="Any additional information..." />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text. When provided, wraps the textarea in a Field with an auto-linked label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Helper text shown below the textarea.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">error</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Error message. Also auto-applies error styling.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"xs" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Textarea size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">rows</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>4</code></td>
+        <td class="px-4 py-3 text-xs">Number of visible rows.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">required</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When <code>false</code>, shows "(optional)" in the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the textarea.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">placeholder</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Placeholder text.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes applied to the textarea element.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>All standard HTML textarea attributes are forwarded to the underlying <code>&lt;textarea&gt;</code> element.</p>
+
+</ComponentSection>

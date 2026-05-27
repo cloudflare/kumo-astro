@@ -1,0 +1,213 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Checkbox"
+description: "A control that allows the user to toggle between checked and not checked."
+sourceFile: "components/checkbox"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Checkbox label="Accept terms and conditions" />`}
+    lang="astro"
+  >
+    <Checkbox label="Accept terms and conditions" />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Checkbox from "@cloudflare/kumo-astro/components/checkbox";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
+---
+
+<Checkbox label="Accept terms" name="terms" />
+```
+
+<p>
+  The Astro <code>Checkbox</code> is fully static — no JavaScript is needed for the visual indicator.
+  The custom checkmark uses a CSS sibling selector (<code>:checked + div</code>) to toggle visibility.
+  There is no <code>onCheckedChange</code> prop — use native <code>oninput</code> or <code>onchange</code>
+  passed via HTML attributes for interactivity.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Default
+
+<ComponentExample
+  code={`<Checkbox label="Enable notifications" />`}
+  lang="astro"
+>
+  <Checkbox label="Enable notifications" />
+</ComponentExample>
+
+### Pre-checked
+
+<ComponentExample
+  code={`<Checkbox label="I agree" defaultChecked={true} />`}
+  lang="astro"
+>
+  <Checkbox label="I agree" defaultChecked={true} />
+</ComponentExample>
+
+### Label First Layout
+
+<p>Use <code>controlFirst={false}</code> to place the label before the checkbox.</p>
+
+<ComponentExample
+  code={`<Checkbox label="Remember me" controlFirst={false} />`}
+  lang="astro"
+>
+  <Checkbox label="Remember me" controlFirst={false} />
+</ComponentExample>
+
+### Disabled
+
+<ComponentExample
+  code={`<Checkbox label="Disabled option" disabled />`}
+  lang="astro"
+>
+  <Checkbox label="Disabled option" disabled />
+</ComponentExample>
+
+### Error Variant
+
+<ComponentExample
+  code={`<Checkbox label="Required field" variant="error" />`}
+  lang="astro"
+>
+  <Checkbox label="Required field" variant="error" />
+</ComponentExample>
+
+### Optional Field
+
+<p>Set <code>required={false}</code> (explicit false) to append an "(optional)" indicator to the label.</p>
+
+<ComponentExample
+  code={`<Checkbox label="Newsletter signup" required={false} />`}
+  lang="astro"
+>
+  <Checkbox label="Newsletter signup" required={false} />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text rendered beside the checkbox.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "error"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual variant. Use <code>"error"</code> to apply error styling.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">checked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled checked state.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultChecked</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Initial checked state (uncontrolled).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Disables the checkbox.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">controlFirst</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">When <code>true</code>, the checkbox appears before the label. Set to <code>false</code> to reverse order.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">required</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When explicitly <code>false</code>, appends "(optional)" to the label.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">name</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML name attribute for form submission.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">value</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML value attribute for form submission.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Accessible label when no visible label is provided.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

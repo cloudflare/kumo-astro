@@ -1,0 +1,185 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Popover"
+description: "An accessible popup anchored to a trigger element, used for displaying rich content."
+sourceFile: "components/popover"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import PopoverRoot from "@cloudflare/kumo-astro/components/popover-root";
+import PopoverTrigger from "@cloudflare/kumo-astro/components/popover-trigger";
+import PopoverContent from "@cloudflare/kumo-astro/components/popover-content";
+import PopoverClose from "@cloudflare/kumo-astro/components/popover-close";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Icon from "~/components/docs/Icon.astro";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<PopoverRoot>\n  <PopoverTrigger>Open popover</PopoverTrigger>\n  <PopoverContent>\n    <p class="text-sm font-semibold text-kumo-default">Popover Title</p>\n    <p class="text-sm text-kumo-subtle mt-1">Popover content goes here.</p>\n  </PopoverContent>\n</PopoverRoot>`}
+    lang="astro"
+  >
+    <PopoverRoot>
+      <PopoverTrigger>Open popover</PopoverTrigger>
+      <PopoverContent>
+        <p class="text-sm font-semibold text-kumo-default">Popover Title</p>
+        <p class="text-sm text-kumo-subtle mt-1">Popover content goes here.</p>
+      </PopoverContent>
+    </PopoverRoot>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import PopoverRoot from "@cloudflare/kumo-astro/components/popover-root";\nimport PopoverTrigger from "@cloudflare/kumo-astro/components/popover-trigger";\nimport PopoverContent from "@cloudflare/kumo-astro/components/popover-content";\nimport PopoverClose from "@cloudflare/kumo-astro/components/popover-close";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import PopoverRoot from "@cloudflare/kumo-astro/components/popover-root";
+import PopoverTrigger from "@cloudflare/kumo-astro/components/popover-trigger";
+import PopoverContent from "@cloudflare/kumo-astro/components/popover-content";
+import PopoverClose from "@cloudflare/kumo-astro/components/popover-close";
+---
+
+<PopoverRoot>
+  <PopoverTrigger>Open</PopoverTrigger>
+  <PopoverContent>
+    <p>Popover content</p>
+    <PopoverClose>Close</PopoverClose>
+  </PopoverContent>
+</PopoverRoot>
+```
+
+<p>
+  The popover is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  There is no <code>open</code>/<code>defaultOpen</code>/<code>onOpenChange</code> — the popover is always uncontrolled.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<PopoverRoot>\n  <PopoverTrigger>Open popover</PopoverTrigger>\n  <PopoverContent>\n    <p class="text-sm font-semibold text-kumo-default">Title</p>\n    <p class="text-sm text-kumo-subtle mt-1">Content goes here.</p>\n  </PopoverContent>\n</PopoverRoot>`}
+  lang="astro"
+>
+  <PopoverRoot>
+    <PopoverTrigger>Open popover</PopoverTrigger>
+    <PopoverContent>
+      <p class="text-sm font-semibold text-kumo-default">Title</p>
+      <p class="text-sm text-kumo-subtle mt-1">Content goes here.</p>
+    </PopoverContent>
+  </PopoverRoot>
+</ComponentExample>
+
+### With Close Button
+
+<ComponentExample
+  code={`<PopoverRoot>\n  <PopoverTrigger>Open</PopoverTrigger>\n  <PopoverContent>\n    <p class="text-sm text-kumo-default">Click the button to close.</p>\n    <PopoverClose class="mt-2 text-sm text-kumo-brand hover:underline">Dismiss</PopoverClose>\n  </PopoverContent>\n</PopoverRoot>`}
+  lang="astro"
+>
+  <PopoverRoot>
+    <PopoverTrigger>Open</PopoverTrigger>
+    <PopoverContent>
+      <p class="text-sm text-kumo-default">Click the button to close.</p>
+      <PopoverClose class="mt-2 text-sm text-kumo-brand hover:underline">Dismiss</PopoverClose>
+    </PopoverContent>
+  </PopoverRoot>
+</ComponentExample>
+
+### Placement
+
+<ComponentExample
+  code={`<div class="flex flex-wrap gap-4">\n  <PopoverRoot side="top">\n    <PopoverTrigger>Top</PopoverTrigger>\n    <PopoverContent><p class="text-sm">Top</p></PopoverContent>\n  </PopoverRoot>\n  <PopoverRoot side="right">\n    <PopoverTrigger>Right</PopoverTrigger>\n    <PopoverContent><p class="text-sm">Right</p></PopoverContent>\n  </PopoverRoot>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-wrap gap-4">
+    <PopoverRoot side="top">
+      <PopoverTrigger>Top</PopoverTrigger>
+      <PopoverContent><p class="text-sm text-kumo-default">Appears above</p></PopoverContent>
+    </PopoverRoot>
+    <PopoverRoot side="bottom">
+      <PopoverTrigger>Bottom</PopoverTrigger>
+      <PopoverContent><p class="text-sm text-kumo-default">Appears below</p></PopoverContent>
+    </PopoverRoot>
+    <PopoverRoot side="right">
+      <PopoverTrigger>Right</PopoverTrigger>
+      <PopoverContent><p class="text-sm text-kumo-default">Appears right</p></PopoverContent>
+    </PopoverRoot>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### PopoverRoot
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom" | "left" | "right"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"bottom"</code></td>
+        <td class="px-4 py-3 text-xs">Preferred side for the popover to appear.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">Auto-generated</td>
+        <td class="px-4 py-3 text-xs">HTML id for the popover root.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### PopoverTrigger
+
+<p>Renders a <code>&lt;button&gt;</code> that toggles the popover. Accepts any button attributes.</p>
+
+### PopoverContent
+
+<p>Renders the popover panel. Accepts <code>class</code> and any div attributes. Content goes in the default slot.</p>
+
+### PopoverClose
+
+<p>Renders a <code>&lt;button&gt;</code> that closes the popover. Accepts any button attributes.</p>
+
+</ComponentSection>

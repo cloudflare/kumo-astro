@@ -1,0 +1,225 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Table of Contents"
+description: "Presentational compound component for section navigation with an active indicator bar."
+sourceFile: "components/table-of-contents"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import TableOfContents from "@cloudflare/kumo-astro/components/table-of-contents";
+import TableOfContentsList from "@cloudflare/kumo-astro/components/table-of-contents-list";
+import TableOfContentsItem from "@cloudflare/kumo-astro/components/table-of-contents-item";
+import TableOfContentsTitle from "@cloudflare/kumo-astro/components/table-of-contents-title";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<TableOfContents>\n  <TableOfContentsTitle>On this page</TableOfContentsTitle>\n  <TableOfContentsList>\n    <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>\n    <TableOfContentsItem href="#install">Installation</TableOfContentsItem>\n    <TableOfContentsItem href="#api">API Reference</TableOfContentsItem>\n  </TableOfContentsList>\n</TableOfContents>`}
+    lang="astro"
+  >
+    <TableOfContents>
+      <TableOfContentsTitle>On this page</TableOfContentsTitle>
+      <TableOfContentsList>
+        <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>
+        <TableOfContentsItem href="#install">Installation</TableOfContentsItem>
+        <TableOfContentsItem href="#usage">Usage</TableOfContentsItem>
+        <TableOfContentsItem href="#api">API Reference</TableOfContentsItem>
+      </TableOfContentsList>
+    </TableOfContents>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import TableOfContents from "@cloudflare/kumo-astro/components/table-of-contents";\nimport TableOfContentsList from "@cloudflare/kumo-astro/components/table-of-contents-list";\nimport TableOfContentsItem from "@cloudflare/kumo-astro/components/table-of-contents-item";\nimport TableOfContentsTitle from "@cloudflare/kumo-astro/components/table-of-contents-title";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import TableOfContents from "@cloudflare/kumo-astro/components/table-of-contents";
+import TableOfContentsList from "@cloudflare/kumo-astro/components/table-of-contents-list";
+import TableOfContentsItem from "@cloudflare/kumo-astro/components/table-of-contents-item";
+import TableOfContentsTitle from "@cloudflare/kumo-astro/components/table-of-contents-title";
+---
+
+<TableOfContents>
+  <TableOfContentsTitle>On this page</TableOfContentsTitle>
+  <TableOfContentsList>
+    <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>
+    <TableOfContentsItem href="#api">API Reference</TableOfContentsItem>
+  </TableOfContentsList>
+</TableOfContents>
+```
+
+<p>
+  This component is purely presentational. To automatically track the active section as the user scrolls,
+  enable <code>scrollSpy</code> on <code>TableOfContents</code> and add <code>data-toc-target="heading-id"</code>
+  to each <code>TableOfContentsItem</code>.
+</p>
+
+### With Scroll Spy
+
+```astro
+<TableOfContents scrollSpy>
+  <TableOfContentsList>
+    <TableOfContentsItem href="#intro" data-toc-target="intro">
+      Introduction
+    </TableOfContentsItem>
+    <TableOfContentsItem href="#api" data-toc-target="api">
+      API Reference
+    </TableOfContentsItem>
+  </TableOfContentsList>
+</TableOfContents>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<TableOfContents>\n  <TableOfContentsTitle>On this page</TableOfContentsTitle>\n  <TableOfContentsList>\n    <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>\n    <TableOfContentsItem href="#install">Installation</TableOfContentsItem>\n    <TableOfContentsItem href="#api">API Reference</TableOfContentsItem>\n  </TableOfContentsList>\n</TableOfContents>`}
+  lang="astro"
+>
+  <TableOfContents>
+    <TableOfContentsTitle>On this page</TableOfContentsTitle>
+    <TableOfContentsList>
+      <TableOfContentsItem href="#intro" active>Introduction</TableOfContentsItem>
+      <TableOfContentsItem href="#install">Installation</TableOfContentsItem>
+      <TableOfContentsItem href="#api">API Reference</TableOfContentsItem>
+    </TableOfContentsList>
+  </TableOfContents>
+</ComponentExample>
+
+### No Active Item
+
+<ComponentExample
+  code={`<TableOfContents>\n  <TableOfContentsList>\n    <TableOfContentsItem href="#intro">Introduction</TableOfContentsItem>\n    <TableOfContentsItem href="#install">Installation</TableOfContentsItem>\n  </TableOfContentsList>\n</TableOfContents>`}
+  lang="astro"
+>
+  <TableOfContents>
+    <TableOfContentsList>
+      <TableOfContentsItem href="#intro">Introduction</TableOfContentsItem>
+      <TableOfContentsItem href="#install">Installation</TableOfContentsItem>
+      <TableOfContentsItem href="#usage">Usage</TableOfContentsItem>
+    </TableOfContentsList>
+  </TableOfContents>
+</ComponentExample>
+
+### Without Title
+
+<ComponentExample
+  code={`<TableOfContents>\n  <TableOfContentsList>\n    <TableOfContentsItem href="#intro" active>Intro</TableOfContentsItem>\n    <TableOfContentsItem href="#api">API</TableOfContentsItem>\n  </TableOfContentsList>\n</TableOfContents>`}
+  lang="astro"
+>
+  <TableOfContents>
+    <TableOfContentsList>
+      <TableOfContentsItem href="#intro" active>Intro</TableOfContentsItem>
+      <TableOfContentsItem href="#api">API</TableOfContentsItem>
+    </TableOfContentsList>
+  </TableOfContents>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### TableOfContents
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">scrollSpy</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">When true, injects an IntersectionObserver that auto-marks the active item. Requires <code>data-toc-target</code> on each item.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"Table of contents"</code></td>
+        <td class="px-4 py-3 text-xs">Accessible label for the nav element.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### TableOfContentsTitle
+
+<p>Renders a small uppercase <code>&lt;p&gt;</code> heading. Optional.</p>
+
+### TableOfContentsList
+
+<p>Renders a <code>&lt;ul&gt;</code> with a left border rail. Accepts <code>class</code>.</p>
+
+### TableOfContentsItem
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">href</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Anchor link destination (e.g. <code>"#intro"</code>).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">active</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Marks this item as the active section with a blue indicator.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">data-toc-target</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">The heading id to watch when <code>scrollSpy</code> is enabled.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

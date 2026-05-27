@@ -1,0 +1,56 @@
+{
+  "name": "@cloudflare/kumo-studio",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./demo-metadata.json": "./dist/demo-metadata.json"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "pnpm run codegen:demos && astro build",
+    "codegen:demos": "tsx scripts/extract-demo-examples.ts",
+    "preview": "astro preview",
+    "astro": "astro",
+    "typecheck": "astro check",
+    "test": "vitest run",
+    "lint": "oxlint src/ && node ../../lint/lint-astro-colors.js src/",
+    "lint:oxlint": "oxlint src/",
+    "lint:astro": "node ../../lint/lint-astro-colors.js src/"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.14",
+    "@astrojs/sitemap": "^3.7.0",
+    "@cloudflare/kumo": "workspace:*",
+    "@cloudflare/kumo-astro": "workspace:*",
+    "@phosphor-icons/react": "catalog:",
+    "@phosphor-icons/web": "catalog:",
+    "@tailwindcss/typography": "^0.5.19",
+    "@types/turndown": "5.0.6",
+    "astro": "^5.18.1",
+    "clsx": "catalog:",
+    "echarts": "^6.0.0",
+    "match-sorter": "^8.2.0",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "tailwind-merge": "catalog:",
+    "turndown": "7.2.2",
+    "turndown-plugin-gfm": "1.0.2"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/react": "^4.2.1",
+    "@tailwindcss/vite": "catalog:",
+    "@types/mdast": "4.0.4",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "oxlint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:",
+    "wrangler": "catalog:"
+  }
+}

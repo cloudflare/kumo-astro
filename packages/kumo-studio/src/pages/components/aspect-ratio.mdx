@@ -1,0 +1,149 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Aspect Ratio"
+description: "Constrains content to a specified aspect ratio using a CSS padding technique."
+sourceFile: "components/aspect-ratio"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import AspectRatio from "@cloudflare/kumo-astro/components/aspect-ratio";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<div class="w-80">\n  <AspectRatio ratio="16/9">\n    <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">\n      <span class="text-kumo-subtle text-sm">16 / 9</span>\n    </div>\n  </AspectRatio>\n</div>`}
+    lang="astro"
+  >
+    <div class="w-80">
+      <AspectRatio ratio="16/9">
+        <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">
+          <span class="text-kumo-subtle text-sm">16 / 9</span>
+        </div>
+      </AspectRatio>
+    </div>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import AspectRatio from "@cloudflare/kumo-astro/components/aspect-ratio";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import AspectRatio from "@cloudflare/kumo-astro/components/aspect-ratio";
+---
+
+<AspectRatio ratio="16/9">
+  <img src="..." class="h-full w-full object-cover rounded-lg" />
+</AspectRatio>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Widescreen (16:9)
+
+<ComponentExample
+  code={`<div class="w-80">\n  <AspectRatio ratio="16/9">\n    <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">\n      <span class="text-kumo-subtle text-sm">16 / 9</span>\n    </div>\n  </AspectRatio>\n</div>`}
+  lang="astro"
+>
+  <div class="w-80">
+    <AspectRatio ratio="16/9">
+      <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">
+        <span class="text-kumo-subtle text-sm">16 / 9</span>
+      </div>
+    </AspectRatio>
+  </div>
+</ComponentExample>
+
+### All Presets
+
+<ComponentExample
+  code={`<div class="grid grid-cols-3 gap-4">\n  <AspectRatio ratio="16/9">...</AspectRatio>\n  <AspectRatio ratio="4/3">...</AspectRatio>\n  <AspectRatio ratio="1/1">...</AspectRatio>\n  <AspectRatio ratio="3/2">...</AspectRatio>\n  <AspectRatio ratio="9/16">...</AspectRatio>\n</div>`}
+  lang="astro"
+>
+  <div class="grid grid-cols-3 gap-4">
+    {["16/9", "4/3", "1/1", "3/2", "9/16"].map((ratio) => (
+      <AspectRatio ratio={ratio}>
+        <div class="h-full w-full rounded-md bg-kumo-tint flex items-center justify-center">
+          <span class="text-kumo-subtle text-xs">{ratio}</span>
+        </div>
+      </AspectRatio>
+    ))}
+  </div>
+</ComponentExample>
+
+### Custom Numeric Ratio
+
+<ComponentExample
+  code={`<div class="w-80">\n  <AspectRatio ratio={21 / 9}>\n    <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">\n      <span class="text-kumo-subtle text-sm">21 : 9 (ultrawide)</span>\n    </div>\n  </AspectRatio>\n</div>`}
+  lang="astro"
+>
+  <div class="w-80">
+    <AspectRatio ratio={21 / 9}>
+      <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">
+        <span class="text-kumo-subtle text-sm">21 : 9 (ultrawide)</span>
+      </div>
+    </AspectRatio>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">ratio</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"16/9" | "4/3" | "1/1" | "3/2" | "9/16" | number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"16/9"</code></td>
+        <td class="px-4 py-3 text-xs">Preset ratio string or a custom numeric ratio (width / height).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes applied to the outer container.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

@@ -1,0 +1,440 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+import { DashboardChart } from "../../components/DashboardChart";
+
+const installCode = `npm install @cloudflare/kumo-astro @cloudflare/kumo echarts`;
+
+const withoutChartCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+---
+
+<div class="flex h-screen bg-kumo-canvas">
+  <aside class="w-56 border-r border-kumo-hairline bg-kumo-base flex flex-col shrink-0">
+    <div class="p-4 border-b border-kumo-hairline">
+      <p class="text-sm font-semibold text-kumo-default">My App</p>
+      <p class="text-xs text-kumo-subtle">Admin Panel</p>
+    </div>
+    <nav class="flex-1 p-3 space-y-0.5">
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-kumo-elevated text-kumo-default text-sm font-medium">Overview</a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Users</a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Settings</a>
+    </nav>
+  </aside>
+  <main class="flex-1 overflow-auto p-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-kumo-default">Overview</h1>
+        <p class="text-sm text-kumo-subtle mt-0.5">Welcome back!</p>
+      </div>
+      <Button variant="primary">Download Report</Button>
+    </div>
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+      <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Total Revenue</p><p class="text-2xl font-bold text-kumo-default mt-1">$48,290</p><Badge variant="success" class="mt-1.5">+12.5%</Badge></CardContent></Card>
+      <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Active Users</p><p class="text-2xl font-bold text-kumo-default mt-1">2,431</p><Badge variant="success" class="mt-1.5">+8.2%</Badge></CardContent></Card>
+      <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">New Signups</p><p class="text-2xl font-bold text-kumo-default mt-1">384</p><Badge variant="info" class="mt-1.5">+3.1%</Badge></CardContent></Card>
+      <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Bounce Rate</p><p class="text-2xl font-bold text-kumo-default mt-1">42.3%</p><Badge variant="warning" class="mt-1.5">-2.4%</Badge></CardContent></Card>
+    </div>
+    <Card>
+      <CardHeader><CardTitle>Recent Activity</CardTitle><CardDescription>Latest actions across your application</CardDescription></CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader><TableRow><TableHead>User</TableHead><TableHead>Action</TableHead><TableHead>Status</TableHead><TableHead>Date</TableHead></TableRow></TableHeader>
+          <TableBody>
+            <TableRow><TableCell class="font-medium">Alice Johnson</TableCell><TableCell>Created new project</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">2 minutes ago</TableCell></TableRow>
+            <TableRow><TableCell class="font-medium">Bob Smith</TableCell><TableCell>Updated DNS records</TableCell><TableCell><Badge variant="info">In Progress</Badge></TableCell><TableCell class="text-kumo-subtle">15 minutes ago</TableCell></TableRow>
+            <TableRow><TableCell class="font-medium">Carol White</TableCell><TableCell>Deployed to production</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">1 hour ago</TableCell></TableRow>
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  </main>
+</div>`;
+
+const usageCode = `---
+// src/pages/dashboard.astro
+import Card from "@cloudflare/kumo-astro/components/card";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+// ... see full source below
+---
+
+<div class="flex h-screen bg-kumo-canvas">
+  <!-- Sidebar + Main Content -->
+</div>`;
+
+const sourceCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+import { DashboardChart } from "../components/DashboardChart"; // React island
+---
+
+<div class="flex h-screen bg-kumo-canvas">
+
+  <!-- Sidebar -->
+  <aside class="w-56 border-r border-kumo-hairline bg-kumo-base flex flex-col shrink-0">
+    <div class="p-4 border-b border-kumo-hairline">
+      <p class="text-sm font-semibold text-kumo-default">My App</p>
+      <p class="text-xs text-kumo-subtle">Admin Panel</p>
+    </div>
+    <nav class="flex-1 p-3 space-y-0.5">
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-kumo-elevated text-kumo-default text-sm font-medium">Overview</a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Users</a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Analytics</a>
+      <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Settings</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-auto p-6">
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h1 class="text-2xl font-bold text-kumo-default">Overview</h1>
+        <p class="text-sm text-kumo-subtle mt-0.5">Welcome back! Here's what's happening today.</p>
+      </div>
+      <Button variant="primary">Download Report</Button>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+      <Card>
+        <CardContent class="pt-4 pb-4">
+          <p class="text-xs text-kumo-subtle">Total Revenue</p>
+          <p class="text-2xl font-bold text-kumo-default mt-1">$48,290</p>
+          <Badge variant="success" class="mt-1.5">+12.5%</Badge>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-4 pb-4">
+          <p class="text-xs text-kumo-subtle">Active Users</p>
+          <p class="text-2xl font-bold text-kumo-default mt-1">2,431</p>
+          <Badge variant="success" class="mt-1.5">+8.2%</Badge>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-4 pb-4">
+          <p class="text-xs text-kumo-subtle">New Signups</p>
+          <p class="text-2xl font-bold text-kumo-default mt-1">384</p>
+          <Badge variant="info" class="mt-1.5">+3.1%</Badge>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent class="pt-4 pb-4">
+          <p class="text-xs text-kumo-subtle">Bounce Rate</p>
+          <p class="text-2xl font-bold text-kumo-default mt-1">42.3%</p>
+          <Badge variant="warning" class="mt-1.5">-2.4%</Badge>
+        </CardContent>
+      </Card>
+    </div>
+
+    <!-- Chart -->
+    <Card class="mb-6">
+      <CardHeader>
+        <CardTitle>Traffic Overview</CardTitle>
+        <CardDescription>Request and error metrics over the past hour</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <DashboardChart client:only="react" />
+      </CardContent>
+    </Card>
+
+    <!-- Activity Table -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Recent Activity</CardTitle>
+        <CardDescription>Latest actions across your application</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>User</TableHead>
+              <TableHead>Action</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Date</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell class="font-medium">Alice Johnson</TableCell>
+              <TableCell>Created new project</TableCell>
+              <TableCell><Badge variant="success">Completed</Badge></TableCell>
+              <TableCell class="text-kumo-subtle">2 minutes ago</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell class="font-medium">Bob Smith</TableCell>
+              <TableCell>Updated DNS records</TableCell>
+              <TableCell><Badge variant="info">In Progress</Badge></TableCell>
+              <TableCell class="text-kumo-subtle">15 minutes ago</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell class="font-medium">Carol White</TableCell>
+              <TableCell>Deployed to production</TableCell>
+              <TableCell><Badge variant="success">Completed</Badge></TableCell>
+              <TableCell class="text-kumo-subtle">1 hour ago</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell class="font-medium">David Brown</TableCell>
+              <TableCell>Failed login attempt</TableCell>
+              <TableCell><Badge variant="warning">Failed</Badge></TableCell>
+              <TableCell class="text-kumo-subtle">3 hours ago</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  </main>
+</div>`;
+---
+
+<DocLayout
+  title="Dashboard"
+  description="An admin dashboard with a sidebar navigation, stat cards, a timeseries chart, and a recent activity table."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+    <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+      <div class="flex h-[800px]">
+        <aside class="w-56 border-r border-kumo-hairline bg-kumo-base flex flex-col shrink-0">
+          <div class="p-4 border-b border-kumo-hairline">
+            <p class="text-sm font-semibold text-kumo-default">My App</p>
+            <p class="text-xs text-kumo-subtle">Admin Panel</p>
+          </div>
+          <nav class="flex-1 p-3 space-y-0.5">
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-kumo-elevated text-kumo-default text-sm font-medium">Overview</a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Users</a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Analytics</a>
+            <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Settings</a>
+          </nav>
+        </aside>
+        <main class="flex-1 overflow-auto p-6">
+          <div class="flex items-center justify-between mb-6">
+            <div>
+              <h1 class="text-2xl font-bold text-kumo-default">Overview</h1>
+              <p class="text-sm text-kumo-subtle mt-0.5">Welcome back! Here's what's happening today.</p>
+            </div>
+            <Button variant="primary">Download Report</Button>
+          </div>
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+            <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Total Revenue</p><p class="text-2xl font-bold text-kumo-default mt-1">$48,290</p><Badge variant="success" class="mt-1.5">+12.5%</Badge></CardContent></Card>
+            <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Active Users</p><p class="text-2xl font-bold text-kumo-default mt-1">2,431</p><Badge variant="success" class="mt-1.5">+8.2%</Badge></CardContent></Card>
+            <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">New Signups</p><p class="text-2xl font-bold text-kumo-default mt-1">384</p><Badge variant="info" class="mt-1.5">+3.1%</Badge></CardContent></Card>
+            <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Bounce Rate</p><p class="text-2xl font-bold text-kumo-default mt-1">42.3%</p><Badge variant="warning" class="mt-1.5">-2.4%</Badge></CardContent></Card>
+          </div>
+          <Card class="mb-6">
+            <CardHeader><CardTitle>Traffic Overview</CardTitle><CardDescription>Request and error metrics over the past hour</CardDescription></CardHeader>
+            <CardContent><DashboardChart client:only="react" /></CardContent>
+          </Card>
+          <Card>
+            <CardHeader><CardTitle>Recent Activity</CardTitle><CardDescription>Latest actions across your application</CardDescription></CardHeader>
+            <CardContent>
+              <Table>
+                <TableHeader><TableRow><TableHead>User</TableHead><TableHead>Action</TableHead><TableHead>Status</TableHead><TableHead>Date</TableHead></TableRow></TableHeader>
+                <TableBody>
+                  <TableRow><TableCell class="font-medium">Alice Johnson</TableCell><TableCell>Created new project</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">2 minutes ago</TableCell></TableRow>
+                  <TableRow><TableCell class="font-medium">Bob Smith</TableCell><TableCell>Updated DNS records</TableCell><TableCell><Badge variant="info">In Progress</Badge></TableCell><TableCell class="text-kumo-subtle">15 minutes ago</TableCell></TableRow>
+                  <TableRow><TableCell class="font-medium">Carol White</TableCell><TableCell>Deployed to production</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">1 hour ago</TableCell></TableRow>
+                  <TableRow><TableCell class="font-medium">David Brown</TableCell><TableCell>Failed login attempt</TableCell><TableCell><Badge variant="warning">Failed</Badge></TableCell><TableCell class="text-kumo-subtle">3 hours ago</TableCell></TableRow>
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
+        </main>
+      </div>
+    </div>
+    <div class="component-example-code">
+      <CodeBlock code={sourceCode} lang="astro" />
+    </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Dashboard is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <p class="mb-2 text-xs text-kumo-subtle">The chart component requires <code class="rounded bg-kumo-control px-1 py-0.5">echarts</code> and <code class="rounded bg-kumo-control px-1 py-0.5">@cloudflare/kumo</code> alongside <code class="rounded bg-kumo-control px-1 py-0.5">@cloudflare/kumo-astro</code>.</p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the chart component</strong></p>
+        <p class="mb-2 text-xs text-kumo-subtle">The chart is a React island. Copy <code class="rounded bg-kumo-control px-1 py-0.5">DashboardChart.tsx</code> into your project alongside the page.</p>
+        <CodeBlock code={`# Copy DashboardChart.tsx into:
+src/components/DashboardChart.tsx`} lang="bash" />
+      </div>
+
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Copy the source code into a new page</strong></p>
+        <CodeBlock code={`# Copy the source code above into:
+src/pages/dashboard.astro`} lang="bash" />
+      </div>
+
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>4. Replace the hardcoded data</strong></p>
+        <CodeBlock code={`// Swap the static stat card values, table rows, and chart data
+// with your own data source (API, database, etc.)`} lang="js" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop this in as a page file (e.g. <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">src/pages/dashboard.astro</code>). The sidebar, stat cards, and table are static — replace the hardcoded data with your own. The chart uses <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">client:only="react"</code> for hydration.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>Without Chart</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A simplified version without the echarts dependency — useful when you don't need data visualisation.</p>
+
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="flex h-[700px]">
+          <aside class="w-56 border-r border-kumo-hairline bg-kumo-base flex flex-col shrink-0">
+            <div class="p-4 border-b border-kumo-hairline">
+              <p class="text-sm font-semibold text-kumo-default">My App</p>
+              <p class="text-xs text-kumo-subtle">Admin Panel</p>
+            </div>
+            <nav class="flex-1 p-3 space-y-0.5">
+              <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg bg-kumo-elevated text-kumo-default text-sm font-medium">Overview</a>
+              <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Users</a>
+              <a href="#" class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-kumo-subtle hover:bg-kumo-elevated hover:text-kumo-default transition-colors text-sm">Settings</a>
+            </nav>
+          </aside>
+          <main class="flex-1 overflow-auto p-6">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <h1 class="text-2xl font-bold text-kumo-default">Overview</h1>
+                <p class="text-sm text-kumo-subtle mt-0.5">Welcome back!</p>
+              </div>
+              <Button variant="primary">Download Report</Button>
+            </div>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+              <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Total Revenue</p><p class="text-2xl font-bold text-kumo-default mt-1">$48,290</p><Badge variant="success" class="mt-1.5">+12.5%</Badge></CardContent></Card>
+              <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Active Users</p><p class="text-2xl font-bold text-kumo-default mt-1">2,431</p><Badge variant="success" class="mt-1.5">+8.2%</Badge></CardContent></Card>
+              <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">New Signups</p><p class="text-2xl font-bold text-kumo-default mt-1">384</p><Badge variant="info" class="mt-1.5">+3.1%</Badge></CardContent></Card>
+              <Card><CardContent class="pt-4 pb-4"><p class="text-xs text-kumo-subtle">Bounce Rate</p><p class="text-2xl font-bold text-kumo-default mt-1">42.3%</p><Badge variant="warning" class="mt-1.5">-2.4%</Badge></CardContent></Card>
+            </div>
+            <Card>
+              <CardHeader><CardTitle>Recent Activity</CardTitle><CardDescription>Latest actions across your application</CardDescription></CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader><TableRow><TableHead>User</TableHead><TableHead>Action</TableHead><TableHead>Status</TableHead><TableHead>Date</TableHead></TableRow></TableHeader>
+                  <TableBody>
+                    <TableRow><TableCell class="font-medium">Alice Johnson</TableCell><TableCell>Created new project</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">2 minutes ago</TableCell></TableRow>
+                    <TableRow><TableCell class="font-medium">Bob Smith</TableCell><TableCell>Updated DNS records</TableCell><TableCell><Badge variant="info">In Progress</Badge></TableCell><TableCell class="text-kumo-subtle">15 minutes ago</TableCell></TableRow>
+                    <TableRow><TableCell class="font-medium">Carol White</TableCell><TableCell>Deployed to production</TableCell><TableCell><Badge variant="success">Completed</Badge></TableCell><TableCell class="text-kumo-subtle">1 hour ago</TableCell></TableRow>
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </main>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={withoutChartCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Card, CardHeader, CardContent</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Stat cards, chart container, activity table container</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Download Report action</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Badge</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Stat card trends and table status indicators</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Table, TableHeader, TableBody, TableRow, TableHead, TableCell</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Recent activity table</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">TimeseriesChart, ChartPalette</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo</td>
+            <td class="px-4 py-3 text-xs">Traffic overview chart (React island, requires echarts)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

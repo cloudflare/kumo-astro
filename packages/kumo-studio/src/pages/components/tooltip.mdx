@@ -1,0 +1,172 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Tooltip"
+description: "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it."
+sourceFile: "components/tooltip"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Icon from "~/components/docs/Icon.astro";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Tooltip content="Save changes">\n  <Button variant="primary">Save</Button>\n</Tooltip>`}
+    lang="astro"
+  >
+    <Tooltip content="Save changes">
+      <Button variant="primary">Save</Button>
+    </Tooltip>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Tooltip from "@cloudflare/kumo-astro/components/tooltip";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
+import Button from "@cloudflare/kumo-astro/components/button";
+---
+
+<Tooltip content="Save changes">
+  <Button>Save</Button>
+</Tooltip>
+```
+
+<p>
+  The trigger element goes in the default slot. The tooltip text is passed via the required <code>content</code> prop — it accepts a plain string only (not markup). There is no <code>open</code>/<code>defaultOpen</code>/<code>onOpenChange</code> — the tooltip is always uncontrolled.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Tooltip content="Save changes">\n  <Button variant="primary">Save</Button>\n</Tooltip>`}
+  lang="astro"
+>
+  <Tooltip content="Save changes">
+    <Button variant="primary">Save</Button>
+  </Tooltip>
+</ComponentExample>
+
+### Icon Button with Tooltip
+
+<ComponentExample
+  code={`<Tooltip content="Add item">\n  <Button variant="secondary" shape="square" aria-label="Add item">\n    <Icon name="plus" />\n  </Button>\n</Tooltip>`}
+  lang="astro"
+>
+  <Tooltip content="Add item">
+    <Button variant="secondary" shape="square" aria-label="Add item">
+      <Icon name="plus" />
+    </Button>
+  </Tooltip>
+</ComponentExample>
+
+### Placement
+
+<ComponentExample
+  code={`<div class="flex flex-wrap items-center gap-4">\n  <Tooltip content="Top" side="top"><Button variant="secondary">Top</Button></Tooltip>\n  <Tooltip content="Bottom" side="bottom"><Button variant="secondary">Bottom</Button></Tooltip>\n  <Tooltip content="Left" side="left"><Button variant="secondary">Left</Button></Tooltip>\n  <Tooltip content="Right" side="right"><Button variant="secondary">Right</Button></Tooltip>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-wrap items-center gap-4">
+    <Tooltip content="Top" side="top"><Button variant="secondary">Top</Button></Tooltip>
+    <Tooltip content="Bottom" side="bottom"><Button variant="secondary">Bottom</Button></Tooltip>
+    <Tooltip content="Left" side="left"><Button variant="secondary">Left</Button></Tooltip>
+    <Tooltip content="Right" side="right"><Button variant="secondary">Right</Button></Tooltip>
+  </div>
+</ComponentExample>
+
+### Custom Delay
+
+<ComponentExample
+  code={`<Tooltip content="Opens quickly" delay={100}>\n  <Button variant="secondary">Fast tooltip</Button>\n</Tooltip>`}
+  lang="astro"
+>
+  <Tooltip content="Opens quickly" delay={100}>
+    <Button variant="secondary">Fast tooltip</Button>
+  </Tooltip>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">content<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Tooltip text. Plain string only — no markup.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom" | "left" | "right"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top"</code></td>
+        <td class="px-4 py-3 text-xs">Preferred side for the tooltip to appear.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">delay</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>600</code></td>
+        <td class="px-4 py-3 text-xs">Delay in milliseconds before showing the tooltip.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">closeDelay</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>0</code></td>
+        <td class="px-4 py-3 text-xs">Delay in milliseconds before hiding the tooltip.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the wrapper element.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

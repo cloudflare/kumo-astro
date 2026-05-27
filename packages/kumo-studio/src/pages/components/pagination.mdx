@@ -1,0 +1,231 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Pagination"
+description: "A page navigation component for navigating through paginated content."
+sourceFile: "components/pagination"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Pagination from "@cloudflare/kumo-astro/components/pagination";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Pagination totalItems={100} pageSize={10} />`}
+    lang="astro"
+  >
+    <Pagination totalItems={100} pageSize={10} />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Pagination from "@cloudflare/kumo-astro/components/pagination";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Pagination from "@cloudflare/kumo-astro/components/pagination";
+---
+
+<Pagination totalItems={100} pageSize={10} />
+```
+
+<p>
+  The Astro <code>Pagination</code> is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  State is managed in the DOM via <code>data-*</code> attributes. Listen for page changes with a custom DOM event:
+</p>
+
+```astro
+<script>
+  document.querySelector('[data-kumo-pagination]')
+    ?.addEventListener('kumo:page-change', (e) => {
+      const { page, pageSize } = e.detail;
+      // fetch new data...
+    });
+</script>
+```
+
+<p>
+  The Astro API differs from the React version: use <code>totalItems</code>/<code>pageSize</code> instead of
+  <code>totalCount</code>/<code>perPage</code>, and there is no <code>setPage</code> callback or compound component API.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Full Controls (Default)
+
+<ComponentExample
+  code={`<Pagination totalItems={100} pageSize={10} />`}
+  lang="astro"
+>
+  <Pagination totalItems={100} pageSize={10} />
+</ComponentExample>
+
+### Simple Controls
+
+<ComponentExample
+  code={`<Pagination totalItems={100} pageSize={10} controls="simple" />`}
+  lang="astro"
+>
+  <Pagination totalItems={100} pageSize={10} controls="simple" />
+</ComponentExample>
+
+### Mid-Page State
+
+<ComponentExample
+  code={`<Pagination totalItems={100} pageSize={10} defaultPage={5} />`}
+  lang="astro"
+>
+  <Pagination totalItems={100} pageSize={10} defaultPage={5} />
+</ComponentExample>
+
+### Large Dataset
+
+<ComponentExample
+  code={`<Pagination totalItems={1250} pageSize={25} />`}
+  lang="astro"
+>
+  <Pagination totalItems={1250} pageSize={25} />
+</ComponentExample>
+
+### With Page Size Selector
+
+<ComponentExample
+  code={`<Pagination totalItems={200} pageSize={25} showPageSize />`}
+  lang="astro"
+>
+  <Pagination totalItems={200} pageSize={25} showPageSize />
+</ComponentExample>
+
+### Custom Page Size Options
+
+<ComponentExample
+  code={`<Pagination totalItems={500} pageSize={10} showPageSize pageSizeOptions={[10, 20, 50]} />`}
+  lang="astro"
+>
+  <Pagination totalItems={500} pageSize={10} showPageSize pageSizeOptions={[10, 20, 50]} />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">totalItems<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Total number of items across all pages.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">pageSize</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>25</code></td>
+        <td class="px-4 py-3 text-xs">Items per page.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultPage</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>1</code></td>
+        <td class="px-4 py-3 text-xs">Initial page (1-indexed).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">page</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled current page (1-indexed).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">controls</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"full" | "simple"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"full"</code></td>
+        <td class="px-4 py-3 text-xs"><code>full</code> — first, prev, input, next, last. <code>simple</code> — prev and next only.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">showPageSize</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Shows a page-size selector dropdown.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">pageSizeOptions</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number[]</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>[25, 50, 100, 250]</code></td>
+        <td class="px-4 py-3 text-xs">Available page size options.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">pageSizeLabel</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"Per page:"</code></td>
+        <td class="px-4 py-3 text-xs">Label shown before the page-size selector.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Events
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Event</th>
+        <th class="px-4 py-3 text-left font-semibold">Detail</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">kumo:page-change</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>{"{ page: number; pageSize: number }"}</code></td>
+        <td class="px-4 py-3 text-xs">Fired on the <code>[data-kumo-pagination]</code> element when the page or page size changes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

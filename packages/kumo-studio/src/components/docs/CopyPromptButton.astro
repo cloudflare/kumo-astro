@@ -1,0 +1,78 @@
+---
+interface Props {
+  componentName: string;
+  code: string;
+  lang?: string;
+}
+
+const { componentName, code, lang = "astro" } = Astro.props;
+
+const prompt = `You are building a UI component using the Kumo design system by Cloudflare.
+
+## Kumo Design Rules (follow these exactly)
+- Only use Kumo semantic tokens for all colors: bg-kumo-base, bg-kumo-canvas, bg-kumo-elevated, text-kumo-default, text-kumo-subtle, text-kumo-strong, border-kumo-hairline, ring-kumo-hairline, etc.
+- NEVER use raw Tailwind colors like bg-gray-500, text-blue-600, bg-white (unless truly needed for contrast)
+- NEVER use the dark: prefix — dark mode is fully automatic via CSS light-dark() tokens
+- Use cn() to compose class names (import from @cloudflare/kumo)
+- Icons use Phosphor Icons: @phosphor-icons/react (React) or @phosphor-icons/web (Astro/HTML)
+
+## Component: ${componentName}
+
+Here is the reference implementation in ${lang}:
+
+\`\`\`${lang}
+${code}
+\`\`\`
+
+## Instructions
+Adapt this ${componentName} component to work in my project.
+- If I am using React, convert it using @cloudflare/kumo React components
+- If I am using Astro, use @cloudflare/kumo-astro components as shown above
+- If I am using another framework, adapt the HTML structure and apply the same Kumo semantic token classes
+- Keep all Kumo design rules intact — do not substitute any tokens with raw colors
+- Do not add dark: prefixes
+`;
+---
+
+<button
+  class="copy-prompt-btn group flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-medium text-kumo-subtle ring-1 ring-kumo-hairline transition-colors hover:bg-kumo-tint hover:text-kumo-default"
+  data-prompt={prompt}
+  type="button"
+  aria-label="Copy AI prompt for this component"
+>
+  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+    <path d="M224,56a8,8,0,0,0-8-8H168V40a16,16,0,0,0-16-16H104A16,16,0,0,0,88,40v8H40a8,8,0,0,0,0,16H56V216a16,16,0,0,0,16,16H184a16,16,0,0,0,16-16V72h16A8,8,0,0,0,224,56ZM104,40h48v8H104Zm80,176H72V72H184Z"/>
+  </svg>
+  <span class="copy-prompt-label">Copy Prompt</span>
+</button>
+
+<script>
+  function initCopyPromptButtons() {
+    document.querySelectorAll<HTMLButtonElement>(".copy-prompt-btn").forEach((btn) => {
+      // Avoid double-binding
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = "true";
+
+      btn.addEventListener("click", async () => {
+        const prompt = btn.dataset.prompt ?? "";
+        await navigator.clipboard.writeText(prompt);
+
+        const label = btn.querySelector(".copy-prompt-label");
+        if (label) {
+          label.textContent = "Copied!";
+          btn.classList.add("text-kumo-default");
+          setTimeout(() => {
+            label.textContent = "Copy Prompt";
+            btn.classList.remove("text-kumo-default");
+          }, 2000);
+        }
+      });
+    });
+  }
+
+  // Run on first load
+  initCopyPromptButtons();
+
+  // Re-run on Astro view transitions
+  document.addEventListener("astro:page-load", initCopyPromptButtons);
+</script>

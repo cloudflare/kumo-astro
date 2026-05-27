@@ -1,0 +1,216 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Label"
+description: "A label component for form fields with support for required/optional indicators."
+sourceFile: "components/label"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Input from "@cloudflare/kumo-astro/components/input";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Label for="name">Display name</Label>`}
+    lang="astro"
+  >
+    <Label for="name">Display name</Label>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Label from "@cloudflare/kumo-astro/components/label";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+### With Form Components (Recommended)
+
+<p>
+  Label features are automatically available through form components like <code>Input</code>, <code>Select</code>,
+  <code>Checkbox</code>, and <code>Switch</code> via their <code>label</code> and <code>required</code> props.
+</p>
+
+```astro
+---
+import Input from "@cloudflare/kumo-astro/components/input";
+---
+
+<!-- Optional field with "(optional)" text -->
+<Input label="Phone" required={false} placeholder="+1 555-0000" />
+```
+
+### Standalone Label
+
+<p>For custom form layouts, use the <code>Label</code> component directly with a <code>for</code> attribute.</p>
+
+```astro
+---
+import Label from "@cloudflare/kumo-astro/components/label";
+---
+
+<Label for="username">Username</Label>
+<input id="username" type="text" />
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Optional Field
+
+<p>Shows gray "(optional)" text when <code>showOptional</code> is true.</p>
+
+<ComponentExample
+  code={`<Label showOptional>Phone number</Label>`}
+  lang="astro"
+>
+  <Label showOptional>Phone number</Label>
+</ComponentExample>
+
+### Form with Mixed Fields
+
+<p>Real-world example showing required and optional fields together.</p>
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Input label="Email" placeholder="you@example.com" />\n  <Input label="Phone" required={false} placeholder="+1 555-0000" />\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <Input label="Email" placeholder="you@example.com" />
+    <Input label="Phone" required={false} placeholder="+1 555-0000" />
+  </div>
+</ComponentExample>
+
+### Standalone Label
+
+<p>Use <code>Label</code> directly for custom layouts.</p>
+
+<ComponentExample
+  code={`<Label for="api-key">API Key</Label>`}
+  lang="astro"
+>
+  <Label for="api-key">API Key</Label>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Label Props
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">for</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">HTML <code>for</code> attribute linking the label to a form control.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">showOptional</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Appends gray "(optional)" text after the label content.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">asContent</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Renders a <code>&lt;span&gt;</code> instead of a <code>&lt;label&gt;</code> for non-form contexts.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Form Component Label Props
+
+<p>These props are available on <code>Input</code>, <code>InputArea</code>, <code>Select</code>, <code>Checkbox</code>, and <code>Switch</code>:</p>
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Label text. When provided, wraps the control in a <code>Field</code> with an auto-linked <code>&lt;label&gt;</code>.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">required</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">When <code>false</code>, shows "(optional)" text and sets the HTML <code>required</code> attribute to false.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>
+
+{/* Design Guidelines */}
+
+<ComponentSection>
+
+## Design Guidelines
+
+### When to Use Optional Indicators
+
+- Use "(optional)" for optional fields when most fields in the form are required
+- Be consistent within a form
+- Fields with no indicator are assumed required by users
+
+### Accessibility
+
+- The `for` attribute links the label to its control for screen readers
+- Optional indicators are purely visual — use the `required` attribute for validation
+
+</ComponentSection>

@@ -1,0 +1,154 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Link"
+description: "A styled anchor component for inline text links with multiple variants."
+sourceFile: "components/link"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Link from "@cloudflare/kumo-astro/components/link";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<p class="text-sm">\n  Read our <Link href="/docs">documentation</Link> for more details.\n</p>`}
+    lang="astro"
+  >
+    <p class="text-sm">
+      Read our <Link href="/docs">documentation</Link> for more details.
+    </p>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Link from "@cloudflare/kumo-astro/components/link";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Link from "@cloudflare/kumo-astro/components/link";
+---
+
+<p>Read our <Link href="/docs">documentation</Link> for more details.</p>
+```
+
+<p>
+  The Astro <code>Link</code> always renders a plain <code>&lt;a&gt;</code> element.
+  There is no <code>LinkProvider</code> or <code>render</code> prop — Astro handles
+  routing natively, so framework router integration is not needed.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Inline in Paragraph
+
+<ComponentExample
+  code={`<p class="text-sm">\n  Read our <Link href="/docs">documentation</Link> for more details.\n</p>`}
+  lang="astro"
+>
+  <p class="text-sm">
+    Read our <Link href="/docs">documentation</Link> for more details.
+  </p>
+</ComponentExample>
+
+### External Link
+
+<ComponentExample
+  code={`<Link href="https://developers.cloudflare.com" target="_blank" rel="noopener noreferrer">\n  Cloudflare Docs\n</Link>`}
+  lang="astro"
+>
+  <Link href="https://developers.cloudflare.com" target="_blank" rel="noopener noreferrer">
+    Cloudflare Docs
+  </Link>
+</ComponentExample>
+
+### Current Variant
+
+<p>Inherits color from its parent — useful for links within colored contexts like alerts.</p>
+
+<ComponentExample
+  code={`<p class="text-kumo-error text-sm">\n  An error occurred. <Link href="/help" variant="current">Get help</Link>\n</p>`}
+  lang="astro"
+>
+  <p class="text-kumo-error text-sm">
+    An error occurred. <Link href="/help" variant="current">Get help</Link>
+  </p>
+</ComponentExample>
+
+### Plain Variant
+
+<ComponentExample
+  code={`<Link href="/settings" variant="plain">Settings</Link>`}
+  lang="astro"
+>
+  <Link href="/settings" variant="plain">Settings</Link>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">href</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Link destination URL.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"inline" | "current" | "plain"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"inline"</code></td>
+        <td class="px-4 py-3 text-xs"><code>inline</code> — underlined primary color. <code>current</code> — inherits parent color. <code>plain</code> — primary color, no underline.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>All standard HTML anchor attributes (<code>target</code>, <code>rel</code>, <code>aria-*</code>, etc.) are forwarded to the underlying <code>&lt;a&gt;</code> element.</p>
+
+</ComponentSection>

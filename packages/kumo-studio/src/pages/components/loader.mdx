@@ -1,0 +1,120 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Loader"
+description: "A loading spinner to indicate loading state."
+sourceFile: "components/loader"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Loader from "@cloudflare/kumo-astro/components/loader";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Loader />`}
+    lang="astro"
+  >
+    <Loader />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Loader from "@cloudflare/kumo-astro/components/loader";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Loader from "@cloudflare/kumo-astro/components/loader";
+---
+
+<Loader />
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Default Size
+
+<ComponentExample
+  code={`<Loader />`}
+  lang="astro"
+>
+  <Loader />
+</ComponentExample>
+
+### Custom Size
+
+<p>Pass a number (pixels) or a preset string to the <code>size</code> prop.</p>
+
+<ComponentExample
+  code={`<Loader size={24} />`}
+  lang="astro"
+>
+  <Loader size={24} />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg" | number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Spinner size. Pass a number for an exact pixel size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"Loading"</code></td>
+        <td class="px-4 py-3 text-xs">Accessible label for the spinner SVG.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes. Use text color utilities (e.g. <code>text-kumo-subtle</code>) to change the spinner color.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

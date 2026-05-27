@@ -1,0 +1,366 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Button"
+description: "Displays a button or a component that looks like a button."
+sourceFile: "components/button"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Icon from "~/components/docs/Icon.astro";
+import Button from "@cloudflare/kumo-astro/components/button";
+import { buttonVariants } from "@cloudflare/kumo/components/button";
+
+{/* Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`---\nimport Button from "@cloudflare/kumo-astro/components/button";\n---\n\n<div class="flex flex-wrap items-center gap-2">\n  <Button variant="secondary">Button</Button>\n  <Button variant="secondary" shape="square" aria-label="Add">\n    <!-- PlusIcon SVG -->\n  </Button>\n</div>`}
+    lang="astro"
+    vrSection="basic"
+    vrTitle="Basic"
+    componentName="Button"
+  >
+    <div class="flex flex-wrap items-center gap-2">
+      <Button variant="secondary">Button</Button>
+      <Button variant="secondary" shape="square" aria-label="Add">
+        <Icon name="plus" />
+      </Button>
+    </div>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Button from "@cloudflare/kumo-astro/components/button";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Button from "@cloudflare/kumo-astro/components/button";
+---
+
+<Button variant="secondary">Click me</Button>
+```
+
+<p>
+  Accepts <code>variant</code>, <code>size</code>, <code>shape</code>,{" "}
+  <code>loading</code>, and <code>disabled</code> props. A few things to note:
+</p>
+
+- Use `class` instead of `className` for custom styles.
+- Place content directly in the slot — there is no `children` prop.
+- There is no `icon` prop — place an SVG element directly in the slot alongside your label text.
+- For navigation, use a plain `<a>` element styled with `buttonVariants()` instead of `LinkButton`.
+- The `title` (tooltip) prop is accepted but not yet rendered; tooltip wrapping is planned for a future release.
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+{/* Variants */}
+
+### Variants
+
+#### Primary
+
+<ComponentExample
+  code={`<Button variant="primary">Primary</Button>`}
+  lang="astro"
+  vrSection="variant-primary"
+  vrTitle="Variant: Primary"
+>
+  <Button variant="primary">Primary</Button>
+</ComponentExample>
+
+#### Secondary
+
+<ComponentExample
+  code={`<Button variant="secondary">Secondary</Button>`}
+  lang="astro"
+  vrSection="variant-secondary"
+  vrTitle="Variant: Secondary"
+>
+  <Button variant="secondary">Secondary</Button>
+</ComponentExample>
+
+#### Ghost
+
+<ComponentExample
+  code={`<Button variant="ghost">Ghost</Button>`}
+  lang="astro"
+  vrSection="variant-ghost"
+  vrTitle="Variant: Ghost"
+>
+  <Button variant="ghost">Ghost</Button>
+</ComponentExample>
+
+#### Destructive
+
+<ComponentExample
+  code={`<Button variant="destructive">Destructive</Button>`}
+  lang="astro"
+  vrSection="variant-destructive"
+  vrTitle="Variant: Destructive"
+>
+  <Button variant="destructive">Destructive</Button>
+</ComponentExample>
+
+#### Outline
+
+<ComponentExample
+  code={`<Button variant="outline">Outline</Button>`}
+  lang="astro"
+  vrSection="variant-outline"
+  vrTitle="Variant: Outline"
+>
+  <Button variant="outline">Outline</Button>
+</ComponentExample>
+
+#### Secondary Destructive
+
+<ComponentExample
+  code={`<Button variant="secondary-destructive">Secondary Destructive</Button>`}
+  lang="astro"
+  vrSection="variant-secondary-destructive"
+  vrTitle="Variant: Secondary Destructive"
+>
+  <Button variant="secondary-destructive">Secondary Destructive</Button>
+</ComponentExample>
+
+{/* Sizes */}
+
+### Sizes
+
+<ComponentExample
+  code={`<div class="flex flex-wrap items-center gap-3">\n  <Button size="xs" variant="secondary">Extra Small</Button>\n  <Button size="sm" variant="secondary">Small</Button>\n  <Button size="base" variant="secondary">Base</Button>\n  <Button size="lg" variant="secondary">Large</Button>\n</div>`}
+  lang="astro"
+  vrSection="sizes"
+  vrTitle="Sizes"
+>
+  <div class="flex flex-wrap items-center gap-3">
+    <Button size="xs" variant="secondary">Extra Small</Button>
+    <Button size="sm" variant="secondary">Small</Button>
+    <Button size="base" variant="secondary">Base</Button>
+    <Button size="lg" variant="secondary">Large</Button>
+  </div>
+</ComponentExample>
+
+{/* With Icon */}
+
+### With Icon
+
+<ComponentExample
+  code={`<Button variant="secondary">\n  <!-- PlusIcon SVG -->\n  Create Worker\n</Button>`}
+  lang="astro"
+  vrSection="with-icon"
+  vrTitle="With Icon"
+>
+  <Button variant="secondary">
+    <Icon name="plus" />
+    Create Worker
+  </Button>
+</ComponentExample>
+
+{/* Icon Only */}
+
+### Icon Only
+
+<p>
+  For icon-only buttons, use `shape="square"` or `shape="circle"` and place
+  your SVG icon in the slot.
+  <strong>Always include `aria-label`</strong>
+  for accessibility — without visible text, screen readers need the label to
+  convey the button's purpose.
+</p>
+<ComponentExample
+  code={`<div class="flex flex-wrap items-center gap-3">\n  <Button variant="secondary" shape="square" aria-label="Add item">\n    <!-- PlusIcon SVG -->\n  </Button>\n  <Button variant="secondary" shape="circle" aria-label="Add item">\n    <!-- PlusIcon SVG -->\n  </Button>\n</div>`}
+  lang="astro"
+  vrSection="icon-only"
+  vrTitle="Icon Only"
+>
+  <div class="flex flex-wrap items-center gap-3">
+    <Button variant="secondary" shape="square" aria-label="Add item">
+      <Icon name="plus" />
+    </Button>
+    <Button variant="secondary" shape="circle" aria-label="Add item">
+      <Icon name="plus" />
+    </Button>
+  </div>
+</ComponentExample>
+
+{/* Loading State */}
+
+### Loading State
+
+<ComponentExample
+  code={`<Button variant="primary" loading>Loading...</Button>`}
+  lang="astro"
+  vrSection="loading"
+  vrTitle="Loading State"
+>
+  <Button variant="primary" loading>Loading...</Button>
+</ComponentExample>
+
+{/* Disabled State */}
+
+### Disabled State
+
+<ComponentExample
+  code={`<Button variant="secondary" disabled>Disabled</Button>`}
+  lang="astro"
+  vrSection="disabled"
+  vrTitle="Disabled State"
+>
+  <Button variant="secondary" disabled>Disabled</Button>
+</ComponentExample>
+
+{/* Title (Tooltip) */}
+
+### Title
+
+  <p>
+    Use the `title` prop to wrap the button in a tooltip. This is useful for
+    icon-only buttons or whenever additional context helps the user understand
+    the action.
+  </p>
+  <ComponentExample
+    code={`<div class="flex flex-wrap items-center gap-3">\n  <Button variant="secondary" title="Create a new Worker">Create Worker</Button>\n  <Button variant="secondary" shape="square" aria-label="Add item" title="Add item">\n    <!-- PlusIcon SVG -->\n  </Button>\n</div>`}
+    lang="astro"
+    vrSection="title"
+    vrTitle="Title"
+  >
+    <div class="flex flex-wrap items-center gap-3">
+      <Button variant="secondary" title="Create a new Worker">Create Worker</Button>
+      <Button variant="secondary" shape="square" aria-label="Add item" title="Add item">
+        <Icon name="plus" />
+      </Button>
+    </div>
+  </ComponentExample>
+
+### Link as Button
+
+<p>
+  Use a plain `<a>` element with `buttonVariants()` when the interaction should
+  navigate somewhere but still look like a button. Use `Button` for in-place
+  actions like submitting, opening, or toggling UI.
+</p>
+<ComponentExample
+  code={`---\nimport { buttonVariants } from "@cloudflare/kumo/components/button";\n---\n\n<div class="flex flex-wrap items-center gap-3">\n  <a href="/components/link" class={buttonVariants({ variant: "secondary" })}>\n    Read Link docs\n  </a>\n  <a\n    href="https://developers.cloudflare.com"\n    class={buttonVariants({ variant: "ghost" })}\n    target="_blank"\n    rel="noopener noreferrer"\n  >\n    <!-- ArrowSquareOutIcon SVG -->\n    Cloudflare Docs\n  </a>\n</div>`}
+  lang="astro"
+  vrSection="link-as-button"
+  vrTitle="Link as Button"
+>
+  <div class="flex flex-wrap items-center gap-3">
+    <a href="/components/link" class={buttonVariants({ variant: "secondary" })}>
+      Read Link docs
+    </a>
+    <a
+      href="https://developers.cloudflare.com"
+      class={buttonVariants({ variant: "ghost" })}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <Icon name="arrow-square-out" />
+      Cloudflare Docs
+    </a>
+  </div>
+</ComponentExample>
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"primary" | "secondary" | "ghost" | "destructive" | "secondary-destructive" | "outline"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"secondary"</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">Visual style of the button.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"xs" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">Button size.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">shape</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"base" | "square" | "circle"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">Button shape. Use <code>"square"</code> or <code>"circle"</code> for icon-only buttons.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">loading</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">Shows a loading spinner and disables interaction.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">disabled</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">Disables the button.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">type</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code class="text-wrap break-words">"button" | "submit" | "reset"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"button"</code></td>
+        <td class="px-4 py-3 text-xs max-w-md">HTML button type attribute.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">title</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs max-w-md">Tooltip text. Accepted but not yet rendered — tooltip wrapping is planned for a future release.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs max-w-md">Additional CSS classes to apply to the button element.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">aria-label</td>
+        <td class="px-4 py-3 font-mono text-xs max-w-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs max-w-md">Required for <code>shape="square"</code> or <code>shape="circle"</code> buttons that have no visible text.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</ComponentSection>
+
+{/* trigger-vr */}

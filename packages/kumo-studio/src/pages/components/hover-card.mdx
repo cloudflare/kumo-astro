@@ -1,0 +1,209 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Hover Card"
+description: "A floating preview card that appears when hovering over a trigger element."
+sourceFile: "components/hover-card"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import HoverCard from "@cloudflare/kumo-astro/components/hover-card";
+import HoverCardTrigger from "@cloudflare/kumo-astro/components/hover-card-trigger";
+import HoverCardContent from "@cloudflare/kumo-astro/components/hover-card-content";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<HoverCard>\n  <HoverCardTrigger>\n    <a href="#" class="text-kumo-brand underline">@cloudflare</a>\n  </HoverCardTrigger>\n  <HoverCardContent>\n    <p class="text-sm font-semibold text-kumo-default">Cloudflare</p>\n    <p class="text-sm text-kumo-subtle mt-1">Building a better internet.</p>\n  </HoverCardContent>\n</HoverCard>`}
+    lang="astro"
+  >
+    <HoverCard>
+      <HoverCardTrigger>
+        <a href="#" class="text-kumo-brand underline">@cloudflare</a>
+      </HoverCardTrigger>
+      <HoverCardContent>
+        <p class="text-sm font-semibold text-kumo-default">Cloudflare</p>
+        <p class="text-sm text-kumo-subtle mt-1">Building a better internet.</p>
+      </HoverCardContent>
+    </HoverCard>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import HoverCard from "@cloudflare/kumo-astro/components/hover-card";\nimport HoverCardTrigger from "@cloudflare/kumo-astro/components/hover-card-trigger";\nimport HoverCardContent from "@cloudflare/kumo-astro/components/hover-card-content";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import HoverCard from "@cloudflare/kumo-astro/components/hover-card";
+import HoverCardTrigger from "@cloudflare/kumo-astro/components/hover-card-trigger";
+import HoverCardContent from "@cloudflare/kumo-astro/components/hover-card-content";
+---
+
+<HoverCard>
+  <HoverCardTrigger>
+    <a href="#">@username</a>
+  </HoverCardTrigger>
+  <HoverCardContent>
+    <p>User profile preview</p>
+  </HoverCardContent>
+</HoverCard>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### User Profile Preview
+
+<ComponentExample
+  code={`<HoverCard>\n  <HoverCardTrigger>\n    <a href="#" class="text-kumo-brand underline">@cloudflare</a>\n  </HoverCardTrigger>\n  <HoverCardContent>\n    <p class="text-sm font-semibold text-kumo-default">Cloudflare</p>\n    <p class="text-sm text-kumo-subtle mt-1">Building a better internet.</p>\n  </HoverCardContent>\n</HoverCard>`}
+  lang="astro"
+>
+  <HoverCard>
+    <HoverCardTrigger>
+      <a href="#" class="text-kumo-brand underline">@cloudflare</a>
+    </HoverCardTrigger>
+    <HoverCardContent>
+      <p class="text-sm font-semibold text-kumo-default">Cloudflare</p>
+      <p class="text-sm text-kumo-subtle mt-1">Building a better internet.</p>
+    </HoverCardContent>
+  </HoverCard>
+</ComponentExample>
+
+### Placement
+
+<ComponentExample
+  code={`<HoverCard>\n  <HoverCardTrigger>\n    <a href="#" class="text-kumo-brand underline">Hover me</a>\n  </HoverCardTrigger>\n  <HoverCardContent side="right" align="start">\n    <p class="text-sm text-kumo-default">Appears to the right</p>\n  </HoverCardContent>\n</HoverCard>`}
+  lang="astro"
+>
+  <HoverCard>
+    <HoverCardTrigger>
+      <a href="#" class="text-kumo-brand underline">Hover me (right)</a>
+    </HoverCardTrigger>
+    <HoverCardContent side="right" align="start">
+      <p class="text-sm text-kumo-default">Appears to the right</p>
+    </HoverCardContent>
+  </HoverCard>
+</ComponentExample>
+
+### Custom Delay
+
+<ComponentExample
+  code={`<HoverCard openDelay={200} closeDelay={100}>\n  <HoverCardTrigger>\n    <a href="#" class="text-kumo-brand underline">Fast hover card</a>\n  </HoverCardTrigger>\n  <HoverCardContent>\n    <p class="text-sm text-kumo-default">Opens quickly on hover.</p>\n  </HoverCardContent>\n</HoverCard>`}
+  lang="astro"
+>
+  <HoverCard openDelay={200} closeDelay={100}>
+    <HoverCardTrigger>
+      <a href="#" class="text-kumo-brand underline">Fast hover card</a>
+    </HoverCardTrigger>
+    <HoverCardContent>
+      <p class="text-sm text-kumo-default">Opens quickly on hover.</p>
+    </HoverCardContent>
+  </HoverCard>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### HoverCard
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">openDelay</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>700</code></td>
+        <td class="px-4 py-3 text-xs">Delay in ms before showing the card.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">closeDelay</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>300</code></td>
+        <td class="px-4 py-3 text-xs">Delay in ms before hiding the card.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the wrapper.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### HoverCardTrigger
+
+<p>Renders a <code>&lt;span&gt;</code> wrapper around the trigger element. Accepts <code>class</code> and any span attributes.</p>
+
+### HoverCardContent
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">side</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"top" | "bottom" | "left" | "right"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"bottom"</code></td>
+        <td class="px-4 py-3 text-xs">Preferred side for the card to appear.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">align</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"start" | "center" | "end"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"start"</code></td>
+        <td class="px-4 py-3 text-xs">Alignment relative to the trigger.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes on the content panel.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

@@ -1,0 +1,320 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Table"
+description: "A table component for displaying tabular data."
+sourceFile: "components/table"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableFooter from "@cloudflare/kumo-astro/components/table-footer";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Table>\n  <TableHeader>\n    <TableRow>\n      <TableHead>Name</TableHead>\n      <TableHead>Status</TableHead>\n      <TableHead>Region</TableHead>\n    </TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow>\n      <TableCell>worker-api</TableCell>\n      <TableCell>Active</TableCell>\n      <TableCell>US East</TableCell>\n    </TableRow>\n  </TableBody>\n</Table>`}
+    lang="astro"
+  >
+    <LayerCard class="p-0 overflow-hidden">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Region</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>worker-api</TableCell>
+            <TableCell>Active</TableCell>
+            <TableCell>US East</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>worker-auth</TableCell>
+            <TableCell>Active</TableCell>
+            <TableCell>EU West</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>worker-cache</TableCell>
+            <TableCell>Disabled</TableCell>
+            <TableCell>Asia Pacific</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </LayerCard>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Table from "@cloudflare/kumo-astro/components/table";\nimport TableHeader from "@cloudflare/kumo-astro/components/table-header";\nimport TableBody from "@cloudflare/kumo-astro/components/table-body";\nimport TableFooter from "@cloudflare/kumo-astro/components/table-footer";\nimport TableRow from "@cloudflare/kumo-astro/components/table-row";\nimport TableHead from "@cloudflare/kumo-astro/components/table-head";\nimport TableCell from "@cloudflare/kumo-astro/components/table-cell";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+---
+
+<LayerCard class="p-0">
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Name</TableHead>
+        <TableHead>Status</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>worker-api</TableCell>
+        <TableCell>Active</TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</LayerCard>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Table>\n  <TableHeader>\n    <TableRow>\n      <TableHead>Name</TableHead>\n      <TableHead>Status</TableHead>\n    </TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow>\n      <TableCell>worker-api</TableCell>\n      <TableCell>Active</TableCell>\n    </TableRow>\n  </TableBody>\n</Table>`}
+  lang="astro"
+>
+  <LayerCard class="p-0 overflow-hidden">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Region</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>worker-api</TableCell>
+          <TableCell>Active</TableCell>
+          <TableCell>US East</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>worker-auth</TableCell>
+          <TableCell>Active</TableCell>
+          <TableCell>EU West</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </LayerCard>
+</ComponentExample>
+
+### Compact Header
+
+<ComponentExample
+  code={`<Table>\n  <TableHeader variant="compact">\n    <TableRow><TableHead>Name</TableHead><TableHead>Value</TableHead></TableRow>\n  </TableHeader>\n  <TableBody>\n    <TableRow><TableCell>Row 1</TableCell><TableCell>Value 1</TableCell></TableRow>\n  </TableBody>\n</Table>`}
+  lang="astro"
+>
+  <LayerCard class="p-0 overflow-hidden">
+    <Table>
+      <TableHeader variant="compact">
+        <TableRow>
+          <TableHead>Name</TableHead>
+          <TableHead>Value</TableHead>
+          <TableHead>Status</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>Row 1</TableCell>
+          <TableCell>Value A</TableCell>
+          <TableCell>Active</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>Row 2</TableCell>
+          <TableCell>Value B</TableCell>
+          <TableCell>Inactive</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </LayerCard>
+</ComponentExample>
+
+### Selected Row
+
+<ComponentExample
+  code={`<Table>\n  <TableBody>\n    <TableRow>...<TableCell>Normal row</TableCell></TableRow>\n    <TableRow variant="selected">...<TableCell>Selected row</TableCell></TableRow>\n  </TableBody>\n</Table>`}
+  lang="astro"
+>
+  <LayerCard class="p-0 overflow-hidden">
+    <Table>
+      <TableHeader>
+        <TableRow><TableHead>Name</TableHead><TableHead>Status</TableHead></TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell>worker-api</TableCell>
+          <TableCell>Active</TableCell>
+        </TableRow>
+        <TableRow variant="selected">
+          <TableCell>worker-auth</TableCell>
+          <TableCell>Active</TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell>worker-cache</TableCell>
+          <TableCell>Disabled</TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
+  </LayerCard>
+</ComponentExample>
+
+### With Footer
+
+<ComponentExample
+  code={`<Table>\n  <TableHeader>...</TableHeader>\n  <TableBody>...</TableBody>\n  <TableFooter>\n    <TableRow>\n      <TableCell colspan="3">3 workers total</TableCell>\n    </TableRow>\n  </TableFooter>\n</Table>`}
+  lang="astro"
+>
+  <LayerCard class="p-0 overflow-hidden">
+    <Table>
+      <TableHeader>
+        <TableRow><TableHead>Name</TableHead><TableHead>Status</TableHead></TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow><TableCell>worker-api</TableCell><TableCell>Active</TableCell></TableRow>
+        <TableRow><TableCell>worker-auth</TableCell><TableCell>Active</TableCell></TableRow>
+      </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell colspan="2" class="text-kumo-subtle text-xs">2 workers total</TableCell>
+        </TableRow>
+      </TableFooter>
+    </Table>
+  </LayerCard>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Table
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">layout</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"auto" | "fixed"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"auto"</code></td>
+        <td class="px-4 py-3 text-xs"><code>auto</code> — columns resize based on content. <code>fixed</code> — equal-width columns.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### TableHeader
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "compact"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs"><code>compact</code> applies smaller padding and elevated background.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">sticky</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Pins the header row to the top of the scroll container.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### TableRow
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "selected"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Use <code>"selected"</code> to highlight the row.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### TableHead / TableCell
+
+<p>Both accept a <code>sticky</code> prop (<code>"left" | "right"</code>) to pin the column to the edge of a horizontally scrollable container. Wrap the table in an <code>overflow-x-auto</code> container when using sticky columns.</p>
+
+### TableBody, TableFooter
+
+<p>Semantic wrappers. Accept <code>class</code> and any standard HTML attributes.</p>
+
+</ComponentSection>

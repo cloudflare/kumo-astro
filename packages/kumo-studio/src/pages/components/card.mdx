@@ -1,0 +1,192 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Card"
+description: "A generic contained surface for grouping related content with optional header, body, and footer."
+sourceFile: "components/card"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Button from "@cloudflare/kumo-astro/components/button";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Card>\n  <CardHeader>\n    <CardTitle>My Card</CardTitle>\n    <CardDescription>A description of the card content.</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p class="text-sm text-kumo-default">Card body content goes here.</p>\n  </CardContent>\n  <CardFooter>\n    <Button size="sm">Action</Button>\n  </CardFooter>\n</Card>`}
+    lang="astro"
+  >
+    <Card>
+      <CardHeader>
+        <CardTitle>My Card</CardTitle>
+        <CardDescription>A description of the card content.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p class="text-sm text-kumo-default">Card body content goes here.</p>
+      </CardContent>
+      <CardFooter>
+        <Button size="sm">Action</Button>
+      </CardFooter>
+    </Card>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Card from "@cloudflare/kumo-astro/components/card";\nimport CardHeader from "@cloudflare/kumo-astro/components/card-header";\nimport CardTitle from "@cloudflare/kumo-astro/components/card-title";\nimport CardDescription from "@cloudflare/kumo-astro/components/card-description";\nimport CardContent from "@cloudflare/kumo-astro/components/card-content";\nimport CardFooter from "@cloudflare/kumo-astro/components/card-footer";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+---
+
+<Card>
+  <CardHeader>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p>Content</p>
+  </CardContent>
+  <CardFooter>
+    <button>Action</button>
+  </CardFooter>
+</Card>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Card>\n  <CardHeader>\n    <CardTitle>My Card</CardTitle>\n    <CardDescription>A description of the card content.</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p class="text-sm text-kumo-default">Card body content goes here.</p>\n  </CardContent>\n  <CardFooter>\n    <Button size="sm">Action</Button>\n  </CardFooter>\n</Card>`}
+  lang="astro"
+>
+  <Card>
+    <CardHeader>
+      <CardTitle>My Card</CardTitle>
+      <CardDescription>A description of the card content.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <p class="text-sm text-kumo-default">Card body content goes here.</p>
+    </CardContent>
+    <CardFooter>
+      <Button size="sm">Action</Button>
+    </CardFooter>
+  </Card>
+</ComponentExample>
+
+### Elevated
+
+<ComponentExample
+  code={`<Card variant="elevated">\n  <CardHeader>\n    <CardTitle>Elevated Card</CardTitle>\n    <CardDescription>Raised surface variant.</CardDescription>\n  </CardHeader>\n  <CardContent>\n    <p class="text-sm text-kumo-default">Content on an elevated surface.</p>\n  </CardContent>\n</Card>`}
+  lang="astro"
+>
+  <Card variant="elevated">
+    <CardHeader>
+      <CardTitle>Elevated Card</CardTitle>
+      <CardDescription>Raised surface variant.</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <p class="text-sm text-kumo-default">Content on an elevated surface.</p>
+    </CardContent>
+  </Card>
+</ComponentExample>
+
+### Variants
+
+<ComponentExample
+  code={`<div class="grid grid-cols-2 gap-4">\n  <Card variant="default"><CardContent><p class="text-sm">default</p></CardContent></Card>\n  <Card variant="elevated"><CardContent><p class="text-sm">elevated</p></CardContent></Card>\n  <Card variant="recessed"><CardContent><p class="text-sm">recessed</p></CardContent></Card>\n  <Card variant="ghost"><CardContent><p class="text-sm">ghost</p></CardContent></Card>\n</div>`}
+  lang="astro"
+>
+  <div class="grid grid-cols-2 gap-4">
+    <Card variant="default"><CardContent><p class="text-sm text-kumo-default">default</p></CardContent></Card>
+    <Card variant="elevated"><CardContent><p class="text-sm text-kumo-default">elevated</p></CardContent></Card>
+    <Card variant="recessed"><CardContent><p class="text-sm text-kumo-default">recessed</p></CardContent></Card>
+    <Card variant="ghost"><CardContent><p class="text-sm text-kumo-default">ghost</p></CardContent></Card>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Card
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "elevated" | "recessed" | "ghost"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs">Visual surface variant.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### CardHeader, CardContent, CardFooter
+
+<p>These sub-components accept only <code>class</code> and any HTML <code>div</code> attributes. Content goes in the default slot.</p>
+
+### CardTitle
+
+<p>Renders an <code>&lt;h3&gt;</code> with semibold styling. Accepts <code>class</code> and any heading attributes.</p>
+
+### CardDescription
+
+<p>Renders a <code>&lt;p&gt;</code> with muted text styling. Accepts <code>class</code> and any paragraph attributes.</p>
+
+</ComponentSection>

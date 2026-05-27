@@ -1,0 +1,221 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Breadcrumbs"
+description: "A navigation component that shows the current page's location within a navigational hierarchy."
+sourceFile: "components/breadcrumbs"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Icon from "~/components/docs/Icon.astro";
+import Breadcrumbs from "@cloudflare/kumo-astro/components/breadcrumbs";
+import BreadcrumbsLink from "@cloudflare/kumo-astro/components/breadcrumbs-link";
+import BreadcrumbsCurrent from "@cloudflare/kumo-astro/components/breadcrumbs-current";
+import BreadcrumbsSeparator from "@cloudflare/kumo-astro/components/breadcrumbs-separator";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Breadcrumbs>\n  <BreadcrumbsLink href="/">Home</BreadcrumbsLink>\n  <BreadcrumbsSeparator />\n  <BreadcrumbsLink href="/docs">Docs</BreadcrumbsLink>\n  <BreadcrumbsSeparator />\n  <BreadcrumbsCurrent>Getting Started</BreadcrumbsCurrent>\n</Breadcrumbs>`}
+    lang="astro"
+  >
+    <Breadcrumbs>
+      <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+      <BreadcrumbsSeparator />
+      <BreadcrumbsLink href="/docs">Docs</BreadcrumbsLink>
+      <BreadcrumbsSeparator />
+      <BreadcrumbsCurrent>Getting Started</BreadcrumbsCurrent>
+    </Breadcrumbs>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Breadcrumbs from "@cloudflare/kumo-astro/components/breadcrumbs";\nimport BreadcrumbsLink from "@cloudflare/kumo-astro/components/breadcrumbs-link";\nimport BreadcrumbsCurrent from "@cloudflare/kumo-astro/components/breadcrumbs-current";\nimport BreadcrumbsSeparator from "@cloudflare/kumo-astro/components/breadcrumbs-separator";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Breadcrumbs from "@cloudflare/kumo-astro/components/breadcrumbs";
+import BreadcrumbsLink from "@cloudflare/kumo-astro/components/breadcrumbs-link";
+import BreadcrumbsCurrent from "@cloudflare/kumo-astro/components/breadcrumbs-current";
+import BreadcrumbsSeparator from "@cloudflare/kumo-astro/components/breadcrumbs-separator";
+---
+
+<Breadcrumbs>
+  <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+  <BreadcrumbsSeparator />
+  <BreadcrumbsLink href="/settings">Settings</BreadcrumbsLink>
+  <BreadcrumbsSeparator />
+  <BreadcrumbsCurrent>Profile</BreadcrumbsCurrent>
+</Breadcrumbs>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Breadcrumbs>\n  <BreadcrumbsLink href="/">Home</BreadcrumbsLink>\n  <BreadcrumbsSeparator />\n  <BreadcrumbsLink href="/settings">Settings</BreadcrumbsLink>\n  <BreadcrumbsSeparator />\n  <BreadcrumbsCurrent>Profile</BreadcrumbsCurrent>\n</Breadcrumbs>`}
+  lang="astro"
+>
+  <Breadcrumbs>
+    <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+    <BreadcrumbsSeparator />
+    <BreadcrumbsLink href="/settings">Settings</BreadcrumbsLink>
+    <BreadcrumbsSeparator />
+    <BreadcrumbsCurrent>Profile</BreadcrumbsCurrent>
+  </Breadcrumbs>
+</ComponentExample>
+
+### With Icons
+
+<p>Pass an icon into the named <code>icon</code> slot on <code>BreadcrumbsLink</code> or <code>BreadcrumbsCurrent</code>.</p>
+
+<ComponentExample
+  code={`<Breadcrumbs>\n  <BreadcrumbsLink href="/">\n    <Icon slot="icon" name="house" />\n    Home\n  </BreadcrumbsLink>\n  <BreadcrumbsSeparator />\n  <BreadcrumbsCurrent>\n    <Icon slot="icon" name="gear" />\n    Settings\n  </BreadcrumbsCurrent>\n</Breadcrumbs>`}
+  lang="astro"
+>
+  <Breadcrumbs>
+    <BreadcrumbsLink href="/">
+      <Icon slot="icon" name="house" />
+      Home
+    </BreadcrumbsLink>
+    <BreadcrumbsSeparator />
+    <BreadcrumbsLink href="/settings">
+      <Icon slot="icon" name="gear" />
+      Settings
+    </BreadcrumbsLink>
+    <BreadcrumbsSeparator />
+    <BreadcrumbsCurrent>
+      <Icon slot="icon" name="user" />
+      Profile
+    </BreadcrumbsCurrent>
+  </Breadcrumbs>
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <Breadcrumbs size="sm">...</Breadcrumbs>\n  <Breadcrumbs size="base">...</Breadcrumbs>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <div>
+      <p class="mb-1 text-xs text-kumo-subtle">size="sm"</p>
+      <Breadcrumbs size="sm">
+        <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+        <BreadcrumbsSeparator />
+        <BreadcrumbsCurrent>Page</BreadcrumbsCurrent>
+      </Breadcrumbs>
+    </div>
+    <div>
+      <p class="mb-1 text-xs text-kumo-subtle">size="base"</p>
+      <Breadcrumbs size="base">
+        <BreadcrumbsLink href="/">Home</BreadcrumbsLink>
+        <BreadcrumbsSeparator />
+        <BreadcrumbsCurrent>Page</BreadcrumbsCurrent>
+      </Breadcrumbs>
+    </div>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Breadcrumbs
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Size of the breadcrumb trail.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### BreadcrumbsLink
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">href<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Link destination URL.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<p>Supports a named <code>icon</code> slot for rendering an icon before the link text.</p>
+
+### BreadcrumbsCurrent
+
+<p>Marks the current page. Renders with <code>aria-current="page"</code>. Supports a named <code>icon</code> slot.</p>
+
+### BreadcrumbsSeparator
+
+<p>Purely visual chevron separator. No props. Always <code>aria-hidden</code>.</p>
+
+</ComponentSection>

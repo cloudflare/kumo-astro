@@ -1,0 +1,242 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Resizable"
+description: "A container that splits into resizable panels separated by a draggable handle."
+sourceFile: "components/resizable"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Resizable from "@cloudflare/kumo-astro/components/resizable";
+import ResizablePanel from "@cloudflare/kumo-astro/components/resizable-panel";
+import ResizableHandle from "@cloudflare/kumo-astro/components/resizable-handle";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Resizable>\n  <ResizablePanel defaultSize={50}>Left</ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize={50}>Right</ResizablePanel>\n</Resizable>`}
+    lang="astro"
+  >
+    <Resizable class="h-40 w-full rounded-xl border border-kumo-line">
+      <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+        <p class="text-sm text-kumo-subtle">Left panel</p>
+      </ResizablePanel>
+      <ResizableHandle />
+      <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+        <p class="text-sm text-kumo-subtle">Right panel</p>
+      </ResizablePanel>
+    </Resizable>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Resizable from "@cloudflare/kumo-astro/components/resizable";\nimport ResizablePanel from "@cloudflare/kumo-astro/components/resizable-panel";\nimport ResizableHandle from "@cloudflare/kumo-astro/components/resizable-handle";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Resizable from "@cloudflare/kumo-astro/components/resizable";
+import ResizablePanel from "@cloudflare/kumo-astro/components/resizable-panel";
+import ResizableHandle from "@cloudflare/kumo-astro/components/resizable-handle";
+---
+
+<Resizable>
+  <ResizablePanel defaultSize={30}>Sidebar</ResizablePanel>
+  <ResizableHandle />
+  <ResizablePanel defaultSize={70}>Main content</ResizablePanel>
+</Resizable>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Horizontal Split
+
+<ComponentExample
+  code={`<Resizable class="h-40 rounded-xl border border-kumo-line">\n  <ResizablePanel defaultSize={50}>Left</ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize={50}>Right</ResizablePanel>\n</Resizable>`}
+  lang="astro"
+>
+  <Resizable class="h-40 w-full rounded-xl border border-kumo-line">
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Left panel</p>
+    </ResizablePanel>
+    <ResizableHandle />
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Right panel</p>
+    </ResizablePanel>
+  </Resizable>
+</ComponentExample>
+
+### Three Panels
+
+<ComponentExample
+  code={`<Resizable class="h-40 rounded-xl border border-kumo-line">\n  <ResizablePanel defaultSize={25}>Sidebar</ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize={50}>Main</ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize={25}>Detail</ResizablePanel>\n</Resizable>`}
+  lang="astro"
+>
+  <Resizable class="h-40 w-full rounded-xl border border-kumo-line">
+    <ResizablePanel defaultSize={25} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Sidebar</p>
+    </ResizablePanel>
+    <ResizableHandle />
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Main content</p>
+    </ResizablePanel>
+    <ResizableHandle />
+    <ResizablePanel defaultSize={25} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Detail panel</p>
+    </ResizablePanel>
+  </Resizable>
+</ComponentExample>
+
+### Vertical Split
+
+<ComponentExample
+  code={`<Resizable direction="vertical" class="h-48 rounded-xl border border-kumo-line">\n  <ResizablePanel defaultSize={50}>Top</ResizablePanel>\n  <ResizableHandle />\n  <ResizablePanel defaultSize={50}>Bottom</ResizablePanel>\n</Resizable>`}
+  lang="astro"
+>
+  <Resizable direction="vertical" class="h-48 w-full rounded-xl border border-kumo-line">
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Top panel</p>
+    </ResizablePanel>
+    <ResizableHandle />
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Bottom panel</p>
+    </ResizablePanel>
+  </Resizable>
+</ComponentExample>
+
+### Ghost Handle
+
+<ComponentExample
+  code={`<Resizable class="h-40 rounded-xl border border-kumo-line">\n  <ResizablePanel defaultSize={50}>Hover the border</ResizablePanel>\n  <ResizableHandle variant="ghost" />\n  <ResizablePanel defaultSize={50}>to see the handle</ResizablePanel>\n</Resizable>`}
+  lang="astro"
+>
+  <Resizable class="h-40 w-full rounded-xl border border-kumo-line">
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">Hover the border</p>
+    </ResizablePanel>
+    <ResizableHandle variant="ghost" />
+    <ResizablePanel defaultSize={50} class="flex items-center justify-center p-4">
+      <p class="text-sm text-kumo-subtle">to see the handle</p>
+    </ResizablePanel>
+  </Resizable>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Resizable
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">direction</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"horizontal" | "vertical"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"horizontal"</code></td>
+        <td class="px-4 py-3 text-xs">Direction of the panel split.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes. Set a height to give the container a fixed size.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### ResizablePanel
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultSize</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>50</code></td>
+        <td class="px-4 py-3 text-xs">Default size as a percentage of the container (0–100).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">minSize</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>number</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>10</code></td>
+        <td class="px-4 py-3 text-xs">Minimum size as a percentage (0–100).</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### ResizableHandle
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default" | "ghost"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"default"</code></td>
+        <td class="px-4 py-3 text-xs"><code>default</code> — visible line. <code>ghost</code> — invisible until hovered.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">withHandle</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">Show grip dots in the center of the handle.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

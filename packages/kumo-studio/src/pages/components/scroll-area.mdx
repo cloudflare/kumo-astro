@@ -1,0 +1,163 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Scroll Area"
+description: "A scrollable container with styled scrollbars consistent across browsers."
+sourceFile: "components/scroll-area"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import ScrollArea from "@cloudflare/kumo-astro/components/scroll-area";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<ScrollArea maxHeight={200} class="w-48 rounded-md border border-kumo-line p-3">\n  <!-- long list of items -->\n</ScrollArea>`}
+    lang="astro"
+  >
+    <ScrollArea maxHeight={200} class="w-48 rounded-md border border-kumo-line p-3">
+      <div class="flex flex-col gap-1">
+        {Array.from({ length: 20 }, (_, i) => (
+          <p class="py-0.5 text-sm text-kumo-default">v1.{i}.0</p>
+        ))}
+      </div>
+    </ScrollArea>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import ScrollArea from "@cloudflare/kumo-astro/components/scroll-area";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import ScrollArea from "@cloudflare/kumo-astro/components/scroll-area";
+---
+
+<ScrollArea maxHeight={300}>
+  <!-- content here -->
+</ScrollArea>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Vertical
+
+<ComponentExample
+  code={`<ScrollArea maxHeight={200} class="w-48 rounded-md border border-kumo-line p-3">\n  <!-- 20 items -->\n</ScrollArea>`}
+  lang="astro"
+>
+  <ScrollArea maxHeight={200} class="w-48 rounded-md border border-kumo-line p-3">
+    <div class="flex flex-col gap-1">
+      {Array.from({ length: 20 }, (_, i) => (
+        <p class="py-0.5 text-sm text-kumo-default">v1.{i}.0</p>
+      ))}
+    </div>
+  </ScrollArea>
+</ComponentExample>
+
+### Horizontal
+
+<ComponentExample
+  code={`<ScrollArea orientation="horizontal" maxWidth="100%" class="rounded-md border border-kumo-line p-3">\n  <div class="flex gap-4" style="width:max-content">\n    <!-- wide content -->\n  </div>\n</ScrollArea>`}
+  lang="astro"
+>
+  <ScrollArea orientation="horizontal" maxWidth="100%" class="rounded-md border border-kumo-line p-3">
+    <div class="flex gap-4" style="width:max-content">
+      {Array.from({ length: 15 }, (_, i) => (
+        <div class="shrink-0 rounded-md border border-kumo-line px-3 py-1 text-sm text-kumo-default">
+          v1.{i}.0
+        </div>
+      ))}
+    </div>
+  </ScrollArea>
+</ComponentExample>
+
+### Both Directions
+
+<ComponentExample
+  code={`<ScrollArea orientation="both" maxHeight={200} maxWidth="100%" class="rounded-md border border-kumo-line p-3">\n  <!-- wide and tall content -->\n</ScrollArea>`}
+  lang="astro"
+>
+  <ScrollArea orientation="both" maxHeight={200} maxWidth="100%" class="rounded-md border border-kumo-line p-3">
+    <div style="width:600px">
+      {Array.from({ length: 15 }, (_, i) => (
+        <p class="py-1 text-sm text-kumo-default whitespace-nowrap">
+          Row {i + 1} — This is a long line of content that extends beyond the visible area
+        </p>
+      ))}
+    </div>
+  </ScrollArea>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">orientation</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"vertical" | "horizontal" | "both"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"vertical"</code></td>
+        <td class="px-4 py-3 text-xs">Scroll direction(s) to enable.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">maxHeight</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string | number</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Maximum height. Numbers are treated as px. Required for vertical scrolling.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">maxWidth</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string | number</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Maximum width. Numbers are treated as px. Required for horizontal scrolling.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

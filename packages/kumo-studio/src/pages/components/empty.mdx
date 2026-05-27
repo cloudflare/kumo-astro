@@ -1,0 +1,236 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Empty"
+description: "A component to display when there's no content or data to show, with optional command line and actions."
+sourceFile: "components/empty"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Icon from "~/components/docs/Icon.astro";
+import Empty from "@cloudflare/kumo-astro/components/empty";
+import Button from "@cloudflare/kumo-astro/components/button";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Empty\n  title="No packages found"\n  description="Get started by installing your first package."\n  commandLine="npm install @cloudflare/kumo"\n>\n  <Icon slot="icon" name="package" size={48} class="text-kumo-inactive" />\n</Empty>`}
+    lang="astro"
+  >
+    <Empty
+      title="No packages found"
+      description="Get started by installing your first package."
+      commandLine="npm install @cloudflare/kumo"
+    >
+      <Icon slot="icon" name="package" size={48} class="text-kumo-inactive" />
+    </Empty>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Empty from "@cloudflare/kumo-astro/components/empty";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Empty from "@cloudflare/kumo-astro/components/empty";
+import Icon from "~/components/docs/Icon.astro";
+---
+
+<Empty
+  title="No results found"
+  description="Try adjusting your search."
+>
+  <Icon slot="icon" name="magnifying-glass" size={48} class="text-kumo-inactive" />
+</Empty>
+```
+
+<p>
+  The icon is passed via the named <code>icon</code> slot. Action buttons and other content
+  go in the default slot and are rendered below the description and command line.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Empty\n  title="No results found"\n  description="Try adjusting your search or filter."\n/>`}
+  lang="astro"
+>
+  <Empty
+    title="No results found"
+    description="Try adjusting your search or filter to find what you're looking for."
+  />
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample
+  code={`<Empty size="sm" title="No data available" description="There is no data to display.">\n  <Icon slot="icon" name="database" size={32} class="text-kumo-inactive" />\n</Empty>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-8">
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">Small</p>
+      <Empty size="sm" title="No data available" description="There is no data to display.">
+        <Icon slot="icon" name="database" size={32} class="text-kumo-inactive" />
+      </Empty>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">Base</p>
+      <Empty size="base" title="No data available" description="There is no data to display.">
+        <Icon slot="icon" name="database" size={48} class="text-kumo-inactive" />
+      </Empty>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">Large</p>
+      <Empty size="lg" title="No data available" description="There is no data to display.">
+        <Icon slot="icon" name="database" size={64} class="text-kumo-inactive" />
+      </Empty>
+    </div>
+  </div>
+</ComponentExample>
+
+### With Command Line
+
+<ComponentExample
+  code={`<Empty\n  title="No projects found"\n  description="Get started by creating your first project."\n  commandLine="npm create kumo-project"\n>\n  <Icon slot="icon" name="folder-open" size={48} class="text-kumo-inactive" />\n</Empty>`}
+  lang="astro"
+>
+  <Empty
+    title="No projects found"
+    description="Get started by creating your first project using the command below."
+    commandLine="npm create kumo-project"
+  >
+    <Icon slot="icon" name="folder-open" size={48} class="text-kumo-inactive" />
+  </Empty>
+</ComponentExample>
+
+### With Actions
+
+<ComponentExample
+  code={`<Empty\n  title="No connection"\n  description="Unable to connect to the server."\n>\n  <Icon slot="icon" name="cloud-slash" size={48} class="text-kumo-inactive" />\n  <div class="flex gap-2">\n    <Button variant="primary">Retry</Button>\n    <Button variant="secondary">Go Back</Button>\n  </div>\n</Empty>`}
+  lang="astro"
+>
+  <Empty
+    title="No connection"
+    description="Unable to connect to the server. Please check your connection and try again."
+  >
+    <Icon slot="icon" name="cloud-slash" size={48} class="text-kumo-inactive" />
+    <div class="flex gap-2">
+      <Button variant="primary">Retry</Button>
+      <Button variant="secondary">Go Back</Button>
+    </div>
+  </Empty>
+</ComponentExample>
+
+### Minimal
+
+<ComponentExample
+  code={`<Empty title="Nothing here" />`}
+  lang="astro"
+>
+  <Empty title="Nothing here" />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">title<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Primary heading text for the empty state.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">description</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Secondary description text displayed below the title.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">commandLine</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Shell command displayed in a copyable code block.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Size of the empty state container.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### Slots
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Slot</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">icon</td>
+        <td class="px-4 py-3 text-xs">Icon or image rendered above the title.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">(default)</td>
+        <td class="px-4 py-3 text-xs">Action buttons or other content rendered below the description and command line.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

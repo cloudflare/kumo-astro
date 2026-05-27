@@ -1,0 +1,136 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Clipboard Text"
+description: "A text component with a copy-to-clipboard button."
+sourceFile: "components/clipboard-text"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<ClipboardText text="0c239dd2" />`}
+    lang="astro"
+  >
+    <ClipboardText text="0c239dd2" />
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";
+---
+
+<ClipboardText text="Copy this text" />
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<ClipboardText text="0c239dd2" />`}
+  lang="astro"
+>
+  <ClipboardText text="0c239dd2" />
+</ComponentExample>
+
+### API Key
+
+<ComponentExample
+  code={`<ClipboardText text="sk_live_51H8..." />`}
+  lang="astro"
+>
+  <ClipboardText text="sk_live_51H8..." />
+</ComponentExample>
+
+### Long Text
+
+<ComponentExample
+  code={`<ClipboardText text="https://example.com/very/long/url/path" />`}
+  lang="astro"
+>
+  <ClipboardText text="https://example.com/very/long/url/path" />
+</ComponentExample>
+
+### Small Size
+
+<ComponentExample
+  code={`<ClipboardText text="npm install @cloudflare/kumo" size="sm" />`}
+  lang="astro"
+>
+  <ClipboardText text="npm install @cloudflare/kumo" size="sm" />
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">text<span class="text-kumo-danger ml-0.5">*</span></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">The text to display and copy to clipboard.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Size of the text field.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

@@ -1,0 +1,292 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Grid"
+description: "A responsive grid layout component for organizing content into columns."
+sourceFile: "components/grid"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Grid from "@cloudflare/kumo-astro/components/grid";
+import GridItem from "@cloudflare/kumo-astro/components/grid-item";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Grid variant="2up" gap="base">\n  <GridItem>\n    <div class="rounded-lg bg-kumo-tint p-4">Item 1</div>\n  </GridItem>\n  <GridItem>\n    <div class="rounded-lg bg-kumo-tint p-4">Item 2</div>\n  </GridItem>\n</Grid>`}
+    lang="astro"
+  >
+    <Grid variant="2up" gap="base">
+      <GridItem>
+        <div class="rounded-lg bg-kumo-tint p-4 text-sm text-kumo-default">Item 1</div>
+      </GridItem>
+      <GridItem>
+        <div class="rounded-lg bg-kumo-tint p-4 text-sm text-kumo-default">Item 2</div>
+      </GridItem>
+    </Grid>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Grid from "@cloudflare/kumo-astro/components/grid";\nimport GridItem from "@cloudflare/kumo-astro/components/grid-item";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Grid from "@cloudflare/kumo-astro/components/grid";
+import GridItem from "@cloudflare/kumo-astro/components/grid-item";
+---
+
+<Grid variant="2up" gap="base">
+  <GridItem>Left</GridItem>
+  <GridItem>Right</GridItem>
+</Grid>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Grid Variants
+
+<ComponentExample
+  code={`<Grid variant="3up" gap="sm">\n  <GridItem>1</GridItem>\n  <GridItem>2</GridItem>\n  <GridItem>3</GridItem>\n</Grid>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-8 w-full">
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">variant="2up"</p>
+      <Grid variant="2up" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">variant="3up"</p>
+      <Grid variant="3up" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">3</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">variant="4up"</p>
+      <Grid variant="4up" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">3</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">4</div></GridItem>
+      </Grid>
+    </div>
+  </div>
+</ComponentExample>
+
+## Asymmetric Layouts
+
+<ComponentExample
+  code={`<Grid variant="2-1" gap="sm">\n  <GridItem>\n    <div class="rounded-lg bg-kumo-tint p-4">Main (66%)</div>\n  </GridItem>\n  <GridItem>\n    <div class="rounded-lg bg-kumo-tint p-4">Sidebar (33%)</div>\n  </GridItem>\n</Grid>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-8 w-full">
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">variant="2-1" (66% / 33%)</p>
+      <Grid variant="2-1" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-sm">Main (66%)</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-sm">Sidebar (33%)</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">variant="1-2" (33% / 66%)</p>
+      <Grid variant="1-2" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-sm">Sidebar (33%)</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-sm">Main (66%)</div></GridItem>
+      </Grid>
+    </div>
+  </div>
+</ComponentExample>
+
+## Gap Sizes
+
+<ComponentExample
+  code={`<Grid variant="side-by-side" gap="lg">\n  <GridItem>...</GridItem>\n  <GridItem>...</GridItem>\n</Grid>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-8 w-full">
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">gap="none"</p>
+      <Grid variant="side-by-side" gap="none">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">gap="sm"</p>
+      <Grid variant="side-by-side" gap="sm">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">gap="base" (default)</p>
+      <Grid variant="side-by-side" gap="base">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+      </Grid>
+    </div>
+    <div>
+      <p class="mb-2 text-sm text-kumo-subtle">gap="lg"</p>
+      <Grid variant="side-by-side" gap="lg">
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">1</div></GridItem>
+        <GridItem><div class="rounded-lg bg-kumo-tint p-4 text-center text-sm">2</div></GridItem>
+      </Grid>
+    </div>
+  </div>
+</ComponentExample>
+
+## Mobile Dividers
+
+<p>
+  In Astro, <code>variant</code> and <code>mobileDivider</code> must be passed directly to each
+  <code>GridItem</code> — there is no React context to propagate them automatically.
+</p>
+
+<ComponentExample
+  code={`<Grid variant="4up">\n  <GridItem variant="4up" mobileDivider>Item 1</GridItem>\n  <GridItem variant="4up" mobileDivider>Item 2</GridItem>\n  <GridItem variant="4up" mobileDivider>Item 3</GridItem>\n  <GridItem variant="4up" mobileDivider>Item 4</GridItem>\n</Grid>`}
+  lang="astro"
+>
+  <Grid variant="4up">
+    <GridItem variant="4up" mobileDivider><div class="rounded-lg bg-kumo-tint p-4 text-sm">Item 1</div></GridItem>
+    <GridItem variant="4up" mobileDivider><div class="rounded-lg bg-kumo-tint p-4 text-sm">Item 2</div></GridItem>
+    <GridItem variant="4up" mobileDivider><div class="rounded-lg bg-kumo-tint p-4 text-sm">Item 3</div></GridItem>
+    <GridItem variant="4up" mobileDivider><div class="rounded-lg bg-kumo-tint p-4 text-sm">Item 4</div></GridItem>
+  </Grid>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* Variant Reference */}
+
+<ComponentSection>
+
+## Variant Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Variant</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">2up</td><td class="px-4 py-3 text-xs">1 column mobile → 2 columns at md</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">side-by-side</td><td class="px-4 py-3 text-xs">Always 2 columns</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">2-1</td><td class="px-4 py-3 text-xs">66% / 33% split at md</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">1-2</td><td class="px-4 py-3 text-xs">33% / 66% split at md</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">1-3up</td><td class="px-4 py-3 text-xs">1 column mobile → 3 columns at lg</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">3up</td><td class="px-4 py-3 text-xs">1 → 2 → 3 columns</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">4up</td><td class="px-4 py-3 text-xs">1 → 2 → 3 → 4 columns</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">6up</td><td class="px-4 py-3 text-xs">2 mobile → up to 6 on xl</td></tr>
+      <tr class="border-b border-kumo-hairline"><td class="px-4 py-3 font-mono text-xs">1-2-4up</td><td class="px-4 py-3 text-xs">1 → 2 → 4 columns</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Grid
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Responsive column layout. See Variant Reference above.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">gap</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"none" | "sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Gap between grid items.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### GridItem
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">variant</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Must match the parent Grid's variant when using <code>mobileDivider</code>.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">mobileDivider</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Shows a bottom divider on mobile. Only applies to <code>variant="4up"</code>.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

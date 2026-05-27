@@ -1,0 +1,189 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Collapsible"
+description: "An interactive component which expands/collapses a panel."
+sourceFile: "components/collapsible"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Collapsible from "@cloudflare/kumo-astro/components/collapsible";
+import CollapsibleTrigger from "@cloudflare/kumo-astro/components/collapsible-trigger";
+import CollapsiblePanel from "@cloudflare/kumo-astro/components/collapsible-panel";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Collapsible>\n  <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>\n  <CollapsiblePanel>\n    <p class="text-sm text-kumo-default pt-2">Kumo is Cloudflare's design system.</p>\n  </CollapsiblePanel>\n</Collapsible>`}
+    lang="astro"
+  >
+    <Collapsible>
+      <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>
+      <CollapsiblePanel>
+        <p class="text-sm text-kumo-default pt-2">Kumo is Cloudflare's design system.</p>
+      </CollapsiblePanel>
+    </Collapsible>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Collapsible from "@cloudflare/kumo-astro/components/collapsible";\nimport CollapsibleTrigger from "@cloudflare/kumo-astro/components/collapsible-trigger";\nimport CollapsiblePanel from "@cloudflare/kumo-astro/components/collapsible-panel";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Collapsible from "@cloudflare/kumo-astro/components/collapsible";
+import CollapsibleTrigger from "@cloudflare/kumo-astro/components/collapsible-trigger";
+import CollapsiblePanel from "@cloudflare/kumo-astro/components/collapsible-panel";
+---
+
+<Collapsible>
+  <CollapsibleTrigger>Show details</CollapsibleTrigger>
+  <CollapsiblePanel>Hidden content</CollapsiblePanel>
+</Collapsible>
+```
+
+<p>
+  The component is interactive via a bundled inline script — no <code>client:</code> directive needed.
+  There is no <code>onOpenChange</code> callback. Use native DOM events if you need to respond to state changes.
+</p>
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Collapsible>\n  <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>\n  <CollapsiblePanel>\n    <p class="text-sm text-kumo-default pt-2">Kumo is Cloudflare's design system.</p>\n  </CollapsiblePanel>\n</Collapsible>`}
+  lang="astro"
+>
+  <Collapsible>
+    <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>
+    <CollapsiblePanel>
+      <p class="text-sm text-kumo-default pt-2">Kumo is Cloudflare's design system.</p>
+    </CollapsiblePanel>
+  </Collapsible>
+</ComponentExample>
+
+### Open by Default
+
+<ComponentExample
+  code={`<Collapsible defaultOpen={true}>\n  <CollapsibleTrigger>Details (open by default)</CollapsibleTrigger>\n  <CollapsiblePanel>\n    <p class="text-sm text-kumo-default pt-2">This content is visible by default.</p>\n  </CollapsiblePanel>\n</Collapsible>`}
+  lang="astro"
+>
+  <Collapsible defaultOpen={true}>
+    <CollapsibleTrigger>Details (open by default)</CollapsibleTrigger>
+    <CollapsiblePanel>
+      <p class="text-sm text-kumo-default pt-2">This content is visible by default.</p>
+    </CollapsiblePanel>
+  </Collapsible>
+</ComponentExample>
+
+### Multiple Collapsibles
+
+<ComponentExample
+  code={`<div class="w-full space-y-2">\n  <Collapsible>\n    <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>\n    <CollapsiblePanel><p class="text-sm pt-2">Kumo is Cloudflare's design system.</p></CollapsiblePanel>\n  </Collapsible>\n  <Collapsible>\n    <CollapsibleTrigger>How do I install it?</CollapsibleTrigger>\n    <CollapsiblePanel><p class="text-sm pt-2">Run npm install @cloudflare/kumo-astro.</p></CollapsiblePanel>\n  </Collapsible>\n</div>`}
+  lang="astro"
+>
+  <div class="w-full space-y-2">
+    <Collapsible>
+      <CollapsibleTrigger>What is Kumo?</CollapsibleTrigger>
+      <CollapsiblePanel>
+        <p class="text-sm text-kumo-default pt-2">Kumo is Cloudflare's design system.</p>
+      </CollapsiblePanel>
+    </Collapsible>
+    <Collapsible>
+      <CollapsibleTrigger>How do I install it?</CollapsibleTrigger>
+      <CollapsiblePanel>
+        <p class="text-sm text-kumo-default pt-2">Run <code>npm install @cloudflare/kumo-astro</code>.</p>
+      </CollapsiblePanel>
+    </Collapsible>
+    <Collapsible>
+      <CollapsibleTrigger>Is React required?</CollapsibleTrigger>
+      <CollapsiblePanel>
+        <p class="text-sm text-kumo-default pt-2">No — <code>@cloudflare/kumo-astro</code> works in any Astro project without React.</p>
+      </CollapsiblePanel>
+    </Collapsible>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### Collapsible
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">open</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Controlled open state.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">defaultOpen</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">Initial open state (uncontrolled).</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">id</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">Auto-generated</td>
+        <td class="px-4 py-3 text-xs">HTML id for the collapsible root.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### CollapsibleTrigger
+
+<p>Renders a <code>&lt;button&gt;</code>. Accepts <code>class</code> and any button attributes. Content goes in the default slot.</p>
+
+### CollapsiblePanel
+
+<p>Renders a <code>&lt;div&gt;</code> that is hidden by default. Accepts <code>class</code> and any div attributes. Content goes in the default slot.</p>
+
+</ComponentSection>

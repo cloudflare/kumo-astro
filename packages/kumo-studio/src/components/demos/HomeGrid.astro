@@ -1,0 +1,864 @@
+---
+/**
+ * HomeGrid — the homepage component showcase grid.
+ *
+ * Static/CSS-only components render as native Astro components (no JS hydration).
+ * Interactive components that require React state are rendered as React islands
+ * via HomeGridReactIslands.tsx with client:visible.
+ */
+import AspectRatio from "@cloudflare/kumo-astro/components/aspect-ratio";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Banner from "@cloudflare/kumo-astro/components/banner";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import Checkbox from "@cloudflare/kumo-astro/components/checkbox";
+import ClipboardText from "@cloudflare/kumo-astro/components/clipboard-text";
+import CodeHighlighted from "@cloudflare/kumo-astro/components/code-highlighted";
+import HoverCard from "@cloudflare/kumo-astro/components/hover-card";
+import HoverCardContent from "@cloudflare/kumo-astro/components/hover-card-content";
+import HoverCardTrigger from "@cloudflare/kumo-astro/components/hover-card-trigger";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Kbd from "@cloudflare/kumo-astro/components/kbd";
+import Label from "@cloudflare/kumo-astro/components/label";
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+import LayerCardPrimary from "@cloudflare/kumo-astro/components/layer-card-primary";
+import LayerCardSecondary from "@cloudflare/kumo-astro/components/layer-card-secondary";
+import Link from "@cloudflare/kumo-astro/components/link";
+import Loader from "@cloudflare/kumo-astro/components/loader";
+import Meter from "@cloudflare/kumo-astro/components/meter";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+import NavigationMenu from "@cloudflare/kumo-astro/components/navigation-menu";
+import NavigationMenuContent from "@cloudflare/kumo-astro/components/navigation-menu-content";
+import NavigationMenuItem from "@cloudflare/kumo-astro/components/navigation-menu-item";
+import NavigationMenuLink from "@cloudflare/kumo-astro/components/navigation-menu-link";
+import NavigationMenuList from "@cloudflare/kumo-astro/components/navigation-menu-list";
+import NavigationMenuSubLink from "@cloudflare/kumo-astro/components/navigation-menu-sub-link";
+import NavigationMenuTrigger from "@cloudflare/kumo-astro/components/navigation-menu-trigger";
+import Resizable from "@cloudflare/kumo-astro/components/resizable";
+import ResizableHandle from "@cloudflare/kumo-astro/components/resizable-handle";
+import ResizablePanel from "@cloudflare/kumo-astro/components/resizable-panel";
+import ScrollArea from "@cloudflare/kumo-astro/components/scroll-area";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+import SkeletonLine from "@cloudflare/kumo-astro/components/skeleton-line";
+import Switch from "@cloudflare/kumo-astro/components/switch";
+import Table from "@cloudflare/kumo-astro/components/table";
+import TableBody from "@cloudflare/kumo-astro/components/table-body";
+import TableCell from "@cloudflare/kumo-astro/components/table-cell";
+import TableHead from "@cloudflare/kumo-astro/components/table-head";
+import TableHeader from "@cloudflare/kumo-astro/components/table-header";
+import TableOfContents from "@cloudflare/kumo-astro/components/table-of-contents";
+import TableOfContentsItem from "@cloudflare/kumo-astro/components/table-of-contents-item";
+import TableOfContentsList from "@cloudflare/kumo-astro/components/table-of-contents-list";
+import TableOfContentsTitle from "@cloudflare/kumo-astro/components/table-of-contents-title";
+import TableRow from "@cloudflare/kumo-astro/components/table-row";
+import Tabs from "@cloudflare/kumo-astro/components/tabs";
+import Text from "@cloudflare/kumo-astro/components/text";
+import Toggle from "@cloudflare/kumo-astro/components/toggle";
+import ToggleGroup from "@cloudflare/kumo-astro/components/toggle-group";
+import ToggleGroupItem from "@cloudflare/kumo-astro/components/toggle-group-item";
+import Tooltip from "@cloudflare/kumo-astro/components/tooltip";
+import DropdownMenu from "@cloudflare/kumo-astro/components/dropdown-menu";
+import DropdownMenuTrigger from "@cloudflare/kumo-astro/components/dropdown-menu-trigger";
+import DropdownMenuContent from "@cloudflare/kumo-astro/components/dropdown-menu-content";
+import DropdownMenuItem from "@cloudflare/kumo-astro/components/dropdown-menu-item";
+import Icon from "~/components/docs/Icon.astro";
+
+// React islands for items that require React state
+import {
+  HomeGridAutocomplete,
+  HomeGridCollapsible,
+  HomeGridCombobox,
+  HomeGridCommandPalette,
+  HomeGridDatePicker,
+  HomeGridDialog,
+  HomeGridFlow,
+  HomeGridInputGroup,
+  HomeGridMenuBar,
+  HomeGridPagination,
+  HomeGridPopover,
+  HomeGridRadio,
+  HomeGridSelect,
+  HomeGridToast,
+} from "~/components/demos/HomeGridReactIslands";
+---
+
+<ul class="grid auto-rows-min grid-cols-1 gap-px bg-kumo-hairline md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+  <!-- Button -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/button" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Button
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="grid gap-3">
+        <Button>
+          <Icon name="plus" slot="icon" />
+          Create Worker
+        </Button>
+        <Button variant="primary">
+          <Icon name="plus" slot="icon" />
+          Create Worker
+        </Button>
+        <Button loading>Create Worker</Button>
+      </div>
+    </div>
+  </li>
+
+  <!-- Input -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/input" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Input
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="grid gap-3">
+        <Input placeholder="Type something..." aria-label="Search" />
+        <Input variant="error" value="Invalid!" aria-label="Error input" />
+      </div>
+    </div>
+  </li>
+
+  <!-- Select -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/select" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Select
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridSelect client:visible />
+    </div>
+  </li>
+
+  <!-- Autocomplete -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/autocomplete" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      Autocomplete
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridAutocomplete client:visible />
+    </div>
+  </li>
+
+  <!-- Combobox -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/combobox" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      Combobox
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridCombobox client:visible />
+    </div>
+  </li>
+
+  <!-- Switch -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/switch" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Switch
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Switch defaultChecked={true} aria-label="Toggle" />
+    </div>
+  </li>
+
+  <!-- Input (with validation) -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/input" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Input (with validation)
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Input
+        label="Email"
+        placeholder="name@example.com"
+        type="email"
+        value="invalid-email"
+        error={{ message: "Please enter a valid email.", match: "typeMismatch" }}
+        description="The email to send notifications to."
+      />
+    </div>
+  </li>
+
+  <!-- Dialog -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/dialog" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Dialog
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridDialog client:visible />
+    </div>
+  </li>
+
+  <!-- Tooltip -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/tooltip" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Tooltip
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex gap-2">
+        <Tooltip content="Add" side="top" open>
+          <Button shape="square" aria-label="Add">
+            <Icon name="plus" />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Change language" side="top">
+          <Button shape="square" aria-label="Change language">
+            <Icon name="translate" />
+          </Button>
+        </Tooltip>
+      </div>
+    </div>
+  </li>
+
+  <!-- Dropdown -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/dropdown" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Dropdown
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <Icon slot="icon" name="plus" />
+          Add
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem>Worker</DropdownMenuItem>
+          <DropdownMenuItem>Pages</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  </li>
+
+  <!-- Collapsible -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/collapsible" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Collapsible
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridCollapsible client:visible />
+    </div>
+  </li>
+
+  <!-- Checkbox -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/checkbox" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Checkbox
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Checkbox label="Max bandwidth" defaultChecked={true} />
+    </div>
+  </li>
+
+  <!-- LayerCard -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/layer-card" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      LayerCard
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <LayerCard layered class="w-[200px]">
+        <LayerCardSecondary>Next Steps</LayerCardSecondary>
+        <LayerCardPrimary>Hello</LayerCardPrimary>
+      </LayerCard>
+    </div>
+  </li>
+
+  <!-- Loader -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/loader" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Loader
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Loader />
+    </div>
+  </li>
+
+  <!-- SkeletonLine -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/skeleton-line" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      SkeletonLine
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex w-[200px] flex-col gap-2">
+        <SkeletonLine minWidth={50} maxWidth={100} />
+        <SkeletonLine minWidth={100} />
+        <SkeletonLine minWidth={50} maxWidth={150} />
+      </div>
+    </div>
+  </li>
+
+  <!-- Banner -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/banner" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Banner
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-2">
+        <Banner title="This is a default banner." />
+        <Banner title="This is an alert banner." variant="alert">
+          <Icon slot="icon" name="warning" weight="fill" />
+        </Banner>
+        <Banner title="This is an error banner." variant="error">
+          <Icon slot="icon" name="warning-octagon" weight="fill" />
+        </Banner>
+      </div>
+    </div>
+  </li>
+
+  <!-- Tabs -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/tabs" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Tabs
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Tabs
+        tabs={[
+          { value: "home", label: "Home" },
+          { value: "about", label: "About" },
+          { value: "contact", label: "Contact" },
+        ]}
+      />
+    </div>
+  </li>
+
+  <!-- Badge -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/badge" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Badge
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-2">
+        <Badge variant="blue">Blue</Badge>
+        <Badge variant="green">Green</Badge>
+        <Badge variant="orange">Orange</Badge>
+        <Badge variant="neutral">Neutral</Badge>
+        <Badge variant="red">Red</Badge>
+      </div>
+    </div>
+  </li>
+
+  <!-- Toast -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/toast" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Toast
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridToast client:visible />
+    </div>
+  </li>
+
+  <!-- Pagination -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/pagination" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Pagination
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridPagination client:visible />
+    </div>
+  </li>
+
+  <!-- InputArea -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/input-area" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      InputArea
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <InputArea placeholder="Enter your name" aria-label="Name" />
+    </div>
+  </li>
+
+  <!-- InputGroup -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/input-group" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      InputGroup
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridInputGroup client:visible />
+    </div>
+  </li>
+
+  <!-- Meter -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/meter" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Meter
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Meter value={75} label="My meter" customValue="100 / 5,000" />
+    </div>
+  </li>
+
+  <!-- MenuBar -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/menu-bar" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      MenuBar
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridMenuBar client:visible />
+    </div>
+  </li>
+
+  <!-- DatePicker -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/date-picker" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      DatePicker
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridDatePicker client:visible />
+    </div>
+  </li>
+
+  <!-- Breadcrumbs -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/breadcrumbs" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Breadcrumbs
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex items-center gap-1 text-sm">
+        <span class="text-kumo-subtle">Home</span>
+        <span class="text-kumo-inactive">/</span>
+        <span class="text-kumo-subtle">Docs</span>
+        <span class="text-kumo-inactive">/</span>
+        <span class="font-medium">Page</span>
+      </div>
+    </div>
+  </li>
+
+  <!-- ClipboardText -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/clipboard-text" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      ClipboardText
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <ClipboardText text="npx kumo add button" />
+    </div>
+  </li>
+
+  <!-- CodeHighlighted -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/code-highlighted" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      CodeHighlighted
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <CodeHighlighted
+        lang="typescript"
+        code={`const sum = (a: number, b: number) => {
+  return a + b;
+};`}
+      />
+    </div>
+  </li>
+
+  <!-- CommandPalette -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/command-palette" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      CommandPalette
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridCommandPalette client:visible />
+    </div>
+  </li>
+
+  <!-- Flow -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/flow" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      Flow
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridFlow client:visible />
+    </div>
+  </li>
+
+  <!-- Link -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/link" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Link
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-2 text-sm">
+        <Link href="#">Default link</Link>
+        <Link href="#" variant="current">Current color link</Link>
+        <Link href="#" variant="plain">Plain link</Link>
+      </div>
+    </div>
+  </li>
+
+  <!-- Empty -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/empty" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Empty
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col items-center gap-1 text-center">
+        <span class="text-sm font-medium">No results</span>
+        <span class="text-xs text-kumo-subtle">Try a different search</span>
+      </div>
+    </div>
+  </li>
+
+  <!-- Grid -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/grid" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Grid
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="grid grid-cols-2 gap-3 w-[140px]">
+        <div class="rounded bg-kumo-control p-3 text-center text-xs">1</div>
+        <div class="rounded bg-kumo-control p-3 text-center text-xs">2</div>
+        <div class="rounded bg-kumo-control p-3 text-center text-xs">3</div>
+        <div class="rounded bg-kumo-control p-3 text-center text-xs">4</div>
+      </div>
+    </div>
+  </li>
+
+  <!-- Label -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/label" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Label
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-2">
+        <Label>Default Label</Label>
+        <Label showOptional>Optional Field</Label>
+        <Label tooltip="More info">With Tooltip</Label>
+      </div>
+    </div>
+  </li>
+
+  <!-- Popover -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/popover" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Popover
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridPopover client:visible />
+    </div>
+  </li>
+
+  <!-- Radio -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/radio" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Radio
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <HomeGridRadio client:visible />
+    </div>
+  </li>
+
+  <!-- Table -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/table" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Table
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Table class="w-[200px] text-sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>Worker 1</TableCell>
+            <TableCell>Active</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Worker 2</TableCell>
+            <TableCell>Paused</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Worker 3</TableCell>
+            <TableCell>Active</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
+  </li>
+
+  <!-- TableOfContents -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/table-of-contents" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      TableOfContents
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <TableOfContents>
+        <TableOfContentsTitle>On this page</TableOfContentsTitle>
+        <TableOfContentsList>
+          <TableOfContentsItem active>Introduction</TableOfContentsItem>
+          <TableOfContentsItem>Installation</TableOfContentsItem>
+          <TableOfContentsItem>Usage</TableOfContentsItem>
+        </TableOfContentsList>
+      </TableOfContents>
+    </div>
+  </li>
+
+  <!-- Text -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/text" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Text
+    </a>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-1">
+        <Text size="lg" bold>Large Bold Text</Text>
+        <Text size="base">Regular text content</Text>
+        <Text size="sm">Small subtle text</Text>
+      </div>
+    </div>
+  </li>
+
+  <!-- AspectRatio -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/aspect-ratio" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      AspectRatio
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="w-48">
+        <AspectRatio ratio="16/9">
+          <div class="h-full w-full rounded-lg bg-kumo-tint flex items-center justify-center">
+            <span class="text-kumo-subtle text-xs">16 / 9</span>
+          </div>
+        </AspectRatio>
+      </div>
+    </div>
+  </li>
+
+  <!-- Card -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/card" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Card
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Card class="w-52">
+        <CardHeader>
+          <CardTitle>Workers</CardTitle>
+          <CardDescription>Deploy at the edge</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p class="text-2xl font-bold text-kumo-default">1.2M</p>
+          <p class="text-xs text-kumo-subtle">requests / day</p>
+        </CardContent>
+        <CardFooter>
+          <Button size="sm">View</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  </li>
+
+  <!-- HoverCard -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/hover-card" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      HoverCard
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="relative inline-block">
+        <HoverCard openDelay={0} closeDelay={0}>
+          <HoverCardTrigger>
+            <a href="#" class="text-kumo-link underline underline-offset-2 text-sm">
+              @cloudflare
+            </a>
+          </HoverCardTrigger>
+          <HoverCardContent>
+            <div class="flex flex-col gap-1.5">
+              <p class="text-sm font-semibold text-kumo-default">Cloudflare</p>
+              <p class="text-xs text-kumo-subtle">Building a better Internet.</p>
+            </div>
+          </HoverCardContent>
+        </HoverCard>
+      </div>
+    </div>
+  </li>
+
+  <!-- Kbd -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/kbd" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Kbd
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex items-center gap-1.5 text-sm text-kumo-default">
+        <Kbd>⌘</Kbd>
+        <span>+</span>
+        <Kbd>K</Kbd>
+      </div>
+    </div>
+  </li>
+
+  <!-- NativeSelect -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/native-select" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      NativeSelect
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <NativeSelect aria-label="Region" defaultValue="workers">
+        <option value="workers">Workers</option>
+        <option value="pages">Pages</option>
+        <option value="r2">R2</option>
+      </NativeSelect>
+    </div>
+  </li>
+
+  <!-- NavigationMenu -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/navigation-menu" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      NavigationMenu
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <NavigationMenu>
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink href="#" active>Home</NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+            <NavigationMenuContent class="w-48">
+              <NavigationMenuSubLink href="#" title="Workers" description="Edge functions" />
+              <NavigationMenuSubLink href="#" title="Pages" description="JAMstack sites" />
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
+  </li>
+
+  <!-- Resizable -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/resizable" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Resizable
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <Resizable class="h-24 w-52 rounded-lg border border-kumo-line">
+        <ResizablePanel defaultSize={50} class="flex items-center justify-center">
+          <span class="text-xs text-kumo-subtle">Left</span>
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel defaultSize={50} class="flex items-center justify-center">
+          <span class="text-xs text-kumo-subtle">Right</span>
+        </ResizablePanel>
+      </Resizable>
+    </div>
+  </li>
+
+  <!-- ScrollArea -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/scroll-area" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      ScrollArea
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <ScrollArea maxHeight={96} class="w-40 rounded-md border border-kumo-line p-2">
+        <p class="py-0.5 text-xs text-kumo-default">Item 1</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 2</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 3</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 4</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 5</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 6</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 7</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 8</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 9</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 10</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 11</p>
+        <p class="py-0.5 text-xs text-kumo-default">Item 12</p>
+      </ScrollArea>
+    </div>
+  </li>
+
+  <!-- Separator -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/separator" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Separator
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex flex-col gap-3 w-48">
+        <p class="text-sm text-kumo-default">Above</p>
+        <Separator />
+        <p class="text-sm text-kumo-default">Below</p>
+        <div class="flex h-5 items-center gap-3">
+          <span class="text-xs text-kumo-subtle">A</span>
+          <Separator orientation="vertical" />
+          <span class="text-xs text-kumo-subtle">B</span>
+          <Separator orientation="vertical" />
+          <span class="text-xs text-kumo-subtle">C</span>
+        </div>
+      </div>
+    </div>
+  </li>
+
+  <!-- Toggle -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/toggle" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      Toggle
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <div class="flex gap-1.5">
+        <Toggle aria-label="Bold" pressed={true}>B</Toggle>
+        <Toggle aria-label="Italic">I</Toggle>
+        <Toggle aria-label="Underline">U</Toggle>
+      </div>
+    </div>
+  </li>
+
+  <!-- ToggleGroup -->
+  <li class="relative flex aspect-square items-center justify-center overflow-hidden bg-kumo-canvas">
+    <a href="/components/toggle-group" class="absolute top-4 left-4 flex items-center gap-1.5 text-base font-medium text-kumo-subtle hover:text-kumo-default">
+      <img src="/astro.svg" alt="Astro" title="Available in @cloudflare/kumo-astro" class="h-4 w-4 opacity-60" />
+      ToggleGroup
+    </a>
+    <span class="absolute top-4 right-4 inline-flex items-center rounded-full bg-kumo-brand px-2 py-0.5 text-[10px] font-semibold text-white">New</span>
+    <div class="flex w-full items-center justify-center p-8 tracking-normal leading-normal">
+      <ToggleGroup defaultValue="center">
+        <ToggleGroupItem value="left">Left</ToggleGroupItem>
+        <ToggleGroupItem value="center">Center</ToggleGroupItem>
+        <ToggleGroupItem value="right">Right</ToggleGroupItem>
+      </ToggleGroup>
+    </div>
+  </li>
+</ul>

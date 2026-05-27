@@ -1,0 +1,192 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Layer Card"
+description: "A card component for both simple surfaces and layered layouts with a secondary header and primary content area."
+sourceFile: "components/layer-card"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+import LayerCardPrimary from "@cloudflare/kumo-astro/components/layer-card-primary";
+import LayerCardSecondary from "@cloudflare/kumo-astro/components/layer-card-secondary";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<LayerCard layered>\n  <LayerCardSecondary>Next Steps</LayerCardSecondary>\n  <LayerCardPrimary>\n    <p class="text-sm font-semibold text-kumo-default">Get started with Kumo</p>\n    <p class="text-sm text-kumo-subtle">Install the component library and build your first UI.</p>\n  </LayerCardPrimary>\n</LayerCard>`}
+    lang="astro"
+  >
+    <div class="w-full max-w-sm">
+      <LayerCard layered>
+        <LayerCardSecondary>Next Steps</LayerCardSecondary>
+        <LayerCardPrimary>
+          <p class="text-sm font-semibold text-kumo-default">Get started with Kumo</p>
+          <p class="text-sm text-kumo-subtle mt-1">Install the component library and build your first UI.</p>
+        </LayerCardPrimary>
+      </LayerCard>
+    </div>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import LayerCard from "@cloudflare/kumo-astro/components/layer-card";\nimport LayerCardPrimary from "@cloudflare/kumo-astro/components/layer-card-primary";\nimport LayerCardSecondary from "@cloudflare/kumo-astro/components/layer-card-secondary";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+### Simple Surface
+
+<p>Without the <code>layered</code> prop, <code>LayerCard</code> renders as a simple elevated surface card.</p>
+
+```astro
+---
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+---
+
+<LayerCard class="p-4">
+  <p>Card content</p>
+</LayerCard>
+```
+
+### Layered Layout
+
+<p>With <code>layered</code>, compose with <code>LayerCardSecondary</code> and <code>LayerCardPrimary</code> for a two-section card.</p>
+
+```astro
+---
+import LayerCard from "@cloudflare/kumo-astro/components/layer-card";
+import LayerCardPrimary from "@cloudflare/kumo-astro/components/layer-card-primary";
+import LayerCardSecondary from "@cloudflare/kumo-astro/components/layer-card-secondary";
+---
+
+<LayerCard layered>
+  <LayerCardSecondary>Header label</LayerCardSecondary>
+  <LayerCardPrimary>Primary content</LayerCardPrimary>
+</LayerCard>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Simple Card
+
+<ComponentExample
+  code={`<LayerCard class="p-4">\n  <p class="text-sm font-semibold text-kumo-default">Simple Card</p>\n  <p class="text-sm text-kumo-subtle mt-1">A basic surface card with padding.</p>\n</LayerCard>`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <LayerCard class="p-4">
+      <p class="text-sm font-semibold text-kumo-default">Simple Card</p>
+      <p class="text-sm text-kumo-subtle mt-1">A basic surface card with padding.</p>
+    </LayerCard>
+  </div>
+</ComponentExample>
+
+### Layered Card
+
+<ComponentExample
+  code={`<LayerCard layered>\n  <LayerCardSecondary>Next Steps</LayerCardSecondary>\n  <LayerCardPrimary>\n    <p class="text-sm font-semibold text-kumo-default">Get started</p>\n    <p class="text-sm text-kumo-subtle">Install the library and start building.</p>\n  </LayerCardPrimary>\n</LayerCard>`}
+  lang="astro"
+>
+  <div class="w-full max-w-sm">
+    <LayerCard layered>
+      <LayerCardSecondary>Next Steps</LayerCardSecondary>
+      <LayerCardPrimary>
+        <p class="text-sm font-semibold text-kumo-default">Get started</p>
+        <p class="text-sm text-kumo-subtle mt-1">Install the library and start building.</p>
+      </LayerCardPrimary>
+    </LayerCard>
+  </div>
+</ComponentExample>
+
+### Multiple Layered Cards
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-3">\n  <LayerCard layered>\n    <LayerCardSecondary>Step 1</LayerCardSecondary>\n    <LayerCardPrimary><p class="text-sm text-kumo-default">Install dependencies</p></LayerCardPrimary>\n  </LayerCard>\n  <LayerCard layered>\n    <LayerCardSecondary>Step 2</LayerCardSecondary>\n    <LayerCardPrimary><p class="text-sm text-kumo-default">Import components</p></LayerCardPrimary>\n  </LayerCard>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-3 w-full max-w-sm">
+    <LayerCard layered>
+      <LayerCardSecondary>Step 1</LayerCardSecondary>
+      <LayerCardPrimary><p class="text-sm text-kumo-default">Install dependencies</p></LayerCardPrimary>
+    </LayerCard>
+    <LayerCard layered>
+      <LayerCardSecondary>Step 2</LayerCardSecondary>
+      <LayerCardPrimary><p class="text-sm text-kumo-default">Import components</p></LayerCardPrimary>
+    </LayerCard>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+### LayerCard
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">layered</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>false</code></td>
+        <td class="px-4 py-3 text-xs">When true, applies layered card styling for use with <code>LayerCardSecondary</code> and <code>LayerCardPrimary</code>.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">as</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"div"</code></td>
+        <td class="px-4 py-3 text-xs">HTML element to render as.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+### LayerCardSecondary
+
+<p>The secondary header area — typically used for a label, step indicator, or category tag. Accepts <code>class</code> and any div attributes.</p>
+
+### LayerCardPrimary
+
+<p>The primary content area — the main body of the layered card. Accepts <code>class</code> and any div attributes.</p>
+
+</ComponentSection>

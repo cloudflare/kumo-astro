@@ -1,0 +1,151 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Separator"
+description: "A visual divider line for separating content horizontally or vertically."
+sourceFile: "components/separator"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<div class="flex flex-col gap-4">\n  <p class="text-kumo-default">Above the separator</p>\n  <Separator />\n  <p class="text-kumo-default">Below the separator</p>\n</div>`}
+    lang="astro"
+  >
+    <div class="flex flex-col gap-4">
+      <p class="text-kumo-default">Above the separator</p>
+      <Separator />
+      <p class="text-kumo-default">Below the separator</p>
+    </div>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Separator from "@cloudflare/kumo-astro/components/separator";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Separator from "@cloudflare/kumo-astro/components/separator";
+---
+
+<div>
+  <p>Above</p>
+  <Separator />
+  <p>Below</p>
+</div>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Horizontal
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <p class="text-kumo-default">Above the separator</p>\n  <Separator />\n  <p class="text-kumo-default">Below the separator</p>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <p class="text-kumo-default">Above the separator</p>
+    <Separator />
+    <p class="text-kumo-default">Below the separator</p>
+  </div>
+</ComponentExample>
+
+### Vertical
+
+<ComponentExample
+  code={`<div class="flex h-8 items-center gap-4">\n  <span class="text-kumo-default">Home</span>\n  <Separator orientation="vertical" />\n  <span class="text-kumo-default">Settings</span>\n  <Separator orientation="vertical" />\n  <span class="text-kumo-default">Profile</span>\n</div>`}
+  lang="astro"
+>
+  <div class="flex h-8 items-center gap-4">
+    <span class="text-kumo-default">Home</span>
+    <Separator orientation="vertical" />
+    <span class="text-kumo-default">Settings</span>
+    <Separator orientation="vertical" />
+    <span class="text-kumo-default">Profile</span>
+  </div>
+</ComponentExample>
+
+### Semantic (Non-decorative)
+
+<p>By default, the separator is decorative (<code>aria-hidden</code>). Set <code>decorative={false}</code> to render it with <code>role="separator"</code> for assistive technologies.</p>
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-4">\n  <p class="text-kumo-default">Section A</p>\n  <Separator decorative={false} />\n  <p class="text-kumo-default">Section B</p>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-4">
+    <p class="text-kumo-default">Section A</p>
+    <Separator decorative={false} />
+    <p class="text-kumo-default">Section B</p>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">orientation</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"horizontal" | "vertical"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"horizontal"</code></td>
+        <td class="px-4 py-3 text-xs">Direction of the separator line.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">decorative</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>boolean</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>true</code></td>
+        <td class="px-4 py-3 text-xs">When <code>true</code>, renders with <code>aria-hidden</code>. Set to <code>false</code> to add <code>role="separator"</code> for assistive technologies.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>

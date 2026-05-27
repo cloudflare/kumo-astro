@@ -1,0 +1,153 @@
+---
+layout: ~/layouts/MdxDocLayout.astro
+title: "Kbd"
+description: "Displays keyboard shortcuts and key combinations in a styled key cap."
+sourceFile: "components/kbd"
+---
+
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Kbd from "@cloudflare/kumo-astro/components/kbd";
+
+{/* Hero Demo */}
+
+<ComponentSection>
+  <ComponentExample
+    code={`<Kbd>⌘K</Kbd>`}
+    lang="astro"
+  >
+    <Kbd>⌘K</Kbd>
+  </ComponentExample>
+</ComponentSection>
+
+{/* Installation */}
+
+<ComponentSection>
+
+## Installation
+
+  <CodeBlock
+    code={`import Kbd from "@cloudflare/kumo-astro/components/kbd";`}
+    lang="astro"
+  />
+
+</ComponentSection>
+
+{/* Usage */}
+
+<ComponentSection>
+
+## Usage
+
+```astro
+---
+import Kbd from "@cloudflare/kumo-astro/components/kbd";
+---
+
+<p>Press <Kbd>⌘K</Kbd> to search</p>
+```
+
+</ComponentSection>
+
+{/* Examples */}
+
+<ComponentSection>
+
+## Examples
+
+### Basic
+
+<ComponentExample
+  code={`<Kbd>⌘K</Kbd>`}
+  lang="astro"
+>
+  <Kbd>⌘K</Kbd>
+</ComponentExample>
+
+### Sizes
+
+<ComponentExample
+  code={`<div class="flex items-center gap-4">\n  <Kbd size="sm">⌘</Kbd>\n  <Kbd size="base">⌘K</Kbd>\n  <Kbd size="lg">⌘⇧P</Kbd>\n</div>`}
+  lang="astro"
+>
+  <div class="flex items-center gap-4">
+    <Kbd size="sm">⌘</Kbd>
+    <Kbd size="base">⌘K</Kbd>
+    <Kbd size="lg">⌘⇧P</Kbd>
+  </div>
+</ComponentExample>
+
+### Inline with Text
+
+<ComponentExample
+  code={`<p class="flex items-center gap-1.5 text-sm text-kumo-default">\n  Press <Kbd>⌘</Kbd>+<Kbd>K</Kbd> to open the command palette\n</p>`}
+  lang="astro"
+>
+  <p class="flex items-center gap-1.5 text-sm text-kumo-default">
+    Press <Kbd>⌘</Kbd>+<Kbd>K</Kbd> to open the command palette
+  </p>
+</ComponentExample>
+
+### Shortcut List
+
+<ComponentExample
+  code={`<div class="flex flex-col gap-3">\n  <div class="flex items-center justify-between">\n    <span class="text-sm text-kumo-default">Save</span>\n    <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>S</Kbd></div>\n  </div>\n  <div class="flex items-center justify-between">\n    <span class="text-sm text-kumo-default">Search</span>\n    <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>K</Kbd></div>\n  </div>\n</div>`}
+  lang="astro"
+>
+  <div class="flex flex-col gap-3">
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-kumo-default">Save</span>
+      <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>S</Kbd></div>
+    </div>
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-kumo-default">Undo</span>
+      <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>Z</Kbd></div>
+    </div>
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-kumo-default">Search</span>
+      <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>K</Kbd></div>
+    </div>
+    <div class="flex items-center justify-between">
+      <span class="text-sm text-kumo-default">New tab</span>
+      <div class="flex items-center gap-1"><Kbd>⌘</Kbd><Kbd>T</Kbd></div>
+    </div>
+  </div>
+</ComponentExample>
+
+</ComponentSection>
+
+{/* API Reference */}
+
+<ComponentSection>
+
+## API Reference
+
+<div class="not-prose overflow-x-auto">
+  <table class="w-full text-sm">
+    <thead>
+      <tr class="border-b border-kumo-hairline">
+        <th class="px-4 py-3 text-left font-semibold">Prop</th>
+        <th class="px-4 py-3 text-left font-semibold">Type</th>
+        <th class="px-4 py-3 text-left font-semibold">Default</th>
+        <th class="px-4 py-3 text-left font-semibold">Description</th>
+      </tr>
+    </thead>
+    <tbody class="text-kumo-strong">
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">size</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"sm" | "base" | "lg"</code></td>
+        <td class="px-4 py-3 font-mono text-xs"><code>"base"</code></td>
+        <td class="px-4 py-3 text-xs">Size of the key cap.</td>
+      </tr>
+      <tr class="border-b border-kumo-hairline">
+        <td class="px-4 py-3 font-mono text-xs">class</td>
+        <td class="px-4 py-3 font-mono text-xs"><code>string</code></td>
+        <td class="px-4 py-3 font-mono text-xs">-</td>
+        <td class="px-4 py-3 text-xs">Additional CSS classes.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</ComponentSection>
