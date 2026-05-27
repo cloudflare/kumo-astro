@@ -1,0 +1,331 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const usageCode = `---
+// src/pages/index.astro
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+// ... see full source below
+---
+
+<section class="bg-kumo-canvas min-h-screen flex items-center justify-center p-8">
+  <!-- hero content here -->
+</section>`;
+
+const sourceCode = `---
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+---
+
+<section class="bg-kumo-canvas min-h-screen flex items-center justify-center p-8">
+  <div class="max-w-3xl mx-auto text-center space-y-6">
+
+    <CloudflareLogo variant="horizontal" height={28} />
+
+    <div class="flex justify-center pt-2">
+      <Badge variant="secondary">New — Kumo v2 is here</Badge>
+    </div>
+
+    <h1 class="text-5xl font-bold text-kumo-default tracking-tight text-pretty">
+      Build consistent UI<br />across every product
+    </h1>
+
+    <p class="text-lg text-kumo-subtle text-pretty max-w-xl mx-auto">
+      Kumo is Cloudflare's design system. Ship accessible, on-brand interfaces
+      in minutes with a library of components built for production.
+    </p>
+
+    <div class="flex items-center justify-center gap-3 pt-2">
+      <Button variant="primary" size="lg">Get started</Button>
+      <Button variant="secondary" size="lg">View components</Button>
+    </div>
+
+    <p class="text-sm text-kumo-subtle">
+      Already using Kumo?{" "}
+      <Link href="#" variant="inline">Read the migration guide →</Link>
+    </p>
+
+  </div>
+</section>`;
+
+const splitHeroCode = `---
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+---
+
+<section class="bg-kumo-canvas min-h-screen flex items-center p-8 lg:p-16">
+  <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+    <!-- Text -->
+    <div class="space-y-6">
+      <div>
+        <Badge variant="secondary">New — Kumo v2 is here</Badge>
+      </div>
+
+      <h1 class="text-5xl font-bold text-kumo-default tracking-tight text-pretty">
+        Build consistent UI across every product
+      </h1>
+
+      <p class="text-lg text-kumo-subtle text-pretty">
+        Kumo is Cloudflare's design system. Ship accessible, on-brand interfaces
+        in minutes with a library of components built for production.
+      </p>
+
+      <div class="flex items-center gap-3">
+        <Button variant="primary" size="lg">Get started</Button>
+        <Button variant="secondary" size="lg">View components</Button>
+      </div>
+
+      <p class="text-sm text-kumo-subtle">
+        Already using Kumo?{" "}
+        <Link href="#" variant="inline">Read the migration guide →</Link>
+      </p>
+    </div>
+
+    <!-- Visual -->
+    <div class="rounded-xl ring ring-kumo-hairline bg-kumo-base p-6 space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-kumo-danger"></div>
+        <div class="w-3 h-3 rounded-full bg-kumo-warning"></div>
+        <div class="w-3 h-3 rounded-full bg-kumo-success"></div>
+      </div>
+      <div class="space-y-2">
+        <div class="h-3 w-3/4 rounded bg-kumo-tint"></div>
+        <div class="h-3 w-1/2 rounded bg-kumo-tint"></div>
+        <div class="h-8 w-full rounded-lg bg-kumo-elevated mt-4"></div>
+        <div class="h-8 w-full rounded-lg bg-kumo-elevated"></div>
+        <div class="flex gap-2 mt-4">
+          <div class="h-8 w-24 rounded-lg bg-kumo-brand"></div>
+          <div class="h-8 w-24 rounded-lg bg-kumo-elevated"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>`;
+
+const minimalHeroCode = `---
+import Button from "@cloudflare/kumo-astro/components/button";
+---
+
+<section class="bg-kumo-canvas min-h-screen flex items-center justify-center p-8">
+  <div class="max-w-2xl mx-auto text-center space-y-8">
+
+    <h1 class="text-6xl font-bold text-kumo-default tracking-tight text-pretty">
+      The fastest way to build on Cloudflare
+    </h1>
+
+    <div class="flex items-center justify-center gap-3">
+      <Button variant="primary" size="lg">Start building</Button>
+      <Button variant="ghost" size="lg">Learn more</Button>
+    </div>
+
+  </div>
+</section>`;
+---
+
+<DocLayout
+  title="Hero"
+  description="A full-width landing section with a badge, headline, description, and call-to-action buttons."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="flex items-center justify-center min-h-[560px] p-12">
+          <div class="max-w-3xl mx-auto text-center space-y-6">
+
+            <CloudflareLogo variant="horizontal" height={28} />
+
+            <div class="flex justify-center pt-2">
+              <Badge variant="secondary">New — Kumo v2 is here</Badge>
+            </div>
+
+            <h1 class="text-5xl font-bold text-kumo-default tracking-tight text-pretty">
+              Build consistent UI<br />across every product
+            </h1>
+
+            <p class="text-lg text-kumo-subtle text-pretty max-w-xl mx-auto">
+              Kumo is Cloudflare's design system. Ship accessible, on-brand interfaces
+              in minutes with a library of components built for production.
+            </p>
+
+            <div class="flex items-center justify-center gap-3 pt-2">
+              <Button variant="primary" size="lg">Get started</Button>
+              <Button variant="secondary" size="lg">View components</Button>
+            </div>
+
+            <p class="text-sm text-kumo-subtle">
+              Already using Kumo?
+              <Link href="#" variant="inline">Read the migration guide →</Link>
+            </p>
+
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={sourceCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Hero is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the source code into your page</strong></p>
+        <CodeBlock code={`# Copy the source code above into your page, e.g.:
+src/pages/index.astro`} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Update the copy and CTA links</strong></p>
+        <CodeBlock code={`<!-- Update the heading, description, badge text, and button hrefs to match your product -->`} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop the hero as a <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">&lt;section&gt;</code> at the top of your page. Swap the heading, description, badge text, and button links for your own content.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>Split</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">Text on the left, a UI mockup visual on the right. Good for product landing pages.</p>
+
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="flex items-center min-h-[480px] p-8 lg:p-12">
+          <div class="max-w-5xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+              <div>
+                <Badge variant="secondary">New — Kumo v2 is here</Badge>
+              </div>
+              <h1 class="text-4xl font-bold text-kumo-default tracking-tight text-pretty">
+                Build consistent UI across every product
+              </h1>
+              <p class="text-base text-kumo-subtle text-pretty">
+                Kumo is Cloudflare's design system. Ship accessible, on-brand interfaces in minutes.
+              </p>
+              <div class="flex items-center gap-3">
+                <Button variant="primary">Get started</Button>
+                <Button variant="secondary">View components</Button>
+              </div>
+            </div>
+            <div class="rounded-xl ring ring-kumo-hairline bg-kumo-base p-6 space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-kumo-danger"></div>
+                <div class="w-3 h-3 rounded-full bg-kumo-warning"></div>
+                <div class="w-3 h-3 rounded-full bg-kumo-success"></div>
+              </div>
+              <div class="space-y-2 pt-2">
+                <div class="h-3 w-3/4 rounded bg-kumo-tint"></div>
+                <div class="h-3 w-1/2 rounded bg-kumo-tint"></div>
+                <div class="h-8 w-full rounded-lg bg-kumo-elevated mt-4"></div>
+                <div class="h-8 w-full rounded-lg bg-kumo-elevated"></div>
+                <div class="flex gap-2 mt-4">
+                  <div class="h-8 w-24 rounded-lg bg-kumo-brand"></div>
+                  <div class="h-8 w-24 rounded-lg bg-kumo-elevated"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={splitHeroCode} lang="astro" />
+      </div>
+    </div>
+
+    <Heading level={3} class="mt-8">Minimal</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">Just a headline and two CTAs — maximum impact with minimum clutter.</p>
+
+    <ComponentExample code={minimalHeroCode} lang="astro">
+      <div class="flex items-center justify-center w-full min-h-[320px] p-12">
+        <div class="max-w-2xl mx-auto text-center space-y-8">
+          <h1 class="text-5xl font-bold text-kumo-default tracking-tight text-pretty">
+            The fastest way to build on Cloudflare
+          </h1>
+          <div class="flex items-center justify-center gap-3">
+            <Button variant="primary" size="lg">Start building</Button>
+            <Button variant="ghost" size="lg">Learn more</Button>
+          </div>
+        </div>
+      </div>
+    </ComponentExample>
+
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Badge</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Announcement label above the headline</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Primary and secondary call-to-action buttons</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Link</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Inline text link below the CTAs</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CloudflareLogo</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Horizontal logo at the top of the hero</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

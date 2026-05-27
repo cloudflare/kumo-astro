@@ -1,0 +1,398 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const usageCode = `---
+// src/pages/pricing.astro
+import Card from "@cloudflare/kumo-astro/components/card";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+// ... see full source below
+---
+
+<div class="bg-kumo-canvas min-h-screen p-12">
+  <div class="max-w-5xl mx-auto">
+    <!-- pricing tiers here -->
+  </div>
+</div>`;
+
+const checkIcon = `<svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>`;
+
+const sourceCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+---
+
+<div class="bg-kumo-canvas min-h-screen p-12">
+  <div class="max-w-5xl mx-auto">
+
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <p class="text-xs font-semibold tracking-widest uppercase text-kumo-subtle mb-3">Pricing</p>
+      <h1 class="text-4xl font-bold text-kumo-default tracking-tight">Simple, transparent pricing</h1>
+      <p class="text-kumo-subtle mt-3 text-pretty max-w-md mx-auto">Start for free, scale as you grow. No hidden fees.</p>
+    </div>
+
+    <!-- Tiers -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Free -->
+      <Card>
+        <CardHeader class="pb-4">
+          <Badge variant="secondary" class="mb-3 w-fit">Free</Badge>
+          <CardTitle class="text-3xl font-bold">$0 <span class="text-base font-normal text-kumo-subtle">/ month</span></CardTitle>
+          <CardDescription>Perfect for personal projects</CardDescription>
+        </CardHeader>
+        <Separator />
+        <CardContent class="pt-4 space-y-2.5">
+          {[
+            "100k requests / day",
+            "1 Worker",
+            "Community support",
+            "Basic analytics",
+          ].map((f) => (
+            <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+              <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              {f}
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter class="pt-4">
+          <Button variant="secondary" class="w-full justify-center">Get started</Button>
+        </CardFooter>
+      </Card>
+
+      <!-- Pro (featured) -->
+      <Card class="ring-2 ring-kumo-brand">
+        <CardHeader class="pb-4">
+          <Badge variant="primary" class="mb-3 w-fit">Most popular</Badge>
+          <CardTitle class="text-3xl font-bold">$20 <span class="text-base font-normal text-kumo-subtle">/ month</span></CardTitle>
+          <CardDescription>For teams shipping to production</CardDescription>
+        </CardHeader>
+        <Separator />
+        <CardContent class="pt-4 space-y-2.5">
+          {[
+            "10M requests / day",
+            "Unlimited Workers",
+            "Priority support",
+            "Advanced analytics",
+            "Custom domains",
+          ].map((f) => (
+            <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+              <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              {f}
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter class="pt-4">
+          <Button variant="primary" class="w-full justify-center">Start free trial</Button>
+        </CardFooter>
+      </Card>
+
+      <!-- Enterprise -->
+      <Card>
+        <CardHeader class="pb-4">
+          <Badge variant="secondary" class="mb-3 w-fit">Enterprise</Badge>
+          <CardTitle class="text-3xl font-bold">Custom</CardTitle>
+          <CardDescription>For large-scale deployments</CardDescription>
+        </CardHeader>
+        <Separator />
+        <CardContent class="pt-4 space-y-2.5">
+          {[
+            "Unlimited requests",
+            "SLA guarantee",
+            "Dedicated support",
+            "Custom contracts",
+            "SSO & audit logs",
+          ].map((f) => (
+            <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+              <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+              {f}
+            </div>
+          ))}
+        </CardContent>
+        <CardFooter class="pt-4">
+          <Button variant="secondary" class="w-full justify-center">Contact sales</Button>
+        </CardFooter>
+      </Card>
+
+    </div>
+  </div>
+</div>`;
+
+const twoTierCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas p-12">
+  <div class="grid grid-cols-2 gap-6 max-w-2xl w-full">
+    <Card>
+      <CardHeader class="pb-4">
+        <Badge variant="secondary" class="mb-3 w-fit">Free</Badge>
+        <CardTitle class="text-3xl font-bold">$0 <span class="text-base font-normal text-kumo-subtle">/ mo</span></CardTitle>
+        <CardDescription>For personal projects</CardDescription>
+      </CardHeader>
+      <Separator />
+      <CardContent class="pt-4 space-y-2">
+        <p class="text-sm text-kumo-subtle">100k requests / day</p>
+        <p class="text-sm text-kumo-subtle">1 Worker</p>
+        <p class="text-sm text-kumo-subtle">Community support</p>
+      </CardContent>
+      <CardFooter><Button variant="secondary" class="w-full justify-center">Get started</Button></CardFooter>
+    </Card>
+    <Card class="ring-2 ring-kumo-brand">
+      <CardHeader class="pb-4">
+        <Badge variant="primary" class="mb-3 w-fit">Pro</Badge>
+        <CardTitle class="text-3xl font-bold">$20 <span class="text-base font-normal text-kumo-subtle">/ mo</span></CardTitle>
+        <CardDescription>For production teams</CardDescription>
+      </CardHeader>
+      <Separator />
+      <CardContent class="pt-4 space-y-2">
+        <p class="text-sm text-kumo-subtle">10M requests / day</p>
+        <p class="text-sm text-kumo-subtle">Unlimited Workers</p>
+        <p class="text-sm text-kumo-subtle">Priority support</p>
+      </CardContent>
+      <CardFooter><Button variant="primary" class="w-full justify-center">Start free trial</Button></CardFooter>
+    </Card>
+  </div>
+</div>`;
+---
+
+<DocLayout
+  title="Pricing"
+  description="Three pricing tiers with a featured plan, feature lists, and call-to-action buttons."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="p-12">
+          <div class="max-w-5xl mx-auto">
+
+            <div class="text-center mb-10">
+              <p class="text-xs font-semibold tracking-widest uppercase text-kumo-subtle mb-3">Pricing</p>
+              <h1 class="text-4xl font-bold text-kumo-default tracking-tight">Simple, transparent pricing</h1>
+              <p class="text-kumo-subtle mt-3 text-pretty max-w-md mx-auto">Start for free, scale as you grow. No hidden fees.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+              <Card>
+                <CardHeader class="pb-4">
+                  <Badge variant="secondary" class="mb-3 w-fit">Free</Badge>
+                  <CardTitle class="text-3xl font-bold">$0 <span class="text-base font-normal text-kumo-subtle">/ month</span></CardTitle>
+                  <CardDescription>Perfect for personal projects</CardDescription>
+                </CardHeader>
+                <Separator />
+                <CardContent class="pt-4 space-y-2.5">
+                  {["100k requests / day", "1 Worker", "Community support", "Basic analytics"].map((f) => (
+                    <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+                      <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                      {f}
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter class="pt-4">
+                  <Button variant="secondary" class="w-full justify-center">Get started</Button>
+                </CardFooter>
+              </Card>
+
+              <Card class="ring-2 ring-kumo-brand">
+                <CardHeader class="pb-4">
+                  <Badge variant="primary" class="mb-3 w-fit">Most popular</Badge>
+                  <CardTitle class="text-3xl font-bold">$20 <span class="text-base font-normal text-kumo-subtle">/ month</span></CardTitle>
+                  <CardDescription>For teams shipping to production</CardDescription>
+                </CardHeader>
+                <Separator />
+                <CardContent class="pt-4 space-y-2.5">
+                  {["10M requests / day", "Unlimited Workers", "Priority support", "Advanced analytics", "Custom domains"].map((f) => (
+                    <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+                      <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                      {f}
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter class="pt-4">
+                  <Button variant="primary" class="w-full justify-center">Start free trial</Button>
+                </CardFooter>
+              </Card>
+
+              <Card>
+                <CardHeader class="pb-4">
+                  <Badge variant="secondary" class="mb-3 w-fit">Enterprise</Badge>
+                  <CardTitle class="text-3xl font-bold">Custom</CardTitle>
+                  <CardDescription>For large-scale deployments</CardDescription>
+                </CardHeader>
+                <Separator />
+                <CardContent class="pt-4 space-y-2.5">
+                  {["Unlimited requests", "SLA guarantee", "Dedicated support", "Custom contracts", "SSO & audit logs"].map((f) => (
+                    <div class="flex items-start gap-2 text-sm text-kumo-subtle">
+                      <svg class="w-4 h-4 text-kumo-success shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                      {f}
+                    </div>
+                  ))}
+                </CardContent>
+                <CardFooter class="pt-4">
+                  <Button variant="secondary" class="w-full justify-center">Contact sales</Button>
+                </CardFooter>
+              </Card>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={sourceCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Pricing is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the source code into a new page</strong></p>
+        <CodeBlock code={`# Copy the source code above into:
+src/pages/pricing.astro`} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Update tier names, prices, and features</strong></p>
+        <CodeBlock code={`<!-- Replace the tier names, prices, feature lists, and button links
+     to match your product's actual pricing -->`} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop this in as a page (e.g. <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">src/pages/pricing.astro</code>). The featured plan uses <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">ring-2 ring-kumo-brand</code> on the Card to stand out. Update the feature lists and CTAs to match your product.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>Two Tier</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A simpler Free + Pro layout for products with fewer tiers.</p>
+    <ComponentExample code={twoTierCode} lang="astro">
+      <div class="flex items-center justify-center w-full p-12">
+        <div class="grid grid-cols-2 gap-6 max-w-2xl w-full">
+          <Card>
+            <CardHeader class="pb-4">
+              <Badge variant="secondary" class="mb-3 w-fit">Free</Badge>
+              <CardTitle class="text-3xl font-bold">$0 <span class="text-base font-normal text-kumo-subtle">/ mo</span></CardTitle>
+              <CardDescription>For personal projects</CardDescription>
+            </CardHeader>
+            <Separator />
+            <CardContent class="pt-4 space-y-2">
+              <p class="text-sm text-kumo-subtle">100k requests / day</p>
+              <p class="text-sm text-kumo-subtle">1 Worker</p>
+              <p class="text-sm text-kumo-subtle">Community support</p>
+            </CardContent>
+            <CardFooter><Button variant="secondary" class="w-full justify-center">Get started</Button></CardFooter>
+          </Card>
+          <Card class="ring-2 ring-kumo-brand">
+            <CardHeader class="pb-4">
+              <Badge variant="primary" class="mb-3 w-fit">Pro</Badge>
+              <CardTitle class="text-3xl font-bold">$20 <span class="text-base font-normal text-kumo-subtle">/ mo</span></CardTitle>
+              <CardDescription>For production teams</CardDescription>
+            </CardHeader>
+            <Separator />
+            <CardContent class="pt-4 space-y-2">
+              <p class="text-sm text-kumo-subtle">10M requests / day</p>
+              <p class="text-sm text-kumo-subtle">Unlimited Workers</p>
+              <p class="text-sm text-kumo-subtle">Priority support</p>
+            </CardContent>
+            <CardFooter><Button variant="primary" class="w-full justify-center">Start free trial</Button></CardFooter>
+          </Card>
+        </div>
+      </div>
+    </ComponentExample>
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Card, CardHeader, CardContent, CardFooter</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Pricing tier containers</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Badge</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Tier labels (Free, Most popular, Enterprise)</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">CTA per tier (Get started, Start free trial, Contact sales)</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Separator</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Divider between price and feature list</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

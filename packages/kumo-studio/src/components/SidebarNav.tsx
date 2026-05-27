@@ -106,6 +106,12 @@ const chartItems: NavItem[] = [
 const blockItems: NavItem[] = [
   { label: "Authentication", href: "/blocks/auth" },
   { label: "Dashboard", href: "/blocks/dashboard" },
+  { label: "Forms", href: "/blocks/forms" },
+  { label: "Hero", href: "/blocks/hero" },
+  { label: "Marketing", href: "/blocks/marketing" },
+  { label: "Navigation", href: "/blocks/navigation" },
+  { label: "Pricing", href: "/blocks/pricing" },
+  { label: "Settings", href: "/blocks/settings" },
   { label: "Page Header", href: "/blocks/page-header" },
   { label: "Resource List", href: "/blocks/resource-list" },
   { label: "Delete Resource", href: "/blocks/delete-resource" },

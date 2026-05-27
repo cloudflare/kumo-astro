@@ -1,0 +1,512 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Field from "@cloudflare/kumo-astro/components/field";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+import Switch from "@cloudflare/kumo-astro/components/switch";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const usageCode = `---
+// src/pages/settings.astro
+import Card from "@cloudflare/kumo-astro/components/card";
+import Input from "@cloudflare/kumo-astro/components/input";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Switch from "@cloudflare/kumo-astro/components/switch";
+// ... see full source below
+---
+
+<div class="bg-kumo-canvas min-h-screen p-8">
+  <div class="max-w-2xl mx-auto">
+    <!-- form sections here -->
+  </div>
+</div>`;
+
+const sourceCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Field from "@cloudflare/kumo-astro/components/field";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+import Switch from "@cloudflare/kumo-astro/components/switch";
+import Separator from "@cloudflare/kumo-astro/components/separator";
+---
+
+<div class="bg-kumo-canvas min-h-screen p-8">
+  <div class="max-w-2xl mx-auto space-y-6">
+
+    <!-- Page Header -->
+    <div class="flex items-center justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-kumo-default tracking-tight">Account Settings</h1>
+        <p class="text-sm text-kumo-subtle mt-0.5">Manage your account details and preferences</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <Button variant="secondary">Cancel</Button>
+        <Button variant="primary">Save changes</Button>
+      </div>
+    </div>
+
+    <!-- Profile -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Profile</CardTitle>
+        <CardDescription>Update your personal information</CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <Field>
+            <Label for="first-name">First name</Label>
+            <Input id="first-name" type="text" placeholder="John" value="John" />
+          </Field>
+          <Field>
+            <Label for="last-name">Last name</Label>
+            <Input id="last-name" type="text" placeholder="Doe" value="Doe" />
+          </Field>
+        </div>
+        <Field>
+          <Label for="email">Email address</Label>
+          <Input id="email" type="email" placeholder="john@example.com" value="john@cloudflare.com" />
+        </Field>
+        <Field>
+          <Label for="bio">Bio</Label>
+          <InputArea id="bio" placeholder="Tell us a little about yourself" rows={3}>A software engineer building things on Cloudflare.</InputArea>
+        </Field>
+      </CardContent>
+    </Card>
+
+    <!-- Preferences -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Preferences</CardTitle>
+        <CardDescription>Customize your experience</CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <Field>
+          <Label for="timezone">Timezone</Label>
+          <NativeSelect id="timezone" name="timezone" wrapperClass="w-full">
+            <option value="utc">UTC</option>
+            <option value="est" selected>Eastern Time (ET)</option>
+            <option value="cst">Central Time (CT)</option>
+            <option value="mst">Mountain Time (MT)</option>
+            <option value="pst">Pacific Time (PT)</option>
+          </NativeSelect>
+        </Field>
+        <Field>
+          <Label for="language">Language</Label>
+          <NativeSelect id="language" name="language" wrapperClass="w-full">
+            <option value="en" selected>English</option>
+            <option value="es">Spanish</option>
+            <option value="fr">French</option>
+            <option value="de">German</option>
+            <option value="ja">Japanese</option>
+          </NativeSelect>
+        </Field>
+      </CardContent>
+    </Card>
+
+    <!-- Notifications -->
+    <Card>
+      <CardHeader>
+        <CardTitle>Notifications</CardTitle>
+        <CardDescription>Choose what you want to be notified about</CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-kumo-default">Email notifications</p>
+            <p class="text-xs text-kumo-subtle">Receive updates about your account activity</p>
+          </div>
+          <Switch defaultChecked={true} aria-label="Email notifications" />
+        </div>
+        <Separator />
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-kumo-default">Marketing emails</p>
+            <p class="text-xs text-kumo-subtle">Receive tips, product updates, and announcements</p>
+          </div>
+          <Switch aria-label="Marketing emails" />
+        </div>
+        <Separator />
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-kumo-default">Security alerts</p>
+            <p class="text-xs text-kumo-subtle">Get notified about sign-ins and security events</p>
+          </div>
+          <Switch defaultChecked={true} aria-label="Security alerts" />
+        </div>
+      </CardContent>
+    </Card>
+
+    <!-- Danger Zone -->
+    <Card>
+      <CardHeader>
+        <CardTitle class="text-kumo-danger">Danger Zone</CardTitle>
+        <CardDescription>Irreversible and destructive actions</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm font-medium text-kumo-default">Delete account</p>
+            <p class="text-xs text-kumo-subtle">Permanently delete your account and all of your data</p>
+          </div>
+          <Button variant="destructive">Delete account</Button>
+        </div>
+      </CardContent>
+    </Card>
+
+  </div>
+</div>`;
+
+const contactFormCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Field from "@cloudflare/kumo-astro/components/field";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas min-h-screen p-8">
+  <div class="w-full max-w-lg">
+    <Card>
+      <CardHeader>
+        <CardTitle>Contact us</CardTitle>
+        <CardDescription>We'll get back to you within 24 hours</CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <Field>
+            <Label for="name">Name</Label>
+            <Input id="name" type="text" placeholder="John Doe" required />
+          </Field>
+          <Field>
+            <Label for="contact-email">Email</Label>
+            <Input id="contact-email" type="email" placeholder="john@example.com" required />
+          </Field>
+        </div>
+        <Field>
+          <Label for="subject">Subject</Label>
+          <NativeSelect id="subject" name="subject" wrapperClass="w-full">
+            <option value="">Select a topic</option>
+            <option value="billing">Billing</option>
+            <option value="technical">Technical support</option>
+            <option value="account">Account</option>
+            <option value="other">Other</option>
+          </NativeSelect>
+        </Field>
+        <Field>
+          <Label for="message">Message</Label>
+          <InputArea id="message" placeholder="Describe your issue or question..." rows={5} required />
+        </Field>
+      </CardContent>
+      <CardFooter>
+        <Button variant="primary" class="w-full justify-center">Send message</Button>
+      </CardFooter>
+    </Card>
+  </div>
+</div>`;
+---
+
+<DocLayout
+  title="Settings"
+  description="A full settings page with profile editing, preferences, notification toggles, and a danger zone."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="p-8">
+          <div class="max-w-2xl mx-auto space-y-6">
+
+            <div class="flex items-center justify-between">
+              <div>
+                <h1 class="text-2xl font-bold text-kumo-default tracking-tight">Account Settings</h1>
+                <p class="text-sm text-kumo-subtle mt-0.5">Manage your account details and preferences</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <Button variant="secondary">Cancel</Button>
+                <Button variant="primary">Save changes</Button>
+              </div>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Profile</CardTitle>
+                <CardDescription>Update your personal information</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                  <Field>
+                    <Label for="first-name-p">First name</Label>
+                    <Input id="first-name-p" type="text" placeholder="John" value="John" />
+                  </Field>
+                  <Field>
+                    <Label for="last-name-p">Last name</Label>
+                    <Input id="last-name-p" type="text" placeholder="Doe" value="Doe" />
+                  </Field>
+                </div>
+                <Field>
+                  <Label for="email-p">Email address</Label>
+                  <Input id="email-p" type="email" value="john@cloudflare.com" />
+                </Field>
+                <Field>
+                  <Label for="bio-p">Bio</Label>
+                  <InputArea id="bio-p" rows={3}>A software engineer building things on Cloudflare.</InputArea>
+                </Field>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Preferences</CardTitle>
+                <CardDescription>Customize your experience</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <Field>
+                  <Label for="timezone-p">Timezone</Label>
+                  <NativeSelect id="timezone-p" name="timezone" wrapperClass="w-full">
+                    <option value="utc">UTC</option>
+                    <option value="est" selected>Eastern Time (ET)</option>
+                    <option value="cst">Central Time (CT)</option>
+                    <option value="pst">Pacific Time (PT)</option>
+                  </NativeSelect>
+                </Field>
+                <Field>
+                  <Label for="language-p">Language</Label>
+                  <NativeSelect id="language-p" name="language" wrapperClass="w-full">
+                    <option value="en" selected>English</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                  </NativeSelect>
+                </Field>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Notifications</CardTitle>
+                <CardDescription>Choose what you want to be notified about</CardDescription>
+              </CardHeader>
+              <CardContent class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-kumo-default">Email notifications</p>
+                    <p class="text-xs text-kumo-subtle">Receive updates about your account activity</p>
+                  </div>
+                  <Switch defaultChecked={true} aria-label="Email notifications" />
+                </div>
+                <Separator />
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-kumo-default">Marketing emails</p>
+                    <p class="text-xs text-kumo-subtle">Receive tips, product updates, and announcements</p>
+                  </div>
+                  <Switch aria-label="Marketing emails" />
+                </div>
+                <Separator />
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-kumo-default">Security alerts</p>
+                    <p class="text-xs text-kumo-subtle">Get notified about sign-ins and security events</p>
+                  </div>
+                  <Switch defaultChecked={true} aria-label="Security alerts" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle class="text-kumo-danger">Danger Zone</CardTitle>
+                <CardDescription>Irreversible and destructive actions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-kumo-default">Delete account</p>
+                    <p class="text-xs text-kumo-subtle">Permanently delete your account and all of your data</p>
+                  </div>
+                  <Button variant="destructive">Delete account</Button>
+                </div>
+              </CardContent>
+            </Card>
+
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={sourceCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Form is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the source code into a new page</strong></p>
+        <CodeBlock code={`# Copy the source code above into:
+src/pages/settings.astro`} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Wire up form submission</strong></p>
+        <CodeBlock code={`// Connect the Save changes button to your API or form handler
+// e.g. use Astro actions, a server endpoint, or a client-side fetch`} lang="js" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop it in as a page file (e.g. <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">src/pages/settings.astro</code>). Each card is an independent section — add or remove sections as needed. Wire up the Save button to your backend.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>Contact Form</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A simpler single-card form for collecting user enquiries.</p>
+    <ComponentExample code={contactFormCode} lang="astro">
+      <div class="flex items-center justify-center w-full p-8">
+        <div class="w-full max-w-lg">
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact us</CardTitle>
+              <CardDescription>We'll get back to you within 24 hours</CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-4">
+              <div class="grid grid-cols-2 gap-4">
+                <Field>
+                  <Label for="name-ex">Name</Label>
+                  <Input id="name-ex" type="text" placeholder="John Doe" />
+                </Field>
+                <Field>
+                  <Label for="cemail-ex">Email</Label>
+                  <Input id="cemail-ex" type="email" placeholder="john@example.com" />
+                </Field>
+              </div>
+              <Field>
+                <Label for="subject-ex">Subject</Label>
+                <NativeSelect id="subject-ex" name="subject" wrapperClass="w-full">
+                  <option value="">Select a topic</option>
+                  <option value="billing">Billing</option>
+                  <option value="technical">Technical support</option>
+                  <option value="account">Account</option>
+                  <option value="other">Other</option>
+                </NativeSelect>
+              </Field>
+              <Field>
+                <Label for="message-ex">Message</Label>
+                <InputArea id="message-ex" placeholder="Describe your issue or question..." rows={4} />
+              </Field>
+            </CardContent>
+            <CardFooter>
+              <Button variant="primary" class="w-full justify-center">Send message</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </ComponentExample>
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Field, Label, Input</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Text inputs with labels</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">InputArea</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Multi-line text input (bio, message)</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">NativeSelect</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Timezone, language, and topic dropdowns</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Switch</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Notification preference toggles</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Save, Cancel, and Delete account actions</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Card, CardHeader, CardContent, CardFooter</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Section containers</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Separator</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Dividers between notification rows</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

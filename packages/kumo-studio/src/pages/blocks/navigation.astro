@@ -1,0 +1,305 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const usageCode = `---
+// src/layouts/Layout.astro
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+// ... see full source below
+---
+
+<nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+  <!-- nav content here -->
+</nav>`;
+
+const sourceCode = `---
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+---
+
+<nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+  <div class="flex items-center gap-6">
+    <CloudflareLogo variant="horizontal" height={20} />
+    <div class="flex items-center gap-4">
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Docs</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <Button variant="secondary" size="sm">Log in</Button>
+    <Button variant="primary" size="sm">Sign up</Button>
+  </div>
+</nav>
+
+<div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+  Page content goes here
+</div>`;
+
+const activeStateCode = `---
+import Button from "@cloudflare/kumo-astro/components/button";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+---
+
+<nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+  <div class="flex items-center gap-6">
+    <CloudflareLogo variant="horizontal" height={20} />
+    <div class="flex items-center gap-4">
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+      <!-- Active link -->
+      <a href="javascript:void(0)" class="relative text-sm text-kumo-default font-medium flex flex-col items-center gap-0">
+        Docs
+        <span class="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-kumo-brand rounded-full"></span>
+      </a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <Button variant="secondary" size="sm">Log in</Button>
+    <Button variant="primary" size="sm">Sign up</Button>
+  </div>
+</nav>
+
+<div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+  Page content goes here
+</div>`;
+
+const breadcrumbCode = `---
+import Button from "@cloudflare/kumo-astro/components/button";
+import CloudflareLogo from "@cloudflare/kumo-astro/components/cloudflare-logo";
+---
+
+<!-- Primary nav -->
+<nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+  <div class="flex items-center gap-6">
+    <CloudflareLogo variant="horizontal" height={20} />
+    <div class="flex items-center gap-4">
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Docs</a>
+      <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <Button variant="secondary" size="sm">Log in</Button>
+    <Button variant="primary" size="sm">Sign up</Button>
+  </div>
+</nav>
+
+<!-- Breadcrumb nav -->
+<nav class="bg-kumo-elevated border-b border-kumo-hairline h-10 px-6 flex items-center">
+  <ol class="flex items-center gap-1.5 text-sm">
+    <li>
+      <a href="javascript:void(0)" class="text-kumo-subtle hover:text-kumo-default transition-colors">Home</a>
+    </li>
+    <li class="text-kumo-subtle">/</li>
+    <li>
+      <a href="javascript:void(0)" class="text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+    </li>
+    <li class="text-kumo-subtle">/</li>
+    <li class="text-kumo-default font-medium">Workers</li>
+  </ol>
+</nav>
+
+<div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+  Page content goes here
+</div>`;
+---
+
+<DocLayout
+  title="Navigation"
+  description="A top navigation bar with logo, nav links, and call-to-action buttons. Copy into your root layout so it appears on every page."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between rounded-t-lg">
+          <div class="flex items-center gap-6">
+            <CloudflareLogo variant="horizontal" height={20} />
+            <div class="flex items-center gap-4">
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Docs</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <Button variant="secondary" size="sm">Log in</Button>
+            <Button variant="primary" size="sm">Sign up</Button>
+          </div>
+        </nav>
+        <div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+          Page content goes here
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={sourceCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Navigation is a <strong>block</strong> — a layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy into your layout file</strong></p>
+        <CodeBlock code={`# Copy the source code above into your layout, e.g.:
+src/layouts/Layout.astro`} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Update links</strong></p>
+        <CodeBlock code={`<!-- Replace the href="javascript:void(0)" values with your actual routes -->`} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop into your root layout file so it appears on every page. Wrap your page <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">&lt;slot /&gt;</code> below the nav.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>With Active State</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">Highlight the current page link with <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">text-kumo-default font-medium</code> and a bottom border indicator using <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">bg-kumo-brand</code>.</p>
+
+    <ComponentExample code={activeStateCode} lang="astro">
+      <div class="w-full">
+        <nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+          <div class="flex items-center gap-6">
+            <CloudflareLogo variant="horizontal" height={20} />
+            <div class="flex items-center gap-4">
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+              <a href="javascript:void(0)" class="relative text-sm text-kumo-default font-medium flex flex-col items-center">
+                Docs
+                <span class="absolute -bottom-[17px] left-0 right-0 h-0.5 bg-kumo-brand rounded-full"></span>
+              </a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <Button variant="secondary" size="sm">Log in</Button>
+            <Button variant="primary" size="sm">Sign up</Button>
+          </div>
+        </nav>
+        <div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+          Page content goes here
+        </div>
+      </div>
+    </ComponentExample>
+
+    <Heading level={3} class="mt-8">Breadcrumb Nav</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A secondary navigation bar below the main nav showing the current page hierarchy. Uses <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">bg-kumo-elevated</code> to distinguish from the primary nav.</p>
+
+    <ComponentExample code={breadcrumbCode} lang="astro">
+      <div class="w-full">
+        <nav class="bg-kumo-base border-b border-kumo-hairline h-12 px-6 flex items-center justify-between">
+          <div class="flex items-center gap-6">
+            <CloudflareLogo variant="horizontal" height={20} />
+            <div class="flex items-center gap-4">
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Solutions</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Docs</a>
+              <a href="javascript:void(0)" class="text-sm text-kumo-subtle hover:text-kumo-default transition-colors">Pricing</a>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <Button variant="secondary" size="sm">Log in</Button>
+            <Button variant="primary" size="sm">Sign up</Button>
+          </div>
+        </nav>
+        <nav class="bg-kumo-elevated border-b border-kumo-hairline h-10 px-6 flex items-center">
+          <ol class="flex items-center gap-1.5 text-sm">
+            <li>
+              <a href="javascript:void(0)" class="text-kumo-subtle hover:text-kumo-default transition-colors">Home</a>
+            </li>
+            <li class="text-kumo-subtle">/</li>
+            <li>
+              <a href="javascript:void(0)" class="text-kumo-subtle hover:text-kumo-default transition-colors">Products</a>
+            </li>
+            <li class="text-kumo-subtle">/</li>
+            <li class="text-kumo-default font-medium">Workers</li>
+          </ol>
+        </nav>
+        <div class="bg-kumo-canvas p-8 text-center text-kumo-subtle text-sm">
+          Page content goes here
+        </div>
+      </div>
+    </ComponentExample>
+
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Log in and Sign up call-to-action buttons</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Link</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Inline text links within the nav or breadcrumbs</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CloudflareLogo</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Horizontal logo in the left side of the nav bar</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Separator</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Optional visual divider between nav sections</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

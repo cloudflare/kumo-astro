@@ -1,0 +1,427 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Field from "@cloudflare/kumo-astro/components/field";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const newsletterCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import Input from "@cloudflare/kumo-astro/components/input";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Field from "@cloudflare/kumo-astro/components/field";
+import Label from "@cloudflare/kumo-astro/components/label";
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas min-h-screen p-8">
+  <div class="w-full max-w-[480px]">
+    <Card>
+      <CardHeader class="pb-4 text-center">
+        <CardTitle class="text-2xl">Stay in the loop</CardTitle>
+        <CardDescription class="text-sm text-pretty">
+          Get the latest updates delivered to your inbox.
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <Field>
+          <Label for="newsletter-email">Email address</Label>
+          <div class="flex gap-2">
+            <Input
+              id="newsletter-email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              class="flex-1"
+            />
+            <Button variant="primary">Subscribe</Button>
+          </div>
+        </Field>
+        <p class="text-xs text-kumo-subtle text-center">
+          No spam, unsubscribe anytime.
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+</div>`;
+
+const feedbackCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Field from "@cloudflare/kumo-astro/components/field";
+import Label from "@cloudflare/kumo-astro/components/label";
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas min-h-screen p-8">
+  <div class="w-full max-w-[480px]">
+    <Card>
+      <CardHeader class="pb-4">
+        <CardTitle class="text-xl">Share your feedback</CardTitle>
+        <CardDescription class="text-sm text-pretty">
+          How would you rate your experience?
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <Field>
+          <Label>Rating</Label>
+          <div class="flex gap-2">
+            <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="1 star"></button>
+            <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="2 stars"></button>
+            <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="3 stars"></button>
+            <button class="h-8 w-8 rounded-full bg-kumo-tint" aria-label="4 stars"></button>
+            <button class="h-8 w-8 rounded-full bg-kumo-tint" aria-label="5 stars"></button>
+          </div>
+        </Field>
+        <Field>
+          <Label for="feedback-comment">Comments</Label>
+          <InputArea
+            id="feedback-comment"
+            placeholder="Tell us what you think..."
+            rows={4}
+          />
+        </Field>
+      </CardContent>
+      <CardFooter class="pt-2">
+        <Button variant="primary" class="w-full justify-center">Submit feedback</Button>
+      </CardFooter>
+    </Card>
+  </div>
+</div>`;
+
+const usageCode = `---
+// src/pages/new-project.astro
+import Card from "@cloudflare/kumo-astro/components/card";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Input from "@cloudflare/kumo-astro/components/input";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+// ... see full source below
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas min-h-screen p-8">
+  <!-- copy full source below into here -->
+</div>`;
+
+const sourceCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import CardFooter from "@cloudflare/kumo-astro/components/card-footer";
+import Input from "@cloudflare/kumo-astro/components/input";
+import InputArea from "@cloudflare/kumo-astro/components/input-area";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Label from "@cloudflare/kumo-astro/components/label";
+import Field from "@cloudflare/kumo-astro/components/field";
+import NativeSelect from "@cloudflare/kumo-astro/components/native-select";
+---
+
+<div class="flex items-center justify-center bg-kumo-canvas min-h-screen p-8">
+  <div class="w-full max-w-[480px]">
+    <Card>
+      <CardHeader class="pb-4">
+        <CardTitle class="text-2xl">Create a new Worker</CardTitle>
+        <CardDescription class="text-sm text-pretty">
+          Configure your Worker and deploy it to Cloudflare's global network
+        </CardDescription>
+      </CardHeader>
+      <CardContent class="space-y-4">
+        <Field>
+          <Label for="worker-name">Worker name</Label>
+          <Input id="worker-name" type="text" placeholder="my-worker" value="my-worker" />
+          <p class="text-xs text-kumo-subtle mt-1">Must be lowercase, letters, numbers, and hyphens only</p>
+        </Field>
+        <Field>
+          <Label for="template">Template</Label>
+          <NativeSelect id="template" name="template" wrapperClass="w-full">
+            <option value="hello-world" selected>Hello World</option>
+            <option value="router">Router</option>
+            <option value="scheduled">Scheduled Worker</option>
+            <option value="api">REST API</option>
+            <option value="static">Static Assets</option>
+          </NativeSelect>
+        </Field>
+        <Field>
+          <Label for="region">Region</Label>
+          <NativeSelect id="region" name="region" wrapperClass="w-full">
+            <option value="auto" selected>Auto (recommended)</option>
+            <option value="us-east">US East</option>
+            <option value="eu-west">EU West</option>
+            <option value="ap-southeast">AP Southeast</option>
+          </NativeSelect>
+        </Field>
+        <Field>
+          <Label for="description">Description <span class="text-kumo-subtle font-normal">(optional)</span></Label>
+          <InputArea id="description" placeholder="What does this Worker do?" rows={3} />
+        </Field>
+      </CardContent>
+      <CardFooter class="flex items-center justify-end gap-2">
+        <Button variant="secondary">Cancel</Button>
+        <Button variant="primary">Deploy Worker</Button>
+      </CardFooter>
+    </Card>
+  </div>
+</div>`;
+---
+
+<DocLayout
+  title="Forms"
+  description="A project creation form showcasing text inputs, dropdowns, textarea, and action buttons — ready to drop into any workflow."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+    <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+      <div class="flex items-center justify-center min-h-[560px] p-8">
+        <div class="w-full max-w-[480px]">
+          <Card>
+            <CardHeader class="pb-4">
+              <CardTitle class="text-2xl">Create a new Worker</CardTitle>
+              <CardDescription class="text-sm text-pretty">
+                Configure your Worker and deploy it to Cloudflare's global network
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-4">
+              <Field>
+                <Label for="worker-name-h">Worker name</Label>
+                <Input id="worker-name-h" type="text" placeholder="my-worker" value="my-worker" />
+                <p class="text-xs text-kumo-subtle mt-1">Must be lowercase, letters, numbers, and hyphens only</p>
+              </Field>
+              <Field>
+                <Label for="template-h">Template</Label>
+                <NativeSelect id="template-h" name="template" wrapperClass="w-full">
+                  <option value="hello-world" selected>Hello World</option>
+                  <option value="router">Router</option>
+                  <option value="scheduled">Scheduled Worker</option>
+                  <option value="api">REST API</option>
+                  <option value="static">Static Assets</option>
+                </NativeSelect>
+              </Field>
+              <Field>
+                <Label for="region-h">Region</Label>
+                <NativeSelect id="region-h" name="region" wrapperClass="w-full">
+                  <option value="auto" selected>Auto (recommended)</option>
+                  <option value="us-east">US East</option>
+                  <option value="eu-west">EU West</option>
+                  <option value="ap-southeast">AP Southeast</option>
+                </NativeSelect>
+              </Field>
+              <Field>
+                <Label for="desc-h">Description <span class="text-kumo-subtle font-normal">(optional)</span></Label>
+                <InputArea id="desc-h" placeholder="What does this Worker do?" rows={3} />
+              </Field>
+            </CardContent>
+            <CardFooter class="flex items-center justify-end gap-2">
+              <Button variant="secondary">Cancel</Button>
+              <Button variant="primary">Deploy Worker</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </div>
+    <div class="component-example-code">
+      <CodeBlock code={sourceCode} lang="astro" />
+    </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Forms is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the source code into a new page</strong></p>
+        <CodeBlock code={`# Copy the source code above into:
+src/pages/register.astro`} lang="bash" />
+      </div>
+
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Wire up submission logic</strong></p>
+        <CodeBlock code={`// Replace the continue button handler with your multi-step or submission logic
+// e.g. POST to your API, navigate to the next step, or integrate with an auth provider
+continueBtn.addEventListener('click', async () => {
+  await fetch('/api/register', { method: 'POST', body: JSON.stringify({ email, password }) });
+});`} lang="js" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop it in as a page file (e.g. <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">src/pages/register.astro</code>). Adapt the step navigation and field validation to match your registration flow.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>Newsletter Signup</Heading>
+    <ComponentExample code={newsletterCode} lang="astro">
+      <div class="flex items-center justify-center w-full p-8">
+        <div class="w-full max-w-[480px]">
+          <Card>
+            <CardHeader class="pb-4 text-center">
+              <CardTitle class="text-2xl">Stay in the loop</CardTitle>
+              <CardDescription class="text-sm text-pretty">
+                Get the latest updates delivered to your inbox.
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-4">
+              <Field>
+                <Label for="newsletter-email-ex">Email address</Label>
+                <div class="flex gap-2">
+                  <Input
+                    id="newsletter-email-ex"
+                    type="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    class="flex-1"
+                  />
+                  <Button variant="primary">Subscribe</Button>
+                </div>
+              </Field>
+              <p class="text-xs text-kumo-subtle text-center">
+                No spam, unsubscribe anytime.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </ComponentExample>
+
+    <Heading level={3} class="mt-8">Feedback Form</Heading>
+    <ComponentExample code={feedbackCode} lang="astro">
+      <div class="flex items-center justify-center w-full p-8">
+        <div class="w-full max-w-[480px]">
+          <Card>
+            <CardHeader class="pb-4">
+              <CardTitle class="text-xl">Share your feedback</CardTitle>
+              <CardDescription class="text-sm text-pretty">
+                How would you rate your experience?
+              </CardDescription>
+            </CardHeader>
+            <CardContent class="space-y-4">
+              <Field>
+                <Label>Rating</Label>
+                <div class="flex gap-2">
+                  <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="1 star"></button>
+                  <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="2 stars"></button>
+                  <button class="h-8 w-8 rounded-full bg-kumo-brand" aria-label="3 stars"></button>
+                  <button class="h-8 w-8 rounded-full bg-kumo-tint" aria-label="4 stars"></button>
+                  <button class="h-8 w-8 rounded-full bg-kumo-tint" aria-label="5 stars"></button>
+                </div>
+              </Field>
+              <Field>
+                <Label for="feedback-comment-ex">Comments</Label>
+                <InputArea
+                  id="feedback-comment-ex"
+                  placeholder="Tell us what you think..."
+                  rows={4}
+                />
+              </Field>
+            </CardContent>
+            <CardFooter class="pt-2">
+              <Button variant="primary" class="w-full justify-center">Submit feedback</Button>
+            </CardFooter>
+          </Card>
+        </div>
+      </div>
+    </ComponentExample>
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Input</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Single-line text, email, and password fields</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">InputArea</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Multi-line textarea for comments and long-form input</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Field</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Wraps label + input pairs with consistent spacing</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Label</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Accessible form field labels</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Submit, continue, and action buttons</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">NativeSelect</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Dropdown select for form option fields</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Card, CardHeader, CardContent, CardFooter</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Form container with structured layout slots</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>

@@ -1,0 +1,513 @@
+---
+import DocLayout from "~/layouts/DocLayout.astro";
+import ComponentSection from "~/components/docs/ComponentSection.astro";
+import ComponentExample from "~/components/docs/ComponentExample.astro";
+import CodeBlock from "~/components/docs/CodeBlock.astro";
+import Heading from "~/components/docs/Heading.astro";
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+import Badge from "@cloudflare/kumo-astro/components/badge";
+import Button from "@cloudflare/kumo-astro/components/button";
+import Link from "@cloudflare/kumo-astro/components/link";
+
+const installCode = `npm install @cloudflare/kumo-astro`;
+
+const usageCode = `---
+// src/pages/features.astro
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+// ... see full source below
+---
+
+<section class="bg-kumo-canvas py-24 px-8">
+  <!-- features grid content here -->
+</section>`;
+
+const sourceCode = `---
+import Card from "@cloudflare/kumo-astro/components/card";
+import CardHeader from "@cloudflare/kumo-astro/components/card-header";
+import CardTitle from "@cloudflare/kumo-astro/components/card-title";
+import CardDescription from "@cloudflare/kumo-astro/components/card-description";
+import CardContent from "@cloudflare/kumo-astro/components/card-content";
+---
+
+<section class="bg-kumo-canvas py-24 px-8">
+  <div class="max-w-5xl mx-auto space-y-16">
+
+    <!-- Section header -->
+    <div class="text-center space-y-4">
+      <p class="text-xs font-semibold uppercase tracking-widest text-kumo-subtle">Features</p>
+      <h2 class="text-4xl font-bold text-kumo-default tracking-tight text-pretty">
+        Everything you need to build fast
+      </h2>
+      <p class="text-base text-kumo-subtle max-w-2xl mx-auto text-pretty">
+        Deploy globally in seconds. Cloudflare's developer platform gives you the
+        primitives to build, secure, and scale any application — without the ops burden.
+      </p>
+    </div>
+
+    <!-- Feature grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Global CDN -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+            </svg>
+          </div>
+          <CardTitle>Global CDN</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            Serve assets from 330+ data centers worldwide. Sub-millisecond cache hits
+            keep your users close to the content they need.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+      <!-- Edge Functions -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+            </svg>
+          </div>
+          <CardTitle>Edge Functions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            Run serverless code at the edge with Cloudflare Workers. Zero cold starts,
+            unlimited scale, and a familiar JavaScript runtime.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+      <!-- Zero Trust Security -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+            </svg>
+          </div>
+          <CardTitle>Zero Trust Security</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            Protect every user, device, and application with identity-aware access
+            policies that enforce security without the VPN overhead.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+      <!-- Analytics -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+            </svg>
+          </div>
+          <CardTitle>Analytics</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            Understand traffic patterns, performance bottlenecks, and user behavior
+            with real-time analytics powered by Cloudflare's global network.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+      <!-- DDoS Protection -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
+            </svg>
+          </div>
+          <CardTitle>DDoS Protection</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            Always-on, unmetered DDoS mitigation absorbs the largest volumetric attacks
+            before they ever reach your origin infrastructure.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+      <!-- Developer API -->
+      <Card>
+        <CardHeader>
+          <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+            <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+            </svg>
+          </div>
+          <CardTitle>Developer API</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <CardDescription>
+            A fully documented REST API and Terraform provider so you can manage every
+            Cloudflare resource programmatically from your existing workflows.
+          </CardDescription>
+        </CardContent>
+      </Card>
+
+    </div>
+  </div>
+</section>`;
+
+const ctaBannerCode = `---
+import Button from "@cloudflare/kumo-astro/components/button";
+---
+
+<section class="bg-kumo-contrast py-20 px-8">
+  <div class="max-w-3xl mx-auto text-center space-y-6">
+    <h2 class="text-3xl font-bold text-kumo-inverse tracking-tight text-pretty">
+      Ready to build on the edge?
+    </h2>
+    <p class="text-base text-kumo-inverse/70 text-pretty">
+      Join millions of developers who trust Cloudflare to deliver fast, secure,
+      and reliable applications — from side projects to enterprise scale.
+    </p>
+    <div class="flex items-center justify-center gap-3 pt-2">
+      <Button variant="primary">Start for free</Button>
+      <Button variant="secondary">Talk to sales</Button>
+    </div>
+  </div>
+</section>`;
+
+const testimonialCode = `<section class="bg-kumo-canvas py-24 px-8">
+  <div class="max-w-2xl mx-auto text-center space-y-8">
+
+    <!-- Quote -->
+    <blockquote>
+      <p class="text-xl text-kumo-default leading-relaxed text-pretty">
+        "Cloudflare Workers cut our API latency by 80%. We now deploy to 330+ locations
+        with a single command and never think about infrastructure again."
+      </p>
+    </blockquote>
+
+    <!-- Attribution -->
+    <div class="flex flex-col items-center gap-3">
+      <div class="w-10 h-10 rounded-full bg-kumo-brand flex items-center justify-center">
+        <span class="text-sm font-semibold text-kumo-inverse">JL</span>
+      </div>
+      <div>
+        <p class="font-semibold text-kumo-default text-sm">Jamie Lee</p>
+        <p class="text-sm text-kumo-subtle">VP Engineering, Acme Corp</p>
+      </div>
+    </div>
+
+  </div>
+</section>`;
+---
+
+<DocLayout
+  title="Marketing"
+  description="A features section showcasing product capabilities — grid of feature cards, CTA banner, and testimonial."
+>
+
+  {/* Hero */}
+
+  <ComponentSection>
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-canvas">
+        <div class="py-24 px-8">
+          <div class="max-w-5xl mx-auto space-y-16">
+
+            <!-- Section header -->
+            <div class="text-center space-y-4">
+              <p class="text-xs font-semibold uppercase tracking-widest text-kumo-subtle">Features</p>
+              <h2 class="text-4xl font-bold text-kumo-default tracking-tight text-pretty">
+                Everything you need to build fast
+              </h2>
+              <p class="text-base text-kumo-subtle max-w-2xl mx-auto text-pretty">
+                Deploy globally in seconds. Cloudflare's developer platform gives you the
+                primitives to build, secure, and scale any application — without the ops burden.
+              </p>
+            </div>
+
+            <!-- Feature grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+              <!-- Global CDN -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                    </svg>
+                  </div>
+                  <CardTitle>Global CDN</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Serve assets from 330+ data centers worldwide. Sub-millisecond cache hits
+                    keep your users close to the content they need.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+              <!-- Edge Functions -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" />
+                    </svg>
+                  </div>
+                  <CardTitle>Edge Functions</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Run serverless code at the edge with Cloudflare Workers. Zero cold starts,
+                    unlimited scale, and a familiar JavaScript runtime.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+              <!-- Zero Trust Security -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z" />
+                    </svg>
+                  </div>
+                  <CardTitle>Zero Trust Security</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Protect every user, device, and application with identity-aware access
+                    policies that enforce security without the VPN overhead.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+              <!-- Analytics -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z" />
+                    </svg>
+                  </div>
+                  <CardTitle>Analytics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Understand traffic patterns, performance bottlenecks, and user behavior
+                    with real-time analytics powered by Cloudflare's global network.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+              <!-- DDoS Protection -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286Zm0 13.036h.008v.008H12v-.008Z" />
+                    </svg>
+                  </div>
+                  <CardTitle>DDoS Protection</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    Always-on, unmetered DDoS mitigation absorbs the largest volumetric attacks
+                    before they ever reach your origin infrastructure.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+              <!-- Developer API -->
+              <Card>
+                <CardHeader>
+                  <div class="w-8 h-8 rounded-lg bg-kumo-brand/10 flex items-center justify-center mb-3">
+                    <svg class="w-4 h-4 text-kumo-brand" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
+                    </svg>
+                  </div>
+                  <CardTitle>Developer API</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription>
+                    A fully documented REST API and Terraform provider so you can manage every
+                    Cloudflare resource programmatically from your existing workflows.
+                  </CardDescription>
+                </CardContent>
+              </Card>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={sourceCode} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Installation */}
+
+  <ComponentSection>
+    <Heading level={2}>Installation</Heading>
+    <p class="mb-6 text-sm text-kumo-strong">
+      Marketing is a <strong>block</strong> — a full-page layout template you copy into your project and own. Unlike components, blocks are not imported from a package. You get the full source code and can customize it however you need.
+    </p>
+    <div class="space-y-6">
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>1. Install dependencies</strong></p>
+        <CodeBlock code={installCode} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>2. Copy the source code into your page</strong></p>
+        <CodeBlock code={`# Copy the source code above into your page, e.g.:
+src/pages/features.astro`} lang="bash" />
+      </div>
+      <div>
+        <p class="mb-2 text-sm text-kumo-strong"><strong>3. Update feature content and copy</strong></p>
+        <CodeBlock code={`<!-- Update each feature card's title, description, and icon to match your product -->`} lang="astro" />
+      </div>
+    </div>
+  </ComponentSection>
+
+  {/* Usage */}
+
+  <ComponentSection>
+    <Heading level={2}>Usage</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">
+      Drop the features grid as a <code class="rounded bg-kumo-control px-1 py-0.5 text-xs">&lt;section&gt;</code> anywhere in your marketing page. Swap the section label, heading, description, and individual feature cards for your own content.
+    </p>
+    <CodeBlock code={usageCode} lang="astro" />
+  </ComponentSection>
+
+  {/* Examples */}
+
+  <ComponentSection>
+    <Heading level={2}>Examples</Heading>
+
+    <Heading level={3}>CTA Banner</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A full-width call-to-action banner with an inverted dark background. Pair it below the features grid to drive conversions.</p>
+
+    <div class="not-prose overflow-hidden rounded-lg">
+      <div class="rounded-t-lg border border-kumo-hairline bg-kumo-contrast">
+        <div class="py-20 px-8">
+          <div class="max-w-3xl mx-auto text-center space-y-6">
+            <h2 class="text-3xl font-bold text-kumo-inverse tracking-tight text-pretty">
+              Ready to build on the edge?
+            </h2>
+            <p class="text-base text-kumo-inverse/70 text-pretty">
+              Join millions of developers who trust Cloudflare to deliver fast, secure,
+              and reliable applications — from side projects to enterprise scale.
+            </p>
+            <div class="flex items-center justify-center gap-3 pt-2">
+              <Button variant="primary">Start for free</Button>
+              <Button variant="secondary">Talk to sales</Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-example-code">
+        <CodeBlock code={ctaBannerCode} lang="astro" />
+      </div>
+    </div>
+
+    <Heading level={3} class="mt-8">Testimonial</Heading>
+    <p class="mb-4 text-sm text-kumo-strong">A centered customer quote with an avatar and attribution. Use it to build social proof alongside your feature highlights.</p>
+
+    <ComponentExample code={testimonialCode} lang="astro">
+      <div class="flex items-center justify-center w-full min-h-[320px] py-16 px-8">
+        <div class="max-w-2xl mx-auto text-center space-y-8">
+          <blockquote>
+            <p class="text-xl text-kumo-default leading-relaxed text-pretty">
+              "Cloudflare Workers cut our API latency by 80%. We now deploy to 330+ locations
+              with a single command and never think about infrastructure again."
+            </p>
+          </blockquote>
+          <div class="flex flex-col items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-kumo-brand flex items-center justify-center">
+              <span class="text-sm font-semibold text-kumo-inverse">JL</span>
+            </div>
+            <div>
+              <p class="font-semibold text-kumo-default text-sm">Jamie Lee</p>
+              <p class="text-sm text-kumo-subtle">VP Engineering, Acme Corp</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ComponentExample>
+
+  </ComponentSection>
+
+  {/* API Reference */}
+
+  <ComponentSection>
+    <Heading level={2}>API Reference</Heading>
+    <div class="not-prose overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-kumo-hairline">
+            <th class="px-4 py-3 text-left font-semibold">Component</th>
+            <th class="px-4 py-3 text-left font-semibold">Package</th>
+            <th class="px-4 py-3 text-left font-semibold">Purpose</th>
+          </tr>
+        </thead>
+        <tbody class="text-kumo-strong">
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Card</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Container for each feature item</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CardHeader</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Icon and title area within a feature card</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CardContent</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Body area holding the feature description</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CardTitle</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Feature name heading inside the card</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">CardDescription</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Feature description text inside the card</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Badge</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Optional label for new or highlighted features</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Button</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Primary and ghost CTAs in the banner variant</td>
+          </tr>
+          <tr class="border-b border-kumo-hairline">
+            <td class="px-4 py-3 font-mono text-xs">Link</td>
+            <td class="px-4 py-3 font-mono text-xs">@cloudflare/kumo-astro</td>
+            <td class="px-4 py-3 text-xs">Inline text links within section copy</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ComponentSection>
+
+</DocLayout>
