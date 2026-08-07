@@ -1,0 +1,76 @@
+packages/kumo-astro/src/components/Tooltip.astro
+  s_988343cb577c7a::t_0055ad70a79592 35-36,45,62,78,81,83,90-107,114,128,131-140,147-150,163
+packages/kumo-astro/src/components/Field.astro
+  s_988343cb577c7a::t_0055ad70a79592 28-30,42-47,84-101,107,120-125,127-130,133-186
+packages/kumo-docs-astro/src/components/demos/HomeGrid.astro
+  s_988343cb577c7a::t_0055ad70a79592 21,70,100-107,180-181,206-209,212-214,228-231,311-316,457-472,529,635
+packages/kumo-astro/src/components/Tabs.astro
+  s_988343cb577c7a::t_0055ad70a79592 123-138,148-161,172-183,205-206
+  s_988343cb577c7a::t_5ddc6804b204f2 207
+packages/kumo-blocks/src/components/BlockCard.astro
+  s_988343cb577c7a::t_0055ad70a79592 10,12
+packages/kumo-astro/src/components/ClipboardText.astro
+  s_988343cb577c7a::t_0055ad70a79592 18,36-38,45-46,51,58-62,64-86,91,93-94,100,104,107,115-117
+packages/kumo-astro/src/components/CodeHighlighted.astro
+  s_988343cb577c7a::t_0055ad70a79592 1-185
+packages/kumo-blocks/src/styles/global.css
+  s_988343cb577c7a::t_4eccbfcb8208c2 6
+  s_988343cb577c7a::t_0055ad70a79592 3,15,25
+packages/kumo-astro/src/utils/field-error.ts
+  s_988343cb577c7a::t_0055ad70a79592 1-21
+packages/kumo-astro/src/components/Input.astro
+  s_988343cb577c7a::t_0055ad70a79592 27,51-54,56
+.changeset/wild-bars-obey.md
+  s_988343cb577c7a::t_0055ad70a79592 1-5
+packages/kumo-astro/src/components/Label.astro
+  s_988343cb577c7a::t_0055ad70a79592 10,14-15,22,36,57-65,73-81
+packages/kumo-astro/src/components/Button.astro
+  s_988343cb577c7a::t_0055ad70a79592 102
+packages/kumo-docs-astro/src/styles/global.css
+  s_988343cb577c7a::t_0055ad70a79592 3
+packages/kumo-blocks/src/components/Sidebar.astro
+  s_988343cb577c7a::t_0055ad70a79592 32,43-44,64-65
+packages/kumo-blocks/src/pages/blocks/auth.astro
+  s_988343cb577c7a::t_9d59d49acf0f1a 137-142,144-149
+  s_988343cb577c7a::t_5db32b65d424a9 43,55,58,126,143
+packages/kumo-docs-astro/src/pages/components/code-highlighted.mdx
+  s_988343cb577c7a::t_0055ad70a79592 3-4,11,17,20-21,25-40,48,54,58,62,65,76-79,83,86,91,94,97-102,105,108,111,117,120,126-288,316-328,330,338-343
+packages/kumo-astro/package.json
+  s_988343cb577c7a::t_0055ad70a79592 38,169-170
+  s_988343cb577c7a::t_735535f325f1c8 171
+packages/kumo-astro/src/components/Banner.astro
+  s_988343cb577c7a::t_0055ad70a79592 61-62
+packages/kumo-astro/src/components/DropdownMenu.astro
+  s_988343cb577c7a::t_0055ad70a79592 78-80
+packages/kumo-astro/src/components/DropdownMenuTrigger.astro
+  s_988343cb577c7a::t_0055ad70a79592 2-13,15-38,45,48-51
+packages/kumo-astro/src/components/Switch.astro
+  s_988343cb577c7a::t_0055ad70a79592 66-72,82-93,112,198-199,202-214,252-259
+  s_988343cb577c7a::t_7752ac17c1eba6 260
+packages/kumo-astro/src/lib/behaviors/popover-anchor.ts
+  s_988343cb577c7a::t_0055ad70a79592 84,91-93
+packages/kumo-blocks/src/pages/index.astro
+  s_988343cb577c7a::t_0055ad70a79592 18,21
+packages/kumo-blocks/src/layouts/Layout.astro
+  s_988343cb577c7a::t_0055ad70a79592 5,22,25,28-37,49-75
+packages/kumo-astro/src/components/Checkbox.astro
+  s_988343cb577c7a::t_0055ad70a79592 53,66
+packages/kumo-astro/src/components/InputArea.astro
+  s_988343cb577c7a::t_0055ad70a79592 28,52-54,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "45138537a99e1662faf243895f8b476057fbec0b",
+  "prompts": {},
+  "sessions": {
+    "s_988343cb577c7a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_021fbc39bffevyHO10tPUf0XE0",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
