@@ -1,0 +1,19 @@
+packages/kumo-blocks/.astro/settings.json
+  s_988343cb577c7a::t_8322f8f082e8e8 3,5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "cfb764a82b155fb6a7c825a59974dbc79d77a779",
+  "prompts": {},
+  "sessions": {
+    "s_988343cb577c7a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_021fbc39bffevyHO10tPUf0XE0",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
