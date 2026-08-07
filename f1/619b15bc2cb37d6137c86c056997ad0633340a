@@ -1,0 +1,19 @@
+packages/kumo-blocks/src/components/DashboardChart.tsx
+  s_1878212a90e383::t_7bdec6c34cd4ed 2-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f1619b15bc2cb37d6137c86c056997ad0633340a",
+  "prompts": {},
+  "sessions": {
+    "s_1878212a90e383": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_021e1c789ffeyBAs9Osg9Hmx9u",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
