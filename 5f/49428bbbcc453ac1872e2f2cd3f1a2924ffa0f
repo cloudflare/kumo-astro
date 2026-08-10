@@ -1,0 +1,22 @@
+ci/visual-regression/run-visual-regression.ts
+  s_9f0d049c124774::t_afbf8d15f2e641 30,185-190,210-215,291-293
+  s_9f0d049c124774::t_21d7b8dffae6b1 503-505,538,562,565-568,593,597-606
+DOCS/VISUAL-REVIEW.md
+  s_9f0d049c124774::t_6e90affd6b99b5 46-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "5f49428bbbcc453ac1872e2f2cd3f1a2924ffa0f",
+  "prompts": {},
+  "sessions": {
+    "s_9f0d049c124774": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_021b807f1ffe0MWe53T5Rk0prO",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Amy Haywood Dutton <adutton@cloudflare.com>"
+    }
+  }
+}
