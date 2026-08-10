@@ -27,6 +27,7 @@ const SCREENSHOTS_DIR =
 const HTML_REPORT_PATH = process.env.VISUAL_REGRESSION_HTML_REPORT;
 const API_KEY = process.env.SCREENSHOT_API_KEY ?? "";
 const MAX_BATCH_PAGES = 50;
+const SECTION_CAPTURE_WIDTH = 720;
 
 /**
  * Screenshot result returned by the worker.
@@ -181,7 +182,12 @@ interface PageRequest {
   url: string;
   captureSections: boolean;
   hideSidebar: boolean;
-  actions?: Array<{ type: string; selector: string; waitAfter?: number }>;
+  actions?: Array<{
+    type: "click" | "hover" | "css";
+    selector?: string;
+    css?: string;
+    waitAfter?: number;
+  }>;
 }
 
 async function captureScreenshots(
@@ -201,6 +207,12 @@ async function captureScreenshots(
       url: component.url,
       captureSections: true,
       hideSidebar: true,
+      actions: [
+        {
+          type: "css",
+          css: `[data-vr-demo] { box-sizing: border-box !important; width: ${SECTION_CAPTURE_WIDTH}px !important; min-width: ${SECTION_CAPTURE_WIDTH}px !important; max-width: ${SECTION_CAPTURE_WIDTH}px !important; }`,
+        },
+      ],
     });
 
     const action = COMPONENT_ACTIONS[component.id];
@@ -276,8 +288,9 @@ async function captureScreenshots(
     const isOpenState = requests.some(
       (r) =>
         r.url === urlPath.replace(/\/$/, "") &&
-        r.actions &&
-        r.actions.length > 0,
+        r.actions?.some(
+          (action) => action.type === "click" || action.type === "hover",
+        ),
     );
 
     let screenshotId: string;
@@ -487,6 +500,9 @@ function generateHtmlReport(
 ): string {
   const changed = comparisons.filter((comparison) => comparison.changed);
   const unchanged = comparisons.filter((comparison) => !comparison.changed);
+  const aboveThreshold = comparisons.filter(
+    (comparison) => !comparison.issue && comparison.diffPercent > 1,
+  );
   const ordered = [...changed, ...unchanged];
 
   const renderFigure = (
@@ -519,7 +535,7 @@ function generateHtmlReport(
           ? `${comparison.diffPixels.toLocaleString()} px (${comparison.diffPercent}%) changed`
           : "No visual changes");
 
-      return `<details class="result ${status}" ${comparison.changed ? "open" : ""}>
+      return `<details class="result ${status}" data-above-threshold="${!comparison.issue && comparison.diffPercent > 1}" ${comparison.changed ? "open" : ""}>
         <summary><span>${escapeHtml(comparison.name)}</span><strong>${escapeHtml(finding)}</strong></summary>
         <div class="images">
           ${renderFigure("Production", comparison.beforePath, `Production rendering of ${comparison.name}`)}
@@ -543,9 +559,13 @@ function generateHtmlReport(
     header { position: sticky; top: 0; z-index: 2; padding: 24px clamp(20px, 4vw, 64px); background: rgb(17 17 17 / 94%); border-bottom: 1px solid #333; backdrop-filter: blur(12px); }
     h1 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.03em; }
     header p { margin: 4px 0; color: #aaa; overflow-wrap: anywhere; }
-    .stats { display: flex; gap: 12px; margin-top: 18px; }
+    .stats { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
     .stat { padding: 8px 12px; border: 1px solid #3a3a3a; border-radius: 999px; background: #1d1d1d; font-size: 14px; }
     .stat.changed { border-color: #7f312d; color: #ff9f98; }
+    button.stat { color: inherit; cursor: pointer; font: inherit; }
+    button.stat[aria-pressed="true"] { border-color: #b79042; color: #ffd783; }
+    button.stat:disabled { cursor: default; opacity: .55; }
+    [hidden] { display: none !important; }
     main { display: grid; gap: 14px; padding: 24px clamp(20px, 4vw, 64px) 64px; }
     details { border: 1px solid #333; border-radius: 12px; overflow: clip; background: #181818; }
     details.changed { border-color: #71312e; }
@@ -570,9 +590,20 @@ function generateHtmlReport(
       <span class="stat changed">${changed.length} changed</span>
       <span class="stat">${unchanged.length} unchanged</span>
       <span class="stat">${comparisons.length} compared</span>
+      <button class="stat" id="threshold-filter" type="button" aria-pressed="false" ${aboveThreshold.length === 0 ? "disabled" : ""}>${aboveThreshold.length} above 1% change</button>
     </div>
   </header>
   <main>${cards || '<div class="empty">No matching screenshots were available to compare.</div>'}</main>
+  <script>
+    const thresholdFilter = document.querySelector("#threshold-filter");
+    thresholdFilter?.addEventListener("click", () => {
+      const active = thresholdFilter.getAttribute("aria-pressed") !== "true";
+      thresholdFilter.setAttribute("aria-pressed", String(active));
+      document.querySelectorAll(".result").forEach((result) => {
+        result.hidden = active && result.getAttribute("data-above-threshold") !== "true";
+      });
+    });
+  </script>
 </body>
 </html>`;
 }

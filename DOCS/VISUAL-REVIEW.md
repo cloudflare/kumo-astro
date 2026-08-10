@@ -43,6 +43,8 @@ Documentation examples receive stable visual-review metadata from `packages/kumo
 
 The worker finds `[data-vr-demo]` elements and captures each one separately. Stable section identifiers allow before and after images to be paired across runs. Element-level screenshots also reduce noise from unrelated page layout and scrolling changes.
 
+The comparison runner fixes these demo surfaces at `720px` wide before capture so documentation layout changes do not create a false changed band when the production and preview content columns have different widths.
+
 If a page does not contain visual-review elements, the worker falls back to a full-page screenshot.
 
 ## Interactive States
