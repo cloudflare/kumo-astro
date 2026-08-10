@@ -6,6 +6,7 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const smokeDir = resolve(__dirname, "tests/smoke");
 // Use the astro binary from kumo-astro's own node_modules (not a global install)
 const astroBin = resolve(__dirname, "node_modules/.bin/astro");
+const port = 4377;
 
 export default defineConfig({
   testDir: "tests",
@@ -16,17 +17,17 @@ export default defineConfig({
   reporter: process.env["CI"] ? "github" : "list",
 
   use: {
-    baseURL: "http://localhost:4322",
+    baseURL: `http://localhost:${port}`,
     trace: "on-first-retry",
     screenshot: "only-on-failure",
   },
 
   webServer: {
     // Run astro dev inside the smoke fixture directory.
-    command: `${astroBin} dev --port 4322`,
+    command: `${astroBin} dev --port ${port}`,
     cwd: smokeDir,
-    url: "http://localhost:4322",
-    reuseExistingServer: !process.env["CI"],
+    url: `http://localhost:${port}`,
+    reuseExistingServer: false,
     timeout: 60_000,
   },
 

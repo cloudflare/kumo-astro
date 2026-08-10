@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 import { execSync } from "node:child_process";
 import { existsSync, mkdirSync, writeFileSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import pixelmatch from "pixelmatch";
 import { PNG } from "pngjs";
 import {
@@ -14,13 +14,19 @@ import {
   type DiscoveredComponent,
 } from "./page-config";
 
-// The worker URL is not a secret — it is public in the source code. Keeping it
-// as a secret in CI provides false security and creates a foot-gun where the
-// env override can be hijacked. The real protection is SCREENSHOT_API_KEY.
-const WORKER_URL =
+// CI always uses the pinned deployed Worker. Local runs may point at Wrangler
+// without allowing a pull request to redirect secret-bearing CI requests.
+const DEPLOYED_WORKER_URL =
   "https://kumo-screenshot-worker.design-engineering.workers.dev";
-const SCREENSHOTS_DIR = "ci/visual-regression/screenshots";
+const WORKER_URL = process.env.CI
+  ? DEPLOYED_WORKER_URL
+  : (process.env.SCREENSHOT_WORKER_URL ?? DEPLOYED_WORKER_URL);
+const SCREENSHOTS_DIR =
+  process.env.VISUAL_REGRESSION_OUTPUT_DIR ??
+  "ci/visual-regression/screenshots";
+const HTML_REPORT_PATH = process.env.VISUAL_REGRESSION_HTML_REPORT;
 const API_KEY = process.env.SCREENSHOT_API_KEY ?? "";
+const MAX_BATCH_PAGES = 50;
 
 /**
  * Screenshot result returned by the worker.
@@ -60,9 +66,13 @@ interface CapturedScreenshot {
 interface ComparisonResult {
   id: string;
   name: string;
-  beforeUrl: string;
-  afterUrl: string;
+  beforeUrl: string | null;
+  afterUrl: string | null;
   diffUrl: string | null;
+  beforePath: string | null;
+  afterPath: string | null;
+  diffPath: string | null;
+  issue?: string;
   changed: boolean;
   diffPixels: number;
   diffPercent: number;
@@ -111,7 +121,8 @@ function getRunStoragePrefix(): string {
   const prNumber =
     process.env.GITHUB_PR_NUMBER ?? process.env.PR_NUMBER ?? "local";
   const runId = process.env.GITHUB_RUN_ID ?? Date.now().toString();
-  const headSha = process.env.PR_HEAD_SHA ?? process.env.GITHUB_SHA ?? "unknown";
+  const headSha =
+    process.env.PR_HEAD_SHA ?? process.env.GITHUB_SHA ?? "unknown";
 
   return [
     "runs",
@@ -213,29 +224,42 @@ async function captureScreenshots(
     headers["X-API-Key"] = API_KEY;
   }
 
-  const response = await fetch(`${WORKER_URL}/batch`, {
-    method: "POST",
-    headers,
-    body: JSON.stringify({
-      baseUrl,
-      pages: requests,
-      viewport: { width: 1440, height: 900 },
-      hideSidebar: true,
-      storage: {
-        prefix: storagePrefix,
-        includeImage: true,
-      },
-    }),
-  });
+  const results: ScreenshotResult[] = [];
+  for (let offset = 0; offset < requests.length; offset += MAX_BATCH_PAGES) {
+    const pages = requests.slice(offset, offset + MAX_BATCH_PAGES);
+    const batchNumber = Math.floor(offset / MAX_BATCH_PAGES) + 1;
+    const batchCount = Math.ceil(requests.length / MAX_BATCH_PAGES);
+    if (batchCount > 1) {
+      console.log(
+        `  Batch ${batchNumber}/${batchCount} (${pages.length} requests)`,
+      );
+    }
 
-  if (!response.ok) {
-    const text = await response.text();
-    throw new Error(`Worker request failed: ${response.status} - ${text}`);
+    const response = await fetch(`${WORKER_URL}/batch`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        baseUrl,
+        pages,
+        viewport: { width: 1440, height: 900 },
+        hideSidebar: true,
+        storage: {
+          prefix: storagePrefix,
+          includeImage: true,
+        },
+      }),
+    });
+
+    if (!response.ok) {
+      const text = await response.text();
+      throw new Error(`Worker request failed: ${response.status} - ${text}`);
+    }
+
+    const data = (await response.json()) as WorkerResponse;
+    results.push(...data.results);
   }
 
-  const data = (await response.json()) as WorkerResponse;
-
-  for (const result of data.results) {
+  for (const result of results) {
     if (result.error) {
       console.warn(`  Error: ${result.url}: ${result.error}`);
       continue;
@@ -371,13 +395,13 @@ function compareImages(beforePath: string, afterPath: string): DiffResult {
 
   const diffPng = new PNG({ width, height });
   diffPng.data = Buffer.from(diffData);
-  const diffImage = PNG.sync.write(diffPng);
+  const changed = diffPixels > 0;
 
   return {
-    changed: true,
+    changed,
     diffPixels,
     diffPercent: Math.round(diffPercent * 100) / 100,
-    diffImage,
+    diffImage: changed ? PNG.sync.write(diffPng) : null,
   };
 }
 
@@ -402,16 +426,22 @@ function generateMarkdownReport(comparisons: ComparisonResult[]): string {
   lines.push("");
 
   for (const comp of changed) {
-    const diffLabel = `${comp.diffPixels.toLocaleString()} px (${comp.diffPercent}%)`;
+    const diffLabel = comp.issue
+      ? comp.issue
+      : `${comp.diffPixels.toLocaleString()} px (${comp.diffPercent}%) changed`;
     lines.push(`### ${comp.name}`);
-    lines.push(`${diffLabel} changed`);
+    lines.push(diffLabel);
     lines.push("");
     lines.push("| Before | After | Diff |");
     lines.push("|--------|-------|------|");
     const diffCell = comp.diffUrl ? `![Diff](${comp.diffUrl})` : "*no diff*";
-    lines.push(
-      `| ![Before](${comp.beforeUrl}) | ![After](${comp.afterUrl}) | ${diffCell} |`,
-    );
+    const beforeCell = comp.beforeUrl
+      ? `![Before](${comp.beforeUrl})`
+      : "*missing*";
+    const afterCell = comp.afterUrl
+      ? `![After](${comp.afterUrl})`
+      : "*missing*";
+    lines.push(`| ${beforeCell} | ${afterCell} | ${diffCell} |`);
     lines.push("");
   }
 
@@ -431,6 +461,120 @@ function generateMarkdownReport(comparisons: ComparisonResult[]): string {
   lines.push("</details>");
 
   return lines.join("\n");
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+function getReportImageSrc(reportPath: string, imagePath: string): string {
+  return relative(dirname(resolve(reportPath)), resolve(imagePath))
+    .split(/[\\/]/)
+    .map(encodeURIComponent)
+    .join("/");
+}
+
+function generateHtmlReport(
+  comparisons: ComparisonResult[],
+  reportPath: string,
+  beforeUrl: string,
+  afterUrl: string,
+): string {
+  const changed = comparisons.filter((comparison) => comparison.changed);
+  const unchanged = comparisons.filter((comparison) => !comparison.changed);
+  const ordered = [...changed, ...unchanged];
+
+  const renderFigure = (
+    label: string,
+    path: string | null,
+    alt: string,
+  ): string => {
+    if (!path) {
+      return `<figure><figcaption>${label}</figcaption><div class="empty">Missing screenshot</div></figure>`;
+    }
+    const src = getReportImageSrc(reportPath, path);
+    return `<figure><figcaption>${label}</figcaption><a href="${src}"><img src="${src}" alt="${escapeHtml(alt)}" loading="lazy"></a></figure>`;
+  };
+
+  const cards = ordered
+    .map((comparison) => {
+      const diff = comparison.issue
+        ? '<figure><figcaption>Diff</figcaption><div class="empty">Comparison unavailable</div></figure>'
+        : comparison.diffPath
+          ? renderFigure(
+              "Diff",
+              comparison.diffPath,
+              `Diff for ${comparison.name}`,
+            )
+          : '<figure><figcaption>Diff</figcaption><div class="empty">No changed pixels</div></figure>';
+      const status = comparison.changed ? "changed" : "unchanged";
+      const finding =
+        comparison.issue ??
+        (comparison.changed
+          ? `${comparison.diffPixels.toLocaleString()} px (${comparison.diffPercent}%) changed`
+          : "No visual changes");
+
+      return `<details class="result ${status}" ${comparison.changed ? "open" : ""}>
+        <summary><span>${escapeHtml(comparison.name)}</span><strong>${escapeHtml(finding)}</strong></summary>
+        <div class="images">
+          ${renderFigure("Production", comparison.beforePath, `Production rendering of ${comparison.name}`)}
+          ${renderFigure("Local", comparison.afterPath, `Local rendering of ${comparison.name}`)}
+          ${diff}
+        </div>
+      </details>`;
+    })
+    .join("\n");
+
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kumo Local Visual Review</title>
+  <style>
+    :root { color-scheme: light dark; font-family: Inter, ui-sans-serif, system-ui, sans-serif; background: #111; color: #f5f5f5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #111; color: #f5f5f5; }
+    header { position: sticky; top: 0; z-index: 2; padding: 24px clamp(20px, 4vw, 64px); background: rgb(17 17 17 / 94%); border-bottom: 1px solid #333; backdrop-filter: blur(12px); }
+    h1 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 40px); letter-spacing: -0.03em; }
+    header p { margin: 4px 0; color: #aaa; overflow-wrap: anywhere; }
+    .stats { display: flex; gap: 12px; margin-top: 18px; }
+    .stat { padding: 8px 12px; border: 1px solid #3a3a3a; border-radius: 999px; background: #1d1d1d; font-size: 14px; }
+    .stat.changed { border-color: #7f312d; color: #ff9f98; }
+    main { display: grid; gap: 14px; padding: 24px clamp(20px, 4vw, 64px) 64px; }
+    details { border: 1px solid #333; border-radius: 12px; overflow: clip; background: #181818; }
+    details.changed { border-color: #71312e; }
+    summary { display: flex; justify-content: space-between; gap: 20px; padding: 16px 18px; cursor: pointer; font-size: 15px; }
+    summary strong { color: #9bd49b; font-size: 13px; font-weight: 600; }
+    .changed summary strong { color: #ff9f98; }
+    .images { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; border-top: 1px solid #333; background: #333; }
+    figure { min-width: 0; margin: 0; padding: 14px; background: #151515; }
+    figcaption { margin-bottom: 10px; color: #aaa; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    img { display: block; width: 100%; height: auto; min-height: 100px; border-radius: 7px; background: white; object-fit: contain; }
+    .empty { display: grid; min-height: 180px; place-items: center; border: 1px dashed #444; border-radius: 7px; color: #777; }
+    @media (max-width: 900px) { .images { grid-template-columns: 1fr; } summary { align-items: flex-start; flex-direction: column; gap: 6px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kumo Local Visual Review</h1>
+    <p>Production: ${escapeHtml(beforeUrl)}</p>
+    <p>Local: ${escapeHtml(afterUrl)}</p>
+    <p>Generated ${escapeHtml(new Date().toLocaleString())}</p>
+    <div class="stats">
+      <span class="stat changed">${changed.length} changed</span>
+      <span class="stat">${unchanged.length} unchanged</span>
+      <span class="stat">${comparisons.length} compared</span>
+    </div>
+  </header>
+  <main>${cards || '<div class="empty">No matching screenshots were available to compare.</div>'}</main>
+</body>
+</html>`;
 }
 
 async function postPRComment(body: string): Promise<void> {
@@ -496,8 +640,27 @@ async function main(): Promise<void> {
   console.log(`Found ${allComponents.length} components\n`);
 
   let components: DiscoveredComponent[];
+  const requestedComponents = (process.env.VISUAL_REGRESSION_COMPONENTS ?? "")
+    .split(",")
+    .map((component) => component.trim())
+    .filter(Boolean);
 
-  if (fullRegression) {
+  if (requestedComponents.length > 0) {
+    const requested = new Set(requestedComponents);
+    components = allComponents.filter((component) =>
+      requested.has(component.id),
+    );
+    const missing = requestedComponents.filter(
+      (component) =>
+        !components.some((candidate) => candidate.id === component),
+    );
+    if (missing.length > 0) {
+      throw new Error(`Unknown component(s): ${missing.join(", ")}`);
+    }
+    console.log(
+      `Running visual regression for: ${components.map((component) => component.id).join(", ")}\n`,
+    );
+  } else if (fullRegression) {
     components = allComponents;
     console.log(
       `Running full visual regression (${components.length} components)...\n`,
@@ -588,8 +751,30 @@ async function main(): Promise<void> {
     const before = beforeMap.get(id);
     const after = afterMap.get(id);
 
-    if (!before || !after) continue;
-    if (!before.url || !after.url) {
+    if (!before || !after) {
+      const available = before ?? after;
+      comparisons.push({
+        id,
+        name: available?.name ?? id,
+        beforeUrl: before?.url ?? null,
+        afterUrl: after?.url ?? null,
+        diffUrl: null,
+        beforePath: before?.path ?? null,
+        afterPath: after?.path ?? null,
+        diffPath: null,
+        issue: before
+          ? "Missing from local documentation"
+          : "New in local documentation",
+        changed: true,
+        diffPixels: 0,
+        diffPercent: 100,
+      });
+      console.log(
+        `  ${available?.name ?? id}: ${before ? "MISSING LOCALLY" : "NEW LOCALLY"}`,
+      );
+      continue;
+    }
+    if ((!before.url || !after.url) && !HTML_REPORT_PATH) {
       console.log(
         `  ${before?.name || after?.name || id}: skipped (upload failed)`,
       );
@@ -599,9 +784,10 @@ async function main(): Promise<void> {
     const diff = compareImages(before.path, after.path);
 
     let diffUrl: string | null = null;
+    let diffPath: string | null = null;
     if (diff.changed && diff.diffImage) {
       const diffFilename = `diff-${id}.png`;
-      const diffPath = join(SCREENSHOTS_DIR, "diff", diffFilename);
+      diffPath = join(SCREENSHOTS_DIR, "diff", diffFilename);
       ensureDir(join(SCREENSHOTS_DIR, "diff"));
       writeFileSync(diffPath, diff.diffImage);
 
@@ -622,6 +808,9 @@ async function main(): Promise<void> {
       beforeUrl: before.url,
       afterUrl: after.url,
       diffUrl,
+      beforePath: before.path,
+      afterPath: after.path,
+      diffPath,
       changed: diff.changed,
       diffPixels: diff.diffPixels,
       diffPercent: diff.diffPercent,
@@ -638,7 +827,16 @@ async function main(): Promise<void> {
 
   console.log("\n=== Generating report ===");
   const report = generateMarkdownReport(comparisons);
-  await postPRComment(report);
+  if (HTML_REPORT_PATH) {
+    ensureDir(dirname(HTML_REPORT_PATH));
+    writeFileSync(
+      HTML_REPORT_PATH,
+      generateHtmlReport(comparisons, HTML_REPORT_PATH, beforeUrl, afterUrl),
+    );
+    console.log(`HTML report: ${resolve(HTML_REPORT_PATH)}`);
+  } else {
+    await postPRComment(report);
+  }
 }
 
 main().catch((error) => {

@@ -8,12 +8,69 @@ Kumo provides accessible, design-system-compliant UI components built on [Base U
 
 ## Packages
 
-This repo publishes two packages:
+This is a pnpm monorepo containing seven packages. Two are published libraries; the other five are private sites and development tools that support the design system.
 
-| Package | Description |
-|---|---|
-| `@cloudflare/kumo` | React component library (Base UI + Tailwind v4) |
-| `@cloudflare/kumo-astro` | Astro component library wrapping the same design system |
+| Package | Purpose | Published |
+|---|---|---|
+| [`@cloudflare/kumo`](./packages/kumo/) | Main React component library and source of truth for components, variants, design tokens, CSS, the component registry, installable blocks, and the Kumo CLI | Yes |
+| [`@cloudflare/kumo-astro`](./packages/kumo-astro/) | Framework-independent Astro implementation of Kumo components, using vanilla JavaScript behavior modules instead of React | Yes |
+| [`@cloudflare/kumo-docs-astro`](./packages/kumo-docs-astro/) | Canonical documentation and demo site deployed at [kumo-ui.com](https://kumo-ui.com); its demo metadata feeds component-registry code generation | No |
+| [`@cloudflare/kumo-blocks`](./packages/kumo-blocks/) | Astro showcase of complete page and layout templates built from `@cloudflare/kumo-astro` | No |
+| [`@cloudflare/kumo-studio`](./packages/kumo-studio/) | AI-oriented documentation and blocks experience with actions that copy implementation prompts containing Kumo setup, token, and component guidance | No |
+| [`@cloudflare/kumo-figma`](./packages/kumo-figma/) | Figma plugin that generates the Kumo UI kit from the component registry, design tokens, and icon data | No |
+| [`@cloudflare/kumo-screenshot-worker`](./packages/kumo-screenshot-worker/) | Authenticated Cloudflare Worker that uses Browser Rendering to capture docs pages and component examples for visual regression testing | No |
+
+### Package Roles
+
+#### `@cloudflare/kumo`
+
+The core package and primary source of truth. It provides the React component library, Base UI primitive exports, semantic design tokens, generated CSS, component variants, component registry, installable blocks, and the `kumo` command-line tool. Blocks under `packages/kumo/src/blocks/` are installed with `kumo add`; they are not normal library exports.
+
+#### `@cloudflare/kumo-astro`
+
+The Astro counterpart to the React library. It publishes `.astro` components without requiring React and implements interactive behavior such as focus trapping, popovers, tabs, and dialogs with browser JavaScript modules. It imports variant functions and types from `@cloudflare/kumo` so both implementations remain aligned.
+
+#### `@cloudflare/kumo-docs-astro`
+
+The canonical documentation site. It uses an Astro shell with React islands to present component documentation, live demos, props tables, installation guidance, search, charts, colors, and changelogs. Its demo extractor produces `dist/demo-metadata.json`, which the core package consumes when generating the component registry.
+
+#### `@cloudflare/kumo-blocks`
+
+A private Astro gallery for higher-level compositions rather than individual components. It demonstrates complete authentication, dashboard, form, hero, marketing, navigation, pricing, and settings layouts built primarily from `@cloudflare/kumo-astro`.
+
+#### `@cloudflare/kumo-studio`
+
+An AI-optimized variation of the documentation site. It adds Copy Prompt actions, embeds Kumo setup and semantic-token rules in those prompts, and includes the expanded block catalog. It is private and currently overlaps with both `kumo-docs-astro` and `kumo-blocks`; the canonical registry pipeline still reads demo metadata from `kumo-docs-astro`.
+
+#### `@cloudflare/kumo-figma`
+
+A Figma plugin that converts the code design system into a generated Figma UI kit. It creates Figma variables, component sets, variants, icons, and theme data. Drift-detection tests verify that its generators stay synchronized with the component registry.
+
+#### `@cloudflare/kumo-screenshot-worker`
+
+Visual-regression infrastructure deployed as a Cloudflare Worker. It uses Puppeteer with Cloudflare Browser Rendering to open documentation pages, run optional browser actions, and capture full pages or specific component examples. The API is protected by an API key and validates target URLs.
+
+### Package Relationships
+
+```text
+@cloudflare/kumo
+  ├── React components, tokens, variants, CSS, registry, CLI
+  ├── shares variants and styles with @cloudflare/kumo-astro
+  ├── is documented by kumo-docs-astro
+  └── supplies registry and token data to kumo-figma
+
+@cloudflare/kumo-astro
+  ├── Astro component implementation
+  ├── is used by kumo-blocks
+  └── is used by kumo-studio blocks
+
+kumo-docs-astro
+  ├── supplies demo metadata to Kumo registry code generation
+  └── provides pages captured by kumo-screenshot-worker
+
+kumo-studio
+  └── provides an AI-oriented documentation and blocks experience
+```
 
 ---
 
@@ -96,7 +153,7 @@ import "@cloudflare/kumo-astro/styles";
 
 #### Available Components
 
-Badge, Banner, Breadcrumbs, Button, CloudflareLogo, Code, Empty, Grid, Label, LayerCard, Link, LinkButton, Loader, Meter, RefreshButton, Table, TableOfContents, Text (34 components total — see `packages/kumo-astro/src/components/`).
+See [`packages/kumo-astro/src/components/`](./packages/kumo-astro/src/components/) and the package's `exports` map for the current component list and import paths.
 
 #### Utilities
 
@@ -145,9 +202,12 @@ pnpm dev   # Start docs site at localhost:4321
 | Package | What to run |
 |---|---|
 | `packages/kumo` | `pnpm --filter @cloudflare/kumo build` — build the library; `pnpm --filter @cloudflare/kumo test` — unit tests; `pnpm --filter @cloudflare/kumo new:component` — scaffold a new component |
-| `packages/kumo-docs-astro` | `pnpm dev` from repo root (or `pnpm --filter kumo-docs-astro dev`) — docs site at localhost:4321 |
+| `packages/kumo-astro` | `pnpm --filter @cloudflare/kumo-astro test` — Playwright tests; `pnpm --filter @cloudflare/kumo-astro typecheck` — validate Astro components |
+| `packages/kumo-docs-astro` | `pnpm dev` from repo root (or `pnpm --filter @cloudflare/kumo-docs-astro dev`) — canonical docs site at localhost:4321 |
+| `packages/kumo-blocks` | `pnpm --filter @cloudflare/kumo-blocks dev` — block showcase; `pnpm --filter @cloudflare/kumo-blocks build` — static build |
+| `packages/kumo-studio` | `pnpm --filter @cloudflare/kumo-studio dev` — AI-oriented docs and blocks experience |
 | `packages/kumo-figma` | `pnpm --filter @cloudflare/kumo-figma build` — build the Figma plugin |
-| `packages/kumo-screenshot-worker` | Used by CI only; no local dev workflow |
+| `packages/kumo-screenshot-worker` | `pnpm --filter @cloudflare/kumo-screenshot-worker dev` — run the screenshot Worker locally; requires an `API_KEY` in `.dev.vars` |
 
 **Build order matters.** The packages depend on each other in sequence:
 

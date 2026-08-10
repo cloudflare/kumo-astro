@@ -45,6 +45,7 @@ coverage/
 .nyc_output/
 test-results/
 playwright-report/
+ci/visual-regression/local-report/
 
 # Temporary files
 *.tmp

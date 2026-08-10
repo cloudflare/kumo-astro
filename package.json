@@ -31,6 +31,7 @@
     "test": "pnpm --filter @cloudflare/kumo test",
     "test:watch": "pnpm --filter @cloudflare/kumo test:watch",
     "test:astro": "pnpm --filter @cloudflare/kumo-astro test",
+    "visual-review:local": "tsx ci/visual-regression/run-local-visual-review.ts",
     "typecheck": "pnpm -r typecheck",
     "version": "changeset version",
     "version:beta": "./ci/versioning/version-beta.sh"
