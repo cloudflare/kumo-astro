@@ -1,0 +1,765 @@
+.agents/skills/index-knowledge/SKILL.md
+  s_9f0d049c124774::t_bc5796b92e15bb 32,41
+.changeset/clean-link-prop-forwarding.md
+  s_9f0d049c124774::t_54b44588d34691 1-5
+.changeset/eight-buses-bow.md
+  s_9f0d049c124774::t_42cab02462ce14 1-5
+.changeset/fix-sidebar-peeking-sliding-views.md
+  s_9f0d049c124774::t_82c267af60c4a0 1-5
+.changeset/fuzzy-tabs-wait.md
+  s_9f0d049c124774::t_dec1510d12e68d 1-5
+.github/actions/install-dependencies/action.yml
+  s_9f0d049c124774::t_91fc2ab0a73521 2,6,12-13,15-16,18-19,33,35
+.github/actions/vite-task-cache/action.yml
+  s_9f0d049c124774::t_1cc5187faefbc0 1-14
+.github/workflows/bigbonk.yml
+  s_9f0d049c124774::t_bb44127f39edd3 32,44
+.github/workflows/bonk.yml
+  s_9f0d049c124774::t_282cccb67091af 33,45,51,54
+.github/workflows/preview-deploy.yml
+  s_9f0d049c124774::t_903046c106f93f 228
+.github/workflows/semgrep.yml
+  s_9f0d049c124774::t_68c48ad4b950c3 8
+.github/workflows/validate-pr-description.yml
+  s_9f0d049c124774::t_b15d4302cfcb94 59-63
+.github/workflows/warm-task-cache.yml
+  s_9f0d049c124774::t_840fcff285cdce 1-25
+.gitignore
+  s_9f0d049c124774::t_1800e9e2f5af60 58-61
+.node-version
+  s_9f0d049c124774::t_62430735bf7fe4 1
+.opencode/agents/kumo.md
+  s_9f0d049c124774::t_08d0f0b1a27db4 26-31
+.review.json
+  s_9f0d049c124774::t_df99f54ba1a9df 1-5
+.vite-hooks/pre-commit
+  s_9f0d049c124774::t_1dfa2688e01500 1-7
+.vite-hooks/pre-push
+  s_9f0d049c124774::t_27e124d6f6acde 1-16
+CONTRIBUTING.md
+  s_9f0d049c124774::t_2a55f8d06c7a00 101-108,162,172,174,180-181
+ci/AGENTS.md
+  s_9f0d049c124774::t_c40d749bad1b20 43,107
+ci/scripts/validate-kumo-changeset.ts
+  s_9f0d049c124774::t_626c1fd4337fd0 13-14,17-18,45-51,167-168,199
+ci/utils/git-operations.test.ts
+  s_9f0d049c124774::t_94a4276b39f8a2 1-113
+ci/utils/git-operations.ts
+  s_9f0d049c124774::t_144080e086284b 1,26,35,38,53,56,62-70,75,84,87,99-107,130-131,134,138-143,146,195-196,205-206,209,212,265
+ci/utils/pr-reporter.ts
+  s_9f0d049c124774::t_d54a6da0349709 8-12,36
+ci/visual-regression/run-visual-regression.ts
+  s_9f0d049c124774::t_ffb8af9f772dbe 114-115
+lint/enforce-variant-standard.js
+  s_9f0d049c124774::t_9861c95146458d 1
+lint/kumo-plugin.js
+  s_9f0d049c124774::t_553e668cf97c26 5,16
+lint/no-cross-package-imports.js
+  s_9f0d049c124774::t_770a38e53175b0 1
+lint/no-flow-node-custom-render.js
+  s_9f0d049c124774::t_b28afe7065d6cf 1-394
+lint/no-primitive-colors.js
+  s_9f0d049c124774::t_8588c1580d9733 1-2,79-80
+lint/no-tailwind-dark-variant.js
+  s_9f0d049c124774::t_b3f369e65a726b 1
+package.json
+  s_9f0d049c124774::t_498e5f15c0156d 12-14,34,40-59
+packages/kumo-docs-astro/.gitignore
+  s_9f0d049c124774::t_3a1dfd57c84d83 3
+packages/kumo-docs-astro/CHANGELOG.md
+  s_9f0d049c124774::t_922464a6f675b6 3-232
+packages/kumo-docs-astro/astro.config.mjs
+  s_9f0d049c124774::t_3149ce3dc54dc7 5,77,80,83-89,91
+packages/kumo-docs-astro/package.json
+  s_9f0d049c124774::t_7ece941ca85a7a 3,11,13,17-19,23-25,30,33,35,43-45,51,54-55
+packages/kumo-docs-astro/public/favicon-white.svg
+  s_9f0d049c124774::t_9fc0357879672d 1-4
+packages/kumo-docs-astro/scripts/generate-design-skill.mjs
+  s_9f0d049c124774::t_e6f9fd5cced841 1-275
+packages/kumo-docs-astro/src/components/Header.astro
+  s_9f0d049c124774::t_4b251a4e6755ee 11
+packages/kumo-docs-astro/src/components/SearchDialog.tsx
+  s_9f0d049c124774::t_1d60aae7914add 30-54,107-112,118-131,258-262,403,421-425
+packages/kumo-docs-astro/src/components/SidebarNav.tsx
+  s_9f0d049c124774::t_61ecdede667df0 36,81,90,111,124-135,216,245,259,285,299,311,325,339,369,387,416,436,444
+packages/kumo-docs-astro/src/components/ThemeToggle.tsx
+  s_9f0d049c124774::t_28e81a01d25f7e 2-21,24,28-40,42-47,50-59,62-67,73-74,79-80,82-109
+packages/kumo-docs-astro/src/components/demos/AutocompleteDemo.tsx
+  s_9f0d049c124774::t_9c649bcf29d168 1,3,126-132,136-139,141,144-146,158-164,171,274,293
+packages/kumo-docs-astro/src/components/demos/BadgeDemo.tsx
+  s_9f0d049c124774::t_5f4b50ff224eac 24,40-58
+packages/kumo-docs-astro/src/components/demos/BannerDemo.tsx
+  s_9f0d049c124774::t_8443b3a8b6071a 1,25-30,70-81,127-188,190-197,203-242,249-252,255-267,270-273,280-289
+packages/kumo-docs-astro/src/components/demos/ButtonDemo.tsx
+  s_9f0d049c124774::t_a070b5c8637798 108,122-128,151-182
+packages/kumo-docs-astro/src/components/demos/Chart/BubbleMapDemo.tsx
+  s_9f0d049c124774::t_c8ab052a84505b 1-442
+packages/kumo-docs-astro/src/components/demos/Chart/ChartDemo.tsx
+  s_9f0d049c124774::t_44dc1dde9d3d7a 7-8,13,20-22,35-37,114-203,431,455-460,494,517-522,563,568-588,592,602-657,691,729-935,1000-1111
+packages/kumo-docs-astro/src/components/demos/Chart/ChoroplethMapDemo.tsx
+  s_9f0d049c124774::t_75bf64656253c2 1-64
+packages/kumo-docs-astro/src/components/demos/Chart/ColorDemo.tsx
+  s_9f0d049c124774::t_a624977c99c7dd 157,182-188,212-215,334-336,396-399,479-486,844-847
+packages/kumo-docs-astro/src/components/demos/Chart/SankeyChartDemo.tsx
+  s_9f0d049c124774::t_9e1b598c21e204 289-304,476-511
+packages/kumo-docs-astro/src/components/demos/CollapsibleDemo.tsx
+  s_9f0d049c124774::t_4e868f77dca8b1 55-57,63-65,82,87-88,117-142,152-153,157-158,162-163
+packages/kumo-docs-astro/src/components/demos/ColorsDemo.tsx
+  s_9f0d049c124774::t_f119bac3a782ce 4,204-206,215-216,332-340
+packages/kumo-docs-astro/src/components/demos/ComboboxDemo.tsx
+  s_9f0d049c124774::t_a71817613ad6fe 4,355,583,589
+packages/kumo-docs-astro/src/components/demos/DatePickerDemo.tsx
+  s_9f0d049c124774::t_f2c3574cf8b26b 295
+packages/kumo-docs-astro/src/components/demos/DateRangePickerDemo.tsx
+  s_9f0d049c124774::t_8c6a2a50eb959a 1
+packages/kumo-docs-astro/src/components/demos/DialogDemo.tsx
+  s_9f0d049c124774::t_38c00222a7bebc 9,90-129,256-257,387-484
+packages/kumo-docs-astro/src/components/demos/DropdownDemo.tsx
+  s_9f0d049c124774::t_9c14ba54039b66 241-258
+packages/kumo-docs-astro/src/components/demos/FlowDemo.tsx
+  s_9f0d049c124774::t_e575b13f58628f 3,14,46-71,78-81,94-96,99,134,138,146,148,167-169,173,270-291
+packages/kumo-docs-astro/src/components/demos/HomeGrid.tsx
+  s_9f0d049c124774::t_b1c2bfafca22df 36,52,64,93,177-190,273-311,366,429,432,437,537,728,734,739,743
+packages/kumo-docs-astro/src/components/demos/InputAreaDemo.tsx
+  s_9f0d049c124774::t_5fc011ef624cdc 83-97
+packages/kumo-docs-astro/src/components/demos/InputDemo.tsx
+  s_9f0d049c124774::t_ea0b182d627680 69-107
+packages/kumo-docs-astro/src/components/demos/InputGroupDemo.tsx
+  s_9f0d049c124774::t_8953322b26020a 107,129-130,133,156,159,176,328
+packages/kumo-docs-astro/src/components/demos/KumoPressDemo.tsx
+  s_9f0d049c124774::t_f1b94e2bd84272 589,602,611,624,726,736,746,756
+packages/kumo-docs-astro/src/components/demos/LayerCardDemo.tsx
+  s_9f0d049c124774::t_2df07d79026021 40-42
+packages/kumo-docs-astro/src/components/demos/LayerCardFilterMockupDemo.tsx
+  s_9f0d049c124774::t_74139ea8aa3cf2 7-9,18-19,21-27,29-31,33-58,60-67,69-91,93-99
+packages/kumo-docs-astro/src/components/demos/RadioDemo.tsx
+  s_9f0d049c124774::t_9d7c117ef25bd6 245-278
+packages/kumo-docs-astro/src/components/demos/RegistryDemo.tsx
+  s_9f0d049c124774::t_2cbc63b9b650f2 62-64,199-201
+packages/kumo-docs-astro/src/components/demos/ResourceListDemo.tsx
+  s_9f0d049c124774::t_f889dcacf6f746 28
+packages/kumo-docs-astro/src/components/demos/SelectDemo.tsx
+  s_9f0d049c124774::t_b3858ba256f090 82-83,102-118
+packages/kumo-docs-astro/src/components/demos/SelectStressTestDemo.tsx
+  s_9f0d049c124774::t_44822505c0deff 348-351
+packages/kumo-docs-astro/src/components/demos/SidebarDemo.tsx
+  s_9f0d049c124774::t_10ea6917317a53 1-7,17,21-29,31,39,47,55-58,65-67,79,83,85,88-161,165,169,172,192,225-249,271,274-288,291,293-295,297-345,360-380,382-415,418-421,423-444,446-461,468,471-477,479-484,488-489,492-497,525,533,536-537,539-540,543,553,561-577,583,587,594,596,599,601,606-607,614,617-708,715,718-721,725,727-728,730-907,922-931,943-947,950,954,957-967,969-1291
+packages/kumo-docs-astro/src/components/demos/SkeletonLineDemo.tsx
+  s_9f0d049c124774::t_3bddedd8a49bd0 44
+packages/kumo-docs-astro/src/components/demos/TableDemo.tsx
+  s_9f0d049c124774::t_fb924d6d2ff763 283-284,357-358
+packages/kumo-docs-astro/src/components/demos/TableOfContentsDemo.tsx
+  s_9f0d049c124774::t_d65e020d514a01 2,138-209
+packages/kumo-docs-astro/src/components/demos/TabsDemo.tsx
+  s_9f0d049c124774::t_6acede20366dc6 4-19,120-164,209,215
+packages/kumo-docs-astro/src/components/demos/ToolbarDemo.tsx
+  s_9f0d049c124774::t_75cdd769dcf10a 1-96
+packages/kumo-docs-astro/src/components/demos/TooltipDemo.tsx
+  s_9f0d049c124774::t_d4bf5aeeeb1014 74-110
+packages/kumo-docs-astro/src/components/demos/data/languages.ts
+  s_9f0d049c124774::t_3da938e2636710 1-24
+packages/kumo-docs-astro/src/components/docs/ChangelogEntry.tsx
+  s_9f0d049c124774::t_d88bae848d9346 24,29
+packages/kumo-docs-astro/src/components/docs/CopyPageButton.tsx
+  s_9f0d049c124774::t_4238fb2689eb66 103
+packages/kumo-docs-astro/src/components/docs/Heading.astro
+  s_9f0d049c124774::t_f1f3ef3128000c 38
+packages/kumo-docs-astro/src/components/docs/PropsTable.astro
+  s_9f0d049c124774::t_c3fded968be852 22-23,26,30
+packages/kumo-docs-astro/src/components/docs/StickyDocHeader.tsx
+  s_9f0d049c124774::t_1ba1a957dfd72a 73,91,104,114,116,125,136,149,162
+packages/kumo-docs-astro/src/components/docs/TableOfContents.tsx
+  s_9f0d049c124774::t_bde8bfd3e5c76e 1-5,84-91,98,101,104,109,126,136,144-145,157,164-165
+packages/kumo-docs-astro/src/components/kumo/resource-list/resource-list.tsx
+  s_9f0d049c124774::t_e42c0c7072bb31 31
+packages/kumo-docs-astro/src/components/skill/CollapseSizeExample.tsx
+  s_9f0d049c124774::t_a715d9c463620f 1-45
+packages/kumo-docs-astro/src/components/skill/DesignTip.tsx
+  s_9f0d049c124774::t_8e0b697a94686f 1-109
+packages/kumo-docs-astro/src/components/skill/DesignTips.tsx
+  s_9f0d049c124774::t_7f8ca7db974fbe 1-70
+packages/kumo-docs-astro/src/components/skill/design-tips.tsx
+  s_9f0d049c124774::t_60abb3aaff1b9a 1-610
+packages/kumo-docs-astro/src/env.d.ts
+  s_9f0d049c124774::t_756a7822c3d770 1
+packages/kumo-docs-astro/src/layouts/BaseLayout.astro
+  s_9f0d049c124774::t_102a2f5ff67ed4 3,44-55,63-71,73-76,78-150,158-160,197,199-204,206,208,210,212,214,216,218-229,231-233,236-243
+packages/kumo-docs-astro/src/layouts/DocLayout.astro
+  s_9f0d049c124774::t_0c85da11fda2e3 59-61,63,67,97,101,109-110,112-113,118-119
+packages/kumo-docs-astro/src/layouts/MainLayout.astro
+  s_9f0d049c124774::t_7d02c043b34fcd 16,44,53
+packages/kumo-docs-astro/src/lib/astro-markdown-pages.test.ts
+  s_9f0d049c124774::t_8d2e05dfacc617 1,37-42,52-63
+packages/kumo-docs-astro/src/lib/astro-markdown-pages.ts
+  s_9f0d049c124774::t_64ebb7055a4771 7-10,23-27,34-37,41,122-126,131
+packages/kumo-docs-astro/src/lib/html-to-markdown.test.ts
+  s_9f0d049c124774::t_3b65a2b8e83470 1-61
+packages/kumo-docs-astro/src/lib/html-to-markdown.ts
+  s_9f0d049c124774::t_4926f2cfeb7d26 50-63,121-123
+packages/kumo-docs-astro/src/pages/charts/index.mdx
+  s_9f0d049c124774::t_89c3c9acdbb69c 42,54
+packages/kumo-docs-astro/src/pages/charts/maps.astro
+  s_9f0d049c124774::t_06abb26e5b448b 1-210
+packages/kumo-docs-astro/src/pages/charts/sankey.astro
+  s_9f0d049c124774::t_c5c238104c96a6 11,16,108-123,186-201
+packages/kumo-docs-astro/src/pages/charts/timeseries.mdx
+  s_9f0d049c124774::t_b3235e5f4b9db7 13-14,18-19,21,23-24,34,45-75,90,106,120,134-167,181,184-187,190-220,222-228
+packages/kumo-docs-astro/src/pages/colors.mdx
+  s_9f0d049c124774::t_04eae6b2f50580 7-13,224,242,244-246,311-312,337
+packages/kumo-docs-astro/src/pages/components/autocomplete.mdx
+  s_9f0d049c124774::t_73e5a89e8f1078 135,139,142-149,153-167,169-174
+packages/kumo-docs-astro/src/pages/components/badge.mdx
+  s_9f0d049c124774::t_515d97c4c5ff24 9-20,24,26-28,30,32-34,38-39,41-43,46,48,50-52,54,56,58-59,62,64,66-68,70,72-74,78
+packages/kumo-docs-astro/src/pages/components/banner.mdx
+  s_9f0d049c124774::t_0896302edba57d 11-25,30-31,41-46,48-49,59-71,86-87,92-93,98-105,108,110-111,114-117,120,122-123,126-130,132-136,138-139,142-152,161
+packages/kumo-docs-astro/src/pages/components/button.mdx
+  s_9f0d049c124774::t_e4ce9e1c2c22b5 11-29,34-35,45-50,52-53,63-64,66-68,86,90,96,100,106,110,116,120,126,130,136,140,147-148,156,160,168-169,175,179,187,191,199,203,212-213,216,220,226-228,231,235-263,273
+packages/kumo-docs-astro/src/pages/components/collapsible.mdx
+  s_9f0d049c124774::t_b16254e4230fa3 4,6,11-20,25-26,36-46,56-60,62-76,79-92,104-127,130-135,138-143,148-163,170-208
+packages/kumo-docs-astro/src/pages/components/combobox.mdx
+  s_9f0d049c124774::t_b021a63c175111 44,143-148,217-260,263-268
+packages/kumo-docs-astro/src/pages/components/date-picker.mdx
+  s_9f0d049c124774::t_1694fd3d6778c6 59-61,156,193-227
+packages/kumo-docs-astro/src/pages/components/dialog.mdx
+  s_9f0d049c124774::t_8aa37e4bc7168f 6,12-23,28-29,39-44,46-47,57-58,60-79,90-93,95-124,133,135-136,139,141-147,150-187,189-192,194-196,198-205,208-220,229,231-232,234,236-239,241-246,249-266,271,273,275-276,278,280-281,283,285-286,288,290-291
+packages/kumo-docs-astro/src/pages/components/dropdown.mdx
+  s_9f0d049c124774::t_a2461425bdf3be 6,11-21,26-27,37-47,57-58,60-81,92-135,138-146,149-156,159-166,179-253
+packages/kumo-docs-astro/src/pages/components/flow.mdx
+  s_9f0d049c124774::t_d8d5d13b6b8ff3 12-13,104-122,243-250,255-258
+packages/kumo-docs-astro/src/pages/components/input-area.mdx
+  s_9f0d049c124774::t_48161dfa244876 3-4,10-24,29-30,40-52,64-80,83,85-88,90-95,108-109,114-116,119,121-130,135-137,142-164,169-185,196-229
+packages/kumo-docs-astro/src/pages/components/input.mdx
+  s_9f0d049c124774::t_42f17310652a86 4,6,12-29,34-35,45-50,52-53,65-81,84-89,91-92,94-96,107,109-114,117,119-124,127-141,146-147,152-209,214-229,240-298,300-327
+packages/kumo-docs-astro/src/pages/components/popover.mdx
+  s_9f0d049c124774::t_a75380a3354d0c 4,6,11-20,25-26,36-46,56-69,72-76,78-140,149-152,157-158,161-200,211-251
+packages/kumo-docs-astro/src/pages/components/radio.mdx
+  s_9f0d049c124774::t_6f24ef16e73e09 4,6,11-27,32-33,43-53,63-73,86-91,96-101,106-155,160-162,167-192,195,197-202,204-237,239,250-301,303
+packages/kumo-docs-astro/src/pages/components/select.mdx
+  s_9f0d049c124774::t_5258464f20dd35 6,12-31,36-37,47-52,54-55,65-130,132-176,178-180,184-194,196-197,200-202,205,209,211-215,217-218,221-231,233-245,247-282,284-288,290-296,298-321,325-328,330-333,335-392,394-396,405-427,429
+packages/kumo-docs-astro/src/pages/components/sidebar.astro
+  s_9f0d049c124774::t_771f537c982bbc 11,15-19,25,56,79,100,103,115,138,156-158,161-167,169,175,177,191,211-370,380-381,388,396,403,405,412
+packages/kumo-docs-astro/src/pages/components/table-of-contents.mdx
+  s_9f0d049c124774::t_8c3d7b29c445d5 10-19,24-25,35-45,55-56,58-70,74-93,96-122,125-143,152-181,184-191,194-201,204-229,238-261,263-264
+packages/kumo-docs-astro/src/pages/components/tabs.mdx
+  s_9f0d049c124774::t_edd4b25d41e792 4,10-20,25-26,36-46,56-57,59-69,80-86,89-96,101-106,109,111-142,153-157,161,163,166,169-170,173-175,178-180,183-185,188-190
+packages/kumo-docs-astro/src/pages/components/toolbar.mdx
+  s_9f0d049c124774::t_6b5912d3fdbd29 1-168
+packages/kumo-docs-astro/src/pages/components/tooltip.mdx
+  s_9f0d049c124774::t_751d9f5c44e401 6,11-18,23-24,34-44,54-55,57-63,66,76,78-79,82-85,88-96,99,101-106,111-133,140-146
+packages/kumo-docs-astro/src/pages/contributing.mdx
+  s_9f0d049c124774::t_0ce9a4327ca204 29
+packages/kumo-docs-astro/src/pages/index.astro
+  s_9f0d049c124774::t_9f7c2dcb012668 4,10,12,14
+packages/kumo-docs-astro/src/pages/llms.txt.ts
+  s_9f0d049c124774::t_20edc153caf4e3 1-263
+packages/kumo-docs-astro/src/pages/skill.astro
+  s_9f0d049c124774::t_95246dbfd5d55a 1-44
+packages/kumo-docs-astro/src/pages/tests/flow.astro
+  s_9f0d049c124774::t_125bdb4370953f 5-6,18,34-55,154-165
+packages/kumo-docs-astro/src/pages/tests/map.astro
+  s_9f0d049c124774::t_c4634deac3adb5 1-58
+packages/kumo-docs-astro/src/pages/tests/timeseries.astro
+  s_9f0d049c124774::t_4d239e4fbf20ef 1-64
+packages/kumo-docs-astro/src/styles/global.css
+  s_9f0d049c124774::t_a284e611751f79 164,181,248,282,294
+packages/kumo-docs-astro/tsconfig.json
+  s_9f0d049c124774::t_2b452ca08fb277 7
+packages/kumo-docs-astro/vite.config.ts
+  s_9f0d049c124774::t_a9bd8f08ea3abc 1-30,32
+packages/kumo-figma/AGENTS.md
+  s_9f0d049c124774::t_a9ebb1c2a4ec57 32,58
+packages/kumo-figma/CHANGELOG.md
+  s_9f0d049c124774::t_ce6b6fdbe2ea57 3-198
+packages/kumo-figma/package.json
+  s_9f0d049c124774::t_98cec93af82e0e 3,7,12,15,17,31-32
+packages/kumo-figma/src/generators/_test-utils.ts
+  s_9f0d049c124774::t_df8333a61f5423 14
+packages/kumo-figma/src/generators/badge.test.ts
+  s_9f0d049c124774::t_ba51205f3f64aa 15
+packages/kumo-figma/src/generators/banner.test.ts
+  s_9f0d049c124774::t_208b046a21b159 15
+packages/kumo-figma/src/generators/breadcrumbs.test.ts
+  s_9f0d049c124774::t_644025b5e12bf1 8
+packages/kumo-figma/src/generators/breadcrumbs.ts
+  s_9f0d049c124774::t_815c3db3a824f0 298
+packages/kumo-figma/src/generators/button.test.ts
+  s_9f0d049c124774::t_7089f5ef0bbd8a 15
+packages/kumo-figma/src/generators/checkbox.test.ts
+  s_9f0d049c124774::t_dc3d2b1ea297eb 18
+packages/kumo-figma/src/generators/clipboard-text.test.ts
+  s_9f0d049c124774::t_f36c49ad628843 15
+packages/kumo-figma/src/generators/code-block.test.ts
+  s_9f0d049c124774::t_111121050a2991 15
+packages/kumo-figma/src/generators/code.test.ts
+  s_9f0d049c124774::t_4539120d646715 19
+packages/kumo-figma/src/generators/collapsible.test.ts
+  s_9f0d049c124774::t_618bcda4494052 14
+packages/kumo-figma/src/generators/combobox.test.ts
+  s_9f0d049c124774::t_901942cb7bc0f5 14
+packages/kumo-figma/src/generators/command-palette.test.ts
+  s_9f0d049c124774::t_342a914ef40d34 18
+packages/kumo-figma/src/generators/date-range-picker.test.ts
+  s_9f0d049c124774::t_034d6908e09904 14
+packages/kumo-figma/src/generators/dialog.test.ts
+  s_9f0d049c124774::t_24b1afe21892ed 15
+packages/kumo-figma/src/generators/drift-detection.test.ts
+  s_9f0d049c124774::t_430775c890493a 13
+packages/kumo-figma/src/generators/dropdown.test.ts
+  s_9f0d049c124774::t_6c577fe472d6fa 18
+packages/kumo-figma/src/generators/empty.test.ts
+  s_9f0d049c124774::t_ab62bad26dedbd 6
+packages/kumo-figma/src/generators/input-area.test.ts
+  s_9f0d049c124774::t_1af3360d015f49 15
+packages/kumo-figma/src/generators/input.test.ts
+  s_9f0d049c124774::t_2e2ea2566e1a14 15
+packages/kumo-figma/src/generators/label.test.ts
+  s_9f0d049c124774::t_7fe9701f974047 14
+packages/kumo-figma/src/generators/layer-card.test.ts
+  s_9f0d049c124774::t_60f481efa6b3e5 14
+packages/kumo-figma/src/generators/layer-card.ts
+  s_9f0d049c124774::t_16588bee96475e 130
+packages/kumo-figma/src/generators/link-button.test.ts
+  s_9f0d049c124774::t_56e080e2dd5926 15
+packages/kumo-figma/src/generators/loader.test.ts
+  s_9f0d049c124774::t_1904171d224ee2 16
+packages/kumo-figma/src/generators/menubar.test.ts
+  s_9f0d049c124774::t_eb7fd5f2959dd8 14
+packages/kumo-figma/src/generators/meter.test.ts
+  s_9f0d049c124774::t_6b4c60bf21fc3c 19
+packages/kumo-figma/src/generators/pagination.test.ts
+  s_9f0d049c124774::t_372357114a2d9c 14
+packages/kumo-figma/src/generators/refresh-button.test.ts
+  s_9f0d049c124774::t_987f186c0d1c7d 17
+packages/kumo-figma/src/generators/select.test.ts
+  s_9f0d049c124774::t_c55c98d124271b 15
+packages/kumo-figma/src/generators/sensitive-input.test.ts
+  s_9f0d049c124774::t_fe7c74a5eaf38f 14
+packages/kumo-figma/src/generators/shared.ts
+  s_9f0d049c124774::t_247798cb6814d3 488
+packages/kumo-figma/src/generators/surface.test.ts
+  s_9f0d049c124774::t_b1447b9066f346 14
+packages/kumo-figma/src/generators/switch.test.ts
+  s_9f0d049c124774::t_4d503c5cd9baf7 14
+packages/kumo-figma/src/generators/table.test.ts
+  s_9f0d049c124774::t_966b08119c038f 14
+packages/kumo-figma/src/generators/tabs.test.ts
+  s_9f0d049c124774::t_e2de28eeac4488 14
+packages/kumo-figma/src/generators/text.test.ts
+  s_9f0d049c124774::t_690b901c19430e 15
+packages/kumo-figma/src/generators/toast.test.ts
+  s_9f0d049c124774::t_33149053f2eec7 15
+packages/kumo-figma/src/generators/tooltip.test.ts
+  s_9f0d049c124774::t_9c452c11ada6ab 14
+packages/kumo-figma/src/parsers/tailwind-to-figma.test.ts
+  s_9f0d049c124774::t_549ce8981bbf1d 1
+packages/kumo-figma/src/parsers/tailwind-to-figma.ts
+  s_9f0d049c124774::t_0c72c364e6d850 197
+packages/kumo-figma/vite.config.ts
+  s_9f0d049c124774::t_c7c039d6900015 1,8-24
+packages/kumo-screenshot-worker/AGENTS.md
+  s_9f0d049c124774::t_921c7df9903bb3 67,75,77,85
+packages/kumo-screenshot-worker/package.json
+  s_9f0d049c124774::t_b64e558f15f0c0 7,13,21-22
+packages/kumo-screenshot-worker/src/index.ts
+  s_9f0d049c124774::t_c04c2213e44040 1,21,26-27,35-40,99-101,113,116,120-124,130-154,279-281,301,309-311,336-339,382,435,437
+packages/kumo-screenshot-worker/worker-configuration.d.ts
+  s_9f0d049c124774::t_d39741fb12ffb8 5-12,16-18,21-23,114,247,622,895,1847,2008,2026-2029,2349,2357,3047,4004,4316,4337,4403,5997,6544,9051,9462,10059,10600,11264,11474,11476,11522-11523,11844,11856,12179,12181
+packages/kumo-screenshot-worker/wrangler.jsonc
+  s_9f0d049c124774::t_684c424e580549 18,21-23
+packages/kumo/AGENTS.md
+  s_9f0d049c124774::t_9ab3d3ff1e0ca1 53
+packages/kumo/CHANGELOG.md
+  s_9f0d049c124774::t_f7ecd20a2f02b8 3-400
+packages/kumo/README.md
+  s_9f0d049c124774::t_40995ca0ad0715 209,211,224
+packages/kumo/ai/USAGE.md
+  s_9f0d049c124774::t_77fa7d981b80d4 35-72,77-82,84-85,88-91,95-101,106-119,122-124,126,141-150,155,170,185,193
+packages/kumo/bin/kumo.js
+  s_9f0d049c124774::t_9592ca85da15e3 36
+packages/kumo/lint/enforce-variant-standard.js
+  s_9f0d049c124774::t_ef94186fa7eaa8 1
+packages/kumo/lint/enforce-variant-standard.test.ts
+  s_9f0d049c124774::t_5371c30468f19d 1,39
+packages/kumo/lint/kumo-plugin.js
+  s_9f0d049c124774::t_b867cc1dbb08b2 6,18
+packages/kumo/lint/no-cross-package-imports.js
+  s_9f0d049c124774::t_da6b4992f2b35b 1
+packages/kumo/lint/no-deprecated-props.js
+  s_9f0d049c124774::t_bcb242c490ade7 1-2
+packages/kumo/lint/no-flow-node-custom-render.js
+  s_9f0d049c124774::t_fcba85d9d04067 1-394
+packages/kumo/lint/no-primitive-colors.js
+  s_9f0d049c124774::t_f680b773fd2c1f 1-2,79-80
+packages/kumo/lint/no-tailwind-dark-variant.js
+  s_9f0d049c124774::t_789ad97cf58b06 1
+packages/kumo/package.json
+  s_9f0d049c124774::t_3d0994b93dc79c 3,6-13,16,22-37,40,43-62,64,68,71-74,76,79-81,84,88,91-94,96,100,104,107-118,120,124,127-142,144,148,151-154,156,159-161,164,168,172,176,179-186,188,192,195-198,200,204,208,211-214,216,220,224,227-230,232,236,240,244,248,252,256,260,264,268,272,276,280,284,288,292,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360,364,368,372,376,380,384,388,392,396,400,403-405,407-409,411-413,415-417,424,432-433,442-449,451,453,456,459-460,464,467-468,473,479-480,487,494,499-513
+packages/kumo/plopfile.js
+  s_9f0d049c124774::t_b7a5f6ba765d5e 52,59,67,75,109,125,127-128
+packages/kumo/scripts/component-registry/discovery.ts
+  s_9f0d049c124774::t_625ded5d735f15 37,186-238,294,302-308,312-317,320,324,492-524
+packages/kumo/scripts/component-registry/index.test.ts
+  s_9f0d049c124774::t_fc997ae0ae73e5 9-10,584-632,734,995-1032
+packages/kumo/scripts/component-registry/index.ts
+  s_9f0d049c124774::t_ec7d11182fbd59 57,437-462,876-946
+packages/kumo/scripts/component-registry/metadata.ts
+  s_9f0d049c124774::t_62e5b3302e2728 305,307,331-360,476
+packages/kumo/scripts/component-registry/props-filter.ts
+  s_9f0d049c124774::t_7983f36a3ab296 185-187
+packages/kumo/scripts/component-registry/sub-components.ts
+  s_9f0d049c124774::t_7772c17e64f68d 9,352-357,359-364,366-370,372-373,375-381,383-389
+packages/kumo/scripts/component-registry/variant-parser.ts
+  s_9f0d049c124774::t_8792c479f2bdf7 218
+packages/kumo/scripts/generate-primitives.ts
+  s_9f0d049c124774::t_d2d60f474c76a9 36-41,54-59,106,119,134
+packages/kumo/scripts/theme-generator/config.ts
+  s_9f0d049c124774::t_018d868ae9c5de 69-70,75,128-129,299,327,386-387,395-396,404-405,413-414,422-423,429,433,441-442,450-477,500-501,503,506-507,511-513,515,518-519,524,530-531,566,630,642
+packages/kumo/scripts/theme-generator/generate-css.test.ts
+  s_9f0d049c124774::t_7bfffb8b1f665a 1
+packages/kumo/scripts/theme-generator/generate-css.ts
+  s_9f0d049c124774::t_eee01915264a35 144-147
+packages/kumo/scripts/theme-generator/types.ts
+  s_9f0d049c124774::t_2844b4220982e5 35-41,72
+packages/kumo/src/blocks/delete-resource/delete-resource.tsx
+  s_9f0d049c124774::t_268bee2870aaca 132,139,153,163,169
+packages/kumo/src/blocks/resource-list/resource-list.test.tsx
+  s_9f0d049c124774::t_8b877f58325e9c 1
+packages/kumo/src/blocks/resource-list/resource-list.tsx
+  s_9f0d049c124774::t_f256dd7e18e1d0 31
+packages/kumo/src/catalog/catalog.test.ts
+  s_9f0d049c124774::t_33f46c3a349d76 5,258-297
+packages/kumo/src/catalog/catalog.ts
+  s_9f0d049c124774::t_557c4a7543c372 52-61,285-286
+packages/kumo/src/code/code-highlighted.tsx
+  s_9f0d049c124774::t_fea2f26dfbc6d0 3,67-68,89,108,119-127,159,170
+packages/kumo/src/code/index.ts
+  s_9f0d049c124774::t_91a4b43548fd34 29,35-37,45-46
+packages/kumo/src/code/provider.test.ts
+  s_9f0d049c124774::t_cc998b18e9a363 1-59
+packages/kumo/src/code/provider.test.tsx
+  s_9f0d049c124774::t_12fb9cc1613c9d 1-428
+packages/kumo/src/code/provider.tsx
+  s_9f0d049c124774::t_0c08756af10569 5-10,40-50,91,96,99-109,112-124,158-160,162-169,177,187,189,201,204-210
+packages/kumo/src/code/types.ts
+  s_9f0d049c124774::t_3a9bced8d6d232 29-58,89-90,92,113-115,117-120,144,147
+packages/kumo/src/code/use-shiki-highlighter.test.tsx
+  s_9f0d049c124774::t_71e3765bebe540 1-235
+packages/kumo/src/code/use-shiki-highlighter.ts
+  s_9f0d049c124774::t_e8ee6e57887923 5-6,54,59-61,63,66,75
+packages/kumo/src/command-line/commands/add.test.ts
+  s_9f0d049c124774::t_35df33da800209 14
+packages/kumo/src/command-line/commands/blocks.test.ts
+  s_9f0d049c124774::t_6aaf1383cd3e8d 6
+packages/kumo/src/command-line/commands/init.test.ts
+  s_9f0d049c124774::t_f681cc1f219110 8
+packages/kumo/src/command-line/utils/config.test.ts
+  s_9f0d049c124774::t_22f1372ad8eb51 5
+packages/kumo/src/command-line/utils/transformer.test.ts
+  s_9f0d049c124774::t_aa5e74c42cfa9e 1
+packages/kumo/src/components/AGENTS.md
+  s_9f0d049c124774::t_72714537bf448b 163-171
+packages/kumo/src/components/autocomplete/autocomplete.test.tsx
+  s_9f0d049c124774::t_eb0df685984080 1-130
+packages/kumo/src/components/autocomplete/autocomplete.tsx
+  s_9f0d049c124774::t_7d5e2c02715d13 3,9-12,40-46,119-121,156,160-164,224,234-235,263,324-326
+packages/kumo/src/components/autocomplete/index.ts
+  s_9f0d049c124774::t_6235becf2751e2 9-10
+packages/kumo/src/components/badge/badge.test.tsx
+  s_9f0d049c124774::t_4749dc4577a05a 1-177
+packages/kumo/src/components/badge/badge.tsx
+  s_9f0d049c124774::t_8f86f5be5a4ae7 22,26,30,38,86-119,124-125,130-131,135,140,142-151,155-158,173,193,196-204,217,222,226-236,238-244
+packages/kumo/src/components/banner/banner-action.tsx
+  s_9f0d049c124774::t_1479b75efd21cd 1-150
+packages/kumo/src/components/banner/banner.test.tsx
+  s_9f0d049c124774::t_c0cec4f4bf4908 1-267
+packages/kumo/src/components/banner/banner.tsx
+  s_9f0d049c124774::t_076872095b1afd 1-6,9-14,16-17,19,23-24,28-29,33-34,37-51,57,62-94,102,106-112,117,119-129,131,134-136,157-160,167-173,184,188-195,220,229,231,235-245,250-267,269-271,274-294,297-312,316,325-338,342-352
+packages/kumo/src/components/breadcrumbs/breadcrumbs.tsx
+  s_9f0d049c124774::t_4792e171fe61a2 53-57,75-76,78-81,84,110,201
+packages/kumo/src/components/button/button.test.tsx
+  s_9f0d049c124774::t_8fb60728e33abb 2,5,115-187,230-300
+packages/kumo/src/components/button/button.tsx
+  s_9f0d049c124774::t_f93c78088e30ba 52,57,65-66,71,76-77,136,156-160,172-253,258,286-309,313-317,333-334,362,369-383,387,394,396,398,402-409,432,458,465-466,473,478-498,501,508,513,516-521
+packages/kumo/src/components/chart/Color.ts
+  s_9f0d049c124774::t_abfbc0dcbdd101 52,68-99,201-211
+packages/kumo/src/components/chart/EChart.tsx
+  s_9f0d049c124774::t_89071901439de5 74-75,80-89,157-163,176-189,192-195,232,252,276,354-358
+packages/kumo/src/components/chart/Legend.tsx
+  s_9f0d049c124774::t_a1103ff0d996b4 1-5,7,9-16,27-32,35-49,55-81,83-96,99,110,118,134-157,159-172,174,197-199
+packages/kumo/src/components/chart/Maps.test.tsx
+  s_9f0d049c124774::t_b4d8a53e13c860 1-141
+packages/kumo/src/components/chart/Maps.tsx
+  s_9f0d049c124774::t_f990ebc36e7a99 1-1009
+packages/kumo/src/components/chart/SankeyChart.test.tsx
+  s_9f0d049c124774::t_4956f072e3b6e6 1,75-77,499-574,677-814
+packages/kumo/src/components/chart/SankeyChart.tsx
+  s_9f0d049c124774::t_84cfd0c3f6a1ff 6,73-77,86-89,167-168,171-172,182,186-198,204,215,230,267-272,294-295,319-325,335,355-356,361
+packages/kumo/src/components/chart/TimeseriesChart.test.tsx
+  s_9f0d049c124774::t_32b080e0ce3b95 1-160
+packages/kumo/src/components/chart/TimeseriesChart.tsx
+  s_9f0d049c124774::t_a8f196f33fd693 3-13,15-36,60-63,96-137,140-153,167-168,181-185,188-189,220-253,255-342,346-352,361-376,441-460,481,486,491,497-500,502-503,509,514,521-525,528-533,555,558-563,568-668,670-679,681,684-686,688,713-717,720-773,775-846,850-909,911-913,915-923,926,930,932-957,959-966,968,972-973,978,981,983,985-1042,1090-1097,1100,1104
+packages/kumo/src/components/chart/index.ts
+  s_9f0d049c124774::t_a4ea21c001f0ec 5-6,24-33
+packages/kumo/src/components/chart/timeseries-markers.ts
+  s_9f0d049c124774::t_7e42a6eef150b1 1-141
+packages/kumo/src/components/chart/timeseries-thresholds.ts
+  s_9f0d049c124774::t_15dfcb18637867 1-8,10-13,16-50,54-65
+packages/kumo/src/components/chart/timeseries-tooltip.tsx
+  s_9f0d049c124774::t_94c5fc26526672 1-166
+packages/kumo/src/components/chart/tooltip-utils.ts
+  s_9f0d049c124774::t_5816c7759a879d 1-10
+packages/kumo/src/components/checkbox/checkbox.tsx
+  s_9f0d049c124774::t_8681ec1de68ab3 51-57,264,271-272,275,309,350-351,353,363-364,372,375
+packages/kumo/src/components/clipboard-text/clipboard-text.test.tsx
+  s_9f0d049c124774::t_c554f31f608368 1-156
+packages/kumo/src/components/clipboard-text/clipboard-text.tsx
+  s_9f0d049c124774::t_3961bf7ac7f9b7 2,10,13-14,71-75,132-150,192-198,207-224,261-262,269,271,276-277,284-292,300-302
+packages/kumo/src/components/cloudflare-logo/cloudflare-logo.tsx
+  s_9f0d049c124774::t_787772159c6f8b 92,216,265-266,268-269
+packages/kumo/src/components/code/code.tsx
+  s_9f0d049c124774::t_01508e651952cb 106-110
+packages/kumo/src/components/collapsible/collapsible.tsx
+  s_9f0d049c124774::t_52be3e41fdf5ca 80-93,120,158-159,162,164,168-176,215-218,221-223
+packages/kumo/src/components/combobox/combobox.browser.test.tsx
+  s_9f0d049c124774::t_1737faec706f4c 1,198
+packages/kumo/src/components/combobox/combobox.test.tsx
+  s_9f0d049c124774::t_cc4e8abcfef8bd 1-154
+packages/kumo/src/components/combobox/combobox.tsx
+  s_9f0d049c124774::t_37b49560e96e22 43-47,76-82,170,172,264,269-270,272,274,283,338,345,352,360-361,373-374,377,382,397-398,451,474,493,501-502,506,537,544,546,549,556,560,580,643-645
+packages/kumo/src/components/combobox/index.ts
+  s_9f0d049c124774::t_f365f98883941b 6-7
+packages/kumo/src/components/command-palette/command-palette.test.tsx
+  s_9f0d049c124774::t_f8bda03b52597f 1,54-55,58,61-62,67,70-71,262-276
+packages/kumo/src/components/command-palette/command-palette.tsx
+  s_9f0d049c124774::t_8876a8bd343d94 282,761
+packages/kumo/src/components/command-palette/types.ts
+  s_9f0d049c124774::t_7f5a8f6c810759 170-173
+packages/kumo/src/components/date-picker/date-picker.tsx
+  s_9f0d049c124774::t_31296f4c8788e6 116
+packages/kumo/src/components/date-range-picker/date-range-picker.tsx
+  s_9f0d049c124774::t_65b29095e78df8 305-313,316,319-322,325-328,331-334,338-342,345-352,355,408-416,419,422-425,428-431,434-437,441-445,448-455,458,607,648-651
+packages/kumo/src/components/dialog/dialog.tsx
+  s_9f0d049c124774::t_31afdb64ee5191 22-23,26-27,30-31,34-35,122-125,146,148-152,261-263,265,278,281-303,306,320-322,324-325,329-350,405-409
+packages/kumo/src/components/dropdown/dropdown.tsx
+  s_9f0d049c124774::t_59ea4a1a36284d 52-58,72-73,121,249-250,314-315,341-342,411-412
+packages/kumo/src/components/empty/empty.tsx
+  s_9f0d049c124774::t_bca807dacc5ba0 47-51,139-142
+packages/kumo/src/components/field/field.tsx
+  s_9f0d049c124774::t_7b349e8117d293 6-19,150
+packages/kumo/src/components/field/index.ts
+  s_9f0d049c124774::t_9f9fcf938b5d2c 3
+packages/kumo/src/components/flow/connectors.tsx
+  s_9f0d049c124774::t_5dc081f5b1593b 2-7,107,142-144,148-150,157,164-230,238,240
+packages/kumo/src/components/flow/diagram.tsx
+  s_9f0d049c124774::t_b50b28b78c3b63 20,28-38,45-46,56-58,60,67-72,91,118-216,369,372,387-393,396-403,408,421,432,436-469,472-480,497-503,505,507-527,535-565,569-579,583-584,587-588,591-600,604-611
+packages/kumo/src/components/flow/flow-layout.ts
+  s_9f0d049c124774::t_7e03d8c832b7c8 1-330
+packages/kumo/src/components/flow/flow.browser.test.tsx
+  s_9f0d049c124774::t_197c876ed99cfd 1,265-323,371
+packages/kumo/src/components/flow/flow.test.tsx
+  s_9f0d049c124774::t_5da695525ec2a8 1,4,6-7,14-62,200,208,407-549
+packages/kumo/src/components/flow/node.tsx
+  s_9f0d049c124774::t_0ae2ecbae10cb2 14-16,68-70,72-77,79-84,86-89,93-98,100,102-109,111-115,117-137,139,142-145,158-163,170-171,175,183,192-195,197-200,243-244,246-247,249-252,254-255,257-260,270
+packages/kumo/src/components/flow/parallel.tsx
+  s_9f0d049c124774::t_7bedee6a86cc3a 1-3,7-8,11,13-22,25-33,35,37-38,40-42,45-47
+packages/kumo/src/components/flow/specs/2026-04-17-flow-layout.md
+  s_9f0d049c124774::t_d91a5d17369a80 1-552
+packages/kumo/src/components/flow/use-children.tsx
+  s_9f0d049c124774::t_0703cd023d7458 52,73-75,84-94,116,145,183-185,188-191,193,195-218,224
+packages/kumo/src/components/grid/grid.tsx
+  s_9f0d049c124774::t_1822b27630c0ff 148-151
+packages/kumo/src/components/input-group/context.ts
+  s_9f0d049c124774::t_d2bef48c150662 123-124
+packages/kumo/src/components/input-group/input-group-addon.tsx
+  s_9f0d049c124774::t_c091d3ec210071 64
+packages/kumo/src/components/input-group/input-group-button.tsx
+  s_9f0d049c124774::t_ea887f15a4e969 152-162,166,168-173
+packages/kumo/src/components/input-group/input-group-input.tsx
+  s_9f0d049c124774::t_387beae123fb39 66,73-74,76-80,82-83
+packages/kumo/src/components/input-group/input-group-suffix.tsx
+  s_9f0d049c124774::t_4b3b475b616895 28
+packages/kumo/src/components/input-group/input-group.test.tsx
+  s_9f0d049c124774::t_8853ab4420401d 2-3,10-13,654,706-709,839,1227,1241-1242,1264,1363-1365,1367-1421
+packages/kumo/src/components/input-group/input-group.tsx
+  s_9f0d049c124774::t_6533b4b1c6b751 134,137,199,201-207,211-214,217,219-220,224,236,272,284,294
+packages/kumo/src/components/input/input-area.tsx
+  s_9f0d049c124774::t_a49fee00270db9 3-9,12-147,161-164,183-216,221,223,229-230,234,237,244,250,253,265,268,301-306
+packages/kumo/src/components/input/input.test.tsx
+  s_9f0d049c124774::t_ae4d6f2be617f0 1,3,10,49-58,130-155,230-403
+packages/kumo/src/components/input/input.tsx
+  s_9f0d049c124774::t_64cdfc5296ceef 9-13,118-122,124-128,132-133,136-137,150,191,194-201,206-207,214,268-269
+packages/kumo/src/components/layer-card/layer-card.test.tsx
+  s_9f0d049c124774::t_bd30fd3ac631e5 1
+packages/kumo/src/components/layer-card/layer-card.tsx
+  s_9f0d049c124774::t_79335e8ade1b5d 95-115,122-126,129-138
+packages/kumo/src/components/link/link.test.tsx
+  s_9f0d049c124774::t_05722e47a7cb20 1,132-136
+packages/kumo/src/components/link/link.tsx
+  s_9f0d049c124774::t_c6f1bd18cf4559 84-90,172-176,184-185,190
+packages/kumo/src/components/loader/loader.tsx
+  s_9f0d049c124774::t_02e64df2154b75 43-47
+packages/kumo/src/components/menubar/menubar.tsx
+  s_9f0d049c124774::t_d9f2ed4df8037d 47-48,51,124
+packages/kumo/src/components/pagination/pagination.test.tsx
+  s_9f0d049c124774::t_7c24c65b4ef018 1
+packages/kumo/src/components/pagination/pagination.tsx
+  s_9f0d049c124774::t_08702b4db6d124 97-101,256,577,604
+packages/kumo/src/components/popover/popover.tsx
+  s_9f0d049c124774::t_d62c837a6a795a 95-96
+packages/kumo/src/components/radio/index.ts
+  s_9f0d049c124774::t_1886711e6ea96a 8
+packages/kumo/src/components/radio/radio.test.tsx
+  s_9f0d049c124774::t_42f20881681a63 1
+packages/kumo/src/components/radio/radio.tsx
+  s_9f0d049c124774::t_8bd695c55535ad 1-8,12-15,18-24,82-91,166-174,197-209,233,235-243,268-275,292,300-315,317-321,323-324,327-328,330-340,344-351,354-355,359,363,366,379-429,431,447,461,464,467-469
+packages/kumo/src/components/radio/radio.type-spec.tsx
+  s_9f0d049c124774::t_c9317292c278df 1-111
+packages/kumo/src/components/select/select.test.tsx
+  s_9f0d049c124774::t_00415615a87ac9 2,523-535,595-702
+packages/kumo/src/components/select/select.tsx
+  s_9f0d049c124774::t_6d063d10511d4e 407-413,415,418-424,435,454-455,459-460,500,576-577
+packages/kumo/src/components/sensitive-input/sensitive-input.test.tsx
+  s_9f0d049c124774::t_4b766085cb8fb7 1,3,39-47
+packages/kumo/src/components/sensitive-input/sensitive-input.tsx
+  s_9f0d049c124774::t_b33a4ad9a1bf42 40-43,96,111-122,329,351,399,409-410,416,418,439-440,445,447,465-466
+packages/kumo/src/components/sidebar/index.ts
+  s_9f0d049c124774::t_860e0e2a6a97e6 8,26-27,41-45
+packages/kumo/src/components/sidebar/sidebar.test.tsx
+  s_9f0d049c124774::t_838a10c3426aec 1-14,21,38-39,46-101,124-131,138-147,165-167,187,189-421,424,426-430,433-537,539-883
+packages/kumo/src/components/sidebar/sidebar.tsx
+  s_9f0d049c124774::t_3ff192ca830400 11,15-17,20,22,78-79,94-97,99-100,106-110,113,118,127-128,130,147-152,201-223,260-263,268-269,272-288,312,314,317-327,329-333,337-338,358-363,365,378-379,384-385,406-407,410-416,420,435-444,447,457-460,463-560,575,578-579,581,593-650,654-658,662-675,685,687-689,692,697-754,786-787,813-814,817,819-845,855-857,874-882,892,895-902,905-908,910,912-914,917-930,932-951,953-955,957,960,964,968-971,974,977-986,988,991,995-997,999,1001,1004,1007-1029,1032-1034,1037,1040-1041,1043,1078,1082,1095,1113,1115,1118,1130-1133,1163-1164,1175,1185,1188-1191,1203,1210,1221-1224,1230-1236,1240,1243-1249,1251,1256-1257,1259-1260,1262-1263,1265,1267,1269,1279,1283,1286-1287,1301-1302,1311-1325,1331-1334,1370-1371,1403,1408,1412-1415,1457-1458,1478,1483-1488,1492-1502,1510,1514,1517-1518,1531-1532,1562-1563,1565,1568,1570-1572,1578,1581-1614,1617-1618,1620-1621,1625,1628-1634,1638-1642,1644-1646,1649-1652,1655,1657-1658,1660,1663,1667-1672,1676-1679,1682,1685-1686,1689,1691-1698,1701,1705-1706,1710,1731-1732,1736,1765-1766,1768-1778,1785-1787,1840-1869,1871,1873-1875,1878-1885,1889,1897-2160,2166-2167,2171-2173,2177-2178,2181-2182,2184-2186,2197,2200-2212,2215-2218,2222-2229,2232-2291,2294-2295,2297-2315,2317-2349,2359-2360,2362-2364,2391,2403,2410-2411,2420,2432,2439-2440
+packages/kumo/src/components/surface/surface.tsx
+  s_9f0d049c124774::t_5d871ac4b96b2d 40-44
+packages/kumo/src/components/switch/switch.tsx
+  s_9f0d049c124774::t_46fbb6796d6ce1 74-83,294,326,381-382,384,447-448,476-477
+packages/kumo/src/components/table-of-contents/index.ts
+  s_9f0d049c124774::t_2df07b37ab73bf 12-17
+packages/kumo/src/components/table-of-contents/table-of-contents.test.tsx
+  s_9f0d049c124774::t_b5f705f6cbe031 2
+packages/kumo/src/components/table-of-contents/table-of-contents.tsx
+  s_9f0d049c124774::t_1c9952ca3099e4 107-108,146-182,189-191,195-196
+packages/kumo/src/components/table-of-contents/use-table-of-contents-active-id.test.tsx
+  s_9f0d049c124774::t_d8f0653e2551e5 1-250
+packages/kumo/src/components/table-of-contents/use-table-of-contents-active-id.ts
+  s_9f0d049c124774::t_2091130b574c51 1-188
+packages/kumo/src/components/table/table.test.tsx
+  s_9f0d049c124774::t_a8bf415ded4cc1 1
+packages/kumo/src/components/table/table.tsx
+  s_9f0d049c124774::t_e98875fb3157b5 131-135,138,140,162,204-208
+packages/kumo/src/components/tabs/tabs.test.tsx
+  s_9f0d049c124774::t_3437c8bd763f70 1-107
+packages/kumo/src/components/tabs/tabs.tsx
+  s_9f0d049c124774::t_2e84617782ec87 1-9,49-61,93-97,135-136,162,182-189,195-200,208-213,219-220,223-224,226,235-236,239-246,248-251,254-255,257,270,274-277,285-304,309-418,422-423,429-438,441-449,451-466,468-501,511,513-525,532-534,538-540,543-547,550-573
+packages/kumo/src/components/text/text.test.tsx
+  s_9f0d049c124774::t_03d87f1aea653b 1
+packages/kumo/src/components/text/text.tsx
+  s_9f0d049c124774::t_e77b558b21578d 131-140,328-339,346
+packages/kumo/src/components/text/text.type-spec.tsx
+  s_9f0d049c124774::t_f9e240d77695f3 22-36,40-42,48-52,67-76,78-82,86-90,92-96
+packages/kumo/src/components/toast/toast.test.tsx
+  s_9f0d049c124774::t_ee22d463f7ab39 2
+packages/kumo/src/components/toast/toast.tsx
+  s_9f0d049c124774::t_7350e2d66dbc50 42-43,130-134,216,375,389,391-404,410-416,418-421,428-431,438-442
+packages/kumo/src/components/toolbar/index.ts
+  s_9f0d049c124774::t_8552e56ea7665c 1-10
+packages/kumo/src/components/toolbar/toolbar.test.tsx
+  s_9f0d049c124774::t_a3f9133cd7419b 1-97
+packages/kumo/src/components/toolbar/toolbar.tsx
+  s_9f0d049c124774::t_42b3bcf8ca5725 1-259
+packages/kumo/src/components/tooltip/tooltip.tsx
+  s_9f0d049c124774::t_a5cf92a19a6b30 57-58,63-67,172,174,186-191,196
+packages/kumo/src/index.ts
+  s_9f0d049c124774::t_8b1b6b3f22ab3a 55-64,173,252-253,259-264,283,301-302,307,328-330
+packages/kumo/src/primitives/index.ts
+  s_9f0d049c124774::t_e2362e6ef831ed 40-43
+packages/kumo/src/primitives/otp-field.ts
+  s_9f0d049c124774::t_dad6f9fdbf7d11 14-17
+packages/kumo/src/react-compat.test.tsx
+  s_9f0d049c124774::t_10a81c6d800724 1-45
+packages/kumo/src/react-html-attributes.d.ts
+  s_9f0d049c124774::t_83f566a1baf3ce 1-5
+packages/kumo/src/styles/kumo-binding.css
+  s_9f0d049c124774::t_f146d2210a5435 144-148,150-153,176-201,248-259,261-263,265,270-272,274,280-286
+packages/kumo/src/styles/kumo.css
+  s_9f0d049c124774::t_b50e887997ad94 23-57
+packages/kumo/src/styles/theme-fedramp.css
+  s_9f0d049c124774::t_6798cdcbbc12f0 11-13,23-26
+packages/kumo/src/styles/theme-kumo.css
+  s_9f0d049c124774::t_6d64709b963d86 40,63-64,146,190-191,195-196,200-201,205-206,210-211,216,220-221,225-236,244-248,255-256,270,287,289,293-298,307-310,312-324,346-350,352-358,360-363,365-368,371,374-379,389-392,394-406,419-423,432-441,443-446,448-451,457
+packages/kumo/src/utils/cn.test.ts
+  s_9f0d049c124774::t_b2169649838323 1-35
+packages/kumo/src/utils/cn.ts
+  s_9f0d049c124774::t_07e5b7bff0d5ca 1
+packages/kumo/src/utils/portal-provider.tsx
+  s_9f0d049c124774::t_849f25b1388007 13
+packages/kumo/src/utils/resolve-variant.test.ts
+  s_9f0d049c124774::t_91b3cabc8916ba 1
+packages/kumo/src/utils/resolve-variant.ts
+  s_9f0d049c124774::t_2bee95bce6a6fc 32
+packages/kumo/src/utils/variant-safety.test.ts
+  s_9f0d049c124774::t_5849d5ddd552c1 9,58,68,107,136,151-153,155,164
+packages/kumo/tests/build/browser-compat.test.ts
+  s_9f0d049c124774::t_c144450d351446 1
+packages/kumo/tests/imports/deep-imports.test.ts
+  s_9f0d049c124774::t_d1a09422483e77 1
+packages/kumo/tests/imports/export-path-validation.test.ts
+  s_9f0d049c124774::t_7a070c6ba9152d 1-2,87,150-151,167,176,224-236,238-239,241,249,269,296
+packages/kumo/tests/imports/import-entries.mjs
+  s_9f0d049c124774::t_1b341dd7249f62 1-26
+packages/kumo/tests/imports/main-entry.test.ts
+  s_9f0d049c124774::t_b4be2129d05965 1
+packages/kumo/tests/imports/node-esm-import.test.ts
+  s_9f0d049c124774::t_388ddd78044b92 1-27
+packages/kumo/tests/imports/package-json-validation.test.ts
+  s_9f0d049c124774::t_74aad36642bd72 1,28,72,137-139
+packages/kumo/tests/imports/primitives.test.ts
+  s_9f0d049c124774::t_ca28b74b8b25cf 1,30,44-51,62,89,126-136,142,228,258,285,295,341
+packages/kumo/tests/lint/no-cross-package-imports.test.ts
+  s_9f0d049c124774::t_c8fd13f9e66402 1
+packages/kumo/tests/lint/no-flow-node-custom-render.test.ts
+  s_9f0d049c124774::t_ed2392f44efc91 1-383
+packages/kumo/tests/select-strict-types.test-d.tsx
+  s_9f0d049c124774::t_bfc2a9a7ca33fb 10,101,142-148
+packages/kumo/tests/setup.ts
+  s_9f0d049c124774::t_ca1fd35246f552 1
+packages/kumo/tests/stratus-scenario-verify.test-d.tsx
+  s_9f0d049c124774::t_ec16d5ad8fde33 6,30-32
+packages/kumo/tests/stratus-scenario.test-d.tsx
+  s_9f0d049c124774::t_e6b5b45582896f 27-29,48-50
+packages/kumo/tsconfig.json
+  s_9f0d049c124774::t_05fa943502c343 19
+packages/kumo/vite.config.ts
+  s_9f0d049c124774::t_356c9893c2bbd0 1,4,22,29-57,59-151,153-189,191-220,223-227,235-238,256-271,273-295,297-316,318,320
+packages/kumo/vitest.browser.config.ts
+  s_9f0d049c124774::t_58c9768857b5fb 1-2
+packages/kumo/vitest.config.ts
+  s_9f0d049c124774::t_69cf9d7e24fefd 1
+pnpm-lock.yaml
+  s_9f0d049c124774::t_366c7f35158702 9-11,30-32,34-35,63-65,70-73,84-86,105-110,115-116,126-131,150-152,154-159,165,172-174,191-192,194-195,198,214-216,233-235,237,239-240,243,253-255,257-258,260-261,270,275-276,283-285,289-291,309-310,312-313,315-316,333-334,341-344,346-349,381-384,386-389,403-408,415-423,426,428-487,489-491,493-494,496-497,499-500,511-512,514-515,517-519,521-525,531-533,540-541,543-544,547-548,655-656,665-666,669-670,672-673,682-736,796-797,800-801,879-884,888-890,909-910,933-934,957-958,981-982,1005-1006,1029-1030,1053-1054,1077-1078,1101-1102,1125-1126,1149-1150,1173-1174,1197-1198,1221-1222,1245-1246,1269-1270,1293-1294,1317-1318,1341-1342,1365-1366,1389-1390,1413-1414,1437-1438,1461-1462,1485-1486,1509-1510,1686-1707,1721-1729,1761-1763,1776-1785,1850-1858,1862-1992,1996-1997,2001-2002,2006-2007,2011-2012,2016-2017,2021-2035,2039-2041,2045-2065,2070-2072,2077-2107,2112-2114,2119-2127,2131-2139,2143-2146,2257-2260,2269-2271,2423-2424,2431-2432,2439-2440,2447-2448,2455-2456,2463-2464,2471-2472,2495-2497,2504-2509,2516-2521,2528-2533,2540-2545,2552-2557,2565-2571,2579-2585,2593-2599,2607-2613,2626-2637,2644-2649,2656-2661,2666-2669,2680-2684,2713-2714,2737-2739,2755-2757,2792-2794,2812-2814,2843-2847,2849-2851,2853-2860,2862-2863,2865-2866,2868-2905,2907-3042,3044-3045,3047-3050,3052-3055,3057-3060,3062-3066,3068-3072,3074-3078,3080-3084,3086-3090,3092-3096,3098-3106,3108-3111,3113-3116,3118-3121,3123-3127,3129-3133,3135-3139,3141-3145,3147-3151,3153-3157,3159-3162,3164-3167,3169-3170,3194-3195,3197,3202-3204,3281-3282,3285-3289,3435-3436,3462-3465,3539-3545,3603-3604,3664-3665,3711-3712,3776-3777,3813-3814,3831-3832,3970-3973,4030-4031,4089-4091,4109,4111-4112,4145-4146,4195-4196,4246-4257,4264-4275,4282-4293,4300-4311,4318-4329,4337-4350,4358-4371,4379-4392,4400-4413,4420-4431,4438-4449,4454-4460,4512-4516,4741-4750,4758-4763,4834-4836,4840-4841,4850-4864,4866-4867,4870-4871,4875-4876,4880-4881,4903-4904,5002-5005,5012,5037-5038,5046-5047,5059-5062,5077-5081,5210-5211,5245-5247,5267-5269,5281-5282,5321-5322,5342-5344,5391-5393,5395-5396,5404-5405,5459-5462,5469-5473,5501-5502,5509-5512,5517-5526,5532-5538,5547-5550,5583-5585,5593-5594,5627-5629,5697-5704,5706,5708,5710,5712,5714,5716,5718,5720,5722,5724,5726,5728,5730,5732,5734,5736,5738,5740,5742,5744-5787,5789,5807,5814-5815,5822-5827,5830,5844-5847,5855-5856,5863-5864,5871-5872,5879-5880,5890-5891,5898-5899,5906-5907,5917-5918,6028-6039,6050-6051,6054-6056,6059-6060,6093-6094,6096-6097,6110-6123,6125,6134-6144,6146-6147,6149-6150,6152,6154-6161,6163-6201,6204,6206-6209,6211-6219,6222,6226,6228-6229,6248,6250,6254,6256,6258-6259,6262-6263,6273-6274,6282,6284,6287-6288,6292,6294,6296-6297,6300,6308-6310,6313,6315,6317,6319,6324,6326,6328,6459,6462,6469,6471,6473,6479,6484-6518,6667,6669,6672,6674,6676,6745-6755,6761-6765,6775,6787,6799,6811,6823,6835,6847,6859,6871,6883,6895,6907,6919,6931,6943,6955,6967,6979,6991,7003,7015,7027,7039,7051,7063,7075,7193-7239,7249-7258,7298-7301,7348,7350,7352-7358,7360,7362-7365,7441-7452,7455-7549,7552,7555,7558,7561,7564,7567,7570,7573,7576,7579,7582,7585,7588,7591-7592,7674-7677,7696-7697,7702,7789,7791-7792,7803,7805,7807,7814,7816,7823,7825,7833,7835,7843,7845,7852,7870,7878-7879,7885-7894,7898-7900,7904-7906,7910-7912,7916-7918,7922-7924,7928-7930,7934-7936,7940-7942,7946-7948,7952-7954,7958-7960,7964-7966,7982-7997,8000,8002,8007,8009,8011-8014,8043-8046,8078-8081,8096-8097,8136-8139,8156-8159,8186,8194,8198-8230,8232-8233,8235-8273,8280,8282-8284,8288-8324,8331,8335-8336,8338-8347,8349,8351,8355-8356,8358,8360-8369,8371,8373,8376,8378-8379,8383,8385,8387-8389,8392-8438,8440,8442-8481,8483,8485-8486,8492,8494,8496,8498-8500,8508,8510,8515,8517,8519,8531-8585,8587-8588,8590-8591,8593-8594,8596-8597,8599,8613,8615,8624,8626,8681,8683-8686,8688,8691,8698,8702,8717,8722,8725,8731-8732,8737,8740,8749-8750,8758,8765,8773-8775,8894,8914-8915,8978,8980,8982,8984,8986,9024,9084,9087,9205,9207-9232,9299,9337,9349,9351,9353,9435,9503-9505,9673-9674,9737,9777-9778,9812,9839,9841,9843-9849,9851-9852,9854-9855,9857-9858,9860-9861,9863-9864,9866-9867,9869,9872,9875,9878,9881,9884,9887,9890,9893,9896,9899-9900,9902-9903,9905,9908,9911,9914,9917,9920,9923,9926,9929,9935-9940,9944-9949,9966,9968-9996,10039-10040,10532-10583,10588-10591,10623,10667-10668,10675,10677,10695-10696,10698-10782,10784-10806,10808-10852,10872,10973-10974,11009,11011,11017,11027,11029,11048-11054,11150,11240,11287-11288,11290,11322,11334,11336,11344-11359,11419,11421-11426,11444,11446,11449,11487-11488,11490,11503-11504,11565-11567,11572-11574,11620,11624-11625,11628-11629,11631-11638,11642-11649,11656-11660,11695,11697-11698,11706,11728-11729,11819-11821,11836-11837,11853-11870,11872-11880,11882-11884,11886-11910,11912-11929,11931-11969,11971-11988,11990-12028,12030,12032,12034,12038,12043-12053,12057-12058,12060-12063,12067-12100,12105-12136,12142,12144,12151,12153,12155,12159,12161,12165-12166,12168,12172,12174,12183,12185,12188,12190,12199,12304-12305,12312,12317-12318,12325,12327,12329,12367,12369-12397
+pnpm-workspace.yaml
+  s_9f0d049c124774::t_4aad2c6de936c5 12,20,34,37,39-63
+skills/kumo-design/SKILL.md
+  s_9f0d049c124774::t_b9f2f7f902c606 1-315
+tools/deployments/validate-pr-description.test.ts
+  s_9f0d049c124774::t_e8b6eb16047a58 8,267,274-279,283-298,307-312
+tools/deployments/validate-pr-description.ts
+  s_9f0d049c124774::t_fa499a97671249 49-52,54,64-70,72,81-83,88-92
+vite.config.ts
+  s_9f0d049c124774::t_ca104b03a60d68 1-106
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "7c27627c38b60c4db7f121207951598d759ef3b9",
+  "prompts": {},
+  "sessions": {
+    "s_9f0d049c124774": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_021b807f1ffe0MWe53T5Rk0prO",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "flue[bot] <flue[bot]@users.noreply.github.com>"
+    }
+  }
+}
