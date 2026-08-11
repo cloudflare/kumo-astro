@@ -1,763 +1,763 @@
 .agents/skills/index-knowledge/SKILL.md
-  s_9f0d049c124774::t_5640b3e0d91d9c 32,41
+  s_9f0d049c124774::t_c5e8be48d52efa 32,41
 .changeset/clean-link-prop-forwarding.md
-  s_9f0d049c124774::t_06af63187c06a1 1-5
+  s_9f0d049c124774::t_ac4a76b1e02289 1-5
 .changeset/eight-buses-bow.md
-  s_9f0d049c124774::t_d78038ea9b6c30 1-5
+  s_9f0d049c124774::t_f0074148afcf24 1-5
 .changeset/fix-sidebar-peeking-sliding-views.md
-  s_9f0d049c124774::t_645aff96164c92 1-5
+  s_9f0d049c124774::t_175054b185d276 1-5
 .changeset/fuzzy-tabs-wait.md
-  s_9f0d049c124774::t_dc12b6535ba575 1-5
+  s_9f0d049c124774::t_fec4c6c2029e74 1-5
 .github/actions/install-dependencies/action.yml
-  s_9f0d049c124774::t_7636fd3a8bb75c 2,6,12-13,15-16,18-19,33,35
+  s_9f0d049c124774::t_bf237bf6037640 2,6,12-13,15-16,18-19,33,35
 .github/actions/vite-task-cache/action.yml
-  s_9f0d049c124774::t_331c94b93202ac 1-14
+  s_9f0d049c124774::t_5a4867bf3171d8 1-14
 .github/workflows/bigbonk.yml
-  s_9f0d049c124774::t_2e23844fb4b43b 32,44
+  s_9f0d049c124774::t_7b4e1dec7666c9 32,44
 .github/workflows/bonk.yml
-  s_9f0d049c124774::t_5ddb1c0b7fe6b2 33,45,51,54
+  s_9f0d049c124774::t_c29ada4547d7c4 33,45,51,54
 .github/workflows/preview-deploy.yml
-  s_9f0d049c124774::t_67f412c9d6886f 228
+  s_9f0d049c124774::t_4f71637717ed1b 228
 .github/workflows/preview.yml
-  s_9f0d049c124774::t_d6e62f05d83223 43-45,72,74,80,100-101,103,106,276
+  s_9f0d049c124774::t_10fef05cbef51e 43-45,72,74,80,100-101,103,106,276
 .github/workflows/pullrequest.yml
-  s_9f0d049c124774::t_e63e9139f627aa 5,26-30,40-41,53-62,80-84,103,122,124,126,128-137,143-150,159-165
+  s_9f0d049c124774::t_cb60ffb5abcce7 5,26-30,40-41,53-62,80-84,103,122,124,126,128-137,143-150,159-165
 .github/workflows/release.yml
-  s_9f0d049c124774::t_050cdf8d4ae39c 38,45-46,51,53-54,63
+  s_9f0d049c124774::t_3dc562f1822f71 38,45-46,51,53-54,63
 .github/workflows/reviewer.yml
-  s_9f0d049c124774::t_eae001eed132c9 61
+  s_9f0d049c124774::t_8b63168b4140ad 61
 .github/workflows/semgrep.yml
-  s_9f0d049c124774::t_a68a5b3753dfca 8
+  s_9f0d049c124774::t_bc0e40e8e5a7f7 8
 .github/workflows/validate-pr-description.yml
-  s_9f0d049c124774::t_345500881a6197 59-63
+  s_9f0d049c124774::t_18e60d5045dc9e 59-63
 .github/workflows/warm-task-cache.yml
-  s_9f0d049c124774::t_87d3964e49fb08 1-25
+  s_9f0d049c124774::t_3c9c37f8f3df45 1-25
 .gitignore
-  s_9f0d049c124774::t_665847ad543220 60-63
+  s_9f0d049c124774::t_e172545d6c8c17 60-63
 .node-version
-  s_9f0d049c124774::t_ca0f0190dc49b4 1
+  s_9f0d049c124774::t_c342769e6b2b77 1
 .opencode/agents/kumo.md
-  s_9f0d049c124774::t_b9748b6b8f5554 26-31
+  s_9f0d049c124774::t_2a19acc98c682b 26-31
 .opencode/package-lock.json
-  s_9f0d049c124774::t_4d9a4c8d7a6dde 8,12-14,25-27,38-40,51-53,64-66,77-79,90-92,95-96,100-102,117-119,156-158,174-176,223-225,232-234,245-250,254-256,284-286,321-323
+  s_9f0d049c124774::t_351751c5fce37f 8,12-14,25-27,38-40,51-53,64-66,77-79,90-92,95-96,100-102,117-119,156-158,174-176,223-225,232-234,245-250,254-256,284-286,321-323
 .review.json
-  s_9f0d049c124774::t_41c3561cd70699 1-5
+  s_9f0d049c124774::t_d68ce1e9b55fae 1-5
 .vite-hooks/pre-commit
-  s_9f0d049c124774::t_28e18381f462ff 1-7
+  s_9f0d049c124774::t_190b74d8ed5020 1-7
 .vite-hooks/pre-push
-  s_9f0d049c124774::t_5c50a589066a81 1-16
+  s_9f0d049c124774::t_e50722c5b2912a 1-16
 AGENTS.md
-  s_9f0d049c124774::t_16a172c0d0cdc3 26,73,227,234-250,264
+  s_9f0d049c124774::t_7e2d2678f9e876 26,73,227,234-250,264
 CONTRIBUTING.md
-  s_9f0d049c124774::t_aabc68d01a6089 101-108,162,172,174,180-181
+  s_9f0d049c124774::t_9b6aeb4f907bb7 101-108,162,172,174,180-181
 ci/AGENTS.md
-  s_9f0d049c124774::t_5756abb95521bc 43,107
+  s_9f0d049c124774::t_1396b7da4e4283 43,107
 ci/scripts/validate-kumo-changeset.ts
-  s_9f0d049c124774::t_4bea9ef36a447b 50-56
+  s_9f0d049c124774::t_8c68f147667b64 50-56
 ci/utils/git-operations.test.ts
-  s_9f0d049c124774::t_910c4fc605a9f9 1-113
+  s_9f0d049c124774::t_491112729083c4 1-113
 ci/utils/git-operations.ts
-  s_9f0d049c124774::t_c80a7f8a08b490 1,26,35,38,53,56,62-70,75,84,87,99-107,130-131,134,138-143,146,195-196,205-206,209,212,265
+  s_9f0d049c124774::t_cd722daa4f93e0 1,26,35,38,53,56,62-70,75,84,87,99-107,130-131,134,138-143,146,195-196,205-206,209,212,265
 ci/utils/pr-reporter.ts
-  s_9f0d049c124774::t_3c12b66e47b515 8-12,36
+  s_9f0d049c124774::t_ab91d896f64bc5 8-12,36
 ci/visual-regression/run-visual-regression.ts
-  s_9f0d049c124774::t_778622f208a392 114-115
+  s_9f0d049c124774::t_c851b8c9f52e7c 114-115
 lint/enforce-variant-standard.js
-  s_9f0d049c124774::t_bbcde4f4a8e38e 1
+  s_9f0d049c124774::t_05de94c46bb655 1
 lint/kumo-plugin.js
-  s_9f0d049c124774::t_1fae2d784b6216 5,16
+  s_9f0d049c124774::t_cc0ad4b1c07549 5,16
 lint/no-cross-package-imports.js
-  s_9f0d049c124774::t_6b5d962291610d 1
+  s_9f0d049c124774::t_86aeabbb3bb61f 1
 lint/no-flow-node-custom-render.js
-  s_9f0d049c124774::t_c32fa7cbf74d98 1-394
+  s_9f0d049c124774::t_dd3b93fbfa277c 1-394
 lint/no-primitive-colors.js
-  s_9f0d049c124774::t_0add3469a81b6b 1-2,79-80
+  s_9f0d049c124774::t_73f32cb8f6f8d1 1-2,79-80
 lint/no-tailwind-dark-variant.js
-  s_9f0d049c124774::t_52fabc679675d2 1
+  s_9f0d049c124774::t_fbe8c5d356e14a 1
 package.json
-  s_9f0d049c124774::t_b8b0a76a5087b6 12-14,37,43-62
+  s_9f0d049c124774::t_3579e517b0e80f 12-14,37,43-62
 packages/kumo-docs-astro/.gitignore
-  s_9f0d049c124774::t_fe96421dc0e1a6 3
+  s_9f0d049c124774::t_1d7e9f047e4826 3
 packages/kumo-docs-astro/CHANGELOG.md
-  s_9f0d049c124774::t_0117acaeef005f 3-232
+  s_9f0d049c124774::t_5ecb3135c3089b 3-232
 packages/kumo-docs-astro/astro.config.mjs
-  s_9f0d049c124774::t_704726acc81999 5,77,80,83-89,91
+  s_9f0d049c124774::t_6ca20486816037 5,77,80,83-89,91
 packages/kumo-docs-astro/package.json
-  s_9f0d049c124774::t_e2e2b7d12fe796 3,11,13,17-19,23-25,32,35,37,45-47,53,56-57
+  s_9f0d049c124774::t_7868cd324c0e84 3,11,13,17-19,23-25,32,35,37,45-47,53,56-57
 packages/kumo-docs-astro/public/favicon-white.svg
-  s_9f0d049c124774::t_930c657de27063 1-4
+  s_9f0d049c124774::t_53baa0ebc3c84c 1-4
 packages/kumo-docs-astro/scripts/generate-design-skill.mjs
-  s_9f0d049c124774::t_b260e1bfec3c31 1-275
+  s_9f0d049c124774::t_6d6b533f785faa 1-275
 packages/kumo-docs-astro/src/components/Header.astro
-  s_9f0d049c124774::t_4eec492abea0d3 11
+  s_9f0d049c124774::t_37cc14f6b44d3b 11
 packages/kumo-docs-astro/src/components/SearchDialog.tsx
-  s_9f0d049c124774::t_f0a2dfcf1382d6 30-54,107-112,118-131,258-262,403,421-425
+  s_9f0d049c124774::t_b6e9c77bb4eef5 30-54,107-112,118-131,258-262,403,421-425
 packages/kumo-docs-astro/src/components/SidebarNav.tsx
-  s_9f0d049c124774::t_449605ae2a2214 36,90,101,122,135-146,227,256,270,296,310,322,336,350,380,398,427,447,455
+  s_9f0d049c124774::t_4f1379cb97c3fc 36,90,101,122,135-146,227,256,270,296,310,322,336,350,380,398,427,447,455
 packages/kumo-docs-astro/src/components/ThemeToggle.tsx
-  s_9f0d049c124774::t_e4e2dfa5666164 2-21,24,28-40,42-47,50-59,62-67,73-74,79-80,82-109
+  s_9f0d049c124774::t_f497abaab21fce 2-21,24,28-40,42-47,50-59,62-67,73-74,79-80,82-109
 packages/kumo-docs-astro/src/components/demos/AutocompleteDemo.tsx
-  s_9f0d049c124774::t_382a8f1997704c 1,3,126-132,136-139,141,144-146,158-164,171,274,293
+  s_9f0d049c124774::t_fdd299448dbb90 1,3,126-132,136-139,141,144-146,158-164,171,274,293
 packages/kumo-docs-astro/src/components/demos/BadgeDemo.tsx
-  s_9f0d049c124774::t_04793a2e72537e 24,40-58
+  s_9f0d049c124774::t_e35a7cfc08400b 24,40-58
 packages/kumo-docs-astro/src/components/demos/BannerDemo.tsx
-  s_9f0d049c124774::t_6438ec2959df0d 1,25-30,70-81,127-188,190-197,203-242,249-252,255-267,270-273,280-289
+  s_9f0d049c124774::t_540d3bdffda331 1,25-30,70-81,127-188,190-197,203-242,249-252,255-267,270-273,280-289
 packages/kumo-docs-astro/src/components/demos/ButtonDemo.tsx
-  s_9f0d049c124774::t_c975b45faea97b 108,122-128,151-182
+  s_9f0d049c124774::t_3bf6658fab8f13 108,122-128,151-182
 packages/kumo-docs-astro/src/components/demos/Chart/BubbleMapDemo.tsx
-  s_9f0d049c124774::t_582954824396dd 1-442
+  s_9f0d049c124774::t_205ca64103db70 1-442
 packages/kumo-docs-astro/src/components/demos/Chart/ChartDemo.tsx
-  s_9f0d049c124774::t_66d7f02245a88a 7-8,13,20-22,35-37,114-203,431,455-460,494,517-522,563,568-588,592,602-657,691,729-935,1000-1111
+  s_9f0d049c124774::t_3e36ae10c305c0 7-8,13,20-22,35-37,114-203,431,455-460,494,517-522,563,568-588,592,602-657,691,729-935,1000-1111
 packages/kumo-docs-astro/src/components/demos/Chart/ChoroplethMapDemo.tsx
-  s_9f0d049c124774::t_ea83e868b973d1 1-64
+  s_9f0d049c124774::t_a48a5517866abb 1-64
 packages/kumo-docs-astro/src/components/demos/Chart/ColorDemo.tsx
-  s_9f0d049c124774::t_4ab4b74f823c25 157,182-188,212-215,334-336,396-399,479-486,844-847
+  s_9f0d049c124774::t_0ada888ed60742 157,182-188,212-215,334-336,396-399,479-486,844-847
 packages/kumo-docs-astro/src/components/demos/Chart/SankeyChartDemo.tsx
-  s_9f0d049c124774::t_20c5f35cedd7d3 289-304,476-511
+  s_9f0d049c124774::t_1acf44d75dfc53 289-304,476-511
 packages/kumo-docs-astro/src/components/demos/CollapsibleDemo.tsx
-  s_9f0d049c124774::t_5a083f88da13cd 55-57,63-65,82,87-88,117-142,152-153,157-158,162-163
+  s_9f0d049c124774::t_24d77669d4e0e9 55-57,63-65,82,87-88,117-142,152-153,157-158,162-163
 packages/kumo-docs-astro/src/components/demos/ColorsDemo.tsx
-  s_9f0d049c124774::t_d1a5c89536167f 4,204-206,215-216,332-340
+  s_9f0d049c124774::t_94d5eb7e61f653 4,204-206,215-216,332-340
 packages/kumo-docs-astro/src/components/demos/ComboboxDemo.tsx
-  s_9f0d049c124774::t_6cd9095ea4d346 4,355,583,589
+  s_9f0d049c124774::t_d28fa5c7b017b9 4,355,583,589
 packages/kumo-docs-astro/src/components/demos/DatePickerDemo.tsx
-  s_9f0d049c124774::t_bd829150dfa550 295
+  s_9f0d049c124774::t_2066c3a8bb0521 295
 packages/kumo-docs-astro/src/components/demos/DateRangePickerDemo.tsx
-  s_9f0d049c124774::t_bde8c31e96eea2 1
+  s_9f0d049c124774::t_4d33a8970810cf 1
 packages/kumo-docs-astro/src/components/demos/DialogDemo.tsx
-  s_9f0d049c124774::t_91daeb2e4a64e8 9,90-129,256-257,387-484
+  s_9f0d049c124774::t_4d147dfa91b876 9,90-129,256-257,387-484
 packages/kumo-docs-astro/src/components/demos/DropdownDemo.tsx
-  s_9f0d049c124774::t_7ddebfacd144bd 241-258
+  s_9f0d049c124774::t_1fa6ab6f147b19 241-258
 packages/kumo-docs-astro/src/components/demos/FlowDemo.tsx
-  s_9f0d049c124774::t_9c48362e2c8488 3,14,46-71,78-81,94-96,99,134,138,146,148,167-169,173,270-291
+  s_9f0d049c124774::t_8cd0ff90b5b65c 3,14,46-71,78-81,94-96,99,134,138,146,148,167-169,173,270-291
 packages/kumo-docs-astro/src/components/demos/HomeGrid.tsx
-  s_9f0d049c124774::t_8ac803ecf67cb3 45,63,164,250-263,346-384,439,502,505,510,610,994
+  s_9f0d049c124774::t_513b89cef7e59f 45,63,164,250-263,346-384,439,502,505,510,610,994
 packages/kumo-docs-astro/src/components/demos/InputAreaDemo.tsx
-  s_9f0d049c124774::t_21a7bb08a29654 83-97
+  s_9f0d049c124774::t_1dcf71688666d5 83-97
 packages/kumo-docs-astro/src/components/demos/InputDemo.tsx
-  s_9f0d049c124774::t_ee9e37e420018b 69-107
+  s_9f0d049c124774::t_ca9c774f1230e5 69-107
 packages/kumo-docs-astro/src/components/demos/InputGroupDemo.tsx
-  s_9f0d049c124774::t_41bb1d3f0dfcf8 107,129-130,133,156,159,176,328
+  s_9f0d049c124774::t_ec24a179f09cf0 107,129-130,133,156,159,176,328
 packages/kumo-docs-astro/src/components/demos/KumoPressDemo.tsx
-  s_9f0d049c124774::t_cd1ae9e7856434 589,602,611,624,726,736,746,756
+  s_9f0d049c124774::t_559cc6df28e7b8 589,602,611,624,726,736,746,756
 packages/kumo-docs-astro/src/components/demos/LayerCardDemo.tsx
-  s_9f0d049c124774::t_a636bc28c7df1f 40-42
+  s_9f0d049c124774::t_26d8476825f8bf 40-42
 packages/kumo-docs-astro/src/components/demos/LayerCardFilterMockupDemo.tsx
-  s_9f0d049c124774::t_b15895bab293fe 7-9,18-19,21-27,29-31,33-58,60-67,69-91,93-99
+  s_9f0d049c124774::t_5045a1c13c040d 7-9,18-19,21-27,29-31,33-58,60-67,69-91,93-99
 packages/kumo-docs-astro/src/components/demos/RadioDemo.tsx
-  s_9f0d049c124774::t_f7045356757bb8 245-278
+  s_9f0d049c124774::t_f65cfc65a96eba 245-278
 packages/kumo-docs-astro/src/components/demos/RegistryDemo.tsx
-  s_9f0d049c124774::t_52acea5a54ca24 62-64,199-201
+  s_9f0d049c124774::t_05592acb0fbc01 62-64,199-201
 packages/kumo-docs-astro/src/components/demos/ResourceListDemo.tsx
-  s_9f0d049c124774::t_b7fbce2c81fe16 28
+  s_9f0d049c124774::t_4a3c0ff9ec52da 28
 packages/kumo-docs-astro/src/components/demos/SelectDemo.tsx
-  s_9f0d049c124774::t_112e582510c3ef 82-83,102-118
+  s_9f0d049c124774::t_1bb0180f137457 82-83,102-118
 packages/kumo-docs-astro/src/components/demos/SelectStressTestDemo.tsx
-  s_9f0d049c124774::t_5fd197ebb50146 348-351
+  s_9f0d049c124774::t_a22ac05ce76607 348-351
 packages/kumo-docs-astro/src/components/demos/SidebarDemo.tsx
-  s_9f0d049c124774::t_d1a5fe1bf54841 1-7,17,21-29,31,39,47,55-58,65-67,79,83,85,88-161,165,169,172,192,225-249,271,274-288,291,293-295,297-345,360-380,382-415,418-421,423-444,446-461,468,471-477,479-484,488-489,492-497,525,533,536-537,539-540,543,553,561-577,583,587,594,596,599,601,606-607,614,617-708,715,718-721,725,727-728,730-907,922-931,943-947,950,954,957-967,969-1291
+  s_9f0d049c124774::t_14a68ef50aff73 1-7,17,21-29,31,39,47,55-58,65-67,79,83,85,88-161,165,169,172,192,225-249,271,274-288,291,293-295,297-345,360-380,382-415,418-421,423-444,446-461,468,471-477,479-484,488-489,492-497,525,533,536-537,539-540,543,553,561-577,583,587,594,596,599,601,606-607,614,617-708,715,718-721,725,727-728,730-907,922-931,943-947,950,954,957-967,969-1291
 packages/kumo-docs-astro/src/components/demos/SkeletonLineDemo.tsx
-  s_9f0d049c124774::t_e3a32840fc2b95 44
+  s_9f0d049c124774::t_54e19583186d70 44
 packages/kumo-docs-astro/src/components/demos/TableDemo.tsx
-  s_9f0d049c124774::t_abb967cb406553 283-284,357-358
+  s_9f0d049c124774::t_d88c28b3f84315 283-284,357-358
 packages/kumo-docs-astro/src/components/demos/TableOfContentsDemo.tsx
-  s_9f0d049c124774::t_f81ea767ef4d1f 2,138-209
+  s_9f0d049c124774::t_7e5d7d87068008 2,138-209
 packages/kumo-docs-astro/src/components/demos/TabsDemo.tsx
-  s_9f0d049c124774::t_2162a3344e7944 4-19,120-164,209,215
+  s_9f0d049c124774::t_52bf702874ca80 4-19,120-164,209,215
 packages/kumo-docs-astro/src/components/demos/ToolbarDemo.tsx
-  s_9f0d049c124774::t_9758915d18bd5a 1-96
+  s_9f0d049c124774::t_eec64689e89c33 1-96
 packages/kumo-docs-astro/src/components/demos/TooltipDemo.tsx
-  s_9f0d049c124774::t_2985f2e1064959 74-110
+  s_9f0d049c124774::t_60e5710a3b12ac 74-110
 packages/kumo-docs-astro/src/components/demos/data/languages.ts
-  s_9f0d049c124774::t_cf225d5d2f7c34 1-24
+  s_9f0d049c124774::t_c0c97ecccae9f2 1-24
 packages/kumo-docs-astro/src/components/docs/ChangelogEntry.tsx
-  s_9f0d049c124774::t_091d52cf59d7be 24,29
+  s_9f0d049c124774::t_7d3aad5d1b977a 24,29
 packages/kumo-docs-astro/src/components/docs/CopyPageButton.tsx
-  s_9f0d049c124774::t_cef1309ef5ad2e 103
+  s_9f0d049c124774::t_3257c6643c3fb7 103
 packages/kumo-docs-astro/src/components/docs/Heading.astro
-  s_9f0d049c124774::t_9a1656af3bd5ba 38
+  s_9f0d049c124774::t_ee799011f6b6a5 38
 packages/kumo-docs-astro/src/components/docs/PropsTable.astro
-  s_9f0d049c124774::t_e112db3f9da8b5 22-23,26,30
+  s_9f0d049c124774::t_62604224248bf7 22-23,26,30
 packages/kumo-docs-astro/src/components/docs/StickyDocHeader.tsx
-  s_9f0d049c124774::t_f34f459912c69c 73,91,104,114,116,125,136,149,162
+  s_9f0d049c124774::t_3fa66c09d8ec06 73,91,104,114,116,125,136,149,162
 packages/kumo-docs-astro/src/components/docs/TableOfContents.tsx
-  s_9f0d049c124774::t_fd1ba178086e0c 1-5,84-91,98,101,104,109,126,136,144-145,157,164-165
+  s_9f0d049c124774::t_d62043dbc45378 1-5,84-91,98,101,104,109,126,136,144-145,157,164-165
 packages/kumo-docs-astro/src/components/kumo/resource-list/resource-list.tsx
-  s_9f0d049c124774::t_c602b6e8c2554f 31
+  s_9f0d049c124774::t_b606ed283279eb 31
 packages/kumo-docs-astro/src/components/skill/CollapseSizeExample.tsx
-  s_9f0d049c124774::t_c2ec9f65ee7cf3 1-45
+  s_9f0d049c124774::t_b8e291ffa72731 1-45
 packages/kumo-docs-astro/src/components/skill/DesignTip.tsx
-  s_9f0d049c124774::t_420065e98567c8 1-109
+  s_9f0d049c124774::t_601c8805734728 1-109
 packages/kumo-docs-astro/src/components/skill/DesignTips.tsx
-  s_9f0d049c124774::t_6f31396914b02f 1-70
+  s_9f0d049c124774::t_6b626861519610 1-70
 packages/kumo-docs-astro/src/components/skill/design-tips.tsx
-  s_9f0d049c124774::t_cfa91b13083faf 1-610
+  s_9f0d049c124774::t_b9db4619d3607a 1-610
 packages/kumo-docs-astro/src/env.d.ts
-  s_9f0d049c124774::t_9aef323df06e6d 1
+  s_9f0d049c124774::t_c9d77db6b368da 1
 packages/kumo-docs-astro/src/layouts/BaseLayout.astro
-  s_9f0d049c124774::t_5396896a7828a1 3,45-56,64-72,74-77,79-151,159-161,198,200-205,207,209,211,213,215,217,219-230,232-234,237-244
+  s_9f0d049c124774::t_346d16d4b7d4de 3,45-56,64-72,74-77,79-151,159-161,198,200-205,207,209,211,213,215,217,219-230,232-234,237-244
 packages/kumo-docs-astro/src/layouts/DocLayout.astro
-  s_9f0d049c124774::t_59bec0a7af6466 59-61,63,67,97,101,109-110,112-113,118-119
+  s_9f0d049c124774::t_883c7c9d12021a 59-61,63,67,97,101,109-110,112-113,118-119
 packages/kumo-docs-astro/src/layouts/MainLayout.astro
-  s_9f0d049c124774::t_a3b82de24b882e 17,45,54
+  s_9f0d049c124774::t_adebca42a7fec7 17,45,54
 packages/kumo-docs-astro/src/lib/astro-markdown-pages.test.ts
-  s_9f0d049c124774::t_51be57053c06c6 1,37-42,52-63
+  s_9f0d049c124774::t_06fe943acc0397 1,37-42,52-63
 packages/kumo-docs-astro/src/lib/astro-markdown-pages.ts
-  s_9f0d049c124774::t_477c7b45a175a4 7-10,23-27,34-37,41,122-126,131
+  s_9f0d049c124774::t_740994851aaf8a 7-10,23-27,34-37,41,122-126,131
 packages/kumo-docs-astro/src/lib/html-to-markdown.test.ts
-  s_9f0d049c124774::t_f16b97512b3ebe 1-61
+  s_9f0d049c124774::t_64f6857f68e183 1-61
 packages/kumo-docs-astro/src/lib/html-to-markdown.ts
-  s_9f0d049c124774::t_64ab1e71d6197b 50-63,121-123
+  s_9f0d049c124774::t_428a5a6662ef2c 50-63,121-123
 packages/kumo-docs-astro/src/pages/charts/index.mdx
-  s_9f0d049c124774::t_da2f0d1a2cce96 42,54
+  s_9f0d049c124774::t_53a5f49dc57386 42,54
 packages/kumo-docs-astro/src/pages/charts/maps.astro
-  s_9f0d049c124774::t_f5f2e8f99f6bbf 1-210
+  s_9f0d049c124774::t_5f4723534c479e 1-210
 packages/kumo-docs-astro/src/pages/charts/sankey.astro
-  s_9f0d049c124774::t_89ecdf306f7ac4 11,16,108-123,186-201
+  s_9f0d049c124774::t_cc471f3ea97d08 11,16,108-123,186-201
 packages/kumo-docs-astro/src/pages/charts/timeseries.mdx
-  s_9f0d049c124774::t_808e3ba93db457 13-14,18-19,21,23-24,34,45-75,90,106,120,134-167,181,184-187,190-220,222-228
+  s_9f0d049c124774::t_ad1887da5d1358 13-14,18-19,21,23-24,34,45-75,90,106,120,134-167,181,184-187,190-220,222-228
 packages/kumo-docs-astro/src/pages/colors.mdx
-  s_9f0d049c124774::t_a51103d0209f7d 7-13,224,242,244-246,311-312,337
+  s_9f0d049c124774::t_d61d0d9d4562da 7-13,224,242,244-246,311-312,337
 packages/kumo-docs-astro/src/pages/components/autocomplete.mdx
-  s_9f0d049c124774::t_e32989e349309c 135,139,142-149,153-167,169-174
+  s_9f0d049c124774::t_0d015d01e92810 135,139,142-149,153-167,169-174
 packages/kumo-docs-astro/src/pages/components/badge.mdx
-  s_9f0d049c124774::t_abe9b6821497a0 9-15,90,92,109-117
+  s_9f0d049c124774::t_84cf8798fb7502 9-15,90,92,109-117
 packages/kumo-docs-astro/src/pages/components/banner.mdx
-  s_9f0d049c124774::t_e0705f743c52e8 11-25,54-59,133-139,153-154,159-182
+  s_9f0d049c124774::t_deebdcb06a2c68 11-25,54-59,133-139,153-154,159-182
 packages/kumo-docs-astro/src/pages/components/button.mdx
-  s_9f0d049c124774::t_3ef2f0de9da8db 11-29,258-259,303-330
+  s_9f0d049c124774::t_2e34fdf021ea96 11-29,258-259,303-330
 packages/kumo-docs-astro/src/pages/components/collapsible.mdx
-  s_9f0d049c124774::t_333d9c31bd50ca 10-19,138-177
+  s_9f0d049c124774::t_f1569f455da0ca 10-19,138-177
 packages/kumo-docs-astro/src/pages/components/combobox.mdx
-  s_9f0d049c124774::t_6ee4ba9dbac90c 44,143-148,217-260,263-268
+  s_9f0d049c124774::t_62c4dd9d3c4cbd 44,143-148,217-260,263-268
 packages/kumo-docs-astro/src/pages/components/date-picker.mdx
-  s_9f0d049c124774::t_1f95d9f0748a38 59-61,156,193-227
+  s_9f0d049c124774::t_f0bc1957fdcbac 59-61,156,193-227
 packages/kumo-docs-astro/src/pages/components/dialog.mdx
-  s_9f0d049c124774::t_4e0ad19be33621 11-22,58-63,112-115,146,148-174,198-237
+  s_9f0d049c124774::t_685f92ef024bd4 11-22,58-63,112-115,146,148-174,198-237
 packages/kumo-docs-astro/src/pages/components/dropdown.mdx
-  s_9f0d049c124774::t_051f6b2ae58504 10-20,170-179
+  s_9f0d049c124774::t_937767f783459c 10-20,170-179
 packages/kumo-docs-astro/src/pages/components/flow.mdx
-  s_9f0d049c124774::t_10b7afe1b0d2ce 12-13,104-122,243-250,255-258
+  s_9f0d049c124774::t_b2e5918a08460e 12-13,104-122,243-250,255-258
 packages/kumo-docs-astro/src/pages/components/input-area.mdx
-  s_9f0d049c124774::t_46ae744aa6c098 10-24,133-155
+  s_9f0d049c124774::t_dacc01dd2613b6 10-24,133-155
 packages/kumo-docs-astro/src/pages/components/input.mdx
-  s_9f0d049c124774::t_e2327defcdc8ff 11-28,47-52,68-71,147-156,159-174,185-186,190-272
+  s_9f0d049c124774::t_18b27474831aac 11-28,47-52,68-71,147-156,159-174,185-186,190-272
 packages/kumo-docs-astro/src/pages/components/popover.mdx
-  s_9f0d049c124774::t_56c90c755b6ae5 76-142
+  s_9f0d049c124774::t_c510fa1e315471 76-142
 packages/kumo-docs-astro/src/pages/components/radio.mdx
-  s_9f0d049c124774::t_9b3ffcc63e7ba2 10-26,162-208
+  s_9f0d049c124774::t_6488ebbe8973de 10-26,162-208
 packages/kumo-docs-astro/src/pages/components/select.mdx
-  s_9f0d049c124774::t_d1731a5d50b013 11-30,57-62,109-113,117-232,235-238,240-259,261-267,269,271-310,312-342,358-417,519-541
+  s_9f0d049c124774::t_3127504990b6dc 11-30,57-62,109-113,117-232,235-238,240-259,261-267,269,271-310,312-342,358-417,519-541
 packages/kumo-docs-astro/src/pages/components/sidebar.astro
-  s_9f0d049c124774::t_5dad39fc4a8ca8 11,15-19,25,56,79,100,103,115,138,156-158,161-167,169,175,177,191,211-370,380-381,388,396,403,405,412
+  s_9f0d049c124774::t_397f610e35068a 11,15-19,25,56,79,100,103,115,138,156-158,161-167,169,175,177,191,211-370,380-381,388,396,403,405,412
 packages/kumo-docs-astro/src/pages/components/table-of-contents.mdx
-  s_9f0d049c124774::t_26ead1316f1652 10-19,77-144
+  s_9f0d049c124774::t_a5aa4d3823e426 10-19,77-144
 packages/kumo-docs-astro/src/pages/components/tabs.mdx
-  s_9f0d049c124774::t_bb9fd48c8b9e6c 10-20,173-194,256-265
+  s_9f0d049c124774::t_6349f24de859c4 10-20,173-194,256-265
 packages/kumo-docs-astro/src/pages/components/toolbar.mdx
-  s_9f0d049c124774::t_69dfc128e77d1c 1-168
+  s_9f0d049c124774::t_70dd786c869d67 1-168
 packages/kumo-docs-astro/src/pages/components/tooltip.mdx
-  s_9f0d049c124774::t_8042b4d768574e 10-17,98-109
+  s_9f0d049c124774::t_3b586700bfc687 10-17,98-109
 packages/kumo-docs-astro/src/pages/contributing.mdx
-  s_9f0d049c124774::t_3fb73d4a20d187 29
+  s_9f0d049c124774::t_9788fb3ebe2beb 29
 packages/kumo-docs-astro/src/pages/index.astro
-  s_9f0d049c124774::t_fd9214722cd566 10,12
+  s_9f0d049c124774::t_4fad994b34da69 10,12
 packages/kumo-docs-astro/src/pages/llms.txt.ts
-  s_9f0d049c124774::t_134db049db9156 1-263
+  s_9f0d049c124774::t_9cd4447686c518 1-263
 packages/kumo-docs-astro/src/pages/skill.astro
-  s_9f0d049c124774::t_df29e6a835c873 1-44
+  s_9f0d049c124774::t_6c2660876a6057 1-44
 packages/kumo-docs-astro/src/pages/tests/flow.astro
-  s_9f0d049c124774::t_f9d487ba49d663 5-6,18,34-55,154-165
+  s_9f0d049c124774::t_bba3e58fe7a9ec 5-6,18,34-55,154-165
 packages/kumo-docs-astro/src/pages/tests/map.astro
-  s_9f0d049c124774::t_468e90f48b69eb 1-58
+  s_9f0d049c124774::t_5fa8388f4da23d 1-58
 packages/kumo-docs-astro/src/pages/tests/timeseries.astro
-  s_9f0d049c124774::t_caa973f9da20fa 1-64
+  s_9f0d049c124774::t_c252efec72eafb 1-64
 packages/kumo-docs-astro/src/styles/global.css
-  s_9f0d049c124774::t_ff1febe1f01c65 164,181,248,282,294
+  s_9f0d049c124774::t_5f22a822919043 164,181,248,282,294
 packages/kumo-docs-astro/tsconfig.json
-  s_9f0d049c124774::t_1a31debcc9a45d 7
+  s_9f0d049c124774::t_77c94e0ddc9ea7 7
 packages/kumo-docs-astro/vite.config.ts
-  s_9f0d049c124774::t_30855c7ceebe0b 1-30,32
+  s_9f0d049c124774::t_6164ad437cbb00 1-30,32
 packages/kumo-figma/AGENTS.md
-  s_9f0d049c124774::t_ea94c8b8c337e5 32,58
+  s_9f0d049c124774::t_66e4c1d22d4944 32,58
 packages/kumo-figma/CHANGELOG.md
-  s_9f0d049c124774::t_b7fb337f81ba3c 3-198
+  s_9f0d049c124774::t_ea0ce1a18276c1 3-198
 packages/kumo-figma/package.json
-  s_9f0d049c124774::t_035290abdc90ef 3,7,12,15,17,31-32
+  s_9f0d049c124774::t_4a9353246518d6 3,7,12,15,17,31-32
 packages/kumo-figma/src/generators/_test-utils.ts
-  s_9f0d049c124774::t_a9faf2a9d430f9 14
+  s_9f0d049c124774::t_9c4d7f94bbfe8f 14
 packages/kumo-figma/src/generators/badge.test.ts
-  s_9f0d049c124774::t_cc7b86d0549f8f 15
+  s_9f0d049c124774::t_174365fe9f2216 15
 packages/kumo-figma/src/generators/banner.test.ts
-  s_9f0d049c124774::t_c97ca0acaa3f38 15
+  s_9f0d049c124774::t_2576c5692d3d11 15
 packages/kumo-figma/src/generators/breadcrumbs.test.ts
-  s_9f0d049c124774::t_ce8c2bb07fe5c8 8
+  s_9f0d049c124774::t_1a9ff58a4e09fc 8
 packages/kumo-figma/src/generators/breadcrumbs.ts
-  s_9f0d049c124774::t_28e27d2aa520a8 298
+  s_9f0d049c124774::t_dc8dbc51bbb484 298
 packages/kumo-figma/src/generators/button.test.ts
-  s_9f0d049c124774::t_51d8090e698712 15
+  s_9f0d049c124774::t_024572efac7e3a 15
 packages/kumo-figma/src/generators/checkbox.test.ts
-  s_9f0d049c124774::t_8c76f38da0464e 18
+  s_9f0d049c124774::t_44da4dd8f2dc9a 18
 packages/kumo-figma/src/generators/clipboard-text.test.ts
-  s_9f0d049c124774::t_5cb2cbe57a32f8 15
+  s_9f0d049c124774::t_abf4fbb5a119af 15
 packages/kumo-figma/src/generators/code-block.test.ts
-  s_9f0d049c124774::t_979380188a9938 15
+  s_9f0d049c124774::t_ebc1abbb28f64d 15
 packages/kumo-figma/src/generators/code.test.ts
-  s_9f0d049c124774::t_2757fcbe36f285 19
+  s_9f0d049c124774::t_3a254d11dba4d3 19
 packages/kumo-figma/src/generators/collapsible.test.ts
-  s_9f0d049c124774::t_01ee669f28816e 14
+  s_9f0d049c124774::t_41d76b4686cc86 14
 packages/kumo-figma/src/generators/combobox.test.ts
-  s_9f0d049c124774::t_fa764f2cdbd643 14
+  s_9f0d049c124774::t_cbdaa17ef7427e 14
 packages/kumo-figma/src/generators/command-palette.test.ts
-  s_9f0d049c124774::t_1956d46f794837 18
+  s_9f0d049c124774::t_fb84721c535c0f 18
 packages/kumo-figma/src/generators/date-range-picker.test.ts
-  s_9f0d049c124774::t_4e5518868fcc80 14
+  s_9f0d049c124774::t_cae10562bb4d3a 14
 packages/kumo-figma/src/generators/dialog.test.ts
-  s_9f0d049c124774::t_873abd06b050be 15
+  s_9f0d049c124774::t_56b1413087687d 15
 packages/kumo-figma/src/generators/drift-detection.test.ts
-  s_9f0d049c124774::t_c013152e4bd535 13
+  s_9f0d049c124774::t_b45c16bd20bea0 13
 packages/kumo-figma/src/generators/dropdown.test.ts
-  s_9f0d049c124774::t_32cbb7e6954342 18
+  s_9f0d049c124774::t_1867788b5852ca 18
 packages/kumo-figma/src/generators/empty.test.ts
-  s_9f0d049c124774::t_a530a9dda51201 6
+  s_9f0d049c124774::t_4807b91ed73da9 6
 packages/kumo-figma/src/generators/input-area.test.ts
-  s_9f0d049c124774::t_6368792a5b0ad3 15
+  s_9f0d049c124774::t_dc18060ffca685 15
 packages/kumo-figma/src/generators/input.test.ts
-  s_9f0d049c124774::t_3478fe4db0d55f 15
+  s_9f0d049c124774::t_f3a6b6d75b1b5a 15
 packages/kumo-figma/src/generators/label.test.ts
-  s_9f0d049c124774::t_d636cfaf1503c5 14
+  s_9f0d049c124774::t_002ad02d16d076 14
 packages/kumo-figma/src/generators/layer-card.test.ts
-  s_9f0d049c124774::t_44d227d7a566b9 14
+  s_9f0d049c124774::t_90efe69201c2db 14
 packages/kumo-figma/src/generators/layer-card.ts
-  s_9f0d049c124774::t_00410ad316c537 130
+  s_9f0d049c124774::t_fb597e7597e486 130
 packages/kumo-figma/src/generators/link-button.test.ts
-  s_9f0d049c124774::t_4cc20f0fdec75d 15
+  s_9f0d049c124774::t_583db33b3105d2 15
 packages/kumo-figma/src/generators/loader.test.ts
-  s_9f0d049c124774::t_49bebb42dd40fd 16
+  s_9f0d049c124774::t_c71b021de9dee7 16
 packages/kumo-figma/src/generators/menubar.test.ts
-  s_9f0d049c124774::t_ad33871805b0af 14
+  s_9f0d049c124774::t_ce87efa3f91db7 14
 packages/kumo-figma/src/generators/meter.test.ts
-  s_9f0d049c124774::t_d1853079d984f1 19
+  s_9f0d049c124774::t_1f618b100f564a 19
 packages/kumo-figma/src/generators/pagination.test.ts
-  s_9f0d049c124774::t_d8c1eac4b72f85 14
+  s_9f0d049c124774::t_34f273b49b6541 14
 packages/kumo-figma/src/generators/refresh-button.test.ts
-  s_9f0d049c124774::t_6cb6e21d2dfb85 17
+  s_9f0d049c124774::t_d61e3e6eab44c0 17
 packages/kumo-figma/src/generators/select.test.ts
-  s_9f0d049c124774::t_b4b4661e16cd7f 15
+  s_9f0d049c124774::t_ed93676c055842 15
 packages/kumo-figma/src/generators/sensitive-input.test.ts
-  s_9f0d049c124774::t_6a7e80ec28afd5 14
+  s_9f0d049c124774::t_a4f0e57d329de6 14
 packages/kumo-figma/src/generators/shared.ts
-  s_9f0d049c124774::t_babe20480b2ef8 488
+  s_9f0d049c124774::t_d7a4f4487cf13c 488
 packages/kumo-figma/src/generators/surface.test.ts
-  s_9f0d049c124774::t_1c2031e27bf693 14
+  s_9f0d049c124774::t_fda8a6f2286175 14
 packages/kumo-figma/src/generators/switch.test.ts
-  s_9f0d049c124774::t_a4a04ef5755468 14
+  s_9f0d049c124774::t_708fc1e402da39 14
 packages/kumo-figma/src/generators/table.test.ts
-  s_9f0d049c124774::t_a557b88b9c1898 14
+  s_9f0d049c124774::t_8b41131c60352b 14
 packages/kumo-figma/src/generators/tabs.test.ts
-  s_9f0d049c124774::t_7ac9798a370695 14
+  s_9f0d049c124774::t_1c96a9b2f15ea5 14
 packages/kumo-figma/src/generators/text.test.ts
-  s_9f0d049c124774::t_79edd7d607930c 15
+  s_9f0d049c124774::t_8d73788f4d63ac 15
 packages/kumo-figma/src/generators/toast.test.ts
-  s_9f0d049c124774::t_43f873bd093a63 15
+  s_9f0d049c124774::t_6e08c2e969a30f 15
 packages/kumo-figma/src/generators/tooltip.test.ts
-  s_9f0d049c124774::t_3ac3f20d401112 14
+  s_9f0d049c124774::t_9a1823e602448e 14
 packages/kumo-figma/src/parsers/tailwind-to-figma.test.ts
-  s_9f0d049c124774::t_a6b0ffb5b72c5d 1
+  s_9f0d049c124774::t_f36cdcf338fd4e 1
 packages/kumo-figma/src/parsers/tailwind-to-figma.ts
-  s_9f0d049c124774::t_6a306da58d8beb 197
+  s_9f0d049c124774::t_7d6e40c5a5e472 197
 packages/kumo-figma/vite.config.ts
-  s_9f0d049c124774::t_0a25f0ab45e1ed 1,8-24
+  s_9f0d049c124774::t_635a2638e99e28 1,8-24
 packages/kumo-screenshot-worker/AGENTS.md
-  s_9f0d049c124774::t_7a9bdc601666c5 67,75,77,85
+  s_9f0d049c124774::t_bf6a97b84c9553 67,75,77,85
 packages/kumo-screenshot-worker/package.json
-  s_9f0d049c124774::t_9284e8f6e8ff9b 7,13,21-22
+  s_9f0d049c124774::t_f183f2e66fbac7 7,13,21-22
 packages/kumo-screenshot-worker/src/index.ts
-  s_9f0d049c124774::t_a86d68c57a15fb 1,21,26-27,35-40,99-101,113,116,120-124,130-154,279-281,301,309-311,336-339,382,435,437
+  s_9f0d049c124774::t_469c79f9db8747 1,21,26-27,35-40,99-101,113,116,120-124,130-154,279-281,301,309-311,336-339,382,435,437
 packages/kumo-screenshot-worker/worker-configuration.d.ts
-  s_9f0d049c124774::t_6676e864c0ea3d 5-12,16-18,21-23,114,247,622,895,1847,2008,2026-2029,2349,2357,3047,4004,4316,4337,4403,5997,6544,9051,9462,10059,10600,11264,11474,11476,11522-11523,11844,11856,12179,12181
+  s_9f0d049c124774::t_47ad84a0cc0bce 5-12,16-18,21-23,114,247,622,895,1847,2008,2026-2029,2349,2357,3047,4004,4316,4337,4403,5997,6544,9051,9462,10059,10600,11264,11474,11476,11522-11523,11844,11856,12179,12181
 packages/kumo-screenshot-worker/wrangler.jsonc
-  s_9f0d049c124774::t_41c0593a1a4692 18,21-23
+  s_9f0d049c124774::t_1e0984d4fc6798 18,21-23
 packages/kumo/AGENTS.md
-  s_9f0d049c124774::t_0bcbae787c8b2a 53
+  s_9f0d049c124774::t_25f98c65e5d6ac 53
 packages/kumo/CHANGELOG.md
-  s_9f0d049c124774::t_7281d41720fbfb 3-400
+  s_9f0d049c124774::t_fe12b39fce3974 3-400
 packages/kumo/README.md
-  s_9f0d049c124774::t_f96da19435f3a7 209,211,224
+  s_9f0d049c124774::t_3ea5dbf460c28f 209,211,224
 packages/kumo/ai/USAGE.md
-  s_9f0d049c124774::t_cff0d42dd7d85f 35-72,77-82,84-85,88-91,95-101,106-119,122-124,126,141-150,155,170,185,193
+  s_9f0d049c124774::t_eb524a996ff40d 35-72,77-82,84-85,88-91,95-101,106-119,122-124,126,141-150,155,170,185,193
 packages/kumo/bin/kumo.js
-  s_9f0d049c124774::t_7dbd8f221fac91 36
+  s_9f0d049c124774::t_6b0b3a1a1093e0 36
 packages/kumo/lint/enforce-variant-standard.js
-  s_9f0d049c124774::t_d8951e03686654 1
+  s_9f0d049c124774::t_e2c9db53d8591a 1
 packages/kumo/lint/enforce-variant-standard.test.ts
-  s_9f0d049c124774::t_8f3ca58a4acb26 1,39
+  s_9f0d049c124774::t_88c4bf34de8cea 1,39
 packages/kumo/lint/kumo-plugin.js
-  s_9f0d049c124774::t_1cc6ad2a443a74 6,18
+  s_9f0d049c124774::t_1d0a3445c96851 6,18
 packages/kumo/lint/no-cross-package-imports.js
-  s_9f0d049c124774::t_e5447fb2bab575 1
+  s_9f0d049c124774::t_2978625207a5e1 1
 packages/kumo/lint/no-deprecated-props.js
-  s_9f0d049c124774::t_f3317596a4613b 1-2
+  s_9f0d049c124774::t_1ea0be89f18ef1 1-2
 packages/kumo/lint/no-flow-node-custom-render.js
-  s_9f0d049c124774::t_c7e851ec7f9ce7 1-394
+  s_9f0d049c124774::t_caa9d45355cfdf 1-394
 packages/kumo/lint/no-primitive-colors.js
-  s_9f0d049c124774::t_0fe9102ed3523e 1-2,79-80
+  s_9f0d049c124774::t_b2661d476863be 1-2,79-80
 packages/kumo/lint/no-tailwind-dark-variant.js
-  s_9f0d049c124774::t_4edc2edc785425 1
+  s_9f0d049c124774::t_c8f719571cd84b 1
 packages/kumo/package.json
-  s_9f0d049c124774::t_a1f5467475da4a 3,6-13,16,22-37,40,43-62,64,68,71-74,76,79-81,84,88,91-94,96,100,104,107-118,120,124,127-142,144,148,151-154,156,159-161,164,168,172,176,179-186,188,192,195-198,200,204,208,211-214,216,220,224,227-230,232,236,240,244,248,252,256,260,264,268,272,276,280,284,288,292,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360,364,368,372,376,380,384,388,392,396,400,403-405,407-409,411-413,415-417,424,432-433,442-449,451,453,456,459-460,464,467-468,473,479-480,487,494,499-513
+  s_9f0d049c124774::t_2e47ec44d48ef6 3,6-13,16,22-37,40,43-62,64,68,71-74,76,79-81,84,88,91-94,96,100,104,107-118,120,124,127-142,144,148,151-154,156,159-161,164,168,172,176,179-186,188,192,195-198,200,204,208,211-214,216,220,224,227-230,232,236,240,244,248,252,256,260,264,268,272,276,280,284,288,292,296,300,304,308,312,316,320,324,328,332,336,340,344,348,352,356,360,364,368,372,376,380,384,388,392,396,400,403-405,407-409,411-413,415-417,424,432-433,442-449,451,453,456,459-460,464,467-468,473,479-480,487,494,499-513
 packages/kumo/plopfile.js
-  s_9f0d049c124774::t_2de9f4670d0391 52,59,67,75,109,125,127-128
+  s_9f0d049c124774::t_da6888d090ac9a 52,59,67,75,109,125,127-128
 packages/kumo/scripts/component-registry/discovery.ts
-  s_9f0d049c124774::t_b1c71fc983f68e 37,186-238,294,302-308,312-317,320,324,492-524
+  s_9f0d049c124774::t_b44f59d61bb192 37,186-238,294,302-308,312-317,320,324,492-524
 packages/kumo/scripts/component-registry/index.test.ts
-  s_9f0d049c124774::t_a80e68f1a156f4 9-10,584-632,734,995-1032
+  s_9f0d049c124774::t_3902986da01041 9-10,584-632,734,995-1032
 packages/kumo/scripts/component-registry/index.ts
-  s_9f0d049c124774::t_dc18731088da89 57,437-462,876-946
+  s_9f0d049c124774::t_f915aa5e420230 57,437-462,876-946
 packages/kumo/scripts/component-registry/metadata.ts
-  s_9f0d049c124774::t_69dad90db4b6b0 305,307,331-360,476
+  s_9f0d049c124774::t_612c0e2f95d140 305,307,331-360,476
 packages/kumo/scripts/component-registry/props-filter.ts
-  s_9f0d049c124774::t_9256adac3bd3f6 185-187
+  s_9f0d049c124774::t_74082822e490d6 185-187
 packages/kumo/scripts/component-registry/sub-components.ts
-  s_9f0d049c124774::t_e1e9ff63eabe47 9,352-357,359-364,366-370,372-373,375-381,383-389
+  s_9f0d049c124774::t_3b9c60e5f792f7 9,352-357,359-364,366-370,372-373,375-381,383-389
 packages/kumo/scripts/component-registry/variant-parser.ts
-  s_9f0d049c124774::t_d47f993fbc84bd 218
+  s_9f0d049c124774::t_b31ba198dfe0f4 218
 packages/kumo/scripts/generate-primitives.ts
-  s_9f0d049c124774::t_8f1b6b9931da40 36-41,54-59,106,119,134
+  s_9f0d049c124774::t_33d9471369f20d 36-41,54-59,106,119,134
 packages/kumo/scripts/theme-generator/config.ts
-  s_9f0d049c124774::t_a2d3a00d277e86 69-70,75,128-129,299,327,386-387,395-396,404-405,413-414,422-423,429,433,441-442,450-477,500-501,503,506-507,511-513,515,518-519,524,530-531,566,630,642
+  s_9f0d049c124774::t_c3cedddf9234ea 69-70,75,128-129,299,327,386-387,395-396,404-405,413-414,422-423,429,433,441-442,450-477,500-501,503,506-507,511-513,515,518-519,524,530-531,566,630,642
 packages/kumo/scripts/theme-generator/generate-css.test.ts
-  s_9f0d049c124774::t_0471f3220dc36f 1
+  s_9f0d049c124774::t_d53a2041f357d3 1
 packages/kumo/scripts/theme-generator/generate-css.ts
-  s_9f0d049c124774::t_c4ce3c683a5528 144-147
+  s_9f0d049c124774::t_022f915b5c2b10 144-147
 packages/kumo/scripts/theme-generator/types.ts
-  s_9f0d049c124774::t_02fb29a3e9caa8 35-41,72
+  s_9f0d049c124774::t_af7781e03dca2b 35-41,72
 packages/kumo/src/blocks/delete-resource/delete-resource.tsx
-  s_9f0d049c124774::t_f512f1b23a44f5 132,139,153,163,169
+  s_9f0d049c124774::t_527af36101314b 132,139,153,163,169
 packages/kumo/src/blocks/resource-list/resource-list.test.tsx
-  s_9f0d049c124774::t_b99f17c03be987 1
+  s_9f0d049c124774::t_5d12e9a5fcfba6 1
 packages/kumo/src/blocks/resource-list/resource-list.tsx
-  s_9f0d049c124774::t_0484479b9bfc7a 31
+  s_9f0d049c124774::t_92edfc31aac51d 31
 packages/kumo/src/catalog/catalog.test.ts
-  s_9f0d049c124774::t_0d6fe5558245d9 5,258-297
+  s_9f0d049c124774::t_4895d05d8ae38a 5,258-297
 packages/kumo/src/catalog/catalog.ts
-  s_9f0d049c124774::t_b4c8b0901371c2 52-61,285-286
+  s_9f0d049c124774::t_2190490ccad5f9 52-61,285-286
 packages/kumo/src/code/code-highlighted.tsx
-  s_9f0d049c124774::t_b5f7e64a9615fa 3,67-68,89,108,119-127,159,170
+  s_9f0d049c124774::t_c896b92f89bd78 3,67-68,89,108,119-127,159,170
 packages/kumo/src/code/index.ts
-  s_9f0d049c124774::t_2a73eb509b1464 29,35-37,45-46
+  s_9f0d049c124774::t_aea51649dbe63b 29,35-37,45-46
 packages/kumo/src/code/provider.test.ts
-  s_9f0d049c124774::t_e029ff668a92e3 1-59
+  s_9f0d049c124774::t_9620a3626b4471 1-59
 packages/kumo/src/code/provider.test.tsx
-  s_9f0d049c124774::t_43cefe76de9869 1-428
+  s_9f0d049c124774::t_8d6db92c098b40 1-428
 packages/kumo/src/code/provider.tsx
-  s_9f0d049c124774::t_f2b8078b13e4c7 5-10,40-50,91,96,99-109,112-124,158-160,162-169,177,187,189,201,204-210
+  s_9f0d049c124774::t_426dbb5ff2d5d3 5-10,40-50,91,96,99-109,112-124,158-160,162-169,177,187,189,201,204-210
 packages/kumo/src/code/types.ts
-  s_9f0d049c124774::t_173daa06b9215d 29-58,89-90,92,113-115,117-120,144,147
+  s_9f0d049c124774::t_0e4f74c510d83e 29-58,89-90,92,113-115,117-120,144,147
 packages/kumo/src/code/use-shiki-highlighter.test.tsx
-  s_9f0d049c124774::t_aabd496b10a6f9 1-235
+  s_9f0d049c124774::t_b47c2393cde4c8 1-235
 packages/kumo/src/code/use-shiki-highlighter.ts
-  s_9f0d049c124774::t_33fd84c26acfed 5-6,54,59-61,63,66,75
+  s_9f0d049c124774::t_454f9a52d7f1c4 5-6,54,59-61,63,66,75
 packages/kumo/src/command-line/commands/add.test.ts
-  s_9f0d049c124774::t_d2fa5be5b12077 14
+  s_9f0d049c124774::t_bc364a6f5fd88f 14
 packages/kumo/src/command-line/commands/blocks.test.ts
-  s_9f0d049c124774::t_47a4c3296d3839 6
+  s_9f0d049c124774::t_29176ac4848891 6
 packages/kumo/src/command-line/commands/init.test.ts
-  s_9f0d049c124774::t_b8e46b4e87465d 8
+  s_9f0d049c124774::t_1c405bc1e1315d 8
 packages/kumo/src/command-line/utils/config.test.ts
-  s_9f0d049c124774::t_407239cda080d6 5
+  s_9f0d049c124774::t_d1f84ef47dd2c7 5
 packages/kumo/src/command-line/utils/transformer.test.ts
-  s_9f0d049c124774::t_79da54a98530b8 1
+  s_9f0d049c124774::t_24f581e932119a 1
 packages/kumo/src/components/AGENTS.md
-  s_9f0d049c124774::t_6487cf28e9202e 163-171
+  s_9f0d049c124774::t_f0c32778a06a2c 163-171
 packages/kumo/src/components/autocomplete/autocomplete.test.tsx
-  s_9f0d049c124774::t_3b00c61c236294 1-130
+  s_9f0d049c124774::t_2179a73c6e15b6 1-130
 packages/kumo/src/components/autocomplete/autocomplete.tsx
-  s_9f0d049c124774::t_d29f7e4d89baea 3,9-12,40-46,119-121,156,160-164,224,234-235,263,324-326
+  s_9f0d049c124774::t_6159f9ccbeb8ce 3,9-12,40-46,119-121,156,160-164,224,234-235,263,324-326
 packages/kumo/src/components/autocomplete/index.ts
-  s_9f0d049c124774::t_0eb92074d98b34 9-10
+  s_9f0d049c124774::t_f3a0dbf454a264 9-10
 packages/kumo/src/components/badge/badge.test.tsx
-  s_9f0d049c124774::t_c9fd96d88cb8a6 1-177
+  s_9f0d049c124774::t_6cc55735102f03 1-177
 packages/kumo/src/components/badge/badge.tsx
-  s_9f0d049c124774::t_e81bac0af28385 22,26,30,38,86-119,124-125,130-131,135,140,142-151,155-158,173,193,196-204,217,222,226-236,238-244
+  s_9f0d049c124774::t_8d8e2265473dad 22,26,30,38,86-119,124-125,130-131,135,140,142-151,155-158,173,193,196-204,217,222,226-236,238-244
 packages/kumo/src/components/banner/banner-action.tsx
-  s_9f0d049c124774::t_ca82b5a37d6b57 1-150
+  s_9f0d049c124774::t_f9e6ccf46f50e4 1-150
 packages/kumo/src/components/banner/banner.test.tsx
-  s_9f0d049c124774::t_daf679680a5707 1-267
+  s_9f0d049c124774::t_ff2f47520907ae 1-267
 packages/kumo/src/components/banner/banner.tsx
-  s_9f0d049c124774::t_cb1cc59d4d6cd4 1-6,9-14,16-17,19,23-24,28-29,33-34,37-51,57,62-94,102,106-112,117,119-129,131,134-136,157-160,167-173,184,188-195,220,229,231,235-245,250-267,269-271,274-294,297-312,316,325-338,342-352
+  s_9f0d049c124774::t_df78d181c80926 1-6,9-14,16-17,19,23-24,28-29,33-34,37-51,57,62-94,102,106-112,117,119-129,131,134-136,157-160,167-173,184,188-195,220,229,231,235-245,250-267,269-271,274-294,297-312,316,325-338,342-352
 packages/kumo/src/components/breadcrumbs/breadcrumbs.tsx
-  s_9f0d049c124774::t_86b5ba86796d3c 53-57,75-76,78-81,84,110,201
+  s_9f0d049c124774::t_9438d311b19dbd 53-57,75-76,78-81,84,110,201
 packages/kumo/src/components/button/button.test.tsx
-  s_9f0d049c124774::t_73fbd9ab0d2e43 2,5,115-187,230-300
+  s_9f0d049c124774::t_b68532e6772718 2,5,115-187,230-300
 packages/kumo/src/components/button/button.tsx
-  s_9f0d049c124774::t_178cc5a47f0b8e 52,57,65-66,71,76-77,136,156-160,172-253,258,286-309,313-317,333-334,362,369-383,387,394,396,398,402-409,432,458,465-466,473,478-498,501,508,513,516-521
+  s_9f0d049c124774::t_8840c4b2b9f57c 52,57,65-66,71,76-77,136,156-160,172-253,258,286-309,313-317,333-334,362,369-383,387,394,396,398,402-409,432,458,465-466,473,478-498,501,508,513,516-521
 packages/kumo/src/components/chart/Color.ts
-  s_9f0d049c124774::t_5c4897d7bd6847 52,68-99,201-211
+  s_9f0d049c124774::t_b92889b5fba93a 52,68-99,201-211
 packages/kumo/src/components/chart/EChart.tsx
-  s_9f0d049c124774::t_70e49c3b748d2b 74-75,80-89,157-163,176-189,192-195,232,252,276,354-358
+  s_9f0d049c124774::t_26170dbce0d3dd 74-75,80-89,157-163,176-189,192-195,232,252,276,354-358
 packages/kumo/src/components/chart/Legend.tsx
-  s_9f0d049c124774::t_9d59b42827864d 1-5,7,9-16,27-32,35-49,55-81,83-96,99,110,118,134-157,159-172,174,197-199
+  s_9f0d049c124774::t_6903a6f9e1dad1 1-5,7,9-16,27-32,35-49,55-81,83-96,99,110,118,134-157,159-172,174,197-199
 packages/kumo/src/components/chart/Maps.test.tsx
-  s_9f0d049c124774::t_dfb56c39fcc2f5 1-141
+  s_9f0d049c124774::t_37ae64a4405323 1-141
 packages/kumo/src/components/chart/Maps.tsx
-  s_9f0d049c124774::t_2266a17223e71e 1-1009
+  s_9f0d049c124774::t_9181a83e18263e 1-1009
 packages/kumo/src/components/chart/SankeyChart.test.tsx
-  s_9f0d049c124774::t_7728c0dd621120 1,75-77,499-574,677-814
+  s_9f0d049c124774::t_6472fb5e54fcf3 1,75-77,499-574,677-814
 packages/kumo/src/components/chart/SankeyChart.tsx
-  s_9f0d049c124774::t_18c92159c2e182 6,73-77,86-89,167-168,171-172,182,186-198,204,215,230,267-272,294-295,319-325,335,355-356,361
+  s_9f0d049c124774::t_452ca8ca3d62a5 6,73-77,86-89,167-168,171-172,182,186-198,204,215,230,267-272,294-295,319-325,335,355-356,361
 packages/kumo/src/components/chart/TimeseriesChart.test.tsx
-  s_9f0d049c124774::t_e60d87bdf39ee1 1-160
+  s_9f0d049c124774::t_6b221cb1cdb3d0 1-160
 packages/kumo/src/components/chart/TimeseriesChart.tsx
-  s_9f0d049c124774::t_7d2a08d111bd07 3-13,15-36,60-63,96-137,140-153,167-168,181-185,188-189,220-253,255-342,346-352,361-376,441-460,481,486,491,497-500,502-503,509,514,521-525,528-533,555,558-563,568-668,670-679,681,684-686,688,713-717,720-773,775-846,850-909,911-913,915-923,926,930,932-957,959-966,968,972-973,978,981,983,985-1042,1090-1097,1100,1104
+  s_9f0d049c124774::t_a87206c1ff8bc9 3-13,15-36,60-63,96-137,140-153,167-168,181-185,188-189,220-253,255-342,346-352,361-376,441-460,481,486,491,497-500,502-503,509,514,521-525,528-533,555,558-563,568-668,670-679,681,684-686,688,713-717,720-773,775-846,850-909,911-913,915-923,926,930,932-957,959-966,968,972-973,978,981,983,985-1042,1090-1097,1100,1104
 packages/kumo/src/components/chart/index.ts
-  s_9f0d049c124774::t_3b0f7d06070473 5-6,24-33
+  s_9f0d049c124774::t_4b95bcf24aec5a 5-6,24-33
 packages/kumo/src/components/chart/timeseries-markers.ts
-  s_9f0d049c124774::t_9ae438b3cf3717 1-141
+  s_9f0d049c124774::t_bfd3857a9eaf81 1-141
 packages/kumo/src/components/chart/timeseries-thresholds.ts
-  s_9f0d049c124774::t_b47face366fd08 1-8,10-13,16-50,54-65
+  s_9f0d049c124774::t_f163c53864c3e2 1-8,10-13,16-50,54-65
 packages/kumo/src/components/chart/timeseries-tooltip.tsx
-  s_9f0d049c124774::t_dafb20ecc79d51 1-166
+  s_9f0d049c124774::t_d775fe9690fd60 1-166
 packages/kumo/src/components/chart/tooltip-utils.ts
-  s_9f0d049c124774::t_1e5442c49471cd 1-10
+  s_9f0d049c124774::t_5d066319dc96fb 1-10
 packages/kumo/src/components/checkbox/checkbox.tsx
-  s_9f0d049c124774::t_bb4e5968481fae 51-57,264,271-272,275,309,350-351,353,363-364,372,375
+  s_9f0d049c124774::t_89c0e88009d358 51-57,264,271-272,275,309,350-351,353,363-364,372,375
 packages/kumo/src/components/clipboard-text/clipboard-text.test.tsx
-  s_9f0d049c124774::t_871ec5e70edd98 1-156
+  s_9f0d049c124774::t_aace0e26a8a315 1-156
 packages/kumo/src/components/clipboard-text/clipboard-text.tsx
-  s_9f0d049c124774::t_5dbe8d2afabedf 2,10,13-14,71-75,132-150,192-198,207-224,261-262,269,271,276-277,284-292,300-302
+  s_9f0d049c124774::t_39665f61e5762f 2,10,13-14,71-75,132-150,192-198,207-224,261-262,269,271,276-277,284-292,300-302
 packages/kumo/src/components/cloudflare-logo/cloudflare-logo.tsx
-  s_9f0d049c124774::t_e8343c1842524b 92,216,265-266,268-269
+  s_9f0d049c124774::t_b3752be921eb2f 92,216,265-266,268-269
 packages/kumo/src/components/code/code.tsx
-  s_9f0d049c124774::t_d89aa6243a406a 106-110
+  s_9f0d049c124774::t_e13d9aaf2c1cf6 106-110
 packages/kumo/src/components/collapsible/collapsible.tsx
-  s_9f0d049c124774::t_5317c7db730200 80-93,120,158-159,162,164,168-176,215-218,221-223
+  s_9f0d049c124774::t_cb13b92dd3f245 80-93,120,158-159,162,164,168-176,215-218,221-223
 packages/kumo/src/components/combobox/combobox.browser.test.tsx
-  s_9f0d049c124774::t_91943397a3fbb1 1,198
+  s_9f0d049c124774::t_51b7d35349dfec 1,198
 packages/kumo/src/components/combobox/combobox.test.tsx
-  s_9f0d049c124774::t_1765fe2ee6e0f9 1-154
+  s_9f0d049c124774::t_bfbfb2a3c4a7a7 1-154
 packages/kumo/src/components/combobox/combobox.tsx
-  s_9f0d049c124774::t_bc1c8fe10f9a47 43-47,76-82,170,172,264,269-270,272,274,283,338,345,352,360-361,373-374,377,382,397-398,451,474,493,501-502,506,537,544,546,549,556,560,580,643-645
+  s_9f0d049c124774::t_c7c3e1392b54d0 43-47,76-82,170,172,264,269-270,272,274,283,338,345,352,360-361,373-374,377,382,397-398,451,474,493,501-502,506,537,544,546,549,556,560,580,643-645
 packages/kumo/src/components/combobox/index.ts
-  s_9f0d049c124774::t_9b8b37bd359bca 6-7
+  s_9f0d049c124774::t_5e547c3c669624 6-7
 packages/kumo/src/components/command-palette/command-palette.test.tsx
-  s_9f0d049c124774::t_d8a13e952aa6d0 1,54-55,58,61-62,67,70-71,262-276
+  s_9f0d049c124774::t_c12efe2879020d 1,54-55,58,61-62,67,70-71,262-276
 packages/kumo/src/components/command-palette/command-palette.tsx
-  s_9f0d049c124774::t_98e663e8dab6b9 282,761
+  s_9f0d049c124774::t_fbd35f0b5d97b9 282,761
 packages/kumo/src/components/command-palette/types.ts
-  s_9f0d049c124774::t_0026ca680c19c7 170-173
+  s_9f0d049c124774::t_8e28d1596ded46 170-173
 packages/kumo/src/components/date-picker/date-picker.tsx
-  s_9f0d049c124774::t_e7282206106016 116
+  s_9f0d049c124774::t_7423316fff6601 116
 packages/kumo/src/components/date-range-picker/date-range-picker.tsx
-  s_9f0d049c124774::t_f80beb139e066f 305-313,316,319-322,325-328,331-334,338-342,345-352,355,408-416,419,422-425,428-431,434-437,441-445,448-455,458,607,648-651
+  s_9f0d049c124774::t_925196162b8f21 305-313,316,319-322,325-328,331-334,338-342,345-352,355,408-416,419,422-425,428-431,434-437,441-445,448-455,458,607,648-651
 packages/kumo/src/components/dialog/dialog.tsx
-  s_9f0d049c124774::t_144c2dfda43456 22-23,26-27,30-31,34-35,122-125,146,148-152,261-263,265,278,281-303,306,320-322,324-325,329-350,405-409
+  s_9f0d049c124774::t_c7f8328621ee1c 22-23,26-27,30-31,34-35,122-125,146,148-152,261-263,265,278,281-303,306,320-322,324-325,329-350,405-409
 packages/kumo/src/components/dropdown/dropdown.tsx
-  s_9f0d049c124774::t_d0b0b3e168de7b 52-58,72-73,121,249-250,314-315,341-342,411-412
+  s_9f0d049c124774::t_a8754a0f78e912 52-58,72-73,121,249-250,314-315,341-342,411-412
 packages/kumo/src/components/empty/empty.tsx
-  s_9f0d049c124774::t_df09d46f34300a 47-51,139-142
+  s_9f0d049c124774::t_6099504b2e0e0d 47-51,139-142
 packages/kumo/src/components/field/field.tsx
-  s_9f0d049c124774::t_e1d2731c1e5dfd 6-19,150
+  s_9f0d049c124774::t_f43fcbf7446d6b 6-19,150
 packages/kumo/src/components/field/index.ts
-  s_9f0d049c124774::t_10377e252ec5a5 3
+  s_9f0d049c124774::t_ee13789871929d 3
 packages/kumo/src/components/flow/connectors.tsx
-  s_9f0d049c124774::t_4313aa34c300dc 2-7,107,142-144,148-150,157,164-230,238,240
+  s_9f0d049c124774::t_06e845cd18ff71 2-7,107,142-144,148-150,157,164-230,238,240
 packages/kumo/src/components/flow/diagram.tsx
-  s_9f0d049c124774::t_f6336def8eb101 20,28-38,45-46,56-58,60,67-72,91,118-216,369,372,387-393,396-403,408,421,432,436-469,472-480,497-503,505,507-527,535-565,569-579,583-584,587-588,591-600,604-611
+  s_9f0d049c124774::t_3c8d93b636ac04 20,28-38,45-46,56-58,60,67-72,91,118-216,369,372,387-393,396-403,408,421,432,436-469,472-480,497-503,505,507-527,535-565,569-579,583-584,587-588,591-600,604-611
 packages/kumo/src/components/flow/flow-layout.ts
-  s_9f0d049c124774::t_2e8772951ac429 1-330
+  s_9f0d049c124774::t_e5075f5453f0db 1-330
 packages/kumo/src/components/flow/flow.browser.test.tsx
-  s_9f0d049c124774::t_09cd596669c740 1,265-323,371
+  s_9f0d049c124774::t_e2983eb86b1792 1,265-323,371
 packages/kumo/src/components/flow/flow.test.tsx
-  s_9f0d049c124774::t_cccee34bcc48d6 1,4,6-7,14-62,200,208,407-549
+  s_9f0d049c124774::t_57d089ca942c0f 1,4,6-7,14-62,200,208,407-549
 packages/kumo/src/components/flow/node.tsx
-  s_9f0d049c124774::t_4ab0088cd0df3b 14-16,68-70,72-77,79-84,86-89,93-98,100,102-109,111-115,117-137,139,142-145,158-163,170-171,175,183,192-195,197-200,243-244,246-247,249-252,254-255,257-260,270
+  s_9f0d049c124774::t_424157dd2e1d6c 14-16,68-70,72-77,79-84,86-89,93-98,100,102-109,111-115,117-137,139,142-145,158-163,170-171,175,183,192-195,197-200,243-244,246-247,249-252,254-255,257-260,270
 packages/kumo/src/components/flow/parallel.tsx
-  s_9f0d049c124774::t_d61be3b9f22863 1-3,7-8,11,13-22,25-33,35,37-38,40-42,45-47
+  s_9f0d049c124774::t_84793341e7bf20 1-3,7-8,11,13-22,25-33,35,37-38,40-42,45-47
 packages/kumo/src/components/flow/specs/2026-04-17-flow-layout.md
-  s_9f0d049c124774::t_9a6c1a544f6c92 1-552
+  s_9f0d049c124774::t_426a756fe774e3 1-552
 packages/kumo/src/components/flow/use-children.tsx
-  s_9f0d049c124774::t_2b6494aa7987c2 52,73-75,84-94,116,145,183-185,188-191,193,195-218,224
+  s_9f0d049c124774::t_5658e47429c8e3 52,73-75,84-94,116,145,183-185,188-191,193,195-218,224
 packages/kumo/src/components/grid/grid.tsx
-  s_9f0d049c124774::t_cc9a4ad4c4e75b 148-151
+  s_9f0d049c124774::t_db6adef2e94348 148-151
 packages/kumo/src/components/input-group/context.ts
-  s_9f0d049c124774::t_a690dc648e5fa2 123-124
+  s_9f0d049c124774::t_40dfe0b93ea5fe 123-124
 packages/kumo/src/components/input-group/input-group-addon.tsx
-  s_9f0d049c124774::t_3664995b1dded6 64
+  s_9f0d049c124774::t_47b55094cae8e4 64
 packages/kumo/src/components/input-group/input-group-button.tsx
-  s_9f0d049c124774::t_a633270df115c8 152-162,166,168-173
+  s_9f0d049c124774::t_8f0d90b9e3d559 152-162,166,168-173
 packages/kumo/src/components/input-group/input-group-input.tsx
-  s_9f0d049c124774::t_9b56bf8a8bdb2e 66,73-74,76-80,82-83
+  s_9f0d049c124774::t_50d80eed159033 66,73-74,76-80,82-83
 packages/kumo/src/components/input-group/input-group-suffix.tsx
-  s_9f0d049c124774::t_78440848df8fb1 28
+  s_9f0d049c124774::t_64c3178b205dd7 28
 packages/kumo/src/components/input-group/input-group.test.tsx
-  s_9f0d049c124774::t_47512ddca160ce 2-3,10-13,654,706-709,839,1227,1241-1242,1264,1363-1365,1367-1421
+  s_9f0d049c124774::t_c5e5e31e40bfda 2-3,10-13,654,706-709,839,1227,1241-1242,1264,1363-1365,1367-1421
 packages/kumo/src/components/input-group/input-group.tsx
-  s_9f0d049c124774::t_50c35b693abcf3 134,137,199,201-207,211-214,217,219-220,224,236,272,284,294
+  s_9f0d049c124774::t_6e9bc4a85ffde4 134,137,199,201-207,211-214,217,219-220,224,236,272,284,294
 packages/kumo/src/components/input/input-area.tsx
-  s_9f0d049c124774::t_e2a467be7364e1 3-9,12-147,161-164,183-216,221,223,229-230,234,237,244,250,253,265,268,301-306
+  s_9f0d049c124774::t_563a5ee9fe3d20 3-9,12-147,161-164,183-216,221,223,229-230,234,237,244,250,253,265,268,301-306
 packages/kumo/src/components/input/input.test.tsx
-  s_9f0d049c124774::t_c63f36fac1ecba 1,3,10,49-58,130-155,230-403
+  s_9f0d049c124774::t_fd2605719ab1b7 1,3,10,49-58,130-155,230-403
 packages/kumo/src/components/input/input.tsx
-  s_9f0d049c124774::t_f551f23176fc94 9-13,118-122,124-128,132-133,136-137,150,191,194-201,206-207,214,268-269
+  s_9f0d049c124774::t_5f90771b719738 9-13,118-122,124-128,132-133,136-137,150,191,194-201,206-207,214,268-269
 packages/kumo/src/components/layer-card/layer-card.test.tsx
-  s_9f0d049c124774::t_3e219292eea8bc 1
+  s_9f0d049c124774::t_5502f54850665d 1
 packages/kumo/src/components/layer-card/layer-card.tsx
-  s_9f0d049c124774::t_bf9c7ab1ff87a5 95-115,122-126,129-138
+  s_9f0d049c124774::t_e54eb1a1a19e0a 95-115,122-126,129-138
 packages/kumo/src/components/link/link.test.tsx
-  s_9f0d049c124774::t_caa18349d8e9ac 1,132-136
+  s_9f0d049c124774::t_7e691eea18fe71 1,132-136
 packages/kumo/src/components/link/link.tsx
-  s_9f0d049c124774::t_d31e50b04d9a35 84-90,172-176,184-185,190
+  s_9f0d049c124774::t_246a468db0960c 84-90,172-176,184-185,190
 packages/kumo/src/components/loader/loader.tsx
-  s_9f0d049c124774::t_f7e66fc1908004 43-47
+  s_9f0d049c124774::t_ee57a74f0f9831 43-47
 packages/kumo/src/components/menubar/menubar.tsx
-  s_9f0d049c124774::t_d08a3fa4221e5a 47-48,51,124
+  s_9f0d049c124774::t_fc75c24d96f637 47-48,51,124
 packages/kumo/src/components/pagination/pagination.test.tsx
-  s_9f0d049c124774::t_f6b555e7ad19bc 1
+  s_9f0d049c124774::t_178485c407310d 1
 packages/kumo/src/components/pagination/pagination.tsx
-  s_9f0d049c124774::t_59c1d8d5c55989 97-101,256,577,604
+  s_9f0d049c124774::t_ae7be8b12c635e 97-101,256,577,604
 packages/kumo/src/components/popover/popover.tsx
-  s_9f0d049c124774::t_4af25c71e3802e 95-96
+  s_9f0d049c124774::t_9e2e588bde9510 95-96
 packages/kumo/src/components/radio/index.ts
-  s_9f0d049c124774::t_7e95dff094ee01 8
+  s_9f0d049c124774::t_28ff4b3b0a0d1c 8
 packages/kumo/src/components/radio/radio.test.tsx
-  s_9f0d049c124774::t_29d796ffbbd3fa 1
+  s_9f0d049c124774::t_4534c33bd11c16 1
 packages/kumo/src/components/radio/radio.tsx
-  s_9f0d049c124774::t_df4b692671fe7e 1-8,12-15,18-24,82-91,166-174,197-209,233,235-243,268-275,292,300-315,317-321,323-324,327-328,330-340,344-351,354-355,359,363,366,379-429,431,447,461,464,467-469
+  s_9f0d049c124774::t_4717579d481cbf 1-8,12-15,18-24,82-91,166-174,197-209,233,235-243,268-275,292,300-315,317-321,323-324,327-328,330-340,344-351,354-355,359,363,366,379-429,431,447,461,464,467-469
 packages/kumo/src/components/radio/radio.type-spec.tsx
-  s_9f0d049c124774::t_44b812acb9155c 1-111
+  s_9f0d049c124774::t_41637c5f9ff991 1-111
 packages/kumo/src/components/select/select.test.tsx
-  s_9f0d049c124774::t_62c665037de4d7 2,523-535,595-702
+  s_9f0d049c124774::t_aad6f65b0dec9d 2,523-535,595-702
 packages/kumo/src/components/select/select.tsx
-  s_9f0d049c124774::t_be3edd7ccbfe87 407-413,415,418-424,435,454-455,459-460,500,576-577
+  s_9f0d049c124774::t_c012c1a41962d1 407-413,415,418-424,435,454-455,459-460,500,576-577
 packages/kumo/src/components/sensitive-input/sensitive-input.test.tsx
-  s_9f0d049c124774::t_f0d93bbe91fe16 1,3,39-47
+  s_9f0d049c124774::t_3ebfc0e7779e50 1,3,39-47
 packages/kumo/src/components/sensitive-input/sensitive-input.tsx
-  s_9f0d049c124774::t_5c47830f7f78d8 40-43,96,111-122,329,351,399,409-410,416,418,439-440,445,447,465-466
+  s_9f0d049c124774::t_2cb5c31682ec58 40-43,96,111-122,329,351,399,409-410,416,418,439-440,445,447,465-466
 packages/kumo/src/components/sidebar/index.ts
-  s_9f0d049c124774::t_7f7909c2f890fa 8,26-27,41-45
+  s_9f0d049c124774::t_155211fdf60281 8,26-27,41-45
 packages/kumo/src/components/sidebar/sidebar.test.tsx
-  s_9f0d049c124774::t_b6f3ab16935c57 1-14,21,38-39,46-101,124-131,138-147,165-167,187,189-421,424,426-430,433-537,539-883
+  s_9f0d049c124774::t_61c30180fa65e5 1-14,21,38-39,46-101,124-131,138-147,165-167,187,189-421,424,426-430,433-537,539-883
 packages/kumo/src/components/sidebar/sidebar.tsx
-  s_9f0d049c124774::t_85c935b0e126f6 11,15-17,20,22,78-79,94-97,99-100,106-110,113,118,127-128,130,147-152,201-223,260-263,268-269,272-288,312,314,317-327,329-333,337-338,358-363,365,378-379,384-385,406-407,410-416,420,435-444,447,457-460,463-560,575,578-579,581,593-650,654-658,662-675,685,687-689,692,697-754,786-787,813-814,817,819-845,855-857,874-882,892,895-902,905-908,910,912-914,917-930,932-951,953-955,957,960,964,968-971,974,977-986,988,991,995-997,999,1001,1004,1007-1029,1032-1034,1037,1040-1041,1043,1078,1082,1095,1113,1115,1118,1130-1133,1163-1164,1175,1185,1188-1191,1203,1210,1221-1224,1230-1236,1240,1243-1249,1251,1256-1257,1259-1260,1262-1263,1265,1267,1269,1279,1283,1286-1287,1301-1302,1311-1325,1331-1334,1370-1371,1403,1408,1412-1415,1457-1458,1478,1483-1488,1492-1502,1510,1514,1517-1518,1531-1532,1562-1563,1565,1568,1570-1572,1578,1581-1614,1617-1618,1620-1621,1625,1628-1634,1638-1642,1644-1646,1649-1652,1655,1657-1658,1660,1663,1667-1672,1676-1679,1682,1685-1686,1689,1691-1698,1701,1705-1706,1710,1731-1732,1736,1765-1766,1768-1778,1785-1787,1840-1869,1871,1873-1875,1878-1885,1889,1897-2160,2166-2167,2171-2173,2177-2178,2181-2182,2184-2186,2197,2200-2212,2215-2218,2222-2229,2232-2291,2294-2295,2297-2315,2317-2349,2359-2360,2362-2364,2391,2403,2410-2411,2420,2432,2439-2440
+  s_9f0d049c124774::t_217bf12855e68e 11,15-17,20,22,78-79,94-97,99-100,106-110,113,118,127-128,130,147-152,201-223,260-263,268-269,272-288,312,314,317-327,329-333,337-338,358-363,365,378-379,384-385,406-407,410-416,420,435-444,447,457-460,463-560,575,578-579,581,593-650,654-658,662-675,685,687-689,692,697-754,786-787,813-814,817,819-845,855-857,874-882,892,895-902,905-908,910,912-914,917-930,932-951,953-955,957,960,964,968-971,974,977-986,988,991,995-997,999,1001,1004,1007-1029,1032-1034,1037,1040-1041,1043,1078,1082,1095,1113,1115,1118,1130-1133,1163-1164,1175,1185,1188-1191,1203,1210,1221-1224,1230-1236,1240,1243-1249,1251,1256-1257,1259-1260,1262-1263,1265,1267,1269,1279,1283,1286-1287,1301-1302,1311-1325,1331-1334,1370-1371,1403,1408,1412-1415,1457-1458,1478,1483-1488,1492-1502,1510,1514,1517-1518,1531-1532,1562-1563,1565,1568,1570-1572,1578,1581-1614,1617-1618,1620-1621,1625,1628-1634,1638-1642,1644-1646,1649-1652,1655,1657-1658,1660,1663,1667-1672,1676-1679,1682,1685-1686,1689,1691-1698,1701,1705-1706,1710,1731-1732,1736,1765-1766,1768-1778,1785-1787,1840-1869,1871,1873-1875,1878-1885,1889,1897-2160,2166-2167,2171-2173,2177-2178,2181-2182,2184-2186,2197,2200-2212,2215-2218,2222-2229,2232-2291,2294-2295,2297-2315,2317-2349,2359-2360,2362-2364,2391,2403,2410-2411,2420,2432,2439-2440
 packages/kumo/src/components/surface/surface.tsx
-  s_9f0d049c124774::t_e12bd4326ec6cc 40-44
+  s_9f0d049c124774::t_a32a8476f4a83e 40-44
 packages/kumo/src/components/switch/switch.tsx
-  s_9f0d049c124774::t_8049982a4296d2 74-83,294,326,381-382,384,447-448,476-477
+  s_9f0d049c124774::t_90bd30fe8d5078 74-83,294,326,381-382,384,447-448,476-477
 packages/kumo/src/components/table-of-contents/index.ts
-  s_9f0d049c124774::t_a772ad74827d0a 12-17
+  s_9f0d049c124774::t_91429dde83e77d 12-17
 packages/kumo/src/components/table-of-contents/table-of-contents.test.tsx
-  s_9f0d049c124774::t_c72653a26576ec 2
+  s_9f0d049c124774::t_531c579e7efe2e 2
 packages/kumo/src/components/table-of-contents/table-of-contents.tsx
-  s_9f0d049c124774::t_faed530f40396a 107-108,146-182,189-191,195-196
+  s_9f0d049c124774::t_ca75f589d9f369 107-108,146-182,189-191,195-196
 packages/kumo/src/components/table-of-contents/use-table-of-contents-active-id.test.tsx
-  s_9f0d049c124774::t_9efc7d2ef7c8e1 1-250
+  s_9f0d049c124774::t_1e358b0d3ccd40 1-250
 packages/kumo/src/components/table-of-contents/use-table-of-contents-active-id.ts
-  s_9f0d049c124774::t_b538b9f42dd2be 1-188
+  s_9f0d049c124774::t_4ccff1b80b233b 1-188
 packages/kumo/src/components/table/table.test.tsx
-  s_9f0d049c124774::t_fd05918f40f6d6 1
+  s_9f0d049c124774::t_012cedc94c0332 1
 packages/kumo/src/components/table/table.tsx
-  s_9f0d049c124774::t_68910e921fae28 131-135,138,140,162,204-208
+  s_9f0d049c124774::t_64f413cfbf60aa 131-135,138,140,162,204-208
 packages/kumo/src/components/tabs/tabs.test.tsx
-  s_9f0d049c124774::t_b6f36584835914 1-107
+  s_9f0d049c124774::t_b7f11e6051aed9 1-107
 packages/kumo/src/components/tabs/tabs.tsx
-  s_9f0d049c124774::t_c4b1eeae34cdc3 1-9,49-61,93-97,135-136,162,182-189,195-200,208-213,219-220,223-224,226,235-236,239-246,248-251,254-255,257,270,274-277,285-304,309-418,422-423,429-438,441-449,451-466,468-501,511,513-525,532-534,538-540,543-547,550-573
+  s_9f0d049c124774::t_2f2c9858e705fd 1-9,49-61,93-97,135-136,162,182-189,195-200,208-213,219-220,223-224,226,235-236,239-246,248-251,254-255,257,270,274-277,285-304,309-418,422-423,429-438,441-449,451-466,468-501,511,513-525,532-534,538-540,543-547,550-573
 packages/kumo/src/components/text/text.test.tsx
-  s_9f0d049c124774::t_5f7428092e59e7 1
+  s_9f0d049c124774::t_17042956026e17 1
 packages/kumo/src/components/text/text.tsx
-  s_9f0d049c124774::t_c8afe072534c65 131-140,328-339,346
+  s_9f0d049c124774::t_237967066ee7e9 131-140,328-339,346
 packages/kumo/src/components/text/text.type-spec.tsx
-  s_9f0d049c124774::t_166b403b216926 22-36,40-42,48-52,67-76,78-82,86-90,92-96
+  s_9f0d049c124774::t_f2f9025fb980cc 22-36,40-42,48-52,67-76,78-82,86-90,92-96
 packages/kumo/src/components/toast/toast.test.tsx
-  s_9f0d049c124774::t_0c17b3931bc256 2
+  s_9f0d049c124774::t_44dfdba668739e 2
 packages/kumo/src/components/toast/toast.tsx
-  s_9f0d049c124774::t_0674910ef46535 42-43,130-134,216,375,389,391-404,410-416,418-421,428-431,438-442
+  s_9f0d049c124774::t_07bdcb18676c6e 42-43,130-134,216,375,389,391-404,410-416,418-421,428-431,438-442
 packages/kumo/src/components/toolbar/index.ts
-  s_9f0d049c124774::t_d0fd481119bd91 1-10
+  s_9f0d049c124774::t_605d944026e3e0 1-10
 packages/kumo/src/components/toolbar/toolbar.test.tsx
-  s_9f0d049c124774::t_227d7b7a8796bb 1-97
+  s_9f0d049c124774::t_c57c5d8a97c3a8 1-97
 packages/kumo/src/components/toolbar/toolbar.tsx
-  s_9f0d049c124774::t_9fb5cf9f0e7aa1 1-259
+  s_9f0d049c124774::t_ffb0e268330312 1-259
 packages/kumo/src/components/tooltip/tooltip.tsx
-  s_9f0d049c124774::t_b096eabd20b1a9 57-58,63-67,172,174,186-191,196
+  s_9f0d049c124774::t_62f94da9467a06 57-58,63-67,172,174,186-191,196
 packages/kumo/src/index.ts
-  s_9f0d049c124774::t_6431ee90ccb055 55-64,173,252-253,259-264,283,301-302,307,328-330
+  s_9f0d049c124774::t_552e5e65029847 55-64,173,252-253,259-264,283,301-302,307,328-330
 packages/kumo/src/primitives/index.ts
-  s_9f0d049c124774::t_da245523a018b8 40-43
+  s_9f0d049c124774::t_e330d827a1dc34 40-43
 packages/kumo/src/primitives/otp-field.ts
-  s_9f0d049c124774::t_8eb2d515da8463 14-17
+  s_9f0d049c124774::t_f5aea3b86252a2 14-17
 packages/kumo/src/react-compat.test.tsx
-  s_9f0d049c124774::t_2483c49e0933ea 1-45
+  s_9f0d049c124774::t_3d49ee122eee4e 1-45
 packages/kumo/src/react-html-attributes.d.ts
-  s_9f0d049c124774::t_9e151045cbecf4 1-5
+  s_9f0d049c124774::t_7c18a23574ab8b 1-5
 packages/kumo/src/styles/kumo-binding.css
-  s_9f0d049c124774::t_40182e401d4b37 144-148,150-153,176-201,248-259,261-263,265,270-272,274,280-286
+  s_9f0d049c124774::t_21cd2a398ce3b7 144-148,150-153,176-201,248-259,261-263,265,270-272,274,280-286
 packages/kumo/src/styles/kumo.css
-  s_9f0d049c124774::t_d784469a78662c 23-57
+  s_9f0d049c124774::t_37f068176d77e7 23-57
 packages/kumo/src/styles/theme-fedramp.css
-  s_9f0d049c124774::t_05a3046f39cd30 11-13,23-26
+  s_9f0d049c124774::t_523eeb8a5fbddf 11-13,23-26
 packages/kumo/src/styles/theme-kumo.css
-  s_9f0d049c124774::t_4cd138cd0ff705 40,63-64,146,190-191,195-196,200-201,205-206,210-211,216,220-221,225-236,244-248,255-256,270,287,289,293-298,307-310,312-324,346-350,352-358,360-363,365-368,371,374-379,389-392,394-406,419-423,432-441,443-446,448-451,457
+  s_9f0d049c124774::t_d8840f75ccb6b3 40,63-64,146,190-191,195-196,200-201,205-206,210-211,216,220-221,225-236,244-248,255-256,270,287,289,293-298,307-310,312-324,346-350,352-358,360-363,365-368,371,374-379,389-392,394-406,419-423,432-441,443-446,448-451,457
 packages/kumo/src/utils/cn.test.ts
-  s_9f0d049c124774::t_2bb153526aec22 1-35
+  s_9f0d049c124774::t_433cdb66ac4ddc 1-35
 packages/kumo/src/utils/cn.ts
-  s_9f0d049c124774::t_39ddf8c580c4d1 1
+  s_9f0d049c124774::t_b2c0d37af47db3 1
 packages/kumo/src/utils/portal-provider.tsx
-  s_9f0d049c124774::t_58628ef21181d8 13
+  s_9f0d049c124774::t_037e2089f54202 13
 packages/kumo/src/utils/resolve-variant.test.ts
-  s_9f0d049c124774::t_d5780f00680245 1
+  s_9f0d049c124774::t_3feede08e2f1ff 1
 packages/kumo/src/utils/resolve-variant.ts
-  s_9f0d049c124774::t_ed71901700abf6 32
+  s_9f0d049c124774::t_f0da3aa79b5c1d 32
 packages/kumo/src/utils/variant-safety.test.ts
-  s_9f0d049c124774::t_213336b82f8683 9,58,68,107,136,151-153,155,164
+  s_9f0d049c124774::t_d2f27a5efa84a7 9,58,68,107,136,151-153,155,164
 packages/kumo/tests/build/browser-compat.test.ts
-  s_9f0d049c124774::t_59798f12d09931 1
+  s_9f0d049c124774::t_624990ebd69aec 1
 packages/kumo/tests/imports/deep-imports.test.ts
-  s_9f0d049c124774::t_88870a274763a3 1
+  s_9f0d049c124774::t_c4e07bc3c19687 1
 packages/kumo/tests/imports/export-path-validation.test.ts
-  s_9f0d049c124774::t_280d210dc465ca 1-2,87,150-151,167,176,224-236,238-239,241,249,269,296
+  s_9f0d049c124774::t_fdbe52cb4e0a7a 1-2,87,150-151,167,176,224-236,238-239,241,249,269,296
 packages/kumo/tests/imports/import-entries.mjs
-  s_9f0d049c124774::t_94ebe9d7e62881 1-26
+  s_9f0d049c124774::t_8a951e8079043a 1-26
 packages/kumo/tests/imports/main-entry.test.ts
-  s_9f0d049c124774::t_5791fc84b8852e 1
+  s_9f0d049c124774::t_ae8d05fa85deb9 1
 packages/kumo/tests/imports/node-esm-import.test.ts
-  s_9f0d049c124774::t_397fc326831e2c 1-27
+  s_9f0d049c124774::t_65995b9fd4ee32 1-27
 packages/kumo/tests/imports/package-json-validation.test.ts
-  s_9f0d049c124774::t_b69b35572c9b81 1,28,72,137-139
+  s_9f0d049c124774::t_d02fb0ce4974e6 1,28,72,137-139
 packages/kumo/tests/imports/primitives.test.ts
-  s_9f0d049c124774::t_6116b128918cd2 1,30,44-51,62,89,126-136,142,228,258,285,295,341
+  s_9f0d049c124774::t_6a3ea5487b3475 1,30,44-51,62,89,126-136,142,228,258,285,295,341
 packages/kumo/tests/lint/no-cross-package-imports.test.ts
-  s_9f0d049c124774::t_2b9278df386605 1
+  s_9f0d049c124774::t_cbc6b9530a3b7e 1
 packages/kumo/tests/lint/no-flow-node-custom-render.test.ts
-  s_9f0d049c124774::t_3c0e6eb65a08d6 1-383
+  s_9f0d049c124774::t_0afc799d89808e 1-383
 packages/kumo/tests/select-strict-types.test-d.tsx
-  s_9f0d049c124774::t_27619636cb523f 10,101,142-148
+  s_9f0d049c124774::t_30189c0c6aa2a8 10,101,142-148
 packages/kumo/tests/setup.ts
-  s_9f0d049c124774::t_2da9f68e3f4cc6 1
+  s_9f0d049c124774::t_27066bdb9c0407 1
 packages/kumo/tests/stratus-scenario-verify.test-d.tsx
-  s_9f0d049c124774::t_44341c3833e8bf 6,30-32
+  s_9f0d049c124774::t_c967ad1be87acf 6,30-32
 packages/kumo/tests/stratus-scenario.test-d.tsx
-  s_9f0d049c124774::t_a29d26b79b9b6b 27-29,48-50
+  s_9f0d049c124774::t_19240d7d31b3cb 27-29,48-50
 packages/kumo/tsconfig.json
-  s_9f0d049c124774::t_28019236677b29 19
+  s_9f0d049c124774::t_70461168684552 19
 packages/kumo/vite.config.ts
-  s_9f0d049c124774::t_46475b6bda60de 1,4,22,29-57,59-151,153-189,191-220,223-227,235-238,256-271,273-295,297-316,318,320
+  s_9f0d049c124774::t_8bb37631dba128 1,4,22,29-57,59-151,153-189,191-220,223-227,235-238,256-271,273-295,297-316,318,320
 packages/kumo/vitest.browser.config.ts
-  s_9f0d049c124774::t_9cf09a422908bf 1-2
+  s_9f0d049c124774::t_8cd3dd1f9a184d 1-2
 packages/kumo/vitest.config.ts
-  s_9f0d049c124774::t_3ff9a0ebf4ce74 1
+  s_9f0d049c124774::t_85df3d6a2c5e36 1
 pnpm-lock.yaml
-  s_9f0d049c124774::t_f7b3dd8f0157b1 9-11,33-35,37-38,66-68,73-76,87-89,108-113,118-119,129-134,153-155,157-162,168,175-177,194-195,197-198,201,217-219,236-238,240,242-243,246,348-350,352-353,355-356,371,376-377,384-386,390-392,410-411,413-414,416-417,434-435,442-445,447-450,482-485,487-490,504-509,516-524,527,529-584,586-592,594-595,597-598,600-601,612-613,615-616,618-620,622-626,632-634,641-642,644-645,648-649,756-757,766-767,770-771,773-774,783-837,897-898,901-902,980-985,989-991,1010-1011,1034-1035,1058-1059,1082-1083,1106-1107,1130-1131,1154-1155,1178-1179,1202-1203,1226-1227,1250-1251,1274-1275,1298-1299,1322-1323,1346-1347,1370-1371,1394-1395,1418-1419,1442-1443,1466-1467,1490-1491,1514-1515,1538-1539,1562-1563,1586-1587,1610-1611,1831-1833,1846-1855,1923-1944,1948-1950,1954-1963,1966-1969,1972-1974,1976-1977,1979-1981,1983-1984,1986-1991,1993-1996,2000-2003,2007-2016,2021-2023,2028-2030,2032,2034-2037,2040-2208,2326-2329,2338-2340,2492-2493,2500-2501,2508-2509,2516-2517,2524-2525,2532-2533,2540-2541,2564-2566,2573-2578,2585-2590,2597-2602,2609-2614,2621-2626,2634-2640,2648-2654,2662-2668,2676-2682,2695-2706,2713-2718,2725-2730,2735-2738,2749-2753,2782-2783,2806-2808,2824-2826,2861-2863,2909-2911,2913,2915-2916,2919-2926,2928-2929,2932-2937,2939-2940,2942,2944-2945,2947-2948,2951,2958-2959,2961-2962,2964-2965,2967-2968,2970-2971,2973,2975-2976,2978-3088,3092-3093,3095-3096,3098-3099,3101-3102,3104-3105,3113-3116,3118-3121,3123-3126,3128-3162,3164-3236,3260-3261,3263,3268-3270,3347-3348,3351-3355,3501-3502,3528-3531,3605-3611,3669-3670,3730-3731,3777-3778,3842-3843,3870-3871,3873-3874,3885-3886,3903-3904,4098-4099,4157-4159,4189-4191,4218-4219,4268-4269,4306-4307,4319-4330,4337-4348,4355-4366,4373-4384,4391-4402,4410-4423,4431-4444,4452-4465,4473-4486,4493-4504,4511-4522,4527-4533,4585-4589,4821-4826,4897-4899,4903-4904,4913-4927,4929-4930,4933-4934,4938-4939,4943-4944,4954-4956,4970-4971,4974-4976,5073-5076,5118-5119,5127-5128,5140-5143,5158-5162,5291-5292,5345-5347,5359-5360,5399-5400,5420-5422,5469-5471,5473-5474,5482-5483,5543-5547,5575-5576,5583-5586,5591-5600,5646-5648,5656-5657,5690-5692,5826-5829,5839-5841,5844-5845,5847,5849,5907,5914-5915,5922-5927,5930,5944-5947,5955-5956,5963-5964,5971-5972,5979-5980,5990-5991,5998-5999,6006-6007,6017-6018,6128-6139,6150-6151,6154-6156,6159-6160,6193-6194,6196-6197,6210-6223,6225,6234-6244,6246-6247,6249-6250,6252,6254-6261,6263-6301,6304,6306-6309,6311-6319,6322,6326,6328-6329,6348,6350,6354,6356,6358-6359,6362-6363,6373-6374,6382,6384,6387-6388,6392,6394,6396-6397,6400,6408-6410,6413,6415,6417,6419,6424,6426,6428,6559,6562,6569,6571,6573,6579,6584-6618,6767,6769,6772,6774,6776,6845-6855,6861-6865,6875,6887,6899,6911,6923,6935,6947,6959,6971,6983,6995,7007,7019,7031,7043,7055,7067,7079,7091,7103,7115,7127,7139,7151,7163,7175,7293-7339,7349-7358,7398-7401,7448,7450,7452-7458,7460,7462-7465,7543-7613,7616,7619,7622,7625,7628,7631,7634,7637,7640,7643,7646,7649,7652,7655-7680,7768-7771,7790-7791,7796,7857,7860,7863,7883,7885-7886,7897,7899,7901,7908,7910,7917,7919,7927,7929,7937,7939,7941,7946,7969,7977-7978,7984-7993,7997-7999,8003-8005,8009-8011,8015-8017,8021-8023,8027-8029,8033-8035,8039-8041,8045-8047,8051-8053,8057-8059,8063-8065,8081-8096,8099,8101,8106-8113,8149-8152,8184-8187,8202-8203,8242-8245,8262,8289,8297,8301-8333,8335-8336,8338-8376,8383,8385-8387,8391-8427,8434,8438-8439,8441-8459,8461,8463,8467-8468,8470,8472,8474,8476,8479,8481-8482,8486,8488,8490-8492,8495-8541,8543,8545-8578,8580-8586,8588-8589,8595,8597,8599,8601-8603,8611-8673,8675-8676,8678-8679,8681-8682,8684-8685,8687-8688,8690-8691,8693-8694,8696-8697,8699-8702,8716,8718,8727,8729,8784,8786-8789,8791,8794,8801,8805,8820,8825,8828,8834-8835,8840,8843,8852-8853,8861,8868,8876-8878,8997,9017-9018,9081,9083,9085,9087,9089,9127,9187,9190,9308,9310-9335,9402,9432,9434-9436,9446,9458,9460,9462,9779-9780,9843,9869,9885-9886,9920,9947,9949,9951-9957,9959-9960,9962-9963,9965-9966,9968-9969,9971-9972,9974-9975,9977,9980,9983,9986,9989,9992,9995,9998,10001,10004,10007-10008,10010-10011,10013,10016,10019,10022,10025,10028,10031,10034,10037,10043-10048,10052-10057,10074,10076-10104,10147-10148,10640-10691,10696-10699,10731,10775-10776,10783,10785,10803-10804,10806-10858,10860-10881,10883-10960,10970,10984,10989,11087-11088,11131,11133-11135,11139,11149,11151,11170-11176,11362,11441,11453,11455,11463-11478,11538,11540-11545,11563,11565,11568,11606-11607,11609,11622-11623,11688-11690,11736,11740-11741,11744-11752,11754,11798,11800-11801,11809,11831-11832,11936-11937,11953-11970,11972-11980,11982-11984,11986-12010,12012-12029,12031-12069,12071-12088,12090-12128,12130,12132,12134,12138,12143-12153,12157-12158,12160-12163,12167-12200,12205-12236,12242,12244,12251,12253,12255,12259,12261,12265-12266,12268,12272,12274,12283,12285,12288,12290,12299,12404-12405,12412,12417-12418,12425,12427,12429,12467,12469-12497
+  s_9f0d049c124774::t_9c851efc91fe40 9-11,33-35,37-38,66-68,73-76,87-89,108-113,118-119,129-134,153-155,157-162,168,175-177,194-195,197-198,201,217-219,236-238,240,242-243,246,348-350,352-353,355-356,371,376-377,384-386,390-392,410-411,413-414,416-417,434-435,442-445,447-450,482-485,487-490,504-509,516-524,527,529-584,586-592,594-595,597-598,600-601,612-613,615-616,618-620,622-626,632-634,641-642,644-645,648-649,756-757,766-767,770-771,773-774,783-837,897-898,901-902,980-985,989-991,1010-1011,1034-1035,1058-1059,1082-1083,1106-1107,1130-1131,1154-1155,1178-1179,1202-1203,1226-1227,1250-1251,1274-1275,1298-1299,1322-1323,1346-1347,1370-1371,1394-1395,1418-1419,1442-1443,1466-1467,1490-1491,1514-1515,1538-1539,1562-1563,1586-1587,1610-1611,1831-1833,1846-1855,1923-1944,1948-1950,1954-1963,1966-1969,1972-1974,1976-1977,1979-1981,1983-1984,1986-1991,1993-1996,2000-2003,2007-2016,2021-2023,2028-2030,2032,2034-2037,2040-2208,2326-2329,2338-2340,2492-2493,2500-2501,2508-2509,2516-2517,2524-2525,2532-2533,2540-2541,2564-2566,2573-2578,2585-2590,2597-2602,2609-2614,2621-2626,2634-2640,2648-2654,2662-2668,2676-2682,2695-2706,2713-2718,2725-2730,2735-2738,2749-2753,2782-2783,2806-2808,2824-2826,2861-2863,2909-2911,2913,2915-2916,2919-2926,2928-2929,2932-2937,2939-2940,2942,2944-2945,2947-2948,2951,2958-2959,2961-2962,2964-2965,2967-2968,2970-2971,2973,2975-2976,2978-3088,3092-3093,3095-3096,3098-3099,3101-3102,3104-3105,3113-3116,3118-3121,3123-3126,3128-3162,3164-3236,3260-3261,3263,3268-3270,3347-3348,3351-3355,3501-3502,3528-3531,3605-3611,3669-3670,3730-3731,3777-3778,3842-3843,3870-3871,3873-3874,3885-3886,3903-3904,4098-4099,4157-4159,4189-4191,4218-4219,4268-4269,4306-4307,4319-4330,4337-4348,4355-4366,4373-4384,4391-4402,4410-4423,4431-4444,4452-4465,4473-4486,4493-4504,4511-4522,4527-4533,4585-4589,4821-4826,4897-4899,4903-4904,4913-4927,4929-4930,4933-4934,4938-4939,4943-4944,4954-4956,4970-4971,4974-4976,5073-5076,5118-5119,5127-5128,5140-5143,5158-5162,5291-5292,5345-5347,5359-5360,5399-5400,5420-5422,5469-5471,5473-5474,5482-5483,5543-5547,5575-5576,5583-5586,5591-5600,5646-5648,5656-5657,5690-5692,5826-5829,5839-5841,5844-5845,5847,5849,5907,5914-5915,5922-5927,5930,5944-5947,5955-5956,5963-5964,5971-5972,5979-5980,5990-5991,5998-5999,6006-6007,6017-6018,6128-6139,6150-6151,6154-6156,6159-6160,6193-6194,6196-6197,6210-6223,6225,6234-6244,6246-6247,6249-6250,6252,6254-6261,6263-6301,6304,6306-6309,6311-6319,6322,6326,6328-6329,6348,6350,6354,6356,6358-6359,6362-6363,6373-6374,6382,6384,6387-6388,6392,6394,6396-6397,6400,6408-6410,6413,6415,6417,6419,6424,6426,6428,6559,6562,6569,6571,6573,6579,6584-6618,6767,6769,6772,6774,6776,6845-6855,6861-6865,6875,6887,6899,6911,6923,6935,6947,6959,6971,6983,6995,7007,7019,7031,7043,7055,7067,7079,7091,7103,7115,7127,7139,7151,7163,7175,7293-7339,7349-7358,7398-7401,7448,7450,7452-7458,7460,7462-7465,7543-7613,7616,7619,7622,7625,7628,7631,7634,7637,7640,7643,7646,7649,7652,7655-7680,7768-7771,7790-7791,7796,7857,7860,7863,7883,7885-7886,7897,7899,7901,7908,7910,7917,7919,7927,7929,7937,7939,7941,7946,7969,7977-7978,7984-7993,7997-7999,8003-8005,8009-8011,8015-8017,8021-8023,8027-8029,8033-8035,8039-8041,8045-8047,8051-8053,8057-8059,8063-8065,8081-8096,8099,8101,8106-8113,8149-8152,8184-8187,8202-8203,8242-8245,8262,8289,8297,8301-8333,8335-8336,8338-8376,8383,8385-8387,8391-8427,8434,8438-8439,8441-8459,8461,8463,8467-8468,8470,8472,8474,8476,8479,8481-8482,8486,8488,8490-8492,8495-8541,8543,8545-8578,8580-8586,8588-8589,8595,8597,8599,8601-8603,8611-8673,8675-8676,8678-8679,8681-8682,8684-8685,8687-8688,8690-8691,8693-8694,8696-8697,8699-8702,8716,8718,8727,8729,8784,8786-8789,8791,8794,8801,8805,8820,8825,8828,8834-8835,8840,8843,8852-8853,8861,8868,8876-8878,8997,9017-9018,9081,9083,9085,9087,9089,9127,9187,9190,9308,9310-9335,9402,9432,9434-9436,9446,9458,9460,9462,9779-9780,9843,9869,9885-9886,9920,9947,9949,9951-9957,9959-9960,9962-9963,9965-9966,9968-9969,9971-9972,9974-9975,9977,9980,9983,9986,9989,9992,9995,9998,10001,10004,10007-10008,10010-10011,10013,10016,10019,10022,10025,10028,10031,10034,10037,10043-10048,10052-10057,10074,10076-10104,10147-10148,10640-10691,10696-10699,10731,10775-10776,10783,10785,10803-10804,10806-10858,10860-10881,10883-10960,10970,10984,10989,11087-11088,11131,11133-11135,11139,11149,11151,11170-11176,11362,11441,11453,11455,11463-11478,11538,11540-11545,11563,11565,11568,11606-11607,11609,11622-11623,11688-11690,11736,11740-11741,11744-11752,11754,11798,11800-11801,11809,11831-11832,11936-11937,11953-11970,11972-11980,11982-11984,11986-12010,12012-12029,12031-12069,12071-12088,12090-12128,12130,12132,12134,12138,12143-12153,12157-12158,12160-12163,12167-12200,12205-12236,12242,12244,12251,12253,12255,12259,12261,12265-12266,12268,12272,12274,12283,12285,12288,12290,12299,12404-12405,12412,12417-12418,12425,12427,12429,12467,12469-12497
 pnpm-workspace.yaml
-  s_9f0d049c124774::t_8918d3850c7e15 12,21,35,38,40-64
+  s_9f0d049c124774::t_dd9e9b8cb848ef 12,21,35,38,40-64
 skills/kumo-design/SKILL.md
-  s_9f0d049c124774::t_8afb5b20e929fd 1-315
+  s_9f0d049c124774::t_a4a80c5c4bce41 1-315
 tools/deployments/validate-pr-description.test.ts
-  s_9f0d049c124774::t_c582c46107256f 8,267,274-279,283-298,307-312
+  s_9f0d049c124774::t_d926b52c82498f 8,267,274-279,283-298,307-312
 tools/deployments/validate-pr-description.ts
-  s_9f0d049c124774::t_bc0ce66bef7a6b 49-52,54,64-70,72,81-83,88-92
+  s_9f0d049c124774::t_a0c4b1c284679f 49-52,54,64-70,72,81-83,88-92
 vite.config.ts
-  s_9f0d049c124774::t_96df0b526a37cf 1-106
+  s_9f0d049c124774::t_fe6351be6abf2d 1-106
 ---
 {
   "schema_version": "authorship/3.0.0",
