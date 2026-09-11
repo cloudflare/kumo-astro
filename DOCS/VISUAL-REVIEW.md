@@ -106,6 +106,7 @@ The Worker is configured in `packages/kumo-screenshot-worker/wrangler.jsonc`. It
 4. Produce a red-highlighted diff PNG for changed screenshots.
 5. Upload diff images through the screenshot worker.
 6. Create or update the visual-regression pull request comment.
+7. Optionally write a versioned JSON report for CI and agent consumers.
 
 The report shows:
 
@@ -116,6 +117,14 @@ The report shows:
 - Diff image
 
 Screenshots are also uploaded as a short-lived GitHub Actions artifact for debugging.
+
+### Machine-readable report and enforcement
+
+Set `VISUAL_REGRESSION_JSON_REPORT` to a file path to write the JSON report. The report currently uses `schemaVersion: 1` and includes every comparison, capture errors, machine-readable findings, the configured threshold, and summary counts. It is written after the existing Markdown or HTML report and before threshold enforcement can fail the command.
+
+`VISUAL_REGRESSION_THRESHOLD_PERCENT` controls the blocking pixel-difference threshold and defaults to `1`. A pixel difference is blocking only when its percentage is strictly greater than the threshold. Missing screenshots, new screenshots, and capture errors are always blocking findings.
+
+Findings remain report-only by default. Set `VISUAL_REGRESSION_ENFORCE_THRESHOLD=true` to exit nonzero after the reports have been written when any blocking finding exists.
 
 ## Triggering Visual Review
 
@@ -155,7 +164,7 @@ The local runner builds Kumo and the canonical documentation production bundle, 
 pnpm visual-review:local
 ```
 
-The runner reads `API_KEY` from `packages/kumo-screenshot-worker/.dev.vars` without printing it. The report and its production, local, and diff images are written to `ci/visual-regression/local-report/index.html`. Service output is available in `ci/visual-regression/local-report/services.log` if startup fails.
+The runner uses `SCREENSHOT_API_KEY` when set, otherwise reads `API_KEY` from `packages/kumo-screenshot-worker/.dev.vars` without printing it. If neither is available, it generates an ephemeral, non-production local key. The selected key is passed explicitly to `wrangler dev`, so local runs and automation do not need the production screenshot secret. The report and its production, local, and diff images are written to `ci/visual-regression/local-report/index.html`. Service output is available in `ci/visual-regression/local-report/services.log` if startup fails.
 
 To run a quicker comparison for one documented component:
 
@@ -175,11 +184,25 @@ After a successful build, use `--skip-build` for faster repeat runs when the sou
 pnpm visual-review:local -- --component button --skip-build
 ```
 
+Write the machine-readable report to a chosen path with `--json`:
+
+```bash
+pnpm visual-review:local -- --json ci/visual-regression/local-report/report.json
+```
+
+Use `--enforce` to return a nonzero exit status when blocking findings exist. The HTML and requested JSON reports are still written before the command exits:
+
+```bash
+pnpm visual-review:local -- --json ci/visual-regression/local-report/report.json --enforce --no-open
+```
+
+Set `VISUAL_REGRESSION_THRESHOLD_PERCENT` to override the default `1%` enforcement threshold.
+
 Set `BEFORE_URL` to override the production baseline when necessary. The lower-level `run-visual-regression.ts` script still supports deployed preview comparisons, but the local runner is the recommended local workflow.
 
 ## CI Behavior
 
-Visual differences currently produce a report for human review; they do not fail CI by themselves. The job fails when the rendering, storage, comparison, or reporting pipeline encounters an actual error.
+Visual differences produce a report for human review and do not fail CI by themselves unless `VISUAL_REGRESSION_ENFORCE_THRESHOLD=true` is set. With enforcement enabled, pixel differences above the configured threshold, missing or new screenshots, and capture errors fail the command after reports are written. The job also fails when the rendering, storage, comparison, or reporting pipeline encounters an actual error.
 
 The workflow checks out the visual-regression script from `main` before exposing secrets. This prevents pull requests from modifying the script and then executing that untrusted version with `SCREENSHOT_API_KEY` or `GITHUB_TOKEN`.
 

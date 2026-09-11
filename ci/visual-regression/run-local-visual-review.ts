@@ -1,5 +1,6 @@
 #!/usr/bin/env tsx
 import { spawn, type ChildProcess } from "node:child_process";
+import { randomUUID } from "node:crypto";
 import {
   createWriteStream,
   existsSync,
@@ -37,21 +38,15 @@ function getArgumentValue(name: string): string | undefined {
 
 function readLocalApiKey(): string {
   if (process.env.SCREENSHOT_API_KEY) return process.env.SCREENSHOT_API_KEY;
-  if (!existsSync(DEV_VARS_PATH)) {
-    throw new Error(
-      `Missing ${DEV_VARS_PATH}. Add API_KEY=<local-key> before running visual review.`,
-    );
+  if (existsSync(DEV_VARS_PATH)) {
+    const line = readFileSync(DEV_VARS_PATH, "utf8")
+      .split(/\r?\n/)
+      .find((candidate) => /^\s*API_KEY\s*=/.test(candidate));
+    const value = line?.replace(/^\s*API_KEY\s*=\s*/, "").trim();
+    const key = value?.replace(/^(['"])(.*)\1$/, "$2");
+    if (key) return key;
   }
-
-  const line = readFileSync(DEV_VARS_PATH, "utf8")
-    .split(/\r?\n/)
-    .find((candidate) => /^\s*API_KEY\s*=/.test(candidate));
-  const value = line?.replace(/^\s*API_KEY\s*=\s*/, "").trim();
-  const key = value?.replace(/^(['"])(.*)\1$/, "$2");
-  if (!key) {
-    throw new Error(`${DEV_VARS_PATH} must define a non-empty API_KEY.`);
-  }
-  return key;
+  return `kumo-local-visual-review-${randomUUID()}`;
 }
 
 async function getFreePort(): Promise<number> {
@@ -179,6 +174,17 @@ function openReport(): void {
 async function main(): Promise<void> {
   const apiKey = readLocalApiKey();
   const component = getArgumentValue("--component");
+  const jsonArgument = getArgumentValue("--json");
+  const hasJsonArgument = process.argv
+    .slice(2)
+    .some(
+      (argument) => argument === "--json" || argument.startsWith("--json="),
+    );
+  if (hasJsonArgument && (!jsonArgument || jsonArgument.startsWith("--"))) {
+    throw new Error("--json requires a report path.");
+  }
+  const jsonReportPath = jsonArgument ? resolve(jsonArgument) : undefined;
+  const enforceThreshold = process.argv.includes("--enforce");
   const beforeUrl = process.env.BEFORE_URL ?? "https://kumo-ui.com";
   const [docsPort, workerPort] = await Promise.all([
     getFreePort(),
@@ -223,6 +229,8 @@ async function main(): Promise<void> {
       "dev",
       "--port",
       String(workerPort),
+      "--var",
+      `API_KEY:${apiKey}`,
     ],
     log,
   );
@@ -236,6 +244,7 @@ async function main(): Promise<void> {
   process.once("SIGINT", handleSignal);
   process.once("SIGTERM", handleSignal);
 
+  let visualReviewError: unknown;
   try {
     await Promise.all([
       waitForService(docs, docsUrl),
@@ -249,19 +258,29 @@ async function main(): Promise<void> {
         : "Comparing every documented component. This can take several minutes.",
     );
 
-    await runVisualReview({
-      ...process.env,
-      BEFORE_URL: beforeUrl,
-      AFTER_URL: docsUrl,
-      SCREENSHOT_API_KEY: apiKey,
-      SCREENSHOT_WORKER_URL: workerUrl,
-      VISUAL_REGRESSION_OUTPUT_DIR: OUTPUT_DIR,
-      VISUAL_REGRESSION_HTML_REPORT: REPORT_PATH,
-      VISUAL_REGRESSION_COMPONENTS: component ?? "",
-      GITHUB_TOKEN: "",
-      GITHUB_PR_NUMBER: "",
-      PR_NUMBER: "",
-    });
+    try {
+      await runVisualReview({
+        ...process.env,
+        BEFORE_URL: beforeUrl,
+        AFTER_URL: docsUrl,
+        SCREENSHOT_API_KEY: apiKey,
+        SCREENSHOT_WORKER_URL: workerUrl,
+        VISUAL_REGRESSION_OUTPUT_DIR: OUTPUT_DIR,
+        VISUAL_REGRESSION_HTML_REPORT: REPORT_PATH,
+        VISUAL_REGRESSION_JSON_REPORT:
+          jsonReportPath ?? process.env.VISUAL_REGRESSION_JSON_REPORT,
+        VISUAL_REGRESSION_ENFORCE_THRESHOLD: enforceThreshold
+          ? "true"
+          : process.env.VISUAL_REGRESSION_ENFORCE_THRESHOLD,
+        VISUAL_REGRESSION_COMPONENTS:
+          component ?? process.env.VISUAL_REGRESSION_COMPONENTS ?? "",
+        GITHUB_TOKEN: "",
+        GITHUB_PR_NUMBER: "",
+        PR_NUMBER: "",
+      });
+    } catch (error) {
+      visualReviewError = error;
+    }
   } finally {
     await Promise.all(services.map(stopProcess));
     log.end();
@@ -269,8 +288,11 @@ async function main(): Promise<void> {
     process.removeListener("SIGTERM", handleSignal);
   }
 
-  console.log(`\nVisual review complete: ${REPORT_PATH}`);
-  openReport();
+  if (existsSync(REPORT_PATH)) {
+    console.log(`\nVisual review complete: ${REPORT_PATH}`);
+    openReport();
+  }
+  if (visualReviewError) throw visualReviewError;
 }
 
 main().catch((error) => {

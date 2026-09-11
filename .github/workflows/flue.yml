@@ -1,0 +1,264 @@
+name: Flue
+
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+concurrency:
+  group: flue-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    name: Authorize and collect context
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    outputs:
+      should_run: ${{ steps.context.outputs.should_run }}
+      command: ${{ steps.context.outputs.command }}
+      target_type: ${{ steps.context.outputs.target_type }}
+      target_number: ${{ steps.context.outputs.target_number }}
+      target_repository: ${{ steps.context.outputs.target_repository }}
+      target_sha: ${{ steps.context.outputs.target_sha }}
+      publish_sha: ${{ steps.context.outputs.publish_sha }}
+      head_ref: ${{ steps.context.outputs.head_ref }}
+      is_fork: ${{ steps.context.outputs.is_fork }}
+      event_id: ${{ steps.context.outputs.event_id }}
+    steps:
+      - name: Checkout trusted automation
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          persist-credentials: false
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-dependencies
+
+      - name: Collect authorized context
+        id: context
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FLUE_CONTEXT_PATH: .flue-runtime/context.json
+        run: pnpm tsx ci/flue/collect-context.ts
+
+      - name: Upload context
+        if: steps.context.outputs.should_run == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: flue-context-${{ github.run_id }}
+          path: .flue-runtime/context.json
+          include-hidden-files: true
+          retention-days: 1
+
+  agent:
+    name: Run ${{ needs.collect.outputs.command }} agent
+    needs: collect
+    if: needs.collect.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: ${{ needs.collect.outputs.command == 'bigbonk' && 60 || 45 }}
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout trusted automation
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: control
+          persist-credentials: false
+
+      - name: Checkout target worktree
+        uses: actions/checkout@v6
+        with:
+          repository: ${{ needs.collect.outputs.target_repository }}
+          ref: ${{ needs.collect.outputs.target_sha }}
+          path: workspace
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: control/package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: control/package.json
+          cache: pnpm
+          cache-dependency-path: control/ci/flue/pnpm-lock.yaml
+
+      - name: Install trusted dependencies
+        run: pnpm --dir control/ci/flue install --frozen-lockfile
+
+      - name: Download context
+        uses: actions/download-artifact@v4
+        with:
+          name: flue-context-${{ github.run_id }}
+          path: control/.flue-runtime
+
+      - name: Copy immutable context into target
+        run: |
+          mkdir -p workspace/.flue-runtime
+          cp control/.flue-runtime/context.json workspace/.flue-runtime/context.json
+
+      - name: Build isolated agent image
+        run: docker build --file control/ci/flue/Dockerfile --tag kumo-flue-agent control
+
+      - name: Run repository agent
+        if: needs.collect.outputs.command != 'review'
+        id: repository-agent
+        working-directory: control
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_REST_TOKEN }}
+        run: |
+          secret_dir="$RUNNER_TEMP/flue-secret-${GITHUB_RUN_ID}"
+          mkdir -p "$secret_dir"
+          chmod 700 "$secret_dir"
+          printf '%s' "$CLOUDFLARE_API_TOKEN" > "$secret_dir/token"
+          chmod 600 "$secret_dir/token"
+          trap 'rm -f "$secret_dir/token"' EXIT
+          docker run --rm \
+            --volume "${{ github.workspace }}/workspace:/workspace" \
+            --volume "${{ github.workspace }}/workspace/.git:/workspace/.git:ro" \
+            --volume "$secret_dir:/run/flue-secret" \
+            --env CLOUDFLARE_ACCOUNT_ID \
+            --env CLOUDFLARE_GATEWAY_ID \
+            --env CF_AI_TOKEN_FILE=/run/flue-secret/token \
+            --env FLUE_WORKSPACE=/workspace \
+            --env FLUE_CONTEXT_PATH=/workspace/.flue-runtime/context.json \
+            --env FLUE_RESULT_PATH=/workspace/.flue-runtime/result.json \
+            kumo-flue-agent \
+            --name RepositoryAgent \
+            --message "Process the authorized repository request." \
+            --json > "${{ github.workspace }}/workspace/.flue-runtime/flue.json"
+
+      - name: Run review agent
+        if: needs.collect.outputs.command == 'review'
+        id: review-agent
+        working-directory: control
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_REST_TOKEN }}
+        run: |
+          secret_dir="$RUNNER_TEMP/flue-secret-${GITHUB_RUN_ID}"
+          mkdir -p "$secret_dir"
+          chmod 700 "$secret_dir"
+          printf '%s' "$CLOUDFLARE_API_TOKEN" > "$secret_dir/token"
+          chmod 600 "$secret_dir/token"
+          trap 'rm -f "$secret_dir/token"' EXIT
+          docker run --rm \
+            --volume "${{ github.workspace }}/workspace:/workspace" \
+            --volume "${{ github.workspace }}/workspace/.git:/workspace/.git:ro" \
+            --volume "$secret_dir:/run/flue-secret" \
+            --env CLOUDFLARE_ACCOUNT_ID \
+            --env CLOUDFLARE_GATEWAY_ID \
+            --env CF_AI_TOKEN_FILE=/run/flue-secret/token \
+            --env FLUE_WORKSPACE=/workspace \
+            --env FLUE_CONTEXT_PATH=/workspace/.flue-runtime/context.json \
+            --env FLUE_RESULT_PATH=/workspace/.flue-runtime/result.json \
+            kumo-flue-agent \
+            --name ReviewAgent \
+            --message "Review the authorized pull request context." \
+            --json > "${{ github.workspace }}/workspace/.flue-runtime/flue.json"
+
+      - name: Package deterministic result
+        if: always()
+        working-directory: control
+        env:
+          FLUE_WORKSPACE: ${{ github.workspace }}/workspace
+          FLUE_CONTEXT_PATH: ${{ github.workspace }}/control/.flue-runtime/context.json
+          FLUE_INPUT_RESULT_PATH: ${{ github.workspace }}/workspace/.flue-runtime/result.json
+          FLUE_RESULT_PATH: ${{ github.workspace }}/control/.flue-runtime/result.json
+          FLUE_PATCH_PATH: ${{ github.workspace }}/control/.flue-runtime/agent.patch
+        run: ci/flue/node_modules/.bin/tsx ci/flue/package-result.ts
+
+      - name: Upload result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: flue-result-${{ github.run_id }}
+          path: |
+            control/.flue-runtime/result.json
+            control/.flue-runtime/agent.patch
+          include-hidden-files: true
+          retention-days: 1
+
+  publish:
+    name: Publish Flue result
+    needs: [collect, agent]
+    if: always() && needs.collect.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout trusted publisher
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: control
+          persist-credentials: false
+
+      - name: Checkout publication target
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.collect.outputs.publish_sha }}
+          path: publish
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          package_json_file: control/package.json
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: control/package.json
+          cache: pnpm
+          cache-dependency-path: control/ci/flue/pnpm-lock.yaml
+
+      - name: Install trusted dependencies
+        run: pnpm --dir control/ci/flue install --frozen-lockfile
+
+      - name: Download result
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: flue-result-${{ github.run_id }}
+          path: runtime
+
+      - name: Download immutable context
+        uses: actions/download-artifact@v4
+        with:
+          name: flue-context-${{ github.run_id }}
+          path: immutable
+
+      - name: Create GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.FLUE_GITHUB_APP_ID }}
+          private-key: ${{ secrets.FLUE_GITHUB_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+
+      - name: Publish validated result
+        working-directory: control
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          FLUE_PUBLISH_WORKSPACE: ${{ github.workspace }}/publish
+          FLUE_CONTEXT_PATH: ${{ github.workspace }}/immutable/context.json
+          FLUE_RESULT_PATH: ${{ github.workspace }}/runtime/result.json
+          FLUE_PATCH_PATH: ${{ github.workspace }}/runtime/agent.patch
+        run: ci/flue/node_modules/.bin/tsx ci/flue/publish-result.ts

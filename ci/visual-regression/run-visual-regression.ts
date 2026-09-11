@@ -25,9 +25,11 @@ const SCREENSHOTS_DIR =
   process.env.VISUAL_REGRESSION_OUTPUT_DIR ??
   "ci/visual-regression/screenshots";
 const HTML_REPORT_PATH = process.env.VISUAL_REGRESSION_HTML_REPORT;
+const JSON_REPORT_PATH = process.env.VISUAL_REGRESSION_JSON_REPORT;
 const API_KEY = process.env.SCREENSHOT_API_KEY ?? "";
 const MAX_BATCH_PAGES = 50;
 const SECTION_CAPTURE_WIDTH = 720;
+const JSON_REPORT_SCHEMA_VERSION = 1;
 
 /**
  * Screenshot result returned by the worker.
@@ -64,6 +66,21 @@ interface CapturedScreenshot {
   url: string | null;
 }
 
+type CapturePhase = "before" | "after";
+
+interface CaptureError {
+  id: string;
+  name: string;
+  phase: CapturePhase;
+  url: string;
+  message: string;
+}
+
+interface CaptureResult {
+  screenshots: CapturedScreenshot[];
+  errors: CaptureError[];
+}
+
 interface ComparisonResult {
   id: string;
   name: string;
@@ -74,9 +91,59 @@ interface ComparisonResult {
   afterPath: string | null;
   diffPath: string | null;
   issue?: string;
+  issueType?: "missing-screenshot" | "new-screenshot";
   changed: boolean;
   diffPixels: number;
   diffPercent: number;
+  exactDiffPercent: number;
+}
+
+interface VisualRegressionFinding {
+  type:
+    | "pixel-diff"
+    | "missing-screenshot"
+    | "new-screenshot"
+    | "capture-error";
+  id: string;
+  name: string;
+  message: string;
+  blocking: boolean;
+  phase?: CapturePhase;
+  url?: string;
+  diffPixels?: number;
+  diffPercent?: number;
+  beforeUrl?: string | null;
+  afterUrl?: string | null;
+  diffUrl?: string | null;
+  beforePath?: string | null;
+  afterPath?: string | null;
+  diffPath?: string | null;
+}
+
+interface VisualRegressionJsonReport {
+  schemaVersion: typeof JSON_REPORT_SCHEMA_VERSION;
+  generatedAt: string;
+  thresholdPercent: number;
+  enforcementEnabled: boolean;
+  beforeUrl: string;
+  afterUrl: string;
+  skipped: boolean;
+  skipReason: string | null;
+  summary: {
+    comparisons: number;
+    changed: number;
+    unchanged: number;
+    captureErrors: number;
+    findings: number;
+    blockingFindings: number;
+  };
+  findings: VisualRegressionFinding[];
+  comparisons: Array<
+    Omit<ComparisonResult, "exactDiffPercent"> & {
+      diffPercent: number;
+      blocking: boolean;
+    }
+  >;
 }
 
 function getChangedFiles(): string[] | null {
@@ -103,6 +170,21 @@ function ensureDir(dir: string): void {
   if (!existsSync(dir)) {
     mkdirSync(dir, { recursive: true });
   }
+}
+
+function getThresholdPercent(): number {
+  const value = process.env.VISUAL_REGRESSION_THRESHOLD_PERCENT ?? "1";
+  const threshold = Number(value);
+  if (!Number.isFinite(threshold) || threshold < 0 || threshold > 100) {
+    throw new Error(
+      `VISUAL_REGRESSION_THRESHOLD_PERCENT must be a number from 0 to 100; received ${JSON.stringify(value)}.`,
+    );
+  }
+  return threshold;
+}
+
+function isThresholdEnforced(): boolean {
+  return process.env.VISUAL_REGRESSION_ENFORCE_THRESHOLD === "true";
 }
 
 function sanitizeKeyPart(value: string): string {
@@ -190,15 +272,46 @@ interface PageRequest {
   }>;
 }
 
+function getScreenshotIdentity(
+  result: ScreenshotResult,
+  requests: PageRequest[],
+): { id: string; name: string } {
+  const urlPath = new URL(result.url).pathname.replace(/\/$/, "");
+  const componentSlug = urlPath.split("/").pop() || "unknown";
+  const isOpenState = requests.some(
+    (request) =>
+      request.url === urlPath &&
+      request.actions?.some(
+        (action) => action.type === "click" || action.type === "hover",
+      ),
+  );
+
+  if (result.sectionId) {
+    return {
+      id: `${componentSlug}-${result.sectionId}`,
+      name: `${formatName(componentSlug)} / ${result.sectionTitle || result.sectionId}`,
+    };
+  }
+  if (isOpenState) {
+    return {
+      id: `${componentSlug}-open`,
+      name: `${formatName(componentSlug)} (Open)`,
+    };
+  }
+  return { id: componentSlug, name: formatName(componentSlug) };
+}
+
 async function captureScreenshots(
   baseUrl: string,
   components: DiscoveredComponent[],
   outputDir: string,
   prefix: string,
   storagePrefix: string,
-): Promise<CapturedScreenshot[]> {
+  phase: CapturePhase,
+): Promise<CaptureResult> {
   ensureDir(outputDir);
   const screenshots: CapturedScreenshot[] = [];
+  const errors: CaptureError[] = [];
 
   const requests: PageRequest[] = [];
 
@@ -272,40 +385,30 @@ async function captureScreenshots(
   }
 
   for (const result of results) {
+    const identity = getScreenshotIdentity(result, requests);
     if (result.error) {
       console.warn(`  Error: ${result.url}: ${result.error}`);
+      errors.push({
+        ...identity,
+        phase,
+        url: result.url,
+        message: result.error,
+      });
       continue;
     }
 
     if (!result.image) {
       console.warn(`  Empty: ${result.url}`);
+      errors.push({
+        ...identity,
+        phase,
+        url: result.url,
+        message: "Screenshot worker returned no image data.",
+      });
       continue;
     }
 
-    const urlPath = new URL(result.url).pathname.replace(/\/$/, "");
-    const componentSlug = urlPath.split("/").pop() || "unknown";
-
-    const isOpenState = requests.some(
-      (r) =>
-        r.url === urlPath.replace(/\/$/, "") &&
-        r.actions?.some(
-          (action) => action.type === "click" || action.type === "hover",
-        ),
-    );
-
-    let screenshotId: string;
-    let screenshotName: string;
-
-    if (result.sectionId) {
-      screenshotId = `${componentSlug}-${result.sectionId}`;
-      screenshotName = `${formatName(componentSlug)} / ${result.sectionTitle || result.sectionId}`;
-    } else if (isOpenState) {
-      screenshotId = `${componentSlug}-open`;
-      screenshotName = `${formatName(componentSlug)} (Open)`;
-    } else {
-      screenshotId = componentSlug;
-      screenshotName = formatName(componentSlug);
-    }
+    const { id: screenshotId, name: screenshotName } = identity;
 
     const filename = `${prefix}-${screenshotId}.png`;
     const filepath = join(outputDir, filename);
@@ -328,7 +431,7 @@ async function captureScreenshots(
     });
   }
 
-  return screenshots;
+  return { screenshots, errors };
 }
 
 function formatName(slug: string): string {
@@ -342,13 +445,20 @@ interface DiffResult {
   changed: boolean;
   diffPixels: number;
   diffPercent: number;
+  exactDiffPercent: number;
   /** Raw PNG buffer of the diff image, null if images are identical or missing */
   diffImage: Buffer | null;
 }
 
 function compareImages(beforePath: string, afterPath: string): DiffResult {
   if (!existsSync(beforePath) || !existsSync(afterPath)) {
-    return { changed: true, diffPixels: 0, diffPercent: 100, diffImage: null };
+    return {
+      changed: true,
+      diffPixels: 0,
+      diffPercent: 100,
+      exactDiffPercent: 100,
+      diffImage: null,
+    };
   }
 
   const beforeBuf = readFileSync(beforePath);
@@ -356,7 +466,13 @@ function compareImages(beforePath: string, afterPath: string): DiffResult {
 
   // Fast path: byte-identical images need no pixel comparison
   if (beforeBuf.equals(afterBuf)) {
-    return { changed: false, diffPixels: 0, diffPercent: 0, diffImage: null };
+    return {
+      changed: false,
+      diffPixels: 0,
+      diffPercent: 0,
+      exactDiffPercent: 0,
+      diffImage: null,
+    };
   }
 
   const beforePng = PNG.sync.read(beforeBuf);
@@ -414,6 +530,7 @@ function compareImages(beforePath: string, afterPath: string): DiffResult {
     changed,
     diffPixels,
     diffPercent: Math.round(diffPercent * 100) / 100,
+    exactDiffPercent: diffPercent,
     diffImage: changed ? PNG.sync.write(diffPng) : null,
   };
 }
@@ -497,11 +614,13 @@ function generateHtmlReport(
   reportPath: string,
   beforeUrl: string,
   afterUrl: string,
+  thresholdPercent: number,
 ): string {
   const changed = comparisons.filter((comparison) => comparison.changed);
   const unchanged = comparisons.filter((comparison) => !comparison.changed);
   const aboveThreshold = comparisons.filter(
-    (comparison) => !comparison.issue && comparison.diffPercent > 1,
+    (comparison) =>
+      !comparison.issue && comparison.exactDiffPercent > thresholdPercent,
   );
   const ordered = [...changed, ...unchanged];
 
@@ -535,7 +654,7 @@ function generateHtmlReport(
           ? `${comparison.diffPixels.toLocaleString()} px (${comparison.diffPercent}%) changed`
           : "No visual changes");
 
-      return `<details class="result ${status}" data-above-threshold="${!comparison.issue && comparison.diffPercent > 1}" ${comparison.changed ? "open" : ""}>
+      return `<details class="result ${status}" data-above-threshold="${!comparison.issue && comparison.exactDiffPercent > thresholdPercent}" ${comparison.changed ? "open" : ""}>
         <summary><span>${escapeHtml(comparison.name)}</span><strong>${escapeHtml(finding)}</strong></summary>
         <div class="images">
           ${renderFigure("Production", comparison.beforePath, `Production rendering of ${comparison.name}`)}
@@ -590,7 +709,7 @@ function generateHtmlReport(
       <span class="stat changed">${changed.length} changed</span>
       <span class="stat">${unchanged.length} unchanged</span>
       <span class="stat">${comparisons.length} compared</span>
-      <button class="stat" id="threshold-filter" type="button" aria-pressed="false" ${aboveThreshold.length === 0 ? "disabled" : ""}>${aboveThreshold.length} above 1% change</button>
+      <button class="stat" id="threshold-filter" type="button" aria-pressed="false" ${aboveThreshold.length === 0 ? "disabled" : ""}>${aboveThreshold.length} above ${thresholdPercent}% change</button>
     </div>
   </header>
   <main>${cards || '<div class="empty">No matching screenshots were available to compare.</div>'}</main>
@@ -606,6 +725,97 @@ function generateHtmlReport(
   </script>
 </body>
 </html>`;
+}
+
+function createJsonReport(
+  comparisons: ComparisonResult[],
+  captureErrors: CaptureError[],
+  thresholdPercent: number,
+  enforcementEnabled: boolean,
+  beforeUrl: string,
+  afterUrl: string,
+  skipReason: string | null = null,
+): VisualRegressionJsonReport {
+  const findings: VisualRegressionFinding[] = [];
+
+  for (const comparison of comparisons) {
+    if (!comparison.changed) continue;
+
+    const type = comparison.issueType ?? "pixel-diff";
+    const blocking =
+      type !== "pixel-diff" || comparison.exactDiffPercent > thresholdPercent;
+    findings.push({
+      type,
+      id: comparison.id,
+      name: comparison.name,
+      message:
+        comparison.issue ??
+        `${comparison.diffPixels.toLocaleString()} px (${comparison.diffPercent}%) changed`,
+      blocking,
+      diffPixels: comparison.diffPixels,
+      diffPercent: comparison.exactDiffPercent,
+      beforeUrl: comparison.beforeUrl,
+      afterUrl: comparison.afterUrl,
+      diffUrl: comparison.diffUrl,
+      beforePath: comparison.beforePath,
+      afterPath: comparison.afterPath,
+      diffPath: comparison.diffPath,
+    });
+  }
+
+  for (const error of captureErrors) {
+    findings.push({
+      type: "capture-error",
+      id: error.id,
+      name: error.name,
+      message: error.message,
+      blocking: true,
+      phase: error.phase,
+      url: error.url,
+    });
+  }
+
+  const changed = comparisons.filter((comparison) => comparison.changed).length;
+  const blockingFindings = findings.filter(
+    (finding) => finding.blocking,
+  ).length;
+  const jsonComparisons = comparisons.map(
+    ({ exactDiffPercent, ...comparison }) => ({
+      ...comparison,
+      diffPercent: exactDiffPercent,
+      blocking:
+        comparison.issueType !== undefined ||
+        exactDiffPercent > thresholdPercent,
+    }),
+  );
+
+  return {
+    schemaVersion: JSON_REPORT_SCHEMA_VERSION,
+    generatedAt: new Date().toISOString(),
+    thresholdPercent,
+    enforcementEnabled,
+    beforeUrl,
+    afterUrl,
+    skipped: skipReason !== null,
+    skipReason,
+    summary: {
+      comparisons: comparisons.length,
+      changed,
+      unchanged: comparisons.length - changed,
+      captureErrors: captureErrors.length,
+      findings: findings.length,
+      blockingFindings,
+    },
+    findings,
+    comparisons: jsonComparisons,
+  };
+}
+
+function writeJsonReport(report: VisualRegressionJsonReport): void {
+  if (!JSON_REPORT_PATH) return;
+  ensureDir(dirname(JSON_REPORT_PATH));
+  writeFileSync(JSON_REPORT_PATH, `${JSON.stringify(report, null, 2)}\n`);
+  console.log(`JSON report: ${resolve(JSON_REPORT_PATH)}`);
 }
 
 async function postPRComment(body: string): Promise<void> {
@@ -661,10 +871,30 @@ async function postPRComment(body: string): Promise<void> {
 async function main(): Promise<void> {
   const args = process.argv.slice(2);
   const fullRegression = args.includes("--full");
+  const thresholdPercent = getThresholdPercent();
+  const enforcementEnabled = isThresholdEnforced();
 
   const beforeUrl = process.env.BEFORE_URL ?? "https://kumo-ui.com";
   const afterUrl =
     process.env.AFTER_URL ?? process.env.PREVIEW_URL ?? beforeUrl;
+  const captureErrors: CaptureError[] = [];
+
+  const writeCurrentJsonReport = (
+    comparisons: ComparisonResult[],
+    skipReason: string | null = null,
+  ): VisualRegressionJsonReport => {
+    const jsonReport = createJsonReport(
+      comparisons,
+      captureErrors,
+      thresholdPercent,
+      enforcementEnabled,
+      beforeUrl,
+      afterUrl,
+      skipReason,
+    );
+    writeJsonReport(jsonReport);
+    return jsonReport;
+  };
 
   console.log("Discovering components from docs site...");
   const allComponents = await discoverComponents(beforeUrl);
@@ -709,9 +939,9 @@ async function main(): Promise<void> {
       const classification = classifyChangedFiles(changedFiles);
 
       if (classification.allSkippable) {
-        console.log(
-          "No visually relevant file changes detected. Skipping visual regression.",
-        );
+        const reason = "No visually relevant file changes detected.";
+        console.log(`${reason} Skipping visual regression.`);
+        writeCurrentJsonReport([], reason);
         return;
       }
 
@@ -733,9 +963,10 @@ async function main(): Promise<void> {
         components = getAffectedComponents(changedFiles, allComponents);
 
         if (components.length === 0) {
-          console.log(
-            "Changed components not found in docs site. Skipping visual regression.",
-          );
+          const reason =
+            "Changed components were not found in the documentation site.";
+          console.log(`${reason} Skipping visual regression.`);
+          writeCurrentJsonReport([], reason);
           return;
         }
 
@@ -751,28 +982,64 @@ async function main(): Promise<void> {
   const storagePrefix = getRunStoragePrefix();
 
   console.log("=== Capturing BEFORE screenshots ===");
-  const beforeScreenshots = await captureScreenshots(
-    beforeUrl,
-    components,
-    beforeDir,
-    "before",
-    `${storagePrefix}/before`,
-  );
+  let beforeCapture: CaptureResult;
+  try {
+    beforeCapture = await captureScreenshots(
+      beforeUrl,
+      components,
+      beforeDir,
+      "before",
+      `${storagePrefix}/before`,
+      "before",
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    captureErrors.push({
+      id: "before-capture",
+      name: "Before capture",
+      phase: "before",
+      url: beforeUrl,
+      message,
+    });
+    writeCurrentJsonReport([]);
+    throw error;
+  }
+  captureErrors.push(...beforeCapture.errors);
 
   console.log("\n=== Capturing AFTER screenshots ===");
-  const afterScreenshots = await captureScreenshots(
-    afterUrl,
-    components,
-    afterDir,
-    "after",
-    `${storagePrefix}/after`,
-  );
+  let afterCapture: CaptureResult;
+  try {
+    afterCapture = await captureScreenshots(
+      afterUrl,
+      components,
+      afterDir,
+      "after",
+      `${storagePrefix}/after`,
+      "after",
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    captureErrors.push({
+      id: "after-capture",
+      name: "After capture",
+      phase: "after",
+      url: afterUrl,
+      message,
+    });
+    writeCurrentJsonReport([]);
+    throw error;
+  }
+  captureErrors.push(...afterCapture.errors);
 
   console.log("\n=== Comparing screenshots ===");
   const comparisons: ComparisonResult[] = [];
 
-  const beforeMap = new Map(beforeScreenshots.map((s) => [s.id, s]));
-  const afterMap = new Map(afterScreenshots.map((s) => [s.id, s]));
+  const beforeMap = new Map(
+    beforeCapture.screenshots.map((screenshot) => [screenshot.id, screenshot]),
+  );
+  const afterMap = new Map(
+    afterCapture.screenshots.map((screenshot) => [screenshot.id, screenshot]),
+  );
 
   const allIds = Array.from(
     new Set([...Array.from(beforeMap.keys()), ...Array.from(afterMap.keys())]),
@@ -796,22 +1063,17 @@ async function main(): Promise<void> {
         issue: before
           ? "Missing from local documentation"
           : "New in local documentation",
+        issueType: before ? "missing-screenshot" : "new-screenshot",
         changed: true,
         diffPixels: 0,
         diffPercent: 100,
+        exactDiffPercent: 100,
       });
       console.log(
         `  ${available?.name ?? id}: ${before ? "MISSING LOCALLY" : "NEW LOCALLY"}`,
       );
       continue;
     }
-    if ((!before.url || !after.url) && !HTML_REPORT_PATH) {
-      console.log(
-        `  ${before?.name || after?.name || id}: skipped (upload failed)`,
-      );
-      continue;
-    }
-
     const diff = compareImages(before.path, after.path);
 
     let diffUrl: string | null = null;
@@ -845,6 +1107,7 @@ async function main(): Promise<void> {
       changed: diff.changed,
       diffPixels: diff.diffPixels,
       diffPercent: diff.diffPercent,
+      exactDiffPercent: diff.exactDiffPercent,
     });
 
     if (diff.changed) {
@@ -862,11 +1125,24 @@ async function main(): Promise<void> {
     ensureDir(dirname(HTML_REPORT_PATH));
     writeFileSync(
       HTML_REPORT_PATH,
-      generateHtmlReport(comparisons, HTML_REPORT_PATH, beforeUrl, afterUrl),
+      generateHtmlReport(
+        comparisons,
+        HTML_REPORT_PATH,
+        beforeUrl,
+        afterUrl,
+        thresholdPercent,
+      ),
     );
     console.log(`HTML report: ${resolve(HTML_REPORT_PATH)}`);
   } else {
     await postPRComment(report);
+  }
+
+  const jsonReport = writeCurrentJsonReport(comparisons);
+  if (enforcementEnabled && jsonReport.summary.blockingFindings > 0) {
+    throw new Error(
+      `Visual regression found ${jsonReport.summary.blockingFindings} blocking finding(s) at a ${thresholdPercent}% threshold.`,
+    );
   }
 }
 

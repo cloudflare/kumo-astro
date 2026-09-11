@@ -50,6 +50,7 @@ ci/visual-regression/local-report/
 # Temporary files
 *.tmp
 .cache/
+.flue-runtime/
 
 # Codex
 .codex/environments

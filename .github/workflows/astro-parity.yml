@@ -1,0 +1,370 @@
+name: Astro Production Parity
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+    inputs:
+      production_commit:
+        description: "Optional deployed upstream commit to inspect"
+        required: false
+        type: string
+      components:
+        description: "Optional comma-separated component routes"
+        required: false
+        type: string
+      full_regression:
+        description: "Force the full visual suite"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: astro-production-parity
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      production_commit: ${{ steps.resolve.outputs.production_commit }}
+      base_commit: ${{ steps.resolve.outputs.base_commit }}
+      previous_commit: ${{ steps.resolve.outputs.previous_commit }}
+      branch: ${{ steps.resolve.outputs.branch }}
+      should_run: ${{ steps.resolve.outputs.should_run }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Fetch upstream history
+        run: |
+          git remote add upstream https://github.com/cloudflare/kumo.git
+          git fetch upstream main
+      - id: resolve
+        env:
+          REQUESTED_PRODUCTION_COMMIT: ${{ inputs.production_commit }}
+        run: pnpm exec tsx ci/flue/resolve-production.ts
+
+  prepare:
+    needs: resolve
+    if: needs.resolve.outputs.should_run == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      components: ${{ steps.prepare.outputs.components }}
+      full: ${{ steps.prepare.outputs.full }}
+      visual_relevant: ${{ steps.prepare.outputs.visual_relevant }}
+      merge_sha: ${{ steps.merge.outputs.merge_sha }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve.outputs.base_commit }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --dir ci/flue install --frozen-lockfile
+      - name: Merge exact production commit
+        id: merge
+        env:
+          PRODUCTION_COMMIT: ${{ needs.resolve.outputs.production_commit }}
+        run: |
+          git remote add upstream https://github.com/cloudflare/kumo.git
+          git fetch upstream main
+          ci/flue/node_modules/.bin/tsx ci/flue/merge-production.ts
+      - id: prepare
+        env:
+          PRODUCTION_COMMIT: ${{ needs.resolve.outputs.production_commit }}
+          PREVIOUS_UPSTREAM_COMMIT: ${{ needs.resolve.outputs.previous_commit }}
+          REQUESTED_COMPONENTS: ${{ inputs.components }}
+          FORCE_FULL: ${{ inputs.full_regression == true }}
+          FLUE_CONTEXT_PATH: .flue-runtime/context.json
+          VISUAL_REGRESSION_JSON_REPORT: .flue-runtime/visual-findings.json
+        run: ci/flue/node_modules/.bin/tsx ci/flue/prepare-parity.ts
+      - name: Bundle trusted production merge
+        run: git bundle create .flue-runtime/production-merge.bundle HEAD ^${{ needs.resolve.outputs.base_commit }} ^${{ needs.resolve.outputs.production_commit }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parity-context
+          path: .flue-runtime/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  agent:
+    needs: [resolve, prepare]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout trusted automation
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve.outputs.base_commit }}
+          path: control
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Checkout writable target
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve.outputs.base_commit }}
+          path: workspace
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+        with:
+          package_json_file: control/package.json
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: control/.node-version
+          cache: pnpm
+          cache-dependency-path: control/ci/flue/pnpm-lock.yaml
+      - run: pnpm --dir control/ci/flue install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: parity-context
+          path: control/.flue-runtime
+      - name: Copy immutable context into target
+        run: |
+          mkdir -p workspace/.flue-runtime
+          cp -R control/.flue-runtime/. workspace/.flue-runtime/
+      - name: Restore trusted production merge
+        working-directory: workspace
+        env:
+          BASE_COMMIT: ${{ needs.resolve.outputs.base_commit }}
+          PRODUCTION_COMMIT: ${{ needs.resolve.outputs.production_commit }}
+          MERGE_COMMIT: ${{ needs.prepare.outputs.merge_sha }}
+        run: |
+          git remote add upstream https://github.com/cloudflare/kumo.git
+          git fetch upstream main
+          ../control/ci/flue/node_modules/.bin/tsx ../control/ci/flue/restore-production.ts
+      - run: pnpm install --frozen-lockfile
+        working-directory: workspace
+      - name: Capture initial visual findings
+        if: needs.prepare.outputs.visual_relevant == 'true'
+        continue-on-error: true
+        working-directory: workspace
+        env:
+          CI: ""
+          VISUAL_REGRESSION_COMPONENTS: ${{ needs.prepare.outputs.components }}
+          VISUAL_REGRESSION_JSON_REPORT: .flue-runtime/visual-findings.json
+        run: pnpm visual-review:local -- --no-open --json .flue-runtime/visual-findings.json --enforce
+      - name: Preserve trusted initial findings
+        if: always()
+        run: |
+          if test -f workspace/.flue-runtime/visual-findings.json; then
+            cp workspace/.flue-runtime/visual-findings.json control/.flue-runtime/visual-findings.json
+          fi
+      - name: Run isolated Flue parity agent
+        id: flue
+        continue-on-error: true
+        env:
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_AI_GATEWAY_ACCOUNT_ID }}
+          CLOUDFLARE_GATEWAY_ID: ${{ secrets.CF_AI_GATEWAY_NAME }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_AI_REST_TOKEN }}
+        run: |
+          mkdir -p control/.flue-runtime/flue-home
+          chmod 700 control/.flue-runtime/flue-home
+          printf '%s' "$CLOUDFLARE_API_TOKEN" > control/.flue-runtime/flue-home/cf-token
+          chmod 600 control/.flue-runtime/flue-home/cf-token
+          trap 'rm -f control/.flue-runtime/flue-home/cf-token' EXIT
+          docker build -f control/ci/flue/Dockerfile -t kumo-flue-agent:${{ github.run_id }} control
+          docker run --rm \
+            -e CLOUDFLARE_ACCOUNT_ID \
+            -e CLOUDFLARE_GATEWAY_ID \
+            -e FLUE_WORKSPACE=/workspace \
+            -e FLUE_CONTEXT_PATH=/workspace/.flue-runtime/context.json \
+            -e FLUE_RESULT_PATH=/workspace/.flue-runtime/result.json \
+            -e CF_AI_TOKEN_FILE=/run/flue-secrets/cf-token \
+            -v "$PWD/workspace:/workspace" \
+            -v "$PWD/workspace/.git:/workspace/.git:ro" \
+            -v "$PWD/control/.flue-runtime/flue-home:/run/flue-secrets" \
+            -w /workspace \
+            kumo-flue-agent:${{ github.run_id }} \
+            --name AstroParityAgent \
+            --message "Repair the authorized Astro parity scope." \
+            --json > workspace/.flue-runtime/flue.json
+      - name: Package untrusted result
+        if: always()
+        working-directory: control
+        env:
+          FLUE_WORKSPACE: ${{ github.workspace }}/workspace
+          FLUE_BASE_SHA: ${{ needs.prepare.outputs.merge_sha }}
+          FLUE_CONTEXT_PATH: ${{ github.workspace }}/control/.flue-runtime/context.json
+          FLUE_INPUT_RESULT_PATH: ${{ github.workspace }}/workspace/.flue-runtime/result.json
+          FLUE_RESULT_PATH: .flue-runtime/result.json
+          FLUE_PATCH_PATH: .flue-runtime/agent.patch
+        run: ci/flue/node_modules/.bin/tsx ci/flue/package-result.ts
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: parity-agent-result
+          path: |
+            control/.flue-runtime/agent.patch
+            control/.flue-runtime/result.json
+            control/.flue-runtime/visual-findings.json
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 1
+
+  verify:
+    needs: [resolve, prepare, agent]
+    if: always() && needs.resolve.result == 'success' && needs.prepare.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve.outputs.base_commit }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm --dir ci/flue install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: parity-context
+          path: .flue-runtime
+      - name: Restore trusted production merge
+        env:
+          BASE_COMMIT: ${{ needs.resolve.outputs.base_commit }}
+          PRODUCTION_COMMIT: ${{ needs.resolve.outputs.production_commit }}
+          MERGE_COMMIT: ${{ needs.prepare.outputs.merge_sha }}
+        run: |
+          git remote add upstream https://github.com/cloudflare/kumo.git
+          git fetch upstream main
+          ci/flue/node_modules/.bin/tsx ci/flue/restore-production.ts
+      - run: pnpm install --frozen-lockfile
+      - uses: actions/download-artifact@v4
+        with:
+          name: parity-agent-result
+          path: .flue-runtime
+      - name: Validate and apply agent patch
+        env:
+          FLUE_PATCH_PATH: .flue-runtime/agent.patch
+          FLUE_RESULT_PATH: .flue-runtime/result.json
+        run: ci/flue/node_modules/.bin/tsx ci/flue/apply-parity-patch.ts
+      - name: Verify Astro packages
+        run: |
+          pnpm --filter @cloudflare/kumo-astro typecheck
+          pnpm --filter @cloudflare/kumo-docs-astro typecheck
+      - name: Verify visual parity from scratch
+        if: needs.prepare.outputs.visual_relevant == 'true'
+        env:
+          CI: ""
+          VISUAL_REGRESSION_COMPONENTS: ${{ needs.prepare.outputs.components }}
+          VISUAL_REGRESSION_JSON_REPORT: .flue-runtime/verified-findings.json
+        run: pnpm visual-review:local -- --no-open --json .flue-runtime/verified-findings.json --enforce
+      - name: Preserve skipped visual report
+        if: needs.prepare.outputs.visual_relevant != 'true'
+        run: cp .flue-runtime/visual-findings.json .flue-runtime/verified-findings.json
+      - name: Restore generated Astro type reference
+        run: git checkout -- packages/kumo-astro/tests/smoke/.astro/types.d.ts
+      - name: Reject verification side effects
+        run: git diff --exit-code
+      - name: Package verified result
+        env:
+          FLUE_BASE_SHA: ${{ needs.prepare.outputs.merge_sha }}
+          FLUE_CONTEXT_PATH: .flue-runtime/context.json
+          FLUE_RESULT_PATH: .flue-runtime/result.json
+          FLUE_PATCH_PATH: .flue-runtime/verified.patch
+        run: ci/flue/node_modules/.bin/tsx ci/flue/package-result.ts
+      - uses: actions/upload-artifact@v4
+        with:
+          name: parity-verified-result
+          path: |
+            .flue-runtime/context.json
+            .flue-runtime/result.json
+            .flue-runtime/verified.patch
+            .flue-runtime/verified-findings.json
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 1
+
+  publish:
+    needs: [resolve, prepare, agent, verify]
+    if: always() && needs.resolve.result == 'success' && needs.prepare.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.resolve.outputs.base_commit }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm --dir ci/flue install --frozen-lockfile
+      - name: Download immutable context
+        uses: actions/download-artifact@v4
+        with:
+          name: parity-context
+          path: .flue-runtime
+      - name: Restore trusted production merge
+        id: merge
+        continue-on-error: true
+        env:
+          BASE_COMMIT: ${{ needs.resolve.outputs.base_commit }}
+          PRODUCTION_COMMIT: ${{ needs.resolve.outputs.production_commit }}
+          MERGE_COMMIT: ${{ needs.prepare.outputs.merge_sha }}
+        run: |
+          git remote add upstream https://github.com/cloudflare/kumo.git
+          git fetch upstream main
+          ci/flue/node_modules/.bin/tsx ci/flue/restore-production.ts
+      - if: steps.merge.outcome == 'success'
+        run: pnpm install --frozen-lockfile
+      - name: Download agent evidence
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: parity-agent-result
+          path: .flue-runtime
+      - name: Download verified result
+        if: needs.verify.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: parity-verified-result
+          path: .flue-runtime
+      - uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ secrets.FLUE_GITHUB_APP_ID }}
+          private-key: ${{ secrets.FLUE_GITHUB_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: ${{ github.event.repository.name }}
+      - name: Publish draft PR or evidence issue
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          FLUE_CONTEXT_PATH: .flue-runtime/context.json
+          FLUE_RESULT_PATH: .flue-runtime/result.json
+          FLUE_PATCH_PATH: ${{ needs.verify.result == 'success' && '.flue-runtime/verified.patch' || '' }}
+          VISUAL_REGRESSION_JSON_REPORT: ${{ needs.verify.result == 'success' && '.flue-runtime/verified-findings.json' || '.flue-runtime/visual-findings.json' }}
+          FLUE_BRANCH: ${{ needs.resolve.outputs.branch }}
+          FLUE_BASE_BRANCH: main
+          FLUE_AGENT_BASE_SHA: ${{ needs.prepare.outputs.merge_sha }}
+          FLUE_FORK_BASE_SHA: ${{ needs.resolve.outputs.base_commit }}
+          FLUE_MERGE_OUTCOME: ${{ steps.merge.outcome }}
+          FLUE_AGENT_OUTCOME: ${{ needs.agent.result }}
+          FLUE_VERIFICATION_OUTCOME: ${{ needs.verify.result }}
+        run: ci/flue/node_modules/.bin/tsx ci/flue/publish-parity.ts

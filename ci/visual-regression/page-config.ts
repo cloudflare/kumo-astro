@@ -46,6 +46,11 @@ export async function discoverComponents(
   baseUrl: string,
 ): Promise<DiscoveredComponent[]> {
   const response = await fetch(baseUrl);
+  if (!response.ok) {
+    throw new Error(
+      `Component discovery failed for ${baseUrl}: HTTP ${response.status}`,
+    );
+  }
   const html = await response.text();
 
   const componentLinks: DiscoveredComponent[] = [];
@@ -69,6 +74,9 @@ export async function discoverComponents(
     componentLinks.push({ id: slug, name, url });
   }
 
+  if (componentLinks.length === 0) {
+    throw new Error(`Component discovery found no routes at ${baseUrl}`);
+  }
   return componentLinks;
 }
 

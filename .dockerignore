@@ -1,0 +1,7 @@
+.git
+.flue-runtime
+node_modules
+**/dist
+**/.astro
+**/.wrangler
+ci/visual-regression/local-report
